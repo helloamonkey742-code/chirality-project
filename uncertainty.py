@@ -38,6 +38,12 @@ def sweep(V, L, c_rng, d_rng, t_rng):
     return x, win, {"finishes": finishes.mean(), "heals": heals.mean(), "strong enough": strong.mean()}
 
 
+# README headline numbers (Summary + Part 8 table), checked below against this script's own output.
+README_WIN_PCT = {"Enceladus": 0.18, "Europa": 0.18, "Early Earth ocean": 1.00}
+WIN_TOL = 0.03  # percentage points; N=200,000 with a fixed seed makes this tight
+README_MIXING_HIGH = {"Enceladus": 0.36, "Europa": 0.37}  # Part 8: mixing D low half 0%, high half 36%/37%
+
+
 def main():
     for name, args in WORLDS.items():
         x, win, parts = sweep(*args)
@@ -47,8 +53,19 @@ def main():
         for k, v in x.items():
             lo = v <= np.median(v)
             effects.append((win[~lo].mean() - win[lo].mean(), k, win[lo].mean(), win[~lo].mean()))
-        for d, k, plo, phi in sorted(effects, key=lambda e: -abs(e[0])):
+        effects.sort(key=lambda e: -abs(e[0]))
+        for d, k, plo, phi in effects:
             print(f"  {k:15} low half {plo:5.0%}  high half {phi:5.0%}   (effect {d:+.0%})")
+        # the README states this world's headline win-rate explicitly (Summary / Part 8 table) -
+        # catch it silently drifting if a range or condition changes.
+        assert abs(win.mean() - README_WIN_PCT[name]) < WIN_TOL, (
+            f"{name}: win rate {win.mean():.0%} no longer matches README's {README_WIN_PCT[name]:.0%}")
+        if name in ("Enceladus", "Europa"):
+            # README: "mixing the deciding input" / "most decisive input: mixing D" for both icy moons.
+            assert effects[0][1] == "mixing D", (
+                f"{name}: most decisive input is {effects[0][1]!r}, not 'mixing D' as the README claims")
+            assert effects[0][2] < 0.01 and abs(effects[0][3] - README_MIXING_HIGH[name]) < WIN_TOL, (
+                f"{name}: mixing split {effects[0][2]:.0%}/{effects[0][3]:.0%} no longer matches README")
     # sanity: a best-case input set must win, a hopeless one must lose
     assert delta_at(1e-6, 1e-16, 1e-3, 1.3e18, 1e8 * YR) * 0.7 > 2
     assert delta_at(1e-6, 1e-18, 1e-3, 3.0, 1e2 * YR) * 0.7 < 2

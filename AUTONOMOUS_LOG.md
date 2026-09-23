@@ -75,3 +75,17 @@
   Observed: under `nice -n 15`, domains3d.py alone has run 76 min (vs ~10 min un-niced earlier). macOS puts
   low-priority jobs on efficiency cores. So no single 3D script fits the routine's 20-min limit under nice:
   routine waves must skip the 3D scripts (domains3d, coarsen3d, k3, shell3d) and frank*.py.
+
+## 2026-09-23 13:35 — wave d (uncertainty.py headline numbers self-checked)
+- Why: wave (c) is still running interactively (coarsen3d under nice, load 4.0), so no heavy runs, and (e) is blocked for the same reason.
+  The Summary's headline "100% early Earth / 18% Enceladus and Europa, mixing decides" was printed by uncertainty.py but no assert checked it.
+- Prediction: the script reproduces 100/18/18% and a mixing-D split of 0%/36–37% exactly (the RNG seed is fixed).
+- Result (sonnet builder + separate sonnet critic; critic verdict HOLDS, and its coverage-gap suggestion was applied):
+  - MEASURED: `nice -n 15 uncertainty.py` exits 0 and prints Enceladus 18%, Europa 18%, early Earth 100%; mixing D is the top input for both moons,
+    0% (low half) vs 36% (Enceladus) / 37% (Europa) (high half). All match README lines 28–30 and 377–381.
+  - New asserts: each world's win rate is within 3 points of the README value, mixing D is ranked first for both moons, and the low/high split matches.
+    Perturbation test: changing the README constant to 50% makes the script exit 1; restoring it gives exit 0.
+  - No README text or number changed.
+- Failed: nothing. Not covered: the "~72% / ~86%" column in the Part 8 table is still printed but not asserted.
+- Next: let the interactive wave (c) finish and log its slow-set result. Then (e) needs an un-niced or interactive run,
+  because 3D scripts under nice exceed the 20-min limit. Otherwise take another (d) item: the Part 8 ~72%/~86% column.
