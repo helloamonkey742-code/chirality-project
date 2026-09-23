@@ -201,7 +201,12 @@ struggles with dilution. So:
   doesn't test that. It's a clear next step.
 
 Concentrations are the weakest inputs here. Stribling & Miller 1987 estimated a relatively
-rich early ocean, but later work revised it downward. Pond and lagoon values are assumptions.
+rich early ocean: about 3×10⁻⁴ M amino acids at steady state (and ~4×10⁻⁶ M of the starting
+molecule HCN, at pH 8 and 0 °C). This is DOCUMENTED from the paper's own abstract. I could not find a
+specific paper that gives a *lower* number, so treat 3×10⁻⁴ M as one contested estimate, not the
+consensus. Pond and lagoon values are assumptions.
+*(Correction 2026-09-23: an earlier version said "later work revised it downward" with no source. That
+claim is withdrawn until a source is found. No number in the tables changed.)*
 
 ### Part 4b: can small pools inherit a bias? (`inherit.py`)
 A pool fills with water that already carries a small excess e0, then concentrates until
@@ -266,9 +271,13 @@ What the calculations say (literature check):
 - **Amino acids:** modern gas-phase calculations favour natural L-alanine. In water the sign becomes
   conformation-dependent and unsettled ("the conformation problem", 2009).
 - **Sugars:** older (1980s–90s) calculations leaned toward natural D-sugars, but the result flips with
-  ring shape, and the authors later corrected the size of their headline effect. One modern DNA-helix
-  calculation reportedly favours the *mirror-image* (L-sugar) helix. I could only verify that through
-  secondary summaries, so it's low confidence.
+  ring shape, and the authors later corrected the size of their headline effect. A 2005 calculation on a
+  whole DNA double helix (Faglioni, D'Agostino, Cadioli & Lazzeretti) concluded, in its own abstract, that
+  the weak force does **not** favour the double helices found in nature. That is now checked against the
+  primary abstract (it used to rest on secondary summaries). Caveats: the abstract says "not the natural
+  helix", which is not quite the same as a strong push toward the mirror helix. I couldn't read the full
+  paper (paywalled), so its helix shape, solvent treatment and effect size are unchecked. Of the 21 later
+  papers citing it (OpenAlex), none reverses it.
 - **Net:** there's no settled sign for sugars, and some evidence points the "wrong" way. By this model, a
   wrong-way sugar bias would partly **cancel** the amino-acid bias.
 
@@ -319,6 +328,11 @@ A pool combining a surface step (to break symmetry) with crystallization (to amp
 most of the spec *without* classic autocatalysis. So R1 may not be strictly needed when an outside
 chiral influence does the symmetry breaking. One open issue: if the mineral's magnetization sets the
 hand, then different pools could get different hands unless their magnetization is aligned.
+Ozturk et al. do address this: they argue that magnetite sediments magnetized by Earth's field after its
+most recent flip would carry a "statistically uniform" magnetization **across a hemisphere**. But in their
+own lab test, flipping the magnet flipped the hand. So the two hemispheres could pick *opposite* hands,
+and the paper doesn't say how that gets resolved. (DOCUMENTED from the full text, PMC10246896. The
+opposite-hemisphere point is my inference, not the paper's claim.)
 
 Scoring limits: several concentrations and times weren't in the abstracts. Marks are judgement
 calls from the papers' main claims, not a formal meta-analysis.
@@ -420,7 +434,7 @@ Needs numpy, scipy, matplotlib.
 - Ledwell, Watson & Law 1993, *Nature* 364:701, doi:10.1038/364701a0 (vertical diffusivity 1.1×10⁻⁵ m²/s)
 - Abernathey & Marshall 2013, *JGR Oceans* 118:901 (surface eddy diffusivity ≲10³–10⁴ m²/s)
 - Bray 1994, "Theory of phase-ordering kinetics", *Adv. Phys.* 43:357 (curvature-driven coarsening, l ∝ t^½)
-- Stribling & Miller 1987, *OLEB* 17:261, doi:10.1007/BF02386466 (early-ocean concentrations; later revised down)
+- Stribling & Miller 1987, *OLEB* 17:261, doi:10.1007/BF02386466 (steady-state early-ocean amino acids ~3×10⁻⁴ M, HCN ~4×10⁻⁶ M)
 - Pearce et al. 2017, *PNAS* 114:11327, doi:10.1073/pnas.1710339114 (warm little ponds, 1 m × 1 m)
 - Baaske et al. 2007, *PNAS* 104:9346, doi:10.1073/pnas.0609592104 (vent-pore thermophoretic concentration)
 - Toner & Catling 2020, *PNAS* 117:883, doi:10.1073/pnas.1916109117 (carbonate-rich lakes)
@@ -428,7 +442,8 @@ Needs numpy, scipy, matplotlib.
 - Breslow & Cheng 2010, *PNAS* 107:5723, doi:10.1073/pnas.1001639107 (L-amino acids → D-glyceraldehyde)
 - Hein, Tse & Blackmond 2011, *Nat. Chem.* 3:704, doi:10.1038/nchem.1108 (proline → enantiopure RNA precursor)
 - Tamura & Schimmel 2004, *Science* 305:1253, doi:10.1126/science.1099141 (D-RNA prefers L-amino acids)
-- Ozturk et al. 2023, *Sci. Adv.* 9:eadg8274, doi:10.1126/sciadv.adg8274 (magnetite → ~60% ee; conglomerate crystallization takes ~25% ee to homochiral)
+- Ozturk et al. 2023, *Sci. Adv.* 9:eadg8274, doi:10.1126/sciadv.adg8274 (magnetite → ~60% ee; conglomerate crystallization takes ~25% ee to homochiral; hemisphere-scale uniform magnetization argument)
+- Faglioni, D'Agostino, Cadioli & Lazzeretti 2005, "Parity violation energy of biomolecules II: DNA", *Chem. Phys. Lett.* 407:522, doi:10.1016/j.cplett.2005.04.009 (weak force does not favour natural DNA helices)
 - Glavin & Dworkin 2009, *PNAS* 106:5487, doi:10.1073/pnas.0811618106 (Murchison L-isovaline ee 18.5 ± 2.6%)
 - Frank 1953, *Biochim. Biophys. Acta* 11:459 (autocatalysis + mutual antagonism model)
 - Soai et al. 1995, *Nature* 378:767, doi:10.1038/378767a0; Sato et al. 2003, *Angew. Chem.* 42:315, doi:10.1002/anie.200390105
