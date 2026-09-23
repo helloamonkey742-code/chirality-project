@@ -25,6 +25,10 @@ simulations in 1D and 3D, and against a real reaction scheme) the math for when 
 spatial patch formation, or to inheritance by pools. Closest: Sandars 2005 (spatial spread of handedness
 in Earth's ocean, no weak force).
 
+**Robustness (Part 8):** varying every uncertain input at once, physics wins in 100% of plausible cases for early
+Earth's open ocean and 18% for Enceladus and Europa, with mixing the deciding input. A second reaction scheme and a
+thin-shell ocean both confirm the results.
+
 **Status:** every computational step is done and self-checked (`./run_all.sh`). **The only remaining step
 is the wet-lab experiment.**
 
@@ -364,6 +368,40 @@ contributes its own molecular counting noise.
   concentration in Parts 1–4 rises by about 1.6×** (F^(−4/3)). No conclusion changes: the margins were
   10–10⁶×, except the Europa mixing margin, which isn't concentration-based.
 
+## Part 8: robustness checks (optional extras)
+
+**Uncertainty sweep (`uncertainty.py`).** 200,000 random input sets per world, every uncertain input varied at
+once over its plausible range: bias g, rate k2, concentration, mixing D, time, volume ±30%, and the chemistry
+factor F (0.3–0.7). "Physics wins" requires all three: the chemistry finishes, the patchwork heals, and F·Δ ≥ 2.
+
+| world | physics wins | if mixing is high enough to heal | most decisive input |
+|---|---|---|---|
+| Early Earth open ocean | **100%** | 100% | none; wins everywhere |
+| Enceladus | **18%** | ~72% | **mixing D**: 0% (low half) vs 36% (high half) |
+| Europa | **18%** | ~86% | **mixing D**: 0% vs 37% |
+
+Next most influential are time (+11 to +17 points) and concentration (+5 to +14). The bias g, rate k2, F and volume each
+move the answer by ≤ 5 points. So **the weak-force size of the effect barely matters; ocean mixing decides
+it.** The 18% mostly reflects that the mixing range spans 7 orders of magnitude (MEASURED).
+
+**Second reaction scheme (`frank2.py`).** Frank's scheme plus wasted back-reactions (L → A, 2L → A + L). It
+matches the formula within 1.7 points in the slow limit, and the conversion factor is **F = 0.71**, the same as
+scheme 1 (0.70). The 1.6× concentration correction from Part 7 holds for both schemes tested (MEASURED).
+
+**Thin ocean shell (`shell3d.py`).** Real icy-moon oceans are 18–46× wider than deep. In a 512 × 512 × 8 slab
+(closed top and bottom), 4 seeds each:
+
+| start (favoured) | after t = 200, thin shell | cube (Part 3) |
+|---|---|---|
+| 50% (control) | 49.8% ± 1.4 | 50% |
+| 52% | **56.1% ± 1.4** | 62% |
+| 55% | **65.4% ± 0.5** | 81% |
+
+The majority still takes over in a thin shell, but **more slowly**. Patch growth exponent 0.41 vs 0.45–0.49
+in the cube, so Part 3's healing times are, if anything, optimistic by a modest factor. A first single-seed
+run in a 256-wide box *failed* (52% → 44%). That was finite-size noise (only ~8 patches), not physics,
+and it's recorded in `AUTONOMOUS_LOG.md` (MEASURED).
+
 ## What this means
 *If* a self-amplifying chiral chemistry existed in an icy-moon ocean, the weak force,
 not chance, should decide the hand. Then finding **right-handed** life on Europa
@@ -411,6 +449,9 @@ python scorecard.py # spec sheet + candidate scores
 python design.py    # slow-experiment detectability + design.png
 python k3.py        # 3D per-patch selection constant (asserts), ~3 min
 python frank.py     # real reaction scheme vs formula (asserts), ~5 min
+python frank2.py    # second scheme with back-reactions (asserts), ~5 min
+python shell3d.py   # thin-shell growth + majority test (asserts), ~15 min
+python uncertainty.py # uncertainty sweep, ~10 s
 ./run_all.sh        # everything fast (~3 min); ./run_all.sh --full adds the 3D + real-chemistry runs
 ```
 Needs numpy, scipy, matplotlib.

@@ -1,0 +1,8 @@
+      g   Omega   tau  predicted simulated   F
+  0.000   1e+04  1600      0.500     0.493   nan
+  0.002   1e+04  1600      0.802     0.785   0.71
+  0.004   1e+04  1600      0.967     0.952   0.71
+  0.002   4e+04  1600      0.951     0.948   0.71
+
+F = 0.71 (scheme 1 in frank.py: 0.70) -> concentrations x1.6
+exit 0

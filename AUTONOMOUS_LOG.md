@@ -36,3 +36,11 @@
 - Failed/unfinished: the Faglioni full text and Chyba & Sagan 1992 are behind paywalls.
 - Next: wave (a) if the interactive session hasn't finished it (check README for Part 8 + shell3d.log exit line);
   otherwise wave (c) when load < 6.
+
+## 2026-09-23 — wave (a) DONE (interactive session)
+- README Part 8 added: uncertainty sweep (Earth 100%, Enceladus/Europa 18%; P(win | heals) 72% / 86%; mixing
+  dominant), frank2 (F = 0.71, matches within 1.7 pts), thin shell 512²×8 × 4 seeds (control 49.8 ± 1.4;
+  52 → 56.1 ± 1.4; 55 → 65.4 ± 0.5; exponent 0.41). All MEASURED. Summary updated; run_all.sh now includes
+  uncertainty.py (fast) and frank2.py + shell3d.py (slow).
+- The earlier single-seed shell3d failure was finite-size noise; kept on record above.
+- Next recommendation: wave (c), a full re-verification when load < 6; then (d)/(e).
