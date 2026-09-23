@@ -65,3 +65,8 @@
   - README wording tightened from "lands close" to the explicit bracket. No reported number changed.
 - Failed: nothing. Wikipedia was not reachable, so R = 252.1 km was not re-fetched to the exact digit.
 - Next: wave (c) (full re-verification, each slow script separately, when load < 6); then (e).
+
+## 2026-09-23 10:45 — wave (c) full re-verification (interactive session, started at the student's request)
+- Load 2.5, no train_grasp job. Each script runs separately under `nice -n 15`, one at a time → verify.log.
+- Prediction (written before running): all 10 fast + 6 slow scripts exit 0. Seeded numbers match the README exactly;
+  frank*/3D numbers match the README tables to the printed digit (all seeds fixed).
