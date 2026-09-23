@@ -1,0 +1,14 @@
+A3. domain size, no bias
+  D=1.0   gamma=0.1    domain=  16.0 cells  C3=8.98
+  D=1.0   gamma=0.025  domain=  38.0 cells  C3=15.11
+  D=2.25  gamma=0.1    domain=  19.6 cells  C3=7.34
+  D=2.25  gamma=0.025  domain=  59.7 cells  C3=15.83
+  C3 = 11.81 (spread 31%)
+Traceback (most recent call last):
+  File "/Users/saptarshighosh/Library/Application Support/Claude/scratch-workspaces/71b2c663-ef4c-4165-823c-ce001594f290/75b2ffca-7ff0-464a-be9e-a5f73f9323df/scratch-2026-09-23-eb9de1/chirality/domains3d.py", line 61, in <module>
+    main()
+    ~~~~^^
+  File "/Users/saptarshighosh/Library/Application Support/Claude/scratch-workspaces/71b2c663-ef4c-4165-823c-ce001594f290/75b2ffca-7ff0-464a-be9e-a5f73f9323df/scratch-2026-09-23-eb9de1/chirality/domains3d.py", line 44, in main
+    assert np.std(ratios) / C3 < 0.25, "3D domain size does not follow sqrt(D)*gamma^-1/4"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 3D domain size does not follow sqrt(D)*gamma^-1/4

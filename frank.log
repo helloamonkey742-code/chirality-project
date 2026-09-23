@@ -1,0 +1,13 @@
+      g   Omega   tau  predicted simulated
+  0.000   1e+04   800      0.500     0.485   (x at crossing 0.0276)
+  0.003   1e+04   200      0.628     0.680   (x at crossing 0.0179)
+  0.003   1e+04   800      0.737     0.733   (x at crossing 0.0280)
+  0.003   1e+04  3200      0.858     0.854   (x at crossing 0.0335)
+  0.006   1e+04  3200      0.999     0.974   (x at crossing 0.0401)
+  0.002   4e+04  3200      0.909     0.898   (x at crossing 0.0318)
+fast sweep (tau=200) is outside the slow limit: real chemistry selects MORE than predicted,
+so the ocean model is conservative there. Nature's sweeps are far slower.
+
+conversion factor vs the simple mapping in ocean.py: F = sqrt(x/(k0+2x)) = 0.70
+-> required concentrations rise by F^(-4/3) = 1.60x
+exit 0
