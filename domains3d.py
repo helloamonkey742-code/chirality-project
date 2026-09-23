@@ -24,12 +24,26 @@ def domain_length(a):
     return 3 * a.size / max(walls, 1)
 
 
+def law_spread(ratios):
+    """Coefficient of variation of the l/(sqrt(D)*gamma^-1/4) ratios (domains.py's C)."""
+    ratios = np.asarray(ratios, dtype=float)
+    return np.std(ratios) / np.mean(ratios)
+
+
 def main():
     """Patch size at the end of the sweep. In 3D this does NOT follow the 1D law
     (spread ~31%): patches keep growing after the choice. See coarsen3d.py."""
+    ratios = []
     for D, gamma in [(1.0, 0.1), (1.0, 0.025), (2.25, 0.1), (2.25, 0.025)]:
         l = domain_length(sweep3d(D, gamma))
-        print(f"D={D:<5} gamma={gamma:<6} domain={l:6.1f} cells  l/(sqrt(D)*gamma^-1/4)={l / (np.sqrt(D) * gamma**-0.25):.2f}", flush=True)
+        r = l / (np.sqrt(D) * gamma**-0.25)
+        ratios.append(r)
+        print(f"D={D:<5} gamma={gamma:<6} domain={l:6.1f} cells  l/(sqrt(D)*gamma^-1/4)={r:.2f}", flush=True)
+    spread = law_spread(ratios)
+    print(f"spread {spread:.0%}")
+    # domains.py asserts spread < 0.25 for the law to "hold" in 1D; here we assert
+    # the opposite -- if this ever holds in 3D, the "fails in 3D" claim is wrong.
+    assert spread > 0.25, "1D patch law unexpectedly held in 3D (spread <= 25%)"
 
 
 if __name__ == "__main__":

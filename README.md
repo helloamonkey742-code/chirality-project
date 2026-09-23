@@ -125,9 +125,11 @@ Running the same model on a 128³ grid (2 million cells) showed that the 1D patc
 
 - **Patches keep growing after the choice.** In 3D, patch walls are curved surfaces. They
   straighten themselves out, so small patches shrink and vanish, with no bias needed.
-  Measured: size grows as `l = A·√(D·t)` (exponents 0.45 and 0.49 vs. theory 0.5; A = 5.5
-  at both mixing strengths). In 1D a wall is a point with no curvature, so this can't happen.
+  Measured: size grows as `l = A·√(D·t)` (exponents 0.45 and 0.49 vs. theory 0.5; A = 5.48
+  and 5.60 at the two mixing strengths). In 1D a wall is a point with no curvature, so this can't happen.
   That's why Part 2 missed it.
+  *(Correction 2026-09-23: this said "A = 5.5 at both"; `coarsen3d.py` prints 5.48 and 5.60, so
+  the second value rounds to 5.6. The conclusion (same growth law at both strengths, within ~2%) is unchanged.)*
 - **The majority hand takes over.** Starting from ready-made patches:
 
   | start (favoured) | t = 50 | t = 200 | t = 400 |

@@ -89,3 +89,20 @@
 - Failed: nothing. Not covered: the "~72% / ~86%" column in the Part 8 table is still printed but not asserted.
 - Next: let the interactive wave (c) finish and log its slow-set result. Then (e) needs an un-niced or interactive run,
   because 3D scripts under nice exceed the 20-min limit. Otherwise take another (d) item: the Part 8 ~72%/~86% column.
+
+## 2026-09-23 16:10 — wave c finish + wave d (routine; started with prediction)
+- Orient: machine rebooted ~15:37 (uptime 25 min at 16:02). The interactive wave (c) died inside shell3d.py; verify.log
+  shows domains3d, coarsen3d, k3, frank, frank2 all exit 0 and shell3d with no result. Load 2.3, no train_grasp.
+- Prediction: shell3d.py re-run under nice reproduces shell3d.log exactly (seeded) but may exceed the 19-min kill.
+  The five finished slow scripts match their logs digit-for-digit.
+- Result (sonnet builder + separate sonnet critic; critic verdict: domains3d check HOLDS, README numbers HOLD except one):
+  - MEASURED: shell3d.py under nice exits 0 in 929 s and matches shell3d.log line for line. So wave (c) is now complete:
+    fast set 10/10 and slow set 6/6 exit 0 (verify.log, now committed). coarsen3d, k3, frank, frank2 match their logs exactly.
+    domains3d prints the same four ratios as before. Its repo log was a stale crash traceback from an older script version; it is now replaced with the verified output.
+  - Wave d: domains3d.py had no self-check behind README's "1D patch law fails in 3D (31% spread)". I added law_spread() and
+    `assert spread > 0.25`, the mirror image of domains.py's holds-test. Tested on the logged ratios (0.314, passes) and on a
+    law-following set (0.014, raises). The full script was not re-run (76 min under nice).
+  - CORRECTION: README Part 3 said "A = 5.5 at both mixing strengths"; coarsen3d prints 5.48 and 5.60. The README now has both
+    values and a dated correction line. The conclusion is unchanged.
+- Failed / caveat: the 31% spread comes from one seed with 2 runs per case, so the 6-point margin over 25% is thin evidence (critic).
+- Next: wave (e), a 3D replication with a different seed. k3.py takes 75 s, so it fits the time limit; a k3 seed sweep is the natural choice.

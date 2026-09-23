@@ -1,0 +1,239 @@
+== sim.py
+check: analytic Phi(Delta) vs simulated P(favoured hand)
+        g  Delta  analytic simulated
+  0.0e+00   0.00     0.500     0.504
+  5.0e-04   0.30     0.617     0.617
+  1.0e-03   0.60     0.724     0.719
+  2.0e-03   1.19     0.883     0.881
+  4.0e-03   2.38     0.991     0.991
+
+temperature noise (jitter in lam), g=1e-3:
+  sigma_T=0.0   P=0.719
+  sigma_T=0.05  P=0.719
+  sigma_T=0.2   P=0.713
+  (no-temperature-noise baseline 0.719)
+-- sim.py exit 0 (12s)
+== ocean.py
+Minimum concentration (M) for the weak force to pick the hand
+= max(size limit, time limit). Mixing only a fraction f of the ocean
+acts like a weaker bias g*sqrt(f): 1% mixed == 10x smaller g.
+
+autocatalysis rate k2 = 1e-06 /M/s
+  body                           g=1e-18   g=1e-17   g=1e-16  time limit
+  Small lake (1 km² × 10 m)      4.8e-01   2.2e-02   1.0e-03     3.2e-05
+  Enceladus ocean                1.2e-08   3.2e-09   3.2e-09     3.2e-09
+  Earth ocean                    3.2e-09   3.2e-09   3.2e-09     3.2e-09
+  Europa ocean                   3.2e-10   3.2e-10   3.2e-10     3.2e-10
+
+autocatalysis rate k2 = 0.001 /M/s
+  body                           g=1e-18   g=1e-17   g=1e-16  time limit
+  Small lake (1 km² × 10 m)      4.8e-02   2.2e-03   1.0e-04     3.2e-08
+  Enceladus ocean                1.2e-09   5.3e-11   3.2e-12     3.2e-12
+  Earth ocean                    8.6e-11   4.0e-12   3.2e-12     3.2e-12
+  Europa ocean                   2.2e-11   1.0e-12   3.2e-13     3.2e-13
+
+autocatalysis rate k2 = 1 /M/s
+  body                           g=1e-18   g=1e-17   g=1e-16  time limit
+  Small lake (1 km² × 10 m)      4.8e-03   2.2e-04   1.0e-05     3.2e-11
+  Enceladus ocean                1.2e-10   5.3e-12   2.5e-13     3.2e-15
+  Earth ocean                    8.6e-12   4.0e-13   1.8e-14     3.2e-15
+  Europa ocean                   2.2e-12   1.0e-13   4.7e-15     3.2e-16
+
+wrote threshold.png
+-- ocean.py exit 0 (0s)
+== domains.py
+A. domain size at freeze-out, no bias
+  gamma=0.01    D=1.0   domain=   40.8 cells   C=12.91
+  gamma=0.01    D=4.0   domain=   80.8 cells   C=12.78
+  gamma=0.01    D=16.0  domain=  170.2 cells   C=13.46
+  gamma=0.0025  D=1.0   domain=   54.4 cells   C=12.17
+  gamma=0.0025  D=4.0   domain=  111.1 cells   C=12.42
+  gamma=0.0025  D=16.0  domain=  235.3 cells   C=13.15
+  C = 12.81 (spread 3%)
+
+B. wall speed with bias
+  g=0.02 D=4.0: simulated 0.0825  predicted 0.0849
+  g=0.01 D=16.0: simulated 0.0850  predicted 0.0849
+
+C. local selection inside patches (D=4, gamma=0.01, eps=1e-4)
+  g=0.0001: fraction favoured 0.656  -> K=0.56
+  g=0.0002: fraction favoured 0.799  -> K=0.61
+  g=0.0003: fraction favoured 0.905  -> K=0.66
+  K = 0.61 (spread 7%)
+-- domains.py exit 0 (53s)
+== patches.py
+Enceladus: one-ocean window needs mixing D >= 3.2e-06 m^2/s (molecular 1e-09, modelled eddy 5e-05)
+   D=1e-09 c=1e-12 M: patch  1.71e+04 m  favoured nan  wall takeover 1e+27 yr
+   D=1e-09 c=1e-09 M: patch  3.03e+03 m  favoured 0.506  wall takeover 3e+25 yr
+   D=1e-09 c=1e-06 M: patch  5.40e+02 m  favoured 0.576  wall takeover 1e+24 yr
+   D=5e-05 c=1e-12 M: patch  3.81e+06 m  favoured nan  wall takeover 5e+24 yr
+   D=5e-05 c=1e-09 M: patch  6.78e+05 m  favoured 1.000  wall takeover 2e+23 yr
+   D=5e-05 c=1e-06 M: patch  1.21e+05 m  favoured 1.000  wall takeover 5e+21 yr
+Europa: one-ocean window needs mixing D >= 1.3e-05 m^2/s (molecular 1e-09, modelled eddy 5e-05)
+   D=1e-09 c=1e-12 M: patch  3.03e+04 m  favoured 0.502  wall takeover 7e+27 yr
+   D=1e-09 c=1e-09 M: patch  5.40e+03 m  favoured 0.524  wall takeover 2e+26 yr
+   D=1e-09 c=1e-06 M: patch  9.59e+02 m  favoured 0.789  wall takeover 7e+24 yr
+   D=5e-05 c=1e-12 M: patch  6.78e+06 m  favoured 0.977  wall takeover 3e+25 yr
+   D=5e-05 c=1e-09 M: patch  1.21e+06 m  favoured 1.000  wall takeover 1e+24 yr
+   D=5e-05 c=1e-06 M: patch  2.15e+05 m  favoured 1.000  wall takeover 3e+22 yr
+wrote patches.png
+-- patches.py exit 0 (1s)
+== scenarios.py
+P(weak force picks the hand), g = 1e-17 (1e-16 in brackets); '-' = never finishes
+
+setting                          conc.          k2=1e-6         k2=1e-3            k2=1
+Open ocean                       1e-07    1.000 (1.000)   1.000 (1.000)   1.000 (1.000)
+Open ocean                       1e-04    1.000 (1.000)   1.000 (1.000)   1.000 (1.000)
+Lake / lagoon (1 km² × 10 m)     1e-05                -   0.514 (0.635)   0.577 (0.974)
+Lake / lagoon (1 km² × 10 m)     1e-02    0.863 (1.000)   1.000 (1.000)   1.000 (1.000)
+Warm little pond (1 m × 1 m)     1e-06                -               -   0.500 (0.500)
+Warm little pond (1 m × 1 m)     1e-02    0.500 (0.501)   0.500 (0.504)   0.502 (0.524)
+Vent pore (1 mm³)                1e-04    0.500 (0.500)   0.500 (0.500)   0.500 (0.500)
+Vent pore (1 mm³)                1e+00    0.500 (0.500)   0.500 (0.500)   0.500 (0.500)
+
+wrote scenarios.png
+-- scenarios.py exit 0 (1s)
+== inherit.py
+check: inherited excess e0 (no bias) -> P(pool follows it)
+  e0=0.0    predicted 0.500  simulated 0.494
+  e0=0.01   predicted 0.632  simulated 0.636
+  e0=0.03   predicted 0.843  simulated 0.837
+  e0=0.06   predicted 0.978  simulated 0.973
+  e0=0.02 + bias g=5e-4: predicted 0.811  simulated 0.805
+
+inherited excess each pool needs to follow reliably (k2 = 1e-3 /M/s):
+  Warm little pond (1 m × 1 m)   e0 >= 6e-12
+  Vent pore (1 mm³)              e0 >= 1e-06
+  Lake / lagoon (1 km² × 10 m)   e0 >= 3e-14
+
+what sources can supply:
+  weak force alone (equilibrium, g/2)                     5e-18
+  meteorite isovaline (Murchison, Glavin & Dworkin 2009)  2e-01
+-- inherit.py exit 0 (2s)
+== dual.py
+1. how often the pair is matched (no bias)
+   kappa=0.0   matched 0.498
+   kappa=0.02  matched 0.777
+   kappa=0.05  matched 0.958
+   kappa=0.1   matched 0.999
+   kappa=0.3   matched 1.000
+
+2. which pair wins (kappa=0.3): biases add or cancel
+       g_a     g_s predicted simulated
+     1e-03   0e+00     0.663     0.669   (matched 1.000)
+     1e-03   1e-03     0.800     0.797   (matched 1.000)
+     1e-03  -1e-03     0.500     0.513   (matched 1.000)
+     2e-03  -1e-03     0.663     0.669   (matched 1.000)
+-- dual.py exit 0 (17s)
+== scorecard.py
+Spec: minimum rate and sensitivity per setting
+  Warm little pond   k2 >= 3e-07 /M/s    follows inherited excess >= 6e-12
+  Lake / lagoon      k2 >= 3e-07 /M/s    follows inherited excess >= 3e-14
+  Open ocean         k2 >= 3e-09 /M/s    follows inherited excess >= 3e-18
+
+candidate                                  R1 R2 R3 R4 R5 R6 R7  score
+Soai reaction (1995; 2003)                 Y  P  P  N  Y  Y  N   4.0/7
+Viedma ripening, NaClO3 (2005)             Y  P  Y  P  Y  Y  N   5.0/7
+Attrition deracemization, aa deriv (2008)  Y  Y  Y  P  Y  Y  P   6.0/7
+Ghadiri peptide replicator (2001)          Y  Y  P  N  Y  Y  Y   5.5/7
+Joyce RNA cross-inhibition (1984)          N  Y  P  Y  ?  N  Y   3.5/7
+Blackmond eutectic (2006)                  N  N  N  P  Y  P  Y   3.0/7
+Magnetite crystallization (2023)           N  N  P  Y  Y  Y  Y   4.5/7
+-- scorecard.py exit 0 (0s)
+== design.py
+smallest detectable k2 (/M/s), seed ee 5%, measurement noise 0.2%
+   conc.    1 month   6 months     1 year    3 years
+  0.01 M      6e-06      1e-06      5e-07      2e-07
+   0.1 M      6e-07      1e-07      5e-08      2e-08
+   1.0 M      6e-08      1e-08      5e-09      2e-09
+nature's floor: pond floor 3e-07, ocean floor 3e-09
+wrote design.png
+-- design.py exit 0 (1s)
+== uncertainty.py
+
+Enceladus: physics wins in 18% of plausible input space
+  each condition alone: finishes 83%, heals 25%, strong enough 73%
+  mixing D        low half    0%  high half   36%   (effect +36%)
+  time            low half   10%  high half   27%   (effect +17%)
+  concentration   low half   11%  high half   25%   (effect +14%)
+  bias g          low half   16%  high half   21%   (effect +5%)
+  rate k2         low half   16%  high half   20%   (effect +4%)
+  chem. factor F  low half   18%  high half   19%   (effect +1%)
+  volume          low half   18%  high half   18%   (effect +0%)
+
+Europa: physics wins in 18% of plausible input space
+  each condition alone: finishes 92%, heals 21%, strong enough 91%
+  mixing D        low half    0%  high half   37%   (effect +37%)
+  time            low half   13%  high half   24%   (effect +11%)
+  concentration   low half   16%  high half   21%   (effect +5%)
+  rate k2         low half   17%  high half   20%   (effect +3%)
+  bias g          low half   17%  high half   19%   (effect +2%)
+  chem. factor F  low half   18%  high half   19%   (effect +0%)
+  volume          low half   18%  high half   18%   (effect -0%)
+
+Early Earth ocean: physics wins in 100% of plausible input space
+  each condition alone: finishes 100%, heals 100%, strong enough 100%
+  bias g          low half  100%  high half  100%   (effect +0%)
+  rate k2         low half  100%  high half  100%   (effect +0%)
+  concentration   low half  100%  high half  100%   (effect +0%)
+  mixing D        low half  100%  high half  100%   (effect +0%)
+  time            low half  100%  high half  100%   (effect +0%)
+  volume          low half  100%  high half  100%   (effect +0%)
+  chem. factor F  low half  100%  high half  100%   (effect +0%)
+-- uncertainty.py exit 0 (0s)
+== domains3d.py
+D=1.0   gamma=0.1    domain=  16.0 cells  l/(sqrt(D)*gamma^-1/4)=8.98
+D=1.0   gamma=0.025  domain=  38.0 cells  l/(sqrt(D)*gamma^-1/4)=15.11
+D=2.25  gamma=0.1    domain=  19.6 cells  l/(sqrt(D)*gamma^-1/4)=7.34
+D=2.25  gamma=0.025  domain=  59.7 cells  l/(sqrt(D)*gamma^-1/4)=15.83
+-- domains3d.py exit 0 (4593s)
+== coarsen3d.py
+D3. patch growth, f = 0.5
+  D=1.0: t=10:l=18.5  t=20:l=24.6  t=40:l=33.1  t=80:l=47.6  exponent 0.45  A=5.48
+  D=2.25: t=10:l=27.5  t=20:l=36.7  t=40:l=52.6  t=80:l=74.8  exponent 0.49  A=5.60
+
+E3. pre-formed patches (~4 cells): does the majority take over? (n=128)
+  f=0.5: t=1: favoured 0.500  t=50: favoured 0.496  t=200: favoured 0.498  t=400: favoured 0.474
+  f=0.52: t=1: favoured 0.521  t=50: favoured 0.566  t=200: favoured 0.621  t=400: favoured 0.652
+  f=0.55: t=1: favoured 0.553  t=50: favoured 0.663  t=200: favoured 0.808  t=400: favoured 0.930
+-- coarsen3d.py exit 0 (10552s)
+== k3.py
+patch size at lam=0.3: 2.5 cells
+  g=5e-05: favoured 0.552 -> K3=3.693
+  g=1e-04: favoured 0.602 -> K3=3.632
+  g=2e-04: favoured 0.697 -> K3=3.602
+K3 = 3.642 (spread 1%)
+-- k3.py exit 0 (75s)
+== frank.py
+      g   Omega   tau  predicted simulated
+  0.000   1e+04   800      0.500     0.485   (x at crossing 0.0276)
+  0.003   1e+04   200      0.628     0.680   (x at crossing 0.0179)
+  0.003   1e+04   800      0.737     0.733   (x at crossing 0.0280)
+  0.003   1e+04  3200      0.858     0.854   (x at crossing 0.0335)
+  0.006   1e+04  3200      0.999     0.974   (x at crossing 0.0401)
+  0.002   4e+04  3200      0.909     0.898   (x at crossing 0.0318)
+fast sweep (tau=200) is outside the slow limit: real chemistry selects MORE than predicted,
+so the ocean model is conservative there. Nature's sweeps are far slower.
+
+conversion factor vs the simple mapping in ocean.py: F = sqrt(x/(k0+2x)) = 0.70
+-> required concentrations rise by F^(-4/3) = 1.60x
+-- frank.py exit 0 (142s)
+== frank2.py
+      g   Omega   tau  predicted simulated   F
+  0.000   1e+04  1600      0.500     0.493   nan
+  0.002   1e+04  1600      0.802     0.785   0.71
+  0.004   1e+04  1600      0.967     0.952   0.71
+  0.002   4e+04  1600      0.951     0.948   0.71
+
+F = 0.71 (scheme 1 in frank.py: 0.70) -> concentrations x1.6
+-- frank2.py exit 0 (1452s)
+== shell3d.py
+(machine rebooted during the run above; shell3d.py re-run separately 2026-09-23 16:03 by the routine)
+f=0.5: t=25:l=30  t=50:l=37  t=100:l=47  t=200:l=68  t=400:l=91   exponent (l > depth) 0.41
+
+majority test: 512 x 512 x 8, 4 seeds each, favoured fraction at t=1 -> t=200 (mean +- sd)
+  f=0.5: 0.500 -> 0.498 +- 0.014   (change -0.002)
+  f=0.52: 0.520 -> 0.561 +- 0.014   (change +0.041)
+  f=0.55: 0.551 -> 0.654 +- 0.005   (change +0.103)
+-- shell3d.py exit 0 (929s)
+== slow set 6/6 exit 0; fast set 10/10 exit 0
