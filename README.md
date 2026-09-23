@@ -425,7 +425,13 @@ star system could do that.
   in the lab but isn't prebiotic. The rate k2 is a swept assumption.
 - PVED has never been measured, and its sign for amino acids in water is unsettled
   (the "conformation problem", 2009).
-- Enceladus ocean volume is derived from shell and core geometry, and its age is debated (1 Myr–1 Gyr).
+- Enceladus ocean volume (2.7×10¹⁶ m³, used throughout Parts 1–3 and 8) is derived from shell and core
+  geometry, not measured directly. DOCUMENTED: Čadek et al. 2016 (*Geophysical Research Letters* 43,
+  DOI: 10.1002/2016GL068634) give an ice shell 18–22 km thick on average and a core radius 180–185 km from
+  Cassini gravity/shape/libration data; subtracting those from Enceladus's known ~252 km shape radius and
+  taking the spherical-shell volume over the ends of those ranges gives 2.45–2.93×10¹⁶ m³, which brackets
+  the 2.7×10¹⁶ m³ figure used here (MEASURED; `ocean.py` checks this with an assert). The ocean's age is
+  separately debated (1 Myr–1 Gyr).
 
 ## How this was made (AI-use disclosure)
 Built in conversation with an AI assistant (Claude). The student chose the questions and direction.

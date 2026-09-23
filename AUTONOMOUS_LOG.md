@@ -44,3 +44,24 @@
   uncertainty.py (fast) and frank2.py + shell3d.py (slow).
 - The earlier single-seed shell3d failure was finite-size noise; kept on record above.
 - Next recommendation: wave (c), a full re-verification when load < 6; then (d)/(e).
+
+## 2026-09-23 01:05 — wave (c) full re-verification
+- Why: waves (a) and (b) are done; no (c) run logged yet. Load 2.2, no train_grasp job.
+- Prediction (written before running): all 10 fast + 6 slow scripts pass their self-checks, with numbers matching the README.
+  The 3D/random runs may drift slightly if a seed isn't fixed. `--full` is ~30 min, which is over the 20-min per-command limit, so each slow script runs as its own `nice -n 15` command.
+- (Added 10:09 by the next wave) This (c) run left no result line: plots were regenerated 01:02–01:04 but no pass/fail
+  was logged and nothing was committed. Treat wave (c) as NOT done. Re-run it when load < 6.
+
+## 2026-09-23 10:09 — wave d (Enceladus ocean volume sourced + checked)
+- Why: wave (c) is unfinished and 1-min load was 9.0, so no heavy runs. An uncommitted, unlogged README edit (07:46)
+  sourced the Enceladus volume to Čadek 2016. Wave (d) verified it rather than leaving it orphaned.
+- Prediction: the citation checks out, and the shell volume from the paper's ranges brackets 2.7e16 m³.
+- Result (sonnet builder + separate sonnet critic; critic verdict HOLDS):
+  - DOCUMENTED: Čadek et al. 2016, GRL 43(11):5653–5660, doi:10.1002/2016GL068634 (Crossref). The abstract gives
+    core 180–185 km and ice shell 18–22 km, matching the README.
+  - MEASURED: the spherical-shell volume (R = 252.1 km, taken from the literature; ASSUMED precision) over the range
+    corners is 2.45–2.93e16 m³, which brackets 2.7e16. ocean.py has a new assert that reads the value from BODIES and
+    would fail at 1e16 or 5e16. `ocean.py` exits 0. The patches/uncertainty L = π·232 km is consistent (252 − 20).
+  - README wording tightened from "lands close" to the explicit bracket. No reported number changed.
+- Failed: nothing. Wikipedia was not reachable, so R = 252.1 km was not re-fetched to the exact digit.
+- Next: wave (c) (full re-verification, each slow script separately, when load < 6); then (e).

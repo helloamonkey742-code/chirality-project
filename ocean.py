@@ -56,6 +56,18 @@ def main():
     c = c_size(1e-17, 1e-3, V, tau)
     assert abs(delta_at(c, 1e-17, 1e-3, V, tau) - DELTA_TARGET) < 1e-9
 
+    # self-check: Enceladus ocean volume matches Cadek et al. 2016 shell/core geometry
+    # (R=252.1 km, shell 18-22 km, core 180-185 km -- see README)
+    R = 252.1e3
+    shell_lo, shell_hi = 18e3, 22e3
+    core_lo, core_hi = 180e3, 185e3
+    vols = [
+        4 / 3 * np.pi * ((R - shell) ** 3 - core ** 3)
+        for shell in (shell_lo, shell_hi)
+        for core in (core_lo, core_hi)
+    ]
+    assert min(vols) <= BODIES["Enceladus ocean"][0] <= max(vols)
+
     print("Minimum concentration (M) for the weak force to pick the hand")
     print("= max(size limit, time limit). Mixing only a fraction f of the ocean")
     print("acts like a weaker bias g*sqrt(f): 1% mixed == 10x smaller g.\n")
