@@ -9,3 +9,10 @@
 - In flight at hand-off: uncertainty.py (ran: Earth 100%, Enceladus/Europa 18%, mixing dominant),
   frank2.py and shell3d.py (logs may or may not be complete). → wave (a).
 - Next recommendation: wave (a).
+
+## 2026-09-23 — interactive session note (not an autonomous wave)
+- Wave (a) is being done by the interactive session. **Do not start wave (a).** If README still has no Part 8 when
+  you read this, AND `shell3d.log` ends in `exit 0` or `exit 1`, AND the interactive session has not
+  committed, then take it over.
+- MEASURED: frank2.py passed (F = 0.71, same as scheme 1). The first shell3d run (256² × 8, one seed) FAILED its
+  majority assert (0.52 → 0.44). It's being re-run at 512² × 8 with 4 seeds + a 50/50 control, because 256 held only ~8 patches.

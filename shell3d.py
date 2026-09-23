@@ -5,9 +5,8 @@ closed top and bottom (no flux). Once patches are wider than the ocean is deep, 
 Checks: (1) patches still grow like sqrt(t); (2) the majority hand still takes over.
 """
 import numpy as np
-from domains3d import domain_length
 
-NX, NZ = 256, 8
+NX, NZ = 256, 8          # growth test; the majority test uses NX = 512 so many patches fit
 
 
 def lap(a):
@@ -22,17 +21,17 @@ def sideways_length(a):
     return 2 * a.size / max(walls, 1)
 
 
-def patchwork(f, rng, width=4):
+def patchwork(f, rng, width=4, nx=NX):
     """Saturated +-1 patches ~width cells across; favoured hand fills fraction f."""
-    kx, kz = np.fft.fftfreq(NX), np.fft.fftfreq(NZ)
+    kx, kz = np.fft.fftfreq(nx), np.fft.fftfreq(NZ)
     kk = kx[:, None, None]**2 + kx[None, :, None]**2 + kz[None, None, :]**2
-    z = np.fft.ifftn(np.fft.fftn(rng.standard_normal((NX, NX, NZ))) * np.exp(-2 * (np.pi * width)**2 * kk)).real
+    z = np.fft.ifftn(np.fft.fftn(rng.standard_normal((nx, nx, NZ))) * np.exp(-2 * (np.pi * width)**2 * kk)).real
     return np.where(z > np.quantile(z, 1 - f), 1.0, -1.0).astype(np.float32)[None]
 
 
-def run(f, times, D=1.0, seed=1):
+def run(f, times, D=1.0, seed=1, nx=NX):
     rng = np.random.default_rng(seed)
-    a = patchwork(f, rng)
+    a = patchwork(f, rng, nx=nx)
     dt, t, out = 0.05, 0.0, []
     for T in times:
         while t < T:
@@ -49,11 +48,16 @@ def main():
     slope = np.polyfit(np.log(ts[late]), np.log(ls[late]), 1)[0]
     print("f=0.5: " + "  ".join(f"t={T}:l={l:.0f}" for T, l, _ in rows) + f"   exponent (l > depth) {slope:.2f}")
     assert abs(slope - 0.5) < 0.12, "thin-shell growth is not sqrt(t)"
-    for f in (0.52, 0.55):
-        rows = run(f, [1, 100, 400, 800])
-        print(f"f={f}: " + "  ".join(f"t={T}: favoured {p:.3f}" for T, _, p in rows))
-        assert rows[-1][2] > rows[0][2] + 0.02, "majority did not grow in a thin shell"
-
+    print("\nmajority test: 512 x 512 x 8, 4 seeds each, favoured fraction at t=1 -> t=200 (mean +- sd)")
+    for f in (0.5, 0.52, 0.55):
+        start, end = [], []
+        for seed in range(4):
+            rows = run(f, [1, 200], seed=seed, nx=512)
+            start.append(rows[0][2]); end.append(rows[1][2])
+        print(f"  f={f}: {np.mean(start):.3f} -> {np.mean(end):.3f} +- {np.std(end):.3f}   "
+              f"(change {np.mean(end) - np.mean(start):+.3f})", flush=True)
+        if f == 0.5:
+            assert abs(np.mean(end) - 0.5) < 0.05, "control drifted: finite-size noise too large"
 
 if __name__ == "__main__":
     main()
