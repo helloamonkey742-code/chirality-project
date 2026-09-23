@@ -70,3 +70,8 @@
 - Load 2.5, no train_grasp job. Each script runs separately under `nice -n 15`, one at a time → verify.log.
 - Prediction (written before running): all 10 fast + 6 slow scripts exit 0. Seeded numbers match the README exactly;
   frank*/3D numbers match the README tables to the printed digit (all seeds fixed).
+- (12:03, in progress) The fast set passed 10/10 (sim, ocean, domains, patches, scenarios, inherit, dual, scorecard,
+  design, uncertainty; all exit 0). The slow set is still running in the interactive session. **Do not start wave (c).**
+  Observed: under `nice -n 15`, domains3d.py alone has run 76 min (vs ~10 min un-niced earlier). macOS puts
+  low-priority jobs on efficiency cores. So no single 3D script fits the routine's 20-min limit under nice:
+  routine waves must skip the 3D scripts (domains3d, coarsen3d, k3, shell3d) and frank*.py.
