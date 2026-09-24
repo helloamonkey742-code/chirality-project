@@ -141,3 +141,6 @@
   - No README number changed. No scripts touched, so run_all was not needed.
 - Failed / caveat: the critic did not check every reference entry exhaustively (spot-checked). Word count is above the 2,500 target.
 - Next: waves a–f are all done. The next routine run should log "IDLE: nothing worth doing" unless README changes (e.g. wet-lab results arrive).
+- PUSH FAILED (23:50): `git push origin main` → "remote: Repository not found." gh's active account is helloamonkey742-code, but the repo belongs to
+  saptarshighosh10-oss (private), so the likely cause is the wrong account (ASSUMED). I did not switch accounts or change credentials. Local main is ahead of origin by 3.
+  The student needs to run `gh auth switch` (or log in as the owner) and then `git push origin main`.
