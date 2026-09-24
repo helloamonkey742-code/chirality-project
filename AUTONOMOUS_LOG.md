@@ -123,3 +123,21 @@
   NOTE: an unrelated commit 8b5e85b (19:13, generic message, "Fable" co-author) captured this wave's half-finished k3.py/k3_seeds.log/log edits mid-run.
   It was not made by this routine. Left as is (no history rewrite).
 - Next: wave (f), the PAPER_DRAFT.md skeleton built only from verified README content.
+
+## 2026-09-23 23:25 — wave f (PAPER_DRAFT.md skeleton; routine; prediction written before drafting)
+- Orient: load 2.35, no train_grasp job. Waves a–e are done; (f) is the first open wave. Doc-only wave, no simulations.
+- Prediction: a sonnet builder can draft the paper from README alone; a separate sonnet critic plus a mechanical
+  number-by-number cross-check will find at least one number or claim that drifted from README (to be fixed before commit).
+- Result (sonnet builder + separate sonnet critic; critic verdict NEEDS-FIXES → all 7 fixed). Prediction held: drift was found.
+  - DOCUMENTED: PAPER_DRAFT.md (~3,150 words) has an abstract, methods, results (Parts 1–8), limitations, the planned experiment, reproducibility, and references.
+    It is labelled DRAFT and not submitted; every number is meant to trace to README.md or EXPERIMENT.md.
+  - MEASURED (mechanical check): all 208 numeric strings in the draft occur in README/EXPERIMENT. The only apparent misses were section numbers and DOI-fragment regex artefacts,
+    each confirmed by hand. The check cannot see numbers written as words, so every number-word was also checked by hand.
+  - Critic found (and I confirmed at the cited README lines) the following. All were fixed in the draft; README and EXPERIMENT were not touched:
+    "nine orders of magnitude" for mixing → seven (10⁻¹⁰–10⁻³; README Part 8 says 7); frank2.py mislabelled Part 7 → Part 8;
+    Brandenburg & Multamäki called a "founding paper" → closest prior spatial work; the Faglioni "not the natural helix ≠ mirror push" caveat was dropped → restored;
+    Europa 79% was missing "at 1 µM"; the 1 M arm was missing "where solubility allows"; the negative controls listed 2 of 3 → all 3.
+    I also reworded one paraphrase I found myself ("time limits only if k2 ≲ 1e-6" → README's actual statement at k2 = 1e-6, ~3 nM Enceladus).
+  - No README number changed. No scripts touched, so run_all was not needed.
+- Failed / caveat: the critic did not check every reference entry exhaustively (spot-checked). Word count is above the 2,500 target.
+- Next: waves a–f are all done. The next routine run should log "IDLE: nothing worth doing" unless README changes (e.g. wet-lab results arrive).
