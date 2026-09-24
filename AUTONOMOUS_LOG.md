@@ -106,3 +106,7 @@
     values and a dated correction line. The conclusion is unchanged.
 - Failed / caveat: the 31% spread comes from one seed with 2 runs per case, so the 6-point margin over 25% is thin evidence (critic).
 - Next: wave (e), a 3D replication with a different seed. k3.py takes 75 s, so it fits the time limit; a k3 seed sweep is the natural choice.
+
+## 2026-09-23 19:05 — wave e (k3.py seed replication; routine; prediction written before running)
+- Orient: load 3.8 (1-min), no train_grasp job at start. Waves a–d are done; (e) is the first open wave. k3.py was chosen because it is the only 3D script that fits the 20-min limit under nice.
+- Prediction: with 3 new seed pairs, each run still passes its own <30% within-run assert. K3 across seeds stays within ±20% of the logged 3.642. The 1% within-run spread was partly luck; expect 5–15% on new seeds.
