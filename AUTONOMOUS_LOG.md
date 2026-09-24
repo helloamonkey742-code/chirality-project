@@ -144,3 +144,7 @@
 - PUSH FAILED (23:50): `git push origin main` → "remote: Repository not found." gh's active account is helloamonkey742-code, but the repo belongs to
   saptarshighosh10-oss (private), so the likely cause is the wrong account (ASSUMED). I did not switch accounts or change credentials. Local main is ahead of origin by 3.
   The student needs to run `gh auth switch` (or log in as the owner) and then `git push origin main`.
+
+## 2026-09-24 08:30 — IDLE: nothing worth doing
+- Waves a–f are all done. Wave c ran last at 2026-09-23 16:18, less than 48 h ago. The tree was clean and load was 2.85. No builder or critic was spawned.
+- The push retry failed again with "Repository not found" (same gh-account cause as 2026-09-23 23:50, ASSUMED). Local main is 3 commits ahead of origin (4 after this entry). The student needs to run `gh auth switch` and then `git push origin main`.
