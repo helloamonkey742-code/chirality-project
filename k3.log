@@ -3,4 +3,5 @@ patch size at lam=0.3: 2.5 cells
   g=1e-04: favoured 0.602 -> K3=3.632
   g=2e-04: favoured 0.697 -> K3=3.602
 K3 = 3.642 (spread 1%)
+effective decision volume K3*l^3 = 60.2 cells (l = 2.548)
 exit 0

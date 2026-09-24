@@ -26,6 +26,8 @@ def main(seed_l=5, seed_g=1):
         print(f"  g={g:.0e}: favoured {p:.3f} -> K3={K:.3f}", flush=True)
     K3 = float(np.mean(Ks))
     print(f"K3 = {K3:.3f} (spread {np.std(Ks) / K3:.0%})")
+    # l is printed to 1 decimal; K3*l^3 must use the unrounded l
+    print(f"effective decision volume K3*l^3 = {K3 * l**3:.1f} cells (l = {l:.3f})")
     assert np.std(Ks) / K3 < 0.3, "3D patch selection not described by N_eff = K3*l^3"
     return l, Ks, K3
 

@@ -4,3 +4,15 @@ patch size at lam=0.3: 2.5 cells
   g=2e-04: favoured 0.698 -> K3=3.627
 K3 = 3.698 (spread 2%)
 seeds 11 12: exit 0, 178s
+patch size at lam=0.3: 2.5 cells
+  g=5e-05: favoured 0.550 -> K3=3.395
+  g=1e-04: favoured 0.600 -> K3=3.502
+  g=2e-04: favoured 0.696 -> K3=3.548
+K3 = 3.481 (spread 2%)
+seeds 21 22: exit 0, 159s
+patch size at lam=0.3: 2.5 cells
+  g=5e-05: favoured 0.552 -> K3=3.701
+  g=1e-04: favoured 0.602 -> K3=3.640
+  g=2e-04: favoured 0.698 -> K3=3.615
+K3 = 3.652 (spread 1%)
+seeds 31 32: exit 0, 169s

@@ -110,3 +110,16 @@
 ## 2026-09-23 19:05 — wave e (k3.py seed replication; routine; prediction written before running)
 - Orient: load 3.8 (1-min), no train_grasp job at start. Waves a–d are done; (e) is the first open wave. k3.py was chosen because it is the only 3D script that fits the 20-min limit under nice.
 - Prediction: with 3 new seed pairs, each run still passes its own <30% within-run assert. K3 across seeds stays within ±20% of the logged 3.642. The 1% within-run spread was partly luck; expect 5–15% on new seeds.
+- Result (sonnet builder + separate sonnet critic). Prediction partly held: the spread came out even smaller than predicted.
+  - MEASURED: k3.py now takes optional seeds (`python k3.py 11 12`). With no arguments it reproduces k3.log digit for digit (critic re-ran it).
+    New seeds 11/12, 21/22, 31/32 give K3 = 3.698, 3.481, 3.652, each exit 0 in 159–178 s under nice. Across all four runs:
+    mean 3.618, spread (std/mean) 2.3%, range 3.481–3.698. Within-run spreads are 1–2%.
+  - Critic HOLDS on reproduction and on the stats. Two real points: (1) the three g values in one run reuse the same noise (domains3d.py:9 re-seeds each call),
+    so the within-run 1% is partly built in, and the cross-seed 2.3% is the fair figure; (2) "≈57 cells" came from rounded l.
+  - CORRECTION (README Part 3): effective decision volume "≈ 57 cells" → 60.2 cells (MEASURED). The old value multiplied K3 by 2.5³, but the unrounded l = 2.548.
+    k3.py now prints K3·l³ from unrounded l. Across seeds, the volume reconstructed from printed fractions is 57–61. The factor-of-1.5 conclusion is unchanged.
+  - Critic's claim that 57 carries "±6% rounding uncertainty" was wrong in form: K3·l³ doesn't depend on l at all (K3 ∝ 1/l³). It was simply computed from the rounded l.
+- Failed / caveat: no cross-seed assert was added. It would need 4 runs (~11 min under nice) inside one script, too slow for run_all. The evidence is k3_seeds.log.
+  NOTE: an unrelated commit 8b5e85b (19:13, generic message, "Fable" co-author) captured this wave's half-finished k3.py/k3_seeds.log/log edits mid-run.
+  It was not made by this routine. Left as is (no history rewrite).
+- Next: wave (f), the PAPER_DRAFT.md skeleton built only from verified README content.

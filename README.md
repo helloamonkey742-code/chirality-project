@@ -166,9 +166,16 @@ assumes the chemistry stays switched on the whole time.
 
 **3D per-patch check (`k3.py`):** stopping just after the transition, the favoured fraction in 3D follows
 the same formula with a constant that is consistent to 1% across three bias strengths (effective
-decision volume ≈ 57 cells at D = 1, γ = 0.1). Combined with majority takeover, the ocean-wide outcome
+decision volume ≈ 60 cells at D = 1, γ = 0.1). Combined with majority takeover, the ocean-wide outcome
 follows the Part 1 whole-ocean formula to within a factor of ~1.5. (The patch size measured that early,
 2.5 cells, is noise-dominated. Only the combined effective volume is meaningful.)
+*(Correction 2026-09-23: this said "≈ 57 cells". That number multiplied K3 by the rounded patch size 2.5³;
+the unrounded size is 2.548, and `k3.py` now prints the volume directly: 60.2 cells, MEASURED. The factor-of-1.5
+conclusion is unchanged.)*
+**Seed replication (`k3_seeds.log`, MEASURED 2026-09-23):** three more random seeds give K3 = 3.698, 3.481, 3.652
+(original 3.642). Across all four the spread is 2.3%, and the effective volume from each run's favoured fractions is
+57–61 cells. The within-run "1%" is partly built in, because the three bias strengths in one run reuse the same
+random noise. The spread between seeds (2.3%) is the fairer measure, and it is still small.
 
 ### Earth check
 Early Earth ocean (1.33×10¹⁸ m³, mean depth 3.7 km), with 10⁷–5×10⁸ yr before life:
