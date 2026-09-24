@@ -148,3 +148,7 @@
 ## 2026-09-24 08:30 — IDLE: nothing worth doing
 - Waves a–f are all done. Wave c ran last at 2026-09-23 16:18, less than 48 h ago. The tree was clean and load was 2.85. No builder or critic was spawned.
 - The push retry failed again with "Repository not found" (same gh-account cause as 2026-09-23 23:50, ASSUMED). Local main is 3 commits ahead of origin (4 after this entry). The student needs to run `gh auth switch` and then `git push origin main`.
+
+## 2026-09-24 13:45 — IDLE: nothing worth doing
+- Waves a–f are all done. Wave c ran last at 2026-09-23 16:18, less than 48 h ago. The tree was clean and load was 2.52. No builder or critic was spawned.
+- The push retry failed again, this time with "Recv failure: Connection reset by peer" (network). `gh auth status` also reports "Failed to log in" for both keyring accounts (helloamonkey742-code active, saptarshighosh10-oss inactive), so the account issue from 2026-09-23 is probably still there (ASSUMED). Local main is 4 commits ahead of origin (5 after this entry). The student needs to re-authenticate as saptarshighosh10-oss (`gh auth login`, then `gh auth switch`) and run `git push origin main`.
