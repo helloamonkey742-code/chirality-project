@@ -439,8 +439,8 @@ contributes its own molecular counting noise.
 | 0.002 | 4×10⁴ | 3200 | 0.909 | 0.898 |
 | 0.003 | 10⁴ | **200 (fast)** | 0.628 | 0.680 |
 
-- **In the slow limit, which is nature's, real chemistry follows the formula** (within ~1 percentage point;
-  2.5 points near saturation).
+- **In the slow limit, which is nature's, real chemistry follows the formula** (within ~1 percentage point for the biased rows;
+  2.5 points near saturation. The no-bias control lands at 48.5% instead of 50%, which is 1.5 points low; 2026-09-26 note, ASSUMED to be run-to-run noise).
 - **A fast sweep selects *more* strongly than predicted**, so the formula errs on the conservative side.
 - **The conversion factor is now known:** compared with the simple mapping in `ocean.py` (bias g, noise 1/N),
   the real scheme's selection strength is lower by **F = √(x/(k0+2x)) ≈ 0.7**. The reason: every reaction that

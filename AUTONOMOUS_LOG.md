@@ -262,3 +262,12 @@
 
 ## 2026-09-25 23:25 — IDLE: nothing worth doing
 - Waves a–g done (g 18:30, d finish 23:10). The only open item is the optional full 3D spherical-shell layer test. It is heavy and not a listed wave, so it was skipped. The load was 5.5 (15-min average 12). The wet lab remains. OUTREACH_EMAILS.md (the student's file) still says 18%.
+
+## 2026-09-26 13:25 — wave c (full re-verification; routine)
+- **Why:** last full run was 2026-09-23 16:10 (>48 h); uncertainty.py, aniso3d.py and README Parts 3/3b/8 changed since. Load 3.0, no train_grasp, gate ok (42% free).
+- **Prediction (written before running):** fast set 10/10 pass and uncertainty.py matches uncertainty.log; slow scripts coarsen3d, k3, frank, frank2, shell3d, aniso3d exit 0 and match their logs (seeded). domains3d (76 min under nice) exceeds the 20-min limit and is skipped.
+- **Result (MEASURED):** fast set 10/10 pass (180 s); uncertainty.py output is identical to uncertainty.log. Slow set under nice: k3 (172 s), frank (277 s), frank2 (216 s), coarsen3d (740 s), aniso3d (316 s) all exit 0 with numbers identical to their logs. aniso3d is the first full run that includes wall_check, and aniso3d.log is replaced with that clean output. shell3d was killed at the 19-min limit (exit 142) after its exponent (0.41) and 50% control (0.498 ± 0.014), both identical; its 52%/55% rows rest on the 2026-09-23 run (929 s then; slower today).
+- **Skipped:** domains3d (76 min, over the limit). A first slow pass was skipped because my own fast run pushed the 1-min load to 9. It ran after a back-off.
+- **Critic (opus55-low):** HOLDS, with no mismatches in any README number tied to these scripts. Fixed: the README's "within ~1 point" for frank now notes that the no-bias control lands 1.5 points low (48.5% vs 50%). No number changed. Not fixed (minor): Part 3b's "3–5 layers" is read from the wall areas, not printed directly.
+- **Prediction check:** right for 9 of 10 scripts tested in full. shell3d did not finish within the limit, so it is only partly verified.
+- **Next:** waves a–g done and wave c re-verified. Next routine should log IDLE unless the machine is idle enough for a shell3d rerun (~16–19 min under nice).

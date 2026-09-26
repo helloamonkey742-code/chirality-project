@@ -1,4 +1,7 @@
 circle check: r^2 = 1714 after t=1000, curvature law predicts 1600 (+7.1%)
+wall check D_h=4, D_z=1: flattening rate 0.00967; D_h*k^2 = 0.00964, D_z*k^2 = 0.00241
+wall check D_h=1, D_z=4: flattening rate 0.00239; D_h*k^2 = 0.00241, D_z*k^2 = 0.00964
+wall check D_h=1, D_z=1: flattening rate 0.00187; D_h*k^2 = 0.00241, D_z*k^2 = 0.00241
 slab   H'=  8 start 0.50: favoured at t=1000 1.00 0.53 0.50 1.00 | one hand 2/4, stacked layers 0/4 (frozen t=500->1000: 0/4), favoured on top 3/4
         seed 0: t=50:0.79 side=528 up=0  t=200:1.00 side=0 up=0 L  t=500:1.00 side=0 up=0 L  t=1000:1.00 side=0 up=0 L
         seed 1: t=50:0.53 side=576 up=0  t=200:0.53 side=512 up=0  t=500:0.53 side=512 up=0  t=1000:0.53 side=512 up=0
@@ -29,11 +32,5 @@ column H'=128 start 0.55: favoured at t=1000 1.00 0.66 0.70 0.77 | one hand 1/4,
         seed 1: t=50:0.67 side=4428 up=4009  t=200:0.66 side=0 up=4096 L  t=500:0.66 side=0 up=4096 L  t=1000:0.66 side=0 up=4096 L
         seed 2: t=50:0.66 side=4722 up=3713  t=200:0.70 side=0 up=3072 L  t=500:0.70 side=0 up=3072 L  t=1000:0.70 side=0 up=3072 L
         seed 3: t=50:0.65 side=6850 up=3391  t=200:0.77 side=628 up=2048  t=500:0.77 side=0 up=2048 L  t=1000:0.77 side=0 up=2048 L
-nice -n 15 /opt/anaconda3/bin/python aniso3d.py  201.17s user 19.39s system 94% cpu 3:52.17 total
 exit 0
---- 2026-09-25 18:25: the 3D runs above came from aniso3d.py before wall_check was added (3D code unchanged since).
---- wall_check lines below: a separate light run (load was ~10, so the full 3D rerun was skipped).
-wall check D_h=4, D_z=1: flattening rate 0.00967; D_h*k^2 = 0.00964, D_z*k^2 = 0.00241
-wall check D_h=1, D_z=4: flattening rate 0.00239; D_h*k^2 = 0.00241, D_z*k^2 = 0.00964
-wall check D_h=1, D_z=1: flattening rate 0.00187; D_h*k^2 = 0.00241, D_z*k^2 = 0.00241
-exit 0
+--- 2026-09-26: first full run with wall_check included (wave c); 3D numbers identical to the 2026-09-25 run.
