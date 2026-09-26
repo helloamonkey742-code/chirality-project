@@ -259,3 +259,6 @@
 - **Mutation test:** changing each README value (Earth 0.40→0.30, Enceladus 0.96→0.80, g upper 0.23→0.19) makes the script fail. Fast suite: 10/10 pass.
 - **Next:** the computational side is at a natural stop. The optional full 3D spherical-shell layer test would measure the two remaining ASSUMED steps
   (top-layer share, band instability), but it is heavy. The wet lab is the remaining real step. OUTREACH_EMAILS.md still says 18%.
+
+## 2026-09-25 23:25 — IDLE: nothing worth doing
+- Waves a–g done (g 18:30, d finish 23:10). The only open item is the optional full 3D spherical-shell layer test. It is heavy and not a listed wave, so it was skipped. The load was 5.5 (15-min average 12). The wet lab remains. OUTREACH_EMAILS.md (the student's file) still says 18%.
