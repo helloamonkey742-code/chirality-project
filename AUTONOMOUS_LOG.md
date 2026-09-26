@@ -271,3 +271,4 @@
 - **Critic (opus55-low):** HOLDS, with no mismatches in any README number tied to these scripts. Fixed: the README's "within ~1 point" for frank now notes that the no-bias control lands 1.5 points low (48.5% vs 50%). No number changed. Not fixed (minor): Part 3b's "3–5 layers" is read from the wall areas, not printed directly.
 - **Prediction check:** right for 9 of 10 scripts tested in full. shell3d did not finish within the limit, so it is only partly verified.
 - **Next:** waves a–g done and wave c re-verified. Next routine should log IDLE unless the machine is idle enough for a shell3d rerun (~16–19 min under nice).
+- **Push failed:** `git push origin main` returned "remote: Repository not found" for github.com/saptarshighosh10-oss/chirality-project. The commit is local only. It could be an auth or account mismatch, or the repo is missing; not investigated (no credential changes).
