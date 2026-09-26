@@ -196,3 +196,45 @@
 - **Next:** the one real open computational question is now whether a layered (strongly anisotropic) ocean coarsens or
   stalls. It can be tested with shell3d.py-style runs using a smaller vertical coupling (e.g. D_z/D_h = 0.01) under nice.
   That test is a worthwhile new wave g; the project was not truly finished.
+
+## 2026-09-25 18:30 — wave g (layered ocean; interactive, the student said "just do that computer step")
+- **Idea:** the patch model is a*(1-a²) + D_h∇²_h a + D_z ∂²_z a. The reaction term has no derivatives, so stretching depth
+  by √(D_h/D_z) turns it *exactly* into the equal-mixing model in a box of depth H' = H·√(D_h/D_z). So "weak vertical mixing"
+  = "equal mixing in a taller box". For Enceladus H/L ≈ 1/18, so H' > L whenever D_z < D_h/333 (Europa: D_h/1386), i.e. for
+  most of the plausible vertical range. Test: aniso3d.py, periodic sideways (L = 32), closed top/bottom, depth
+  H' = 8 (slab), 32 (cube), 128 (column), 4 seeds, 50% and 55% starts, to t = 1000.
+- **Prediction (before running):** slab and cube heal toward one hand at 55% (majority wins). The column collapses into
+  stacked horizontal layers in most seeds, and these stop changing between t = 500 and t = 1000 (flat walls don't move),
+  so the ocean does NOT reach one hand. If so, Part 3's vertical-healing rule is too optimistic in the column regime.
+- **First run (MEASURED, aniso3d.log):** column (H' = 4L) froze into 3–5 stacked layers in 7/8 runs; nothing changed
+  t = 500 → 1000. Cube at 55%: 4/4 one hand. Slab: 2/4 one hand; the other 2 are flat side-by-side stripes that wrap around the
+  periodic box (exactly 512 side-wall cells = 2 straight walls), a known artifact of small periodic boxes, not layering.
+  Prediction for the column confirmed. Prediction for the slab only half right (stripe artifact).
+- **Next thought (before running more):** on a real moon a "layer" wall is a sphere (radius ≈ R), not a flat sheet.
+  In this model walls move at speed D·curvature (Allen & Cahn 1979), so each wall should creep inward at
+  v ≈ 2·√(D_h·D_z)/R (derived through the stretch), and the TOP layer takes over in t ≈ H·R / (2√(D_h·D_z)). Adding (1) a 2D
+  shrinking-circle check that this code's walls move at D·curvature and (2) the hand of the top layer.
+  Prediction: circle check passes within 10%; with sphericity, win rates drop somewhat from 43%/58% (the deciding volume
+  shrinks to the top layer), and if layers never merge (flat bound) they collapse to near 0%.
+- **Own error caught before use:** the "√(D_h·D_z)/R" creep speed above is wrong. Stretching depth also steepens the wall's
+  curvature; the two effects cancel. The direct result: a nearly flat wall obeys dh/dt = D_h∇²h, so a spherical layer wall
+  sinks at 2·D_h/R, independent of D_z. MEASURED (wall_check in aniso3d.py): a wavy wall flattens at 0.00967 vs D_h·k² = 0.00964
+  (D_h = 4, D_z = 1) and 0.00239 vs 0.00241 (D_h = 1, D_z = 4). Equal mixing D = 1 came out 22% slow (grid drag on the sharpest
+  wall), reported but not asserted. Consequence: layers on a real moon merge in H·R/(2D_h) ≈ 10⁴–10⁵ yr, far shorter than the ages.
+- **Result (MEASURED):** column 7/8 frozen layers (3–5 each); cube 55% start 4/4 one hand; slab failures = periodic stripes.
+  Circle check +7.1%. Wall check: D_h·k² within 0.3–1% at D_h/D_z = 4 and 1/4. With layering in uncertainty.py (layers merge on
+  a round moon; the top layer decides with share L/H'): Enceladus **55%**, Europa **78%**, Earth 100%. If layers never merged
+  (flat bound): 3% / 7% / 40%. The most decisive input is now **concentration** (21%→89%, 57%→99%), then bias g (+18 to +23),
+  rate k2 (+14), vertical D_z (+10 to +14). Sideways D_h has a slight negative effect (−6 to −8: thinner deciding layer).
+  Layers form in 96% / 92% of draws. Merge time ≤ 1.5×10⁴ yr / 2.8×10⁵ yr.
+- **Prediction check:** column stall confirmed. My "win rates drop somewhat" prediction was **wrong**: they rose (43→55%, 58→78%),
+  because layers merge quickly on a sphere and the old top-to-bottom time rule no longer applies. The "flat bound near 0%"
+  prediction was right (3% / 7%).
+- **Critic (Sonnet):** HOLDS_WITH_FIXES. All numbers match; the asserts fail under both mutations (wrong creep speed 55→52%,
+  no layering 55→69%). Fixed: 7% → 7.1%, a comment on the across∧creep condition, and a great-circle-band argument
+  (flagged ASSUMED; no spherical simulation). High-severity note: the student's OUTREACH_EMAILS.md email #5 still quotes 18%
+  and "mixing decides"; not edited (the student's file), flagged to the student.
+- **Not done:** the full aniso3d.py rerun after adding wall_check was skipped (load ~10, the student was on the machine).
+  The 3D code was unchanged; wall_check was run separately and appended to aniso3d.log. aniso3d.py is added to run_all's slow list.
+- **Next:** a full 3D spherical-shell layer test would turn the remaining ASSUMED steps (top-layer share, band instability)
+  into measurements, but it is heavy. Otherwise the computation really is at a natural stop; the wet lab remains.

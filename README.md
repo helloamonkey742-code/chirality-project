@@ -8,10 +8,12 @@ simulations in 1D and 3D, and against a real reaction scheme) the math for when 
 
 - **Size isn't the limit.** The oceans of Enceladus, Europa and early Earth hold far more than enough
   molecules. Ponds and vent pores hold too few, so there chance wins (Parts 1, 4).
-- **Mixing decides it.** A patchwork of left- and right-handed regions heals in 3D, and the ocean-wide majority wins,
-  if mixing is fast enough. Sideways mixing across an icy-moon ocean is fast enough by a wide margin. The open
-  question is **vertical mixing** (top to bottom), which is uncertain across 10⁻¹⁰–10⁻³ m²/s. So **vertical ocean
-  mixing is the number that decides the icy-moon answer** (Parts 2–3, corrected 2026-09-25 in Part 3).
+- **A patchwork heals, but through layers.** In 3D, a patchwork of left- and right-handed regions heals and the
+  majority wins. Icy-moon oceans mix fast sideways but slowly up and down, so the patchwork first settles into
+  stacked layers of opposite hands. On a flat model ocean those layers freeze. On a round moon they don't: each layer
+  boundary is a sphere and slowly sinks, so the **top layer takes over the whole ocean** within about 10⁴–10⁵ years.
+  The top layer's own majority then picks the hand, using only the molecules in that layer (Part 3b, added 2026-09-25).
+  An earlier version said vertical mixing decides the icy-moon answer; with layering modelled, it matters much less.
 - **Pools can inherit a hand.** A pond follows an inherited excess as small as 6×10⁻¹². The weak force can't
   supply that directly (~5×10⁻¹⁸), but meteorites can (up to 18.5% L-excess), which makes meteorite seeding
   the simplest pond story (Part 4b).
@@ -27,9 +29,11 @@ spatial patch formation, or to inheritance by pools. Closest: Sandars 2005 (spat
 in Earth's ocean, no weak force).
 
 **Robustness (Part 8):** varying every uncertain input at once, physics wins in 100% of plausible cases for early
-Earth's open ocean, 43% for Enceladus and 58% for Europa, with vertical mixing the deciding input.
+Earth's open ocean, 55% for Enceladus and 78% for Europa, with concentration the deciding input. These numbers rely
+on layers merging on a round moon (Part 3b). If they never merged, it would be only 3% and 7%.
 A second reaction scheme and a thin-shell ocean both confirm the results.
-*(Correction 2026-09-25: this said 18% for both moons. That run used a vertical-mixing range for sideways healing; see Part 3.)*
+*(Corrections 2026-09-25: this first said 18% for both moons, which used a vertical-mixing range for sideways healing
+(see Part 3). It then said 43% and 58%, before layering was modelled (see Part 3b).)*
 
 **Status:** every computational step is done and self-checked (`./run_all.sh`). **The only remaining step
 is the wet-lab experiment.**
@@ -176,19 +180,56 @@ What this changes:
   2×10⁻⁷ m²/s (Europa), depending on the ocean's age. At the same age, that's about 330× (Enceladus) and
   1400× (Europa) lower than the old one-number threshold, because the depth is much shorter than the width. But the
   thresholds still sit inside the 10⁻¹⁰–10⁻³ vertical range (MEASURED; `uncertainty.py` checks these).
-- So the model still doesn't settle the icy-moon answer, but the deciding number is now **vertical** mixing,
-  and physics wins in more of the plausible range than first reported (Part 8: 43% and 58%, not 18%).
+- So the model still doesn't settle the icy-moon answer, and physics wins in more of the plausible range than first
+  reported (43% and 58%, not 18%). *(Update, same day: the top-to-bottom rule above turned out to be the wrong
+  picture for most of the range; see Part 3b. The current numbers are 55% and 78%.)*
   The Part 2 and Part 3 tables above are left as first reported. Read their "mixing" column as vertical mixing
   applied over the ocean's width, which is the pessimistic case.
-- Two cautions (ASSUMED, untested):
-  1. Using the same constant A = 5.5 in each direction extends a fit made with equal mixing in all directions.
-     Stretching the depth axis turns uneven diffusion into even diffusion exactly, but patch coarsening is not plain
-     diffusion, so this is plausible, not proven.
-  2. These oceans are 300–1400× wider than deep, and vertical mixing is much weaker than sideways mixing, so a
-     patchwork will probably look like stacked layers. A flat boundary between layers has no curvature to shrink
-     it, so it could stall. That is likely the normal case here, not a rare one. The 3D and thin-shell runs
-     used equal mixing in all directions and don't test it. If layers do stall, a stratified ocean could keep
-     different hands at different depths.
+- The caution first written here, that layers might stall, is now tested in Part 3b. They do stall in a flat box,
+  but not on a round moon.
+
+### Part 3b: a layered ocean (`aniso3d.py`, added 2026-09-25)
+**A shortcut.** In this model, weak vertical mixing is *exactly* the same as equal mixing in a taller ocean. Stretch the
+depth by √(D_h/D_z) and the equations become the equal-mixing ones, because the chemistry term has no mixing in it.
+The stretched ocean is deeper than it is wide whenever D_z < D_h/333 (Enceladus) or D_h/1400 (Europa), which covers
+96% (Enceladus) and 92% (Europa) of the plausible range in Part 8. So the test is simple: compare flat, cube-shaped and
+tall boxes (32 wide, 8 / 32 / 128 deep; periodic sideways; closed top and bottom; 4 seeds; 50% and 55% starts; t = 1000).
+
+| box (stands for) | 55% start: ends as one hand | 50% start: ends as one hand | stuck as stacked layers |
+|---|---|---|---|
+| flat, 8 deep (strong vertical mixing) | 2/4 | 2/4 | 0/8 |
+| cube, 32 deep | **4/4** | 3/4 | 1/8 |
+| tall, 128 deep (weak vertical mixing) | 1/4 | 0/4 | **7/8**, 3–5 layers each, frozen from t = 500 to 1000 |
+
+(MEASURED, `aniso3d.log`.) The flat box's failures are not layers. They are two straight stripes that wrap around the
+small periodic box, a known artifact of periodic boxes. On a sphere, a band's two edges can't both be great
+circles (two great circles always cross), so at least one edge is curved and shrinks. The one stationary split,
+two hemispheres divided by a single great circle, is unstable: any tilt shortens the boundary. That's an argument,
+not a spherical simulation (ASSUMED).
+
+**So with weak vertical mixing, the patchwork freezes into layers of opposite hands**, as predicted. A flat boundary
+between two layers has no curvature, so nothing pushes it.
+
+**On a round moon, the layers still merge.** A layer boundary there is a sphere (radius ≈ the moon's), and a curved
+boundary moves at D × curvature. Two checks in `aniso3d.py`:
+- A shrinking circle follows the textbook law (Allen & Cahn 1979) to within 7.1% (MEASURED).
+- A wavy boundary with uneven mixing flattens at a rate set by **sideways** mixing only: 0.00967 vs 0.00964 predicted
+  (sideways 4×, vertical 1×), and 0.00239 vs 0.00241 (sideways 1×, vertical 4×) (MEASURED). With equal mixing the grid
+  drags the sharpest boundary about 20% slow; that case is reported but not used.
+
+So a spherical layer boundary sinks at 2·D_h/R, however weak vertical mixing is. Each inner layer shrinks away, and the
+**top layer takes over the whole ocean** in about H·R/(2·D_h): at most 1.5×10⁴ years (Enceladus) or 2.8×10⁵ years
+(Europa) even at the slowest sideways mixing considered (0.01 m²/s). That's far shorter than either ocean's age (MEASURED
+from the rule; `uncertainty.py` checks it).
+
+**What picks the top layer's hand?** Its own majority, set by the weak-force bias summed over the molecules in that
+layer. In the tall-box runs the favoured hand ended on top in 3/4 runs from a 55% start vs 2/4 from 50%. That's
+consistent but only 8 runs. The top layer is taken to be about as thick as the ocean is wide *in stretched units*
+(the runs show 3–5 layers in a box 4× deeper than wide), i.e. a share L/H' of the molecules (ASSUMED). Fewer molecules
+means a weaker push from the weak force, which is why concentration and the bias matter more in Part 8 now.
+
+**Limits:** the sphere argument is a calculation checked in 2D pieces, not a full 3D spherical-shell simulation. The
+top-layer thickness is an estimate. Four seeds per case in small boxes.
 
 Limits of Part 3: finite boxes (128³), so the late-time takeover (the 55% run reached 93% as
 patches hit the box size) is shown qualitatively, not as an exact rate. The growth law
@@ -413,21 +454,23 @@ contributes its own molecular counting noise.
 once over its plausible range: bias g, rate k2, concentration, sideways mixing D_h, vertical mixing D_z, time, volume ±30%, and the chemistry
 factor F (0.3–0.7). "Physics wins" requires all three: the chemistry finishes, the patchwork heals, and F·Δ ≥ 2.
 
-| world | physics wins | if the patchwork heals | most decisive input |
+| world | physics wins (round moon) | if layers never merged | most decisive input |
 |---|---|---|---|
-| Early Earth open ocean | **100%** | 100% | none; wins everywhere |
-| Enceladus | **43%** | ~70% | **vertical mixing D_z**: 18% (low half) vs 68% (high half) |
-| Europa | **58%** | ~88% | **vertical mixing D_z**: 28% vs 87% |
+| Early Earth open ocean | **100%** | 40% | none; wins everywhere on a round planet |
+| Enceladus | **55%** | 3% | **concentration**: 21% (low half) vs 89% (high half) |
+| Europa | **78%** | 7% | **concentration**: 57% vs 99% |
 
-Next most influential are concentration (+17 to +35 points) and time (+13 to +20). The bias g and rate k2 move the
-answer by 6–12 points; F and volume by ≤ 3; sideways mixing by 0 (it always heals). So **the weak-force size of the
-effect matters much less than vertical ocean mixing** (MEASURED). If vertical mixing is at least 10⁻³ m²/s, the
-lowest value Zhang et al. 2024 use, every patchwork heals and the win rates become the ~70% and ~88% in the
-second column.
-*(Correction 2026-09-25: this table first said 18% for both moons, with "mixing D" at 0% (low half) vs 36–37% (high
+Next most influential are the bias g (+18 to +23 points), rate k2 (+14) and vertical mixing (+10 to +14). Faster sideways
+mixing *lowers* the win rate slightly (−6 to −8), because it makes the stretched ocean taller and the deciding top layer
+thinner. Time moves it 4–8 points; F and volume ≤ 2. Sideways healing and layer merging always finish in time (MEASURED).
+**So on a round moon, the question is again mostly chemistry (how concentrated, how biased), not ocean mixing.**
+The second column shows how much rides on layers merging: without it, almost every icy-moon case ends as layers of
+opposite hands.
+*(Corrections 2026-09-25: this table first said 18% for both moons, with "mixing D" at 0% (low half) vs 36–37% (high
 half). That run used one mixing range, Zeng & Jansen's vertical 10⁻¹⁰–10⁻³ m²/s, for healing across the whole ocean.
-`uncertainty.py` now uses sideways mixing 10⁻²–10² m²/s over the half-circumference and vertical mixing 10⁻¹⁰–10⁻³
-m²/s over the depth, and checks the new numbers with asserts. See Part 3's caveat.)*
+A second version split sideways (10⁻²–10² m²/s) and vertical (10⁻¹⁰–10⁻³ m²/s) mixing and gave 43% and 58% with vertical
+mixing deciding. It still treated top-to-bottom healing like ordinary patch growth, which Part 3b shows is wrong
+when the ocean layers. `uncertainty.py` checks the current numbers with asserts.)*
 
 **Second reaction scheme (`frank2.py`).** Frank's scheme plus wasted back-reactions (L → A, 2L → A + L). It
 matches the formula within 1.7 points in the slow limit, and the conversion factor is **F = 0.71**, the same as
@@ -465,7 +508,8 @@ star system could do that.
   3D runs use finite 128³ boxes.
 - Real ocean turbulence is not simple diffusion. Vertical mixing in icy-moon oceans is a model input
   (Zeng & Jansen 2021), uncertain over 10⁻¹⁰–10⁻³ m²/s. Sideways mixing is much faster (~0.1 m²/s, Zhang et al. 2024)
-  and never limits healing here. Treating the two directions separately assumes a layered ocean still coarsens (Part 3).
+  and never limits healing here. With weak vertical mixing the ocean forms layers; the icy-moon win rates assume those
+  layers merge because the moon is round (Part 3b: checked in 2D pieces, not a full spherical 3D run).
 - τ (how slowly conditions change) is set to the ocean's age, the most favourable case.
 - No known prebiotic reaction does this kind of autocatalysis. The Soai reaction does it
   in the lab but isn't prebiotic. The rate k2 is a swept assumption.
@@ -503,6 +547,7 @@ python k3.py        # 3D per-patch selection constant (asserts), ~3 min
 python frank.py     # real reaction scheme vs formula (asserts), ~5 min
 python frank2.py    # second scheme with back-reactions (asserts), ~5 min
 python shell3d.py   # thin-shell growth + majority test (asserts), ~15 min
+python aniso3d.py   # layered ocean: flat / cube / tall boxes + curvature and wall checks (asserts), ~4–8 min
 python uncertainty.py # uncertainty sweep, ~10 s
 ./run_all.sh        # everything fast (~3 min); ./run_all.sh --full adds the 3D + real-chemistry runs
 ```
@@ -524,6 +569,7 @@ Needs numpy, scipy, matplotlib.
 - Jafarpour, Biancalani & Goldenfeld 2017, *PRE* 95:032407, doi:10.1103/PhysRevE.95.032407
 - Zeng & Jansen 2021, *PSJ* 2:151, doi:10.3847/PSJ/ac1114 (Enceladus ocean model; **vertical** diffusivity κ_z ~3×10⁻¹⁰–3×10⁻³ m²/s, Sec. II.2; low-salinity run uses 5×10⁻⁵; sideways mixing across a hemisphere ~1000 yr in their simulation)
 - Zhang, Kang & Marshall 2024, *Science Advances* 10, doi:10.1126/sciadv.adn6857 (Enceladus sideways eddy diffusivity "of order ~0.1 m²/s" from scaling + eddy-resolving simulations; vertical κ runs use 10⁻³–10⁻¹ m²/s)
+- Allen & Cahn 1979, *Acta Metallurgica* 27:1085, doi:10.1016/0001-6160(79)90196-2 (boundaries move at D × curvature)
 - Charette & Smith 2010, *Oceanography* 23(2), doi:10.5670/oceanog.2010.09 (Earth ocean volume)
 - Ledwell, Watson & Law 1993, *Nature* 364:701, doi:10.1038/364701a0 (vertical diffusivity 1.1×10⁻⁵ m²/s)
 - Abernathey & Marshall 2013, *JGR Oceans* 118:901 (surface eddy diffusivity ≲10³–10⁴ m²/s)

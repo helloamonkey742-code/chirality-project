@@ -6,7 +6,7 @@ cd "$(dirname "$0")"
 PY=${PYTHON:-python3}
 
 fast=(sim.py ocean.py domains.py patches.py scenarios.py inherit.py dual.py scorecard.py design.py uncertainty.py)
-slow=(domains3d.py coarsen3d.py k3.py frank.py frank2.py shell3d.py)
+slow=(domains3d.py coarsen3d.py k3.py frank.py frank2.py shell3d.py aniso3d.py)
 
 scripts=("${fast[@]}")
 [[ "${1:-}" == "--full" ]] && scripts+=("${slow[@]}")
