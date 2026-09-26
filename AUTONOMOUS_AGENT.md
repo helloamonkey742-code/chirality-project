@@ -44,7 +44,14 @@ e. **Replication:** re-run one 3D result (coarsen3d.py or k3.py) with a differen
 f. **Paper skeleton:** once a–e are done, draft PAPER_DRAFT.md: a short computational paper (abstract,
    methods, results, limitations, references) built ONLY from the README's verified content. It's a
    draft for the student and a mentor; never submit it anywhere.
-If a–f are all done, log "IDLE: nothing worth doing" and end.
+g. **Layered-ocean test** (added 2026-09-25 after the vertical/horizontal mixing correction; see README Part 3 caveat):
+   icy-moon oceans are 300–1400× wider than deep with much weaker vertical than sideways mixing. Test whether a patchwork
+   still coarsens or stalls at flat layer boundaries: a shell3d.py-style run (new script, e.g. aniso3d.py) with the
+   vertical coupling reduced (D_z/D_h = 0.1 and 0.01), several seeds, 52%/55% starts plus a 50% control. Write the
+   prediction first. Report the favoured fraction over time and whether horizontal layers persist. Stay within the
+   20-minute limit (shrink the grid if needed and say so). Update the README caveat with the MEASURED answer, whichever
+   way it goes.
+If a–g are all done, log "IDLE: nothing worth doing" and end.
 
 ## How to work
 - Use the Agent tool with model "sonnet" for builders and a SEPARATE sonnet critic that tries to break

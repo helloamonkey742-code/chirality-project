@@ -164,3 +164,35 @@
 
 ## 2026-09-25 13:46 — IDLE: nothing worth doing
 - The last two entries were IDLE, so this run ended right away as the rules require (load 1.62). The untracked OUTREACH_EMAILS.md was left alone.
+
+## 2026-09-25 18:05 — wave d (interactive; the student said "continue — is this truly it?")
+- **Why:** checked whether "done" was really done. The icy-moon headline (18%, "mixing decides") rests on one input range.
+  Sonnet literature agent + direct check of arXiv:2101.10530v2 Sec. II.2 found that Zeng & Jansen's
+  "3×10⁻¹⁰ to 3×10⁻³ m²/s" is κ_z, the **vertical** diffusivity (DOCUMENTED). The model used it as the diffusivity for healing
+  **across** the ocean (L = πR, horizontal). Same paper: horizontal diffusivity is "much larger than the vertical", and
+  horizontal mixing across a hemisphere takes ~1000 yr in their simulation (DOCUMENTED). Zhang, Kang & Marshall 2024
+  (Sci. Adv., doi:10.1126/sciadv.adn6857) diagnose lateral eddy diffusivity ~0.03–2 m²/s for Enceladus (DOCUMENTED, via agent).
+  Earth's check already separated horizontal and vertical; only the icy moons mixed them up.
+- **Fix:** healing needs both horizontal healing over πR with D_h and vertical healing over the ocean depth H with D_z.
+  H = V / (4π(L/π)²) from the project's own volumes (≈40 km Enceladus, ≈123 km Europa), so no new inputs. D_h log-uniform
+  10⁻²–10² m²/s (ASSUMED bracket around the 0.03–30 literature values); D_z keeps 10⁻¹⁰–10⁻³.
+- **Prediction (written before running):** horizontal healing never binds; Enceladus win rate rises from 18% to ~40–50%,
+  Europa to ~60–75%; vertical mixing D_z stays the (or a top-two) most decisive input.
+- **Result (MEASURED):** Enceladus **43%** (was 18%), Europa **58%** (was 18%), early Earth 100% (unchanged). Sideways
+  healing never binds (needs D_h ≥ 5.6×10⁻⁴ / 2.2×10⁻⁴ m²/s, 50–450× below the literature values). Vertical D_z is the most
+  decisive input (18%→68% Enceladus, 28%→87% Europa, low vs high half). If the patchwork heals, wins are ~70% / ~88%.
+  Prediction check: Enceladus inside the predicted 40–50%. Europa came in **below** the predicted 60–75% (58%), because
+  concentration and time still limit it. D_z stayed on top, as predicted.
+- **Critic (Sonnet, separate):** HOLDS_WITH_FIXES. All numbers reproduced, win|heals recomputed (70.5%/87.5%). A mutation
+  test (old range put back) fails the asserts. Fixed: added the 50–140× conservative margin (0.03 m²/s low end), stated the
+  A = 5.5 per-direction extrapolation as untested, and strengthened the layering caveat (300–1400× wider than deep, so
+  flat layers stalling may be the normal case → different hands at different depths is possible). Also fixed the stale
+  "mixing D" in the Part 8 intro and added a pointer under the Part 2 table. **Rejected:** the claim that Zhang et al. 2024
+  never say "of order ~0.1 m²/s" for sideways mixing. The full text (PMC11540039) says "K should be of order ∼0.1 m² s⁻¹",
+  where K is their lateral eddy coefficient (checked directly).
+- **Checks:** `./run_all.sh` fast 10/10 pass. New asserts in uncertainty.py back every new README number.
+  README/PAPER_DRAFT corrections are dated, and the old numbers are kept in the correction notes. EXPERIMENT.md is untouched.
+- **Not touched:** OUTREACH_EMAILS.md (the student's untracked file). It still says 18% and should be updated before sending.
+- **Next:** the one real open computational question is now whether a layered (strongly anisotropic) ocean coarsens or
+  stalls. It can be tested with shell3d.py-style runs using a smaller vertical coupling (e.g. D_z/D_h = 0.01) under nice.
+  That test is a worthwhile new wave g; the project was not truly finished.

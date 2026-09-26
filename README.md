@@ -8,9 +8,10 @@ simulations in 1D and 3D, and against a real reaction scheme) the math for when 
 
 - **Size isn't the limit.** The oceans of Enceladus, Europa and early Earth hold far more than enough
   molecules. Ponds and vent pores hold too few, so there chance wins (Parts 1, 4).
-- **Mixing decides it.** Oceans need mixing of about ≥10⁻⁵ m²/s to act as one system or to heal a patchwork.
-  In 3D, patches merge and the ocean-wide majority wins. Real icy-moon mixing is uncertain across
-  10⁻¹⁰–10⁻³ m²/s, so **ocean mixing is the number that decides the icy-moon answer** (Parts 2–3).
+- **Mixing decides it.** A patchwork of left- and right-handed regions heals in 3D, and the ocean-wide majority wins,
+  if mixing is fast enough. Sideways mixing across an icy-moon ocean is fast enough by a wide margin. The open
+  question is **vertical mixing** (top to bottom), which is uncertain across 10⁻¹⁰–10⁻³ m²/s. So **vertical ocean
+  mixing is the number that decides the icy-moon answer** (Parts 2–3, corrected 2026-09-25 in Part 3).
 - **Pools can inherit a hand.** A pond follows an inherited excess as small as 6×10⁻¹². The weak force can't
   supply that directly (~5×10⁻¹⁸), but meteorites can (up to 18.5% L-excess), which makes meteorite seeding
   the simplest pond story (Part 4b).
@@ -26,8 +27,9 @@ spatial patch formation, or to inheritance by pools. Closest: Sandars 2005 (spat
 in Earth's ocean, no weak force).
 
 **Robustness (Part 8):** varying every uncertain input at once, physics wins in 100% of plausible cases for early
-Earth's open ocean and 18% for Enceladus and Europa, with mixing the deciding input. A second reaction scheme and a
-thin-shell ocean both confirm the results.
+Earth's open ocean, 43% for Enceladus and 58% for Europa, with vertical mixing the deciding input.
+A second reaction scheme and a thin-shell ocean both confirm the results.
+*(Correction 2026-09-25: this said 18% for both moons. That run used a vertical-mixing range for sideways healing; see Part 3.)*
 
 **Status:** every computational step is done and self-checked (`./run_all.sh`). **The only remaining step
 is the wet-lab experiment.**
@@ -103,6 +105,8 @@ is possible only if mixing D ≥ √10·L²/(C²·τ)**, i.e.
 | Enceladus | 3×10⁻⁶ m²/s | 10⁻⁹ ✗ | 5×10⁻⁵ ✓ (~15×) |
 | Europa | 1×10⁻⁵ m²/s | 10⁻⁹ ✗ | 5×10⁻⁵ ✓ (~4×) |
 
+*(2026-09-25: the "modelled mixing" value is a vertical rate applied over the ocean's width; see the correction in Part 3.)*
+
 ![patches](patches.png)
 
 - **With only molecular diffusion**, oceans break into km-scale patches and the favoured
@@ -155,10 +159,36 @@ conclusion is robust: **with eddy-driven mixing, physics picks the hand ocean-wi
 molecular diffusion, you get a frozen mixed-hand ocean.** What Part 3 changed is the *mechanism*:
 the patchwork doesn't stay frozen, it heals within 10⁷–10⁸ years.
 
-**Caveat on mixing:** Zeng & Jansen 2021 use 5×10⁻⁵ m²/s in their Enceladus simulations but say the
-real value is very poorly constrained, **10⁻¹⁰ to 10⁻³ m²/s**. The threshold (~10⁻⁵) sits inside that
-range. So the model doesn't decide the icy-moon answer; it shows that **ocean mixing is the one number
-that decides it**. Measuring that mixing is a job for future missions.
+**Caveat on mixing (corrected 2026-09-25).** Ocean mixing is much faster sideways than up and down, so the two
+directions need separate numbers. Parts 2–3 and 8 originally used a single mixing value D for healing *across* the
+ocean, and took its range, 10⁻¹⁰ to 10⁻³ m²/s, from Zeng & Jansen 2021. On re-reading, that range is their estimate
+for **vertical** mixing (κ_z, their Section II.2), and the 5×10⁻⁵ m²/s in the tables above is also a vertical value
+(DOCUMENTED). The same paper says sideways mixing is "much larger than the vertical" and that sideways mixing across a
+hemisphere takes about 1000 years in their simulation. Zhang, Kang & Marshall 2024 estimate sideways eddy mixing in
+Enceladus's ocean "of order ~0.1 m²/s" (DOCUMENTED).
+
+What this changes:
+- **Across the ocean:** healing needs sideways mixing ≥ ~6×10⁻⁴ m²/s (Enceladus) or ~2×10⁻⁴ m²/s (Europa). That's
+  about 180–450× below the ~0.1 m²/s estimate, and still 50–140× below 0.03 m²/s, the low end of the runs in
+  Zhang et al. So **sideways healing is not a limit** (MEASURED from the rule above).
+- **Top to bottom:** the patchwork also has to heal over the ocean's depth (≈40 km Enceladus, ≈120 km Europa,
+  from the volumes used here). That needs vertical mixing ≥ ~2×10⁻⁹ to 2×10⁻⁶ m²/s (Enceladus) or ~4×10⁻⁹ to
+  2×10⁻⁷ m²/s (Europa), depending on the ocean's age. At the same age, that's about 330× (Enceladus) and
+  1400× (Europa) lower than the old one-number threshold, because the depth is much shorter than the width. But the
+  thresholds still sit inside the 10⁻¹⁰–10⁻³ vertical range (MEASURED; `uncertainty.py` checks these).
+- So the model still doesn't settle the icy-moon answer, but the deciding number is now **vertical** mixing,
+  and physics wins in more of the plausible range than first reported (Part 8: 43% and 58%, not 18%).
+  The Part 2 and Part 3 tables above are left as first reported. Read their "mixing" column as vertical mixing
+  applied over the ocean's width, which is the pessimistic case.
+- Two cautions (ASSUMED, untested):
+  1. Using the same constant A = 5.5 in each direction extends a fit made with equal mixing in all directions.
+     Stretching the depth axis turns uneven diffusion into even diffusion exactly, but patch coarsening is not plain
+     diffusion, so this is plausible, not proven.
+  2. These oceans are 300–1400× wider than deep, and vertical mixing is much weaker than sideways mixing, so a
+     patchwork will probably look like stacked layers. A flat boundary between layers has no curvature to shrink
+     it, so it could stall. That is likely the normal case here, not a rare one. The 3D and thin-shell runs
+     used equal mixing in all directions and don't test it. If layers do stall, a stratified ocean could keep
+     different hands at different depths.
 
 Limits of Part 3: finite boxes (128³), so the late-time takeover (the 55% run reached 93% as
 patches hit the box size) is shown qualitatively, not as an exact rate. The growth law
@@ -380,18 +410,24 @@ contributes its own molecular counting noise.
 ## Part 8: robustness checks (optional extras)
 
 **Uncertainty sweep (`uncertainty.py`).** 200,000 random input sets per world, every uncertain input varied at
-once over its plausible range: bias g, rate k2, concentration, mixing D, time, volume ±30%, and the chemistry
+once over its plausible range: bias g, rate k2, concentration, sideways mixing D_h, vertical mixing D_z, time, volume ±30%, and the chemistry
 factor F (0.3–0.7). "Physics wins" requires all three: the chemistry finishes, the patchwork heals, and F·Δ ≥ 2.
 
-| world | physics wins | if mixing is high enough to heal | most decisive input |
+| world | physics wins | if the patchwork heals | most decisive input |
 |---|---|---|---|
 | Early Earth open ocean | **100%** | 100% | none; wins everywhere |
-| Enceladus | **18%** | ~72% | **mixing D**: 0% (low half) vs 36% (high half) |
-| Europa | **18%** | ~86% | **mixing D**: 0% vs 37% |
+| Enceladus | **43%** | ~70% | **vertical mixing D_z**: 18% (low half) vs 68% (high half) |
+| Europa | **58%** | ~88% | **vertical mixing D_z**: 28% vs 87% |
 
-Next most influential are time (+11 to +17 points) and concentration (+5 to +14). The bias g, rate k2, F and volume each
-move the answer by ≤ 5 points. So **the weak-force size of the effect barely matters; ocean mixing decides
-it.** The 18% mostly reflects that the mixing range spans 7 orders of magnitude (MEASURED).
+Next most influential are concentration (+17 to +35 points) and time (+13 to +20). The bias g and rate k2 move the
+answer by 6–12 points; F and volume by ≤ 3; sideways mixing by 0 (it always heals). So **the weak-force size of the
+effect matters much less than vertical ocean mixing** (MEASURED). If vertical mixing is at least 10⁻³ m²/s, the
+lowest value Zhang et al. 2024 use, every patchwork heals and the win rates become the ~70% and ~88% in the
+second column.
+*(Correction 2026-09-25: this table first said 18% for both moons, with "mixing D" at 0% (low half) vs 36–37% (high
+half). That run used one mixing range, Zeng & Jansen's vertical 10⁻¹⁰–10⁻³ m²/s, for healing across the whole ocean.
+`uncertainty.py` now uses sideways mixing 10⁻²–10² m²/s over the half-circumference and vertical mixing 10⁻¹⁰–10⁻³
+m²/s over the depth, and checks the new numbers with asserts. See Part 3's caveat.)*
 
 **Second reaction scheme (`frank2.py`).** Frank's scheme plus wasted back-reactions (L → A, 2L → A + L). It
 matches the formula within 1.7 points in the slow limit, and the conversion factor is **F = 0.71**, the same as
@@ -427,8 +463,9 @@ star system could do that.
   concentrations ×1.6). Other schemes with more non-productive turnover would give a smaller F.
 - Part 2's patch laws are 1D. Part 3 adds 3D coarsening, and `k3.py` confirms the per-patch law in 3D;
   3D runs use finite 128³ boxes.
-- Real ocean turbulence is not simple diffusion. The icy-moon mixing value is a model input
-  (Zeng & Jansen 2021), uncertain over 10⁻¹⁰–10⁻³ m²/s. Horizontal mixing is usually faster than vertical.
+- Real ocean turbulence is not simple diffusion. Vertical mixing in icy-moon oceans is a model input
+  (Zeng & Jansen 2021), uncertain over 10⁻¹⁰–10⁻³ m²/s. Sideways mixing is much faster (~0.1 m²/s, Zhang et al. 2024)
+  and never limits healing here. Treating the two directions separately assumes a layered ocean still coarsens (Part 3).
 - τ (how slowly conditions change) is set to the ocean's age, the most favourable case.
 - No known prebiotic reaction does this kind of autocatalysis. The Soai reaction does it
   in the lab but isn't prebiotic. The rate k2 is a swept assumption.
@@ -485,7 +522,8 @@ Needs numpy, scipy, matplotlib.
 - Sandars 2005, *Int. J. Astrobiol.*, doi:10.1017/s1473550405002338 (spatial homochiralization in Earth's ocean; closest prior work)
 - Gleiser & Walker 2008, "Punctuated chirality", *OLEB*, doi:10.1007/s11084-008-9147-0
 - Jafarpour, Biancalani & Goldenfeld 2017, *PRE* 95:032407, doi:10.1103/PhysRevE.95.032407
-- Zeng & Jansen 2021, *PSJ* 2:151, doi:10.3847/PSJ/ac1114 (Enceladus ocean model; simulations use ~5×10⁻⁵ m²/s, plausible range 10⁻¹⁰–10⁻³)
+- Zeng & Jansen 2021, *PSJ* 2:151, doi:10.3847/PSJ/ac1114 (Enceladus ocean model; **vertical** diffusivity κ_z ~3×10⁻¹⁰–3×10⁻³ m²/s, Sec. II.2; low-salinity run uses 5×10⁻⁵; sideways mixing across a hemisphere ~1000 yr in their simulation)
+- Zhang, Kang & Marshall 2024, *Science Advances* 10, doi:10.1126/sciadv.adn6857 (Enceladus sideways eddy diffusivity "of order ~0.1 m²/s" from scaling + eddy-resolving simulations; vertical κ runs use 10⁻³–10⁻¹ m²/s)
 - Charette & Smith 2010, *Oceanography* 23(2), doi:10.5670/oceanog.2010.09 (Earth ocean volume)
 - Ledwell, Watson & Law 1993, *Nature* 364:701, doi:10.1038/364701a0 (vertical diffusivity 1.1×10⁻⁵ m²/s)
 - Abernathey & Marshall 2013, *JGR Oceans* 118:901 (surface eddy diffusivity ≲10³–10⁴ m²/s)
