@@ -252,3 +252,10 @@
   blocked running uncertainty.py; untested asserts could break run_all. No critic was run (nothing substantive was committed).
 - **Next:** when the machine is free, add asserts to uncertainty.py for README_FLAT_PCT Earth 0.40 (checked for all worlds),
   layered share 0.96/0.92, and the bias-g effect in +18..+23. Then run it and save uncertainty.log. After that the project is at a natural stop.
+
+## 2026-09-25 23:10 — wave d finish (interactive; the student said "do it")
+- **Result (MEASURED, uncertainty.log):** uncertainty.py now asserts the three numbers flagged at 18:40. Layered share: Enceladus 96%, Europa 92%.
+  Bias-g effect: +23 / +18 points. Early Earth "if layers never merged": 40% (Earth layers in 60% of draws). All match the README. No number changed.
+- **Mutation test:** changing each README value (Earth 0.40→0.30, Enceladus 0.96→0.80, g upper 0.23→0.19) makes the script fail. Fast suite: 10/10 pass.
+- **Next:** the computational side is at a natural stop. The optional full 3D spherical-shell layer test would measure the two remaining ASSUMED steps
+  (top-layer share, band instability), but it is heavy. The wet lab is the remaining real step. OUTREACH_EMAILS.md still says 18%.

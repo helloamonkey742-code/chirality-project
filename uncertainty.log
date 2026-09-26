@@ -1,0 +1,35 @@
+
+Enceladus: physics wins in 55% of plausible input space
+  each condition alone: creep in time 100%, finishes 83%, heals across 100%, layers (column) 96%, strong enough 73%, flat-layer bound 3%
+  concentration   low half   21%  high half   89%   (effect +69%)
+  bias g          low half   44%  high half   67%   (effect +23%)
+  rate k2         low half   48%  high half   62%   (effect +14%)
+  vertical D_z    low half   48%  high half   62%   (effect +14%)
+  horizontal D_h  low half   59%  high half   51%   (effect -8%)
+  time            low half   51%  high half   59%   (effect +8%)
+  chem. factor F  low half   54%  high half   56%   (effect +2%)
+  volume          low half   55%  high half   55%   (effect -1%)
+
+Europa: physics wins in 78% of plausible input space
+  each condition alone: creep in time 100%, finishes 92%, heals across 100%, layers (column) 92%, strong enough 91%, flat-layer bound 7%
+  concentration   low half   57%  high half   99%   (effect +42%)
+  bias g          low half   69%  high half   88%   (effect +18%)
+  rate k2         low half   71%  high half   85%   (effect +14%)
+  vertical D_z    low half   73%  high half   83%   (effect +10%)
+  horizontal D_h  low half   81%  high half   75%   (effect -6%)
+  time            low half   76%  high half   80%   (effect +4%)
+  chem. factor F  low half   77%  high half   79%   (effect +2%)
+  volume          low half   78%  high half   78%   (effect -0%)
+
+Early Earth ocean: physics wins in 100% of plausible input space
+  each condition alone: creep in time 100%, finishes 100%, heals across 100%, layers (column) 60%, strong enough 100%, flat-layer bound 40%
+  bias g          low half  100%  high half  100%   (effect +0%)
+  rate k2         low half  100%  high half  100%   (effect +0%)
+  concentration   low half  100%  high half  100%   (effect +0%)
+  horizontal D_h  low half  100%  high half  100%   (effect +0%)
+  vertical D_z    low half  100%  high half  100%   (effect +0%)
+  time            low half  100%  high half  100%   (effect +0%)
+  volume          low half  100%  high half  100%   (effect +0%)
+  chem. factor F  low half  100%  high half  100%   (effect +0%)
+Enceladus: layers form if D_z < D_h/333; they merge within 1.5e+04 yr at D_h = 0.01
+Europa: layers form if D_z < D_h/1386; they merge within 2.8e+05 yr at D_h = 0.01

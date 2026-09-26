@@ -70,9 +70,10 @@ def sweep(V, L, c_rng, dh_rng, dz_rng, t_rng):
 # README headline numbers (Summary + Part 8 table), checked below against this script's own output.
 # (Corrections 2026-09-25: first 18% / 18% with one mixing D; then 43% / 58% before layering was modelled.)
 README_WIN_PCT = {"Enceladus": 0.55, "Europa": 0.78, "Early Earth ocean": 1.00}
-README_FLAT_PCT = {"Enceladus": 0.03, "Europa": 0.07}  # if layers never merged
+README_FLAT_PCT = {"Enceladus": 0.03, "Europa": 0.07, "Early Earth ocean": 0.40}  # if layers never merged
 WIN_TOL = 0.03  # percentage points; N=200,000 with a fixed seed makes this tight
 README_CONC_SPLIT = {"Enceladus": (0.21, 0.90), "Europa": (0.57, 0.99)}  # Part 8: concentration low / high half
+README_COLUMN_PCT = {"Enceladus": 0.96, "Europa": 0.92}  # Part 3b: share of input space where the ocean layers
 
 
 def main():
@@ -91,6 +92,7 @@ def main():
         # catch it silently drifting if a range or condition changes.
         assert abs(win.mean() - README_WIN_PCT[name]) < WIN_TOL, (
             f"{name}: win rate {win.mean():.0%} no longer matches README's {README_WIN_PCT[name]:.0%}")
+        assert abs(parts["flat-layer bound"] - README_FLAT_PCT[name]) < WIN_TOL, f"{name}: flat bound drifted"
         if name in ("Enceladus", "Europa"):
             # README: concentration decides most; sideways healing and layer merging always happen in time.
             assert effects[0][1] == "concentration", (
@@ -99,7 +101,9 @@ def main():
             assert abs(effects[0][2] - lo) < WIN_TOL and abs(effects[0][3] - hi) < WIN_TOL, (
                 f"{name}: concentration split {effects[0][2]:.0%}/{effects[0][3]:.0%} no longer matches README")
             assert parts["heals across"] == 1.0 and parts["creep in time"] == 1.0, f"{name}: healing now binds"
-            assert abs(parts["flat-layer bound"] - README_FLAT_PCT[name]) < WIN_TOL, f"{name}: flat bound drifted"
+            assert abs(parts["layers (column)"] - README_COLUMN_PCT[name]) < WIN_TOL, f"{name}: layered share drifted"
+            g = [e[0] for e in effects if e[1] == "bias g"][0]  # Part 8: "bias g (+18 to +23 points)"
+            assert 0.18 - WIN_TOL < g < 0.23 + WIN_TOL, f"{name}: bias g effect {g:+.0%} outside README's +18..+23"
     # README Part 3 note: when the ocean layers, and how long the layers take to merge
     for name, ratio, t_worst in (("Enceladus", 334, 1.5e4), ("Europa", 1386, 2.8e5)):
         V, L, _, (dh_lo, _), _, _ = WORLDS[name]
