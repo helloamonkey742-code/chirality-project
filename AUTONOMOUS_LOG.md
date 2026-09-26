@@ -272,3 +272,4 @@
 - **Prediction check:** right for 9 of 10 scripts tested in full. shell3d did not finish within the limit, so it is only partly verified.
 - **Next:** waves a–g done and wave c re-verified. Next routine should log IDLE unless the machine is idle enough for a shell3d rerun (~16–19 min under nice).
 - **Push failed:** `git push origin main` returned "remote: Repository not found" for github.com/saptarshighosh10-oss/chirality-project. The commit is local only. It could be an auth or account mismatch, or the repo is missing; not investigated (no credential changes).
+- **Push resolved:** the documented gh-account workaround (memory file) worked; origin is in sync.
