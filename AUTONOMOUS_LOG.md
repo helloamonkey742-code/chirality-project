@@ -238,3 +238,17 @@
   The 3D code was unchanged; wall_check was run separately and appended to aniso3d.log. aniso3d.py is added to run_all's slow list.
 - **Next:** a full 3D spherical-shell layer test would turn the remaining ASSUMED steps (top-layer share, band instability)
   into measurements, but it is heavy. Otherwise the computation really is at a natural stop; the wet lab remains.
+
+## 2026-09-25 18:40 — wave d (routine; light only: load 10–17, then routine-gate check failed on swap 94%)
+- **Why:** waves a–g done; the newest claims (Part 3b / Part 8 from wave g) were the least audited. No simulations allowed at this load.
+- **Prediction:** most wave-g numbers are already asserted; one or two secondary numbers are not.
+- **Result (DOCUMENTED, by reading code and logs; nothing run):** backed already: the aniso3d box table and circle/wall checks
+  (aniso3d.log + asserts), 55%/78%/100%, 3%/7%, the concentration splits, D_h/333 and D_h/1386, and the merge times (uncertainty.py asserts).
+  **Unbacked:** "layers form in 96%/92%", "bias g +18 to +23", and Earth's "40% if layers never merged". Analytic check (ASSUMED
+  log-uniform ranges as in the code): Enceladus layers when log D_h − log D_z > 2.52 → 95.9%; Earth H ≈ 2.6 km, L/H ≈ 7.7e3, layers when
+  D_h/D_z > 5.9e7 → ~61% of draws, so the flat bound ≈ 39–40%. All three are consistent with the README; nothing contradicted.
+- **Failed:** the builder (opus55-low) wrongly flagged Earth's 40% as contradicted (its stretched-depth estimate was ~3.4e5 m instead of ~2.6e8 m);
+  I caught it and reverted its README note. Asserts for the three numbers were written but **reverted uncommitted** because the gate
+  blocked running uncertainty.py; untested asserts could break run_all. No critic was run (nothing substantive was committed).
+- **Next:** when the machine is free, add asserts to uncertainty.py for README_FLAT_PCT Earth 0.40 (checked for all worlds),
+  layered share 0.96/0.92, and the bias-g effect in +18..+23. Then run it and save uncertainty.log. After that the project is at a natural stop.
