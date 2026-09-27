@@ -14,9 +14,13 @@ Layering (added 2026-09-25, aniso3d.py): stretching depth by sqrt(D_h/D_z) makes
 in a box of depth H' = H*sqrt(D_h/D_z). If H' > L (a "column"), the patchwork freezes into stacked layers of
 opposite hands instead of healing (MEASURED in aniso3d.py). Two cases:
   flat (pessimistic)  layers never merge -> physics can't win ocean-wide.
-  curved (real moon)  layer walls are spheres of radius R = L/pi, so they sink at 2*D_h/R, whatever D_z is
-                      (aniso3d.circle_check and wall_check), and the TOP layer takes over within t = H*R/(2*D_h). The top layer (thickness ~L in stretched units, ASSUMED from the
-                      3-5 layers seen in aniso3d.py) decides alone, so only a fraction L/H' of the molecules count.
+  curved (real moon)  layer walls are spheres of radius R = L/pi, so they sink at 2*D_z/R, whatever D_h is,
+                      and the TOP layer takes over within t = H*R/(2*D_z). (corrected 2026-09-26, sphere_layers.py:
+                      walls sink at 2*D_z/R, not 2*D_h/R; the old D_h rule came from a flat-box argument in aniso3d.py
+                      that does not apply when the vertical direction follows the radius.) The top layer (thickness ~L
+                      in stretched units, ASSUMED from the 3-5 layers seen in aniso3d.py; sphere_layers.py top-layer
+                      share 0.52/0.07 vs L/H' 0.25 from 2 runs - no support either way) decides alone, so only a
+                      fraction L/H' of the molecules count.
 Then rank inputs by how much P(win) changes between the low and high half of each range.
 """
 import numpy as np
@@ -57,8 +61,8 @@ def sweep(V, L, c_rng, dh_rng, dz_rng, t_rng):
     across = (L / A) ** 2 / Dh <= t
     column = H * np.sqrt(Dh / Dz) > L                   # stretched depth deeper than wide -> stacked layers
     # layers first need the patchwork to span sideways (across), then the inner layers sink away
-    creep = across & (H * (L / np.pi) / (2 * Dh) <= t)
-    top = np.minimum(1.0, L / (H * np.sqrt(Dh / Dz)))  # share of molecules in the deciding (top) layer
+    creep = across & (H * (L / np.pi) / (2 * Dz) <= t)  # walls sink at 2*D_z/R (sphere_layers.py)
+    top = np.minimum(1.0, L / (H * np.sqrt(Dh / Dz)))  # ASSUMED share of molecules in the deciding (top) layer
     delta = lambda f: x["chem. factor F"] * delta_at(x["concentration"], x["bias g"], x["rate k2"], x["volume"], t, f)
     strong = delta(1.0) >= 2
     win_flat = finishes & across & ~column & strong
@@ -68,11 +72,13 @@ def sweep(V, L, c_rng, dh_rng, dz_rng, t_rng):
 
 
 # README headline numbers (Summary + Part 8 table), checked below against this script's own output.
-# (Corrections 2026-09-25: first 18% / 18% with one mixing D; then 43% / 58% before layering was modelled.)
-README_WIN_PCT = {"Enceladus": 0.55, "Europa": 0.78, "Early Earth ocean": 1.00}
+# (Corrections 2026-09-25: first 18% / 18% with one mixing D; then 43% / 58% before layering was modelled;
+#  2026-09-26: 55% / 78% / 100% while layers merged at the sideways rate 2*D_h/R.)
+README_WIN_PCT = {"Enceladus": 0.22, "Europa": 0.29, "Early Earth ocean": 0.75}
 README_FLAT_PCT = {"Enceladus": 0.03, "Europa": 0.07, "Early Earth ocean": 0.40}  # if layers never merged
 WIN_TOL = 0.03  # percentage points; N=200,000 with a fixed seed makes this tight
-README_CONC_SPLIT = {"Enceladus": (0.21, 0.90), "Europa": (0.57, 0.99)}  # Part 8: concentration low / high half
+README_TOP_SPLIT = {"Enceladus": (0.00, 0.43), "Europa": (0.00, 0.57)}  # Part 8: vertical D_z low / high half
+README_CREEP_PCT = {"Enceladus": 0.33, "Europa": 0.34}  # share where layers merge in time
 README_COLUMN_PCT = {"Enceladus": 0.96, "Europa": 0.92}  # Part 3b: share of input space where the ocean layers
 
 
@@ -94,22 +100,23 @@ def main():
             f"{name}: win rate {win.mean():.0%} no longer matches README's {README_WIN_PCT[name]:.0%}")
         assert abs(parts["flat-layer bound"] - README_FLAT_PCT[name]) < WIN_TOL, f"{name}: flat bound drifted"
         if name in ("Enceladus", "Europa"):
-            # README: concentration decides most; sideways healing and layer merging always happen in time.
-            assert effects[0][1] == "concentration", (
-                f"{name}: most decisive input is {effects[0][1]!r}, not 'concentration' as the README claims")
-            lo, hi = README_CONC_SPLIT[name]
+            # README: vertical mixing decides most (layers must merge in time); sideways healing always happens.
+            assert effects[0][1] == "vertical D_z", (
+                f"{name}: most decisive input is {effects[0][1]!r}, not 'vertical D_z' as the README claims")
+            lo, hi = README_TOP_SPLIT[name]
             assert abs(effects[0][2] - lo) < WIN_TOL and abs(effects[0][3] - hi) < WIN_TOL, (
-                f"{name}: concentration split {effects[0][2]:.0%}/{effects[0][3]:.0%} no longer matches README")
-            assert parts["heals across"] == 1.0 and parts["creep in time"] == 1.0, f"{name}: healing now binds"
+                f"{name}: D_z split {effects[0][2]:.0%}/{effects[0][3]:.0%} no longer matches README")
+            assert parts["heals across"] == 1.0, f"{name}: healing now binds"
+            assert abs(parts["creep in time"] - README_CREEP_PCT[name]) < WIN_TOL, f"{name}: merge-in-time share drifted"
             assert abs(parts["layers (column)"] - README_COLUMN_PCT[name]) < WIN_TOL, f"{name}: layered share drifted"
-            g = [e[0] for e in effects if e[1] == "bias g"][0]  # Part 8: "bias g (+18 to +23 points)"
-            assert 0.18 - WIN_TOL < g < 0.23 + WIN_TOL, f"{name}: bias g effect {g:+.0%} outside README's +18..+23"
+            g = [e[0] for e in effects if e[1] == "bias g"][0]  # Part 8: "bias g (+4 to +8 points)"
+            assert 0.04 - WIN_TOL < g < 0.08 + WIN_TOL, f"{name}: bias g effect {g:+.0%} outside README's +4..+8"
     # README Part 3 note: when the ocean layers, and how long the layers take to merge
-    for name, ratio, t_worst in (("Enceladus", 334, 1.5e4), ("Europa", 1386, 2.8e5)):
-        V, L, _, (dh_lo, _), _, _ = WORLDS[name]
+    for name, ratio, t_worst in (("Enceladus", 334, 1.5e12), ("Europa", 1386, 2.8e13)):
+        V, L, _, _, (dz_lo, _), _ = WORLDS[name]
         H = depth(V, L)
-        t_merge = H * (L / np.pi) / (2 * dh_lo) / YR
-        print(f"{name}: layers form if D_z < D_h/{(L / H) ** 2:.0f}; they merge within {t_merge:.1e} yr at D_h = {dh_lo}")
+        t_merge = H * (L / np.pi) / (2 * dz_lo) / YR
+        print(f"{name}: layers form if D_z < D_h/{(L / H) ** 2:.0f}; they merge within {t_merge:.1e} yr at D_z = {dz_lo}")
         assert abs((L / H) ** 2 / ratio - 1) < 0.05 and abs(t_merge / t_worst - 1) < 0.1
     # sanity: a best-case input set must win, a hopeless one must lose
     assert delta_at(1e-6, 1e-16, 1e-3, 1.3e18, 1e8 * YR) * 0.7 > 2
