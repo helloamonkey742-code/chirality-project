@@ -535,6 +535,14 @@ star system could do that.
   (Zeng & Jansen 2021), uncertain over 10⁻¹⁰–10⁻³ m²/s. Sideways mixing is much faster (~0.1 m²/s, Zhang et al. 2024)
   and never limits healing here. With weak vertical mixing the ocean forms layers; layers merge only as fast
   as vertical mixing allows (Part 3b, `sphere_layers.py`), so vertical mixing is again the key unknown.
+  *(Note 2026-09-27, `vertical_mixing_lit.md`: Zeng & Jansen 2021 is still the only primary estimate. Their Sec. 2.2 was
+  re-read this date and gives 3×10⁻¹⁰ to 3×10⁻³, DOCUMENTED. Ames et al. 2025 quote "10⁻⁷ to 10⁻³" citing the same paper,
+  so theirs is not a second estimate. Modellers run 5×10⁻⁵ to 5×10⁻³, which clears the merge bar, but those values are
+  chosen partly so the simulation runs. The same Sec. 2.2 notes that
+  molecules spread by themselves at ~10⁻⁹ m²/s. Below that, D_z really means "molecular only". That changes no percentage,
+  since those draws never merge either way. But the worst-case merge times quoted at 10⁻¹⁰ (1.5×10¹² / 2.8×10¹³ yr) would
+  be ~10× shorter at the 10⁻⁹ floor. That is still far longer than the Solar System's age. No Europa-specific value was
+  found, so Europa uses the Enceladus range, ASSUMED.)*
 - τ (how slowly conditions change) is set to the ocean's age, the most favourable case.
 - No known prebiotic reaction does this kind of autocatalysis. The Soai reaction does it
   in the lab but isn't prebiotic. The rate k2 is a swept assumption.
