@@ -284,3 +284,11 @@
 - **shell3d re-verification:** the rerun reproduced the exponent 0.41, the f=0.5 control (0.498 ± 0.014) and the **f=0.52 row (0.561 ± 0.014) identically**. The f=0.55 row was not re-verified: the full run hit the 25-min cap, the separate driver died with its agent (API error), and a retry was blocked by the gate (30% free, load 12). The 55% row still rests on the 2026-09-23 run.
 - **Failed/limits:** sphere_layers varied D_z only together with grid spacing (critic note; a fixed-dz D_z sweep would remove that confound). The sphere grids are coarse (R = 6–16 cells), with 2–3 seeds per case.
 - **Next:** (1) re-verify shell3d's f=0.55 row alone when the machine is free; (2) optional sphere_layers run with D_z varied at fixed dz; (3) the key open science question is now the real vertical-mixing strength in icy-moon oceans. That is a literature wave (b-style), and it decides the answer.
+
+## 2026-09-27 08:25 — wave c (partial: shell3d f=0.55 row only; routine)
+- **Why:** the last log's first "Next" item; it is the only README number from shell3d not re-run since 2026-09-23. Load 1.5, gate ok (64% free), no train_grasp.
+- **Prediction (written before running):** seeded, so identical to shell3d.log: f=0.55 goes 0.551 -> 0.654 +- 0.005 over 4 seeds at 512x512x8, t=1 -> 200.
+- **Result (MEASURED):** 0.551 -> 0.654 +- 0.005 (change +0.103), per-seed ends 0.658/0.645/0.659/0.654; identical to shell3d.log. Ran shell3d.run() for f=0.55 only (270 s under nice). Every shell3d row (exponent, 50%, 52%, 55%) has now been re-run since the 2026-09-23 original.
+- **Critic:** skipped by choice. This is a seeded reproduction compared string-for-string with a committed log, so there is nothing to interpret. No README number changed.
+- **Prediction check:** right.
+- **Next:** optional sphere_layers D_z sweep at fixed dz (removes the grid-spacing confound); the open science question is the real vertical-mixing strength in icy-moon oceans (literature). Otherwise IDLE.
