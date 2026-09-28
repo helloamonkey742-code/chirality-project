@@ -251,6 +251,11 @@ layer took over within at most 1.5×10⁴ years (Enceladus) or 2.8×10⁵ years 
   floor and seems to have been pulled in. `1d` doubled the depth, a fix chosen after seeing that failure, and the problem
   went away. So on a fixed grid the speed still follows D_z. The weakest case is barely resolved (~1.4 cells wide), so its
   3% shortfall may come from the grid.
+  *(Added 2026-09-27 23:30.)* Two more seeds (`sphere_layers.py 1e`, `sphere_layers_1e.log`) gave the same ratios to 3 decimals
+  (0.967 / 0.986 / 0.995; spread 0.000) (MEASURED). The seed only sets the pattern of small bumps on the wall (typical
+  size 1.5 grid steps), and sideways mixing smooths them out quickly, so this match was expected. It rules out
+  random luck for this one setup (R = 16, D_h = 1, one grid) only. The open limits are still the grid and the depth
+  (see 1c above).
 The full test takes about 22 minutes (`./run_all.sh --full`).
 
 **What picks the top layer's hand?** Its own majority, set by the weak-force bias summed over the molecules in that

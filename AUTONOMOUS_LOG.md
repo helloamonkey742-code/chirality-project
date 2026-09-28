@@ -312,3 +312,12 @@
 - **Critic (opus55-low, separate): HOLDS_WITH_FIXES.** Fixed: "~2.5 widths" → ~1.6; "shown" → "seems"; scope limited to 1 seed/R=16; ratios stated as using mid-depth r; D_z=0.0008 case is under-resolved (~1.4 cells), so its 3% shortfall may be a grid effect.
 - **Prediction check:** wrong for the pre-registered 1c (floor artifact); right for the post-hoc 1d.
 - **Next:** optional: repeat 1d with a second seed (pre-registered, ~3 min) and a fixed-D_z clearance sweep to pin down the floor-pull distance. Optional D_z 1e-9 floor in uncertainty.py. Otherwise IDLE; the wet lab remains.
+
+## 2026-09-27 23:30 — wave e (replication: sphere 1d with seeds 1 and 2; routine)
+- **Why:** waves a–g are done. The last log's first "Next" was to repeat the post-hoc 1d (sphere wall speed follows D_z on a fixed grid) with another seed. Load 3.5, gate ok (69% free), no train_grasp.
+- **Prediction (written in code before running):** seeds 1 and 2 give every ratio in 0.95–1.00 (seed 0: 0.967/0.986/0.995) and each doubling in 1.9–2.1; the 1d asserts pass.
+- **Result (MEASURED, sphere_layers_1e.log, 179 s under nice, exit 0):** both seeds give 0.967/0.986/0.995 and doublings ×2.038/×2.018, identical to 3 decimals (spread 0.000). The seed did change the run (start radii differ in the 4th decimal).
+- **Interpretation:** the seed only sets the bump pattern (std 1.5·dz), which D_h = 1 flattens quickly, so the match was expected. It rules out seed luck for this setup only; it is not an independent test. The open limits stay grid and depth (1c). No reported number changed. README Part 3b has a dated note. Code: section1d takes a seed (default 0, so the 1d path is unchanged apart from the header text), and a new section "1e" was added.
+- **Critic (opus55-low, separate): HOLDS_WITH_FIXES.** Fixed: "±1.5 grid steps" → typical size (it is a std, not a bound); "never the weak spot" → limited to R=16, D_h=1, one grid.
+- **Prediction check:** right.
+- **Next:** remaining optional items are low value (the D_z 1e-9 floor in uncertainty.py leaves every % unchanged). Next routine should log IDLE; the wet lab remains.

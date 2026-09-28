@@ -261,18 +261,18 @@ def section1c(t0):
     print(f"  asserts ok: speed tracks D_z at fixed dz. [{time.time() - t0:.0f}s]")
 
 
-def section1d(t0):
+def section1d(t0, seed=0):
     # POST-HOC follow-up, added after 1c failed at D_z=0.0032 (ratio 1.393; wall ended below the middle third).
     # Hypothesis: floor pull from a thick wall near the no-flux floor, not a failure of speed ~ 2 D_z/r.
     # Test: give the wall room (nz=48, wall starts ~0.48 from each boundary, ~6 widths even at D_z=0.0032), same T.
     # PREDICTION (before running): all three ratios in 0.8-1.25 and each doubling within 15% if floor pull is the cause.
     # If D_z=0.0032 still fails with >=5 widths of floor clearance, the floor-pull hypothesis is wrong.
-    print("\n(1d) POST-HOC after 1c: same cases, nz=48 (twice the depth) to test the floor-pull hypothesis")
+    print(f"\n(1d) POST-HOC after 1c: same cases, nz=48 (twice the depth) to test the floor-pull hypothesis, seed {seed}")
     nz = 48
     cases = ((0.0008, 800), (0.0016, 400), (0.0032, 200))
     out, clear = [], []
     for Dz, T in cases:
-        out.append(wall_speed(1.0, 0.02, 16, nz, T, Dz=Dz))
+        out.append(wall_speed(1.0, 0.02, 16, nz, T, seed=seed, Dz=Dz))
         clear.append((wall_speed.last_wall - (16 - nz * 0.02)) / np.sqrt(2 * Dz))
     for (Dz, _), (_, _, sp), c in zip(cases, out, clear):
         pz = 2 * Dz / (16 - nz * 0.02 / 2)                             # independent: nominal mid-depth r
@@ -304,6 +304,11 @@ def main():
         section1c(t0)
     if "1d" in SECTIONS:
         section1d(t0)
+    if "1e" in SECTIONS:
+        # REPLICATION of 1d with new seeds (2026-09-27 23:30, routine). PREDICTION (before running): for seeds 1 and 2,
+        # every ratio in 0.95-1.00 (seed 0: 0.967/0.986/0.995) and each doubling in 1.9-2.1; the 1d asserts pass.
+        for sd in (1, 2):
+            section1d(t0, seed=sd)
     if "2" in SECTIONS:
         print("\n(2) patchwork start, R=10 (circumference 63), nz=80 -> stretched depth H' = 40 (NOT deeper than wide), "
               "dz=0.02, D_z=0.0016")

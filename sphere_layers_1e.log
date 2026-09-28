@@ -1,0 +1,25 @@
+# run: nice -n 15 /opt/anaconda3/bin/python -u sphere_layers.py 1e   (Sun Sep 27 23:22:09 PDT 2026, 3.49 3.51 3.53)
+
+(1d) POST-HOC after 1c: same cases, nz=48 (twice the depth) to test the floor-pull hypothesis, seed 1
+  D_h=1 D_z=0.0008 (D_z/D_h=8.0e-04) R=16 N=3217 nz=48 dz=0.02 dt=0.043: wall radius 15.5041 -> 15.4402; sink speed 9.973e-05; 2D_z/r=1.034e-04 (ratio 0.964); README 2D_h/r=1.293e-01 (ratio 0.0008)
+  D_h=1 D_z=0.0016 (D_z/D_h=1.6e-03) R=16 N=3217 nz=48 dz=0.02 dt=0.030: wall radius 15.5038 -> 15.4388; sink speed 2.033e-04; 2D_z/r=2.068e-04 (ratio 0.983); README 2D_h/r=1.293e-01 (ratio 0.0016)
+  D_h=1 D_z=0.0032 (D_z/D_h=3.2e-03) R=16 N=3217 nz=48 dz=0.02 dt=0.019: wall radius 15.5037 -> 15.4380; sink speed 4.102e-04; 2D_z/r=4.137e-04 (ratio 0.992); README 2D_h/r=1.293e-01 (ratio 0.0032)
+  D_z=0.0008: speed 9.973e-05 / (2 D_z/r_nominal=1.031e-04) = 0.967; final wall 10.0 widths above floor
+  D_z=0.0016: speed 2.033e-04 / (2 D_z/r_nominal=2.062e-04) = 0.986; final wall 7.0 widths above floor
+  D_z=0.0032: speed 4.102e-04 / (2 D_z/r_nominal=4.124e-04) = 0.995; final wall 5.0 widths above floor
+  speed ratio per D_z doubling: 2.038 (0.0016/0.0008), 2.018 (0.0032/0.0016)
+  asserts ok: speed tracks D_z at fixed dz with room to move. [82s]
+
+(1d) POST-HOC after 1c: same cases, nz=48 (twice the depth) to test the floor-pull hypothesis, seed 2
+  D_h=1 D_z=0.0008 (D_z/D_h=8.0e-04) R=16 N=3217 nz=48 dz=0.02 dt=0.043: wall radius 15.5040 -> 15.4402; sink speed 9.973e-05; 2D_z/r=1.034e-04 (ratio 0.964); README 2D_h/r=1.293e-01 (ratio 0.0008)
+  D_h=1 D_z=0.0016 (D_z/D_h=1.6e-03) R=16 N=3217 nz=48 dz=0.02 dt=0.030: wall radius 15.5038 -> 15.4387; sink speed 2.033e-04; 2D_z/r=2.068e-04 (ratio 0.983); README 2D_h/r=1.293e-01 (ratio 0.0016)
+  D_h=1 D_z=0.0032 (D_z/D_h=3.2e-03) R=16 N=3217 nz=48 dz=0.02 dt=0.019: wall radius 15.5036 -> 15.4380; sink speed 4.102e-04; 2D_z/r=4.137e-04 (ratio 0.992); README 2D_h/r=1.293e-01 (ratio 0.0032)
+  D_z=0.0008: speed 9.973e-05 / (2 D_z/r_nominal=1.031e-04) = 0.967; final wall 10.0 widths above floor
+  D_z=0.0016: speed 2.033e-04 / (2 D_z/r_nominal=2.062e-04) = 0.986; final wall 7.0 widths above floor
+  D_z=0.0032: speed 4.102e-04 / (2 D_z/r_nominal=4.124e-04) = 0.995; final wall 5.0 widths above floor
+  speed ratio per D_z doubling: 2.038 (0.0016/0.0008), 2.018 (0.0032/0.0016)
+  asserts ok: speed tracks D_z at fixed dz with room to move. [179s]
+real 179.38
+user 150.35
+sys 28.76
+# exit 0
