@@ -321,3 +321,6 @@
 - **Critic (opus55-low, separate): HOLDS_WITH_FIXES.** Fixed: "±1.5 grid steps" → typical size (it is a std, not a bound); "never the weak spot" → limited to R=16, D_h=1, one grid.
 - **Prediction check:** right.
 - **Next:** remaining optional items are low value (the D_z 1e-9 floor in uncertainty.py leaves every % unchanged). Next routine should log IDLE; the wet lab remains.
+
+## 2026-09-28 09:37 — IDLE: nothing worth doing
+- Waves a–g done; last log recommended IDLE; wave c re-verify not due until 2026-09-28 13:25 (48 h rule). Gate ok (62% free), load 4.1.
