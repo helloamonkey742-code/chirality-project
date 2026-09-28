@@ -302,3 +302,13 @@
 - **Failed/caught:** the builder (opus55-low) compared against the retired heal-across-depth thresholds (2e-9..2e-6), which are 70–180× too low, and wrongly counted Ames as independent. The critic (opus55-low, separate; verdict HOLDS_WITH_FIXES) caught both, and both were fixed before commit. The IOP PDF was bot-walled; the arXiv copy worked.
 - **Prediction check:** mostly right (no consensus; model values ≥1e-5). Wrong in one detail: there is only ONE primary estimate, not several.
 - **Next:** optional: floor D_z at 1e-9 in uncertainty.py and rerun (the percentages should stay identical; the worst-case merge line changes). Optional sphere_layers D_z sweep at fixed dz. Otherwise IDLE; the wet lab remains.
+
+## 2026-09-27 18:30 — wave d (quality: sphere wall speed vs D_z at fixed grid; routine)
+- **Why:** waves a–g are done. The last logs name the open confound: sphere_layers varied D_z only together with grid spacing dz (D_z = 4·dz² hard-wired). The 2·D_z/R result that set the 22/29/75% numbers rests on it. Load 2.7, gate ok (42% free), no train_grasp.
+- **Prediction (written in code before running):** at fixed dz = 0.02, speed/(2·D_z/r) in 0.8–1.25 for D_z = 0.0008/0.0016/0.0032, and speed doubles within 15% per doubling.
+- **Result 1c (MEASURED, pre-registered, sphere_layers_1c.log):** 0.967 / 0.994 (control; matches section 1's 0.991) / **1.393 → FAILED**, exit 1. The D_z=0.0032 wall moved 0.098 vs 0.065 and ended ~1.6 wall-widths above the no-flux floor.
+- **Result 1d (MEASURED, POST-HOC, 1 seed, sphere_layers_1d.log):** twice the depth (nz=48) → 0.967 / 0.986 / 0.995, doubling ×2.04 / ×2.02, walls 10/7/5 widths above the floor, exit 0, 154 s. This is consistent with floor pull as the cause of 1c; it is not proof (depth and start radius changed too).
+- **Conclusion:** on a fixed grid the speed follows D_z, so the confound does not undo 2·D_z/R. No reported number changed. README Part 3b has a dated bullet; section 1 code path is unchanged (Dz=None default; not re-run, checked by reading + compile).
+- **Critic (opus55-low, separate): HOLDS_WITH_FIXES.** Fixed: "~2.5 widths" → ~1.6; "shown" → "seems"; scope limited to 1 seed/R=16; ratios stated as using mid-depth r; D_z=0.0008 case is under-resolved (~1.4 cells), so its 3% shortfall may be a grid effect.
+- **Prediction check:** wrong for the pre-registered 1c (floor artifact); right for the post-hoc 1d.
+- **Next:** optional: repeat 1d with a second seed (pre-registered, ~3 min) and a fixed-D_z clearance sweep to pin down the floor-pull distance. Optional D_z 1e-9 floor in uncertainty.py. Otherwise IDLE; the wet lab remains.
