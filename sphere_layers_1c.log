@@ -1,0 +1,25 @@
+# run: nice -n 15 /opt/anaconda3/bin/python -u sphere_layers.py 1c   (Sun Sep 27 18:23:16 PDT 2026, 2.43 2.90 3.01)
+
+(1c) D_z varied at FIXED dz=0.02 (section 1 only varied D_z together with dz): R=16 nz=24 D_h=1 seed 0
+  note: at D_z=0.0008 the wall width sqrt(2 D_z)=0.040 is only ~1.4 cells of dz=0.02 (under-resolved)
+  D_h=1 D_z=0.0008 (D_z/D_h=8.0e-04) R=16 N=3217 nz=24 dz=0.02 dt=0.044: wall radius 15.7443 -> 15.6814; sink speed 9.821e-05; 2D_z/r=1.018e-04 (ratio 0.964); README 2D_h/r=1.273e-01 (ratio 0.0008)
+  D_h=1 D_z=0.0016 (D_z/D_h=1.6e-03) R=16 N=3217 nz=24 dz=0.02 dt=0.031: wall radius 15.7440 -> 15.6793; sink speed 2.019e-04; 2D_z/r=2.037e-04 (ratio 0.991); README 2D_h/r=1.273e-01 (ratio 0.0016)
+  D_h=1 D_z=0.0032 (D_z/D_h=3.2e-03) R=16 N=3217 nz=24 dz=0.02 dt=0.019: wall radius 15.7437 -> 15.6461; sink speed 5.658e-04; 2D_z/r=4.075e-04 (ratio 1.388); README 2D_h/r=1.274e-01 (ratio 0.0044)
+  D_z=0.0008: speed 9.821e-05 / (2 D_z/r_nominal=1.015e-04) = 0.967
+  D_z=0.0016: speed 2.019e-04 / (2 D_z/r_nominal=2.030e-04) = 0.994
+  D_z=0.0032: speed 5.658e-04 / (2 D_z/r_nominal=4.061e-04) = 1.393
+Traceback (most recent call last):
+  File "/Users/saptarshighosh/Documents/chirality-project/sphere_layers.py", line 297, in <module>
+    main()
+    ~~~~^^
+  File "/Users/saptarshighosh/Documents/chirality-project/sphere_layers.py", line 276, in main
+    section1c(t0)
+    ~~~~~~~~~^^^^
+  File "/Users/saptarshighosh/Documents/chirality-project/sphere_layers.py", line 255, in section1c
+    assert 0.8 < sp / pz < 1.25, f"D_z={Dz}: speed not 2*D_z/r (ratio {sp / pz:.3f})"
+           ^^^^^^^^^^^^^^^^^^^^
+AssertionError: D_z=0.0032: speed not 2*D_z/r (ratio 1.393)
+real 62.04
+user 59.57
+sys 4.24
+# exit 1

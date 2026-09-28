@@ -243,6 +243,14 @@ layer took over within at most 1.5×10⁴ years (Enceladus) or 2.8×10⁵ years 
 - A column-like shell (4× deeper than wide in stretched units) started at 50% froze into stacked layers; their share changed
   by ±0.013 over t = 500→1000, matching the predicted slow creep (±0.013; post-hoc check, 2 runs). The top layer held a share of 0.52 and 0.07 of the ocean in 2 runs, vs the L/H' = 0.25 used
   in Part 8. Two runs neither support nor rule out that rule, so it stays ASSUMED.
+- *(Added 2026-09-27.)* The runs above changed vertical mixing D_z only together with the grid spacing. So we re-ran
+  on a fixed grid (dz = 0.02) with D_z = 0.0008, 0.0016 and 0.0032. The wall sank at 0.967, 0.986 and 0.995 of 2·D_z/r
+  (r = the wall's middle-depth radius), and each doubling of D_z doubled the speed (×2.04, ×2.02) (MEASURED,
+  `sphere_layers.py 1d`, `sphere_layers_1d.log`; 1 seed, R = 16). The first planned try (`1c`, half as deep,
+  `sphere_layers_1c.log`) failed at D_z = 0.0032 (1.39×). That wall ended only ~1.6 wall-widths above the closed sea
+  floor and seems to have been pulled in. `1d` doubled the depth, a fix chosen after seeing that failure, and the problem
+  went away. So on a fixed grid the speed still follows D_z. The weakest case is barely resolved (~1.4 cells wide), so its
+  3% shortfall may come from the grid.
 The full test takes about 22 minutes (`./run_all.sh --full`).
 
 **What picks the top layer's hand?** Its own majority, set by the weak-force bias summed over the molecules in that

@@ -55,10 +55,10 @@ def sphere_mesh(n):
 
 
 class Shell:
-    def __init__(self, R, nz, dz, Dh, N=None):
+    def __init__(self, R, nz, dz, Dh, N=None, Dz=None):
         self.N = N or int(round(4 * np.pi * R * R))                    # horizontal spacing ~1 at radius R
         self.p, self.L, self.area = sphere_mesh(self.N)
-        self.R, self.nz, self.dz, self.Dh, self.Dz = R, nz, dz, Dh, 4 * dz * dz
+        self.R, self.nz, self.dz, self.Dh, self.Dz = R, nz, dz, Dh, (4 * dz * dz if Dz is None else Dz)
         self.r_in = R - nz * dz
         self.r = self.r_in + (np.arange(nz) + 0.5) * dz
         self.rf = self.r_in + np.arange(1, nz) * dz                    # inner faces
@@ -103,8 +103,8 @@ def smooth_noise(sh, rng, ell=3.0):
 
 
 # ---------- (1) layer wall speed ----------
-def wall_speed(Dh, dz, R, nz, t_end, seed=0):
-    sh = Shell(R, nz, dz, Dh)
+def wall_speed(Dh, dz, R, nz, t_end, seed=0, Dz=None):
+    sh = Shell(R, nz, dz, Dh, Dz=Dz)
     check_stability(sh)
     rng = np.random.default_rng(seed)
     h = sh.r_in + nz * dz / 2 + 1.5 * dz * smooth_noise(sh, rng)      # bumpy wall, so D_h has something to act on
@@ -119,7 +119,8 @@ def wall_speed(Dh, dz, R, nz, t_end, seed=0):
     print(f"  D_h={Dh:g} D_z={sh.Dz:.4g} (D_z/D_h={sh.Dz / Dh:.1e}) R={R} N={sh.N} nz={nz} dz={dz} dt={sh.dt:.3f}: "
           f"wall radius {rw[0]:.4f} -> {rw[-1]:.4f}; sink speed {speed:.3e}; "
           f"2D_z/r={pz:.3e} (ratio {speed / pz:.3f}); README 2D_h/r={ph:.3e} (ratio {speed / ph:.4f})", flush=True)
-    return speed / pz, speed / ph
+    wall_speed.last_wall = rw[-1]                                      # final wall radius, read by section 1d
+    return speed / pz, speed / ph, speed
 
 
 # ---------- (2) patchwork start: layers, top layer, winner ----------
@@ -234,12 +235,57 @@ def section1(t0):
     # t_end keeps each wall in the middle third of the depth (a first run to t=400 let the dz=0.04 wall reach the
     # sea floor, where the no-flux boundary pulls it in: ratio 1.60, rejected as a boundary artifact)
     r1 = [wall_speed(Dh, dz, 16, 24, T) for Dh, dz, T in ((1.0, 0.02, 400), (4.0, 0.02, 400), (1.0, 0.04, 150))]
-    for rz, rh in r1:
+    for rz, rh, _ in r1:
         assert 0.8 < rz < 1.25, f"wall speed not 2*D_z/r (ratio {rz:.3f})"
         assert rh < 0.1, f"wall speed near README 2*D_h/r (ratio {rh:.3f})"
     assert abs(r1[1][0] / r1[0][0] - 1) < 0.15, "x4 D_h changed the wall speed: D_h does control it"
     print(f"  asserts ok: speed tracks D_z (ratios {[round(x[0], 3) for x in r1]}), not D_h. [{time.time() - t0:.0f}s]")
 
+
+def section1c(t0):
+    print("\n(1c) D_z varied at FIXED dz=0.02 (section 1 only varied D_z together with dz): R=16 nz=24 D_h=1 seed 0")
+    # PREDICTION (written before running): speed/(2 D_z/r) in 0.8-1.25 for every case, and each doubling of D_z
+    # doubles the speed to within 15% (successive speed ratio in 1.7-2.3). D_z=0.0016 is the control (section 1: 0.991).
+    # t_end ~ 1/D_z keeps the wall in the middle third of the depth.
+    print("  note: at D_z=0.0008 the wall width sqrt(2 D_z)=0.040 is only ~1.4 cells of dz=0.02 (under-resolved)")
+    cases = ((0.0008, 800), (0.0016, 400), (0.0032, 200))
+    out = [wall_speed(1.0, 0.02, 16, 24, T, Dz=Dz) for Dz, T in cases]
+    for (Dz, _), (rz, _, sp) in zip(cases, out):
+        pz = 2 * Dz / (16 - 24 * 0.02 / 2)                             # independent of wall_speed: nominal mid-depth r
+        print(f"  D_z={Dz:g}: speed {sp:.3e} / (2 D_z/r_nominal={pz:.3e}) = {sp / pz:.3f}")
+        assert 0.8 < sp / pz < 1.25, f"D_z={Dz}: speed not 2*D_z/r (ratio {sp / pz:.3f})"
+    dbl = [out[i + 1][2] / out[i][2] for i in range(2)]
+    print(f"  speed ratio per D_z doubling: {dbl[0]:.3f} (0.0016/0.0008), {dbl[1]:.3f} (0.0032/0.0016)")
+    for d in dbl:
+        assert abs(d / 2 - 1) < 0.15, f"doubling D_z changed speed by x{d:.3f}, not ~2"
+    print(f"  asserts ok: speed tracks D_z at fixed dz. [{time.time() - t0:.0f}s]")
+
+
+def section1d(t0):
+    # POST-HOC follow-up, added after 1c failed at D_z=0.0032 (ratio 1.393; wall ended below the middle third).
+    # Hypothesis: floor pull from a thick wall near the no-flux floor, not a failure of speed ~ 2 D_z/r.
+    # Test: give the wall room (nz=48, wall starts ~0.48 from each boundary, ~6 widths even at D_z=0.0032), same T.
+    # PREDICTION (before running): all three ratios in 0.8-1.25 and each doubling within 15% if floor pull is the cause.
+    # If D_z=0.0032 still fails with >=5 widths of floor clearance, the floor-pull hypothesis is wrong.
+    print("\n(1d) POST-HOC after 1c: same cases, nz=48 (twice the depth) to test the floor-pull hypothesis")
+    nz = 48
+    cases = ((0.0008, 800), (0.0016, 400), (0.0032, 200))
+    out, clear = [], []
+    for Dz, T in cases:
+        out.append(wall_speed(1.0, 0.02, 16, nz, T, Dz=Dz))
+        clear.append((wall_speed.last_wall - (16 - nz * 0.02)) / np.sqrt(2 * Dz))
+    for (Dz, _), (_, _, sp), c in zip(cases, out, clear):
+        pz = 2 * Dz / (16 - nz * 0.02 / 2)                             # independent: nominal mid-depth r
+        print(f"  D_z={Dz:g}: speed {sp:.3e} / (2 D_z/r_nominal={pz:.3e}) = {sp / pz:.3f}; "
+              f"final wall {c:.1f} widths above floor")
+    dbl = [out[i + 1][2] / out[i][2] for i in range(2)]
+    print(f"  speed ratio per D_z doubling: {dbl[0]:.3f} (0.0016/0.0008), {dbl[1]:.3f} (0.0032/0.0016)")
+    for (Dz, _), (_, _, sp) in zip(cases, out):
+        pz = 2 * Dz / (16 - nz * 0.02 / 2)
+        assert 0.8 < sp / pz < 1.25, f"D_z={Dz}: speed not 2*D_z/r (ratio {sp / pz:.3f})"
+    for d in dbl:
+        assert abs(d / 2 - 1) < 0.15, f"doubling D_z changed speed by x{d:.3f}, not ~2"
+    print(f"  asserts ok: speed tracks D_z at fixed dz with room to move. [{time.time() - t0:.0f}s]")
 
 
 def main():
@@ -254,6 +300,10 @@ def main():
 
     if "1" in SECTIONS:
         section1(t0)
+    if "1c" in SECTIONS:
+        section1c(t0)
+    if "1d" in SECTIONS:
+        section1d(t0)
     if "2" in SECTIONS:
         print("\n(2) patchwork start, R=10 (circumference 63), nz=80 -> stretched depth H' = 40 (NOT deeper than wide), "
               "dz=0.02, D_z=0.0016")
