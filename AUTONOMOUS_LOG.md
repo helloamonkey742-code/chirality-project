@@ -324,3 +324,12 @@
 
 ## 2026-09-28 09:37 — IDLE: nothing worth doing
 - Waves a–g done; last log recommended IDLE; wave c re-verify not due until 2026-09-28 13:25 (48 h rule). Gate ok (62% free), load 4.1.
+
+## 2026-09-28 18:30 — wave c (partial full re-verification; routine)
+- **Why:** last full run 2026-09-26 13:25 (>48 h); uncertainty.py and sphere_layers.py changed since. Load 1.9 at start, gate ok (82% free), no train_grasp.
+- **Prediction (written 18:24 before the slow runs):** sphere_layers 1/2/2b/3, k3, frank, frank2, aniso3d, coarsen3d all exit 0 with numbers identical to their committed logs (seeded, code unchanged). shell3d and domains3d skipped (over the 20-min limit; every shell3d row was re-run 09-26/27).
+- **Result (MEASURED):** fast set 10/10 pass (86 s); uncertainty.py output identical to uncertainty.log (the 22/29/75% numbers). sphere_layers sections 1 and 3 (49 s; the 2·D_z/R wall-speed test behind the 2026-09-27 correction), k3 (89 s) and frank (177 s) all exit 0, and every output line matches its log.
+- **Skipped:** frank2, aniso3d, sphere_layers 2 and 2b, coarsen3d. The 1-min load reached 6.35 after frank, mostly the student's Chrome (GPU helper ~260% CPU), so heavy work stopped. No commit of any half-done output.
+- **Critic:** skipped. These are seeded reproductions compared line by line with committed logs; no README number changed.
+- **Prediction check:** right for every script that ran.
+- **Next:** finish the skipped five (≈ 5 + 5 + 14 + 8 + 12 min under nice) when the machine is idle; otherwise IDLE. The wet lab remains.
