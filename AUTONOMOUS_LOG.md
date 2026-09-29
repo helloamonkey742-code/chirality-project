@@ -333,3 +333,10 @@
 - **Critic:** skipped. These are seeded reproductions compared line by line with committed logs; no README number changed.
 - **Prediction check:** right for every script that ran.
 - **Next:** finish the skipped five (≈ 5 + 5 + 14 + 8 + 12 min under nice) when the machine is idle; otherwise IDLE. The wet lab remains.
+
+## 2026-09-29 08:29 — wave c (finish skipped re-verify; routine) — ABORTED, nothing verified
+- **Why:** the 09-28 partial re-verify left frank2, aniso3d, sphere_layers 2/2b and coarsen3d un-run. Gate ok (76% free). Load 8.4 at start, 5.7 twenty seconds later, so one slow script was tried. No train_grasp.
+- **Prediction:** frank2 exits 0 in about 5 min, and its output matches frank2.log line by line (F = 0.71).
+- **Result:** frank2.py ran from 08:30 to about 11:10. That is 9486 s of wall time under nice -n 15, and the load hit 12–14 (the student was using the machine; the Mac may also have slept). It was killed (exit 143) with no output. MEASURED: nothing. No number changed, and no repo file changed except this log.
+- **Mistake:** the 20-min limit was only an intention. The command had no hard timeout, so it overran by about 8×. Next time wrap each slow run in `timeout 1200` (or check the clock), and re-check load between scripts.
+- **Next:** finish frank2, aniso3d, sphere_layers 2/2b and coarsen3d one at a time with a hard 20-min kill, only when load is < 3. Otherwise IDLE. The wet lab remains.
