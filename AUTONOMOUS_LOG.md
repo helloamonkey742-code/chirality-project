@@ -343,3 +343,12 @@
 
 ## 2026-09-29 14:05 — IDLE: nothing worth doing
 - Only open item is finishing the wave c re-verify (frank2, aniso3d, sphere_layers 2/2b, coarsen3d), which needs load < 3. Load 6.2 now (student on the machine), so no heavy runs. Gate ok (37% free). No number changed.
+
+## 2026-09-30 08:45 — wave c (finish skipped re-verify; routine) — frank2 only
+- **Why:** frank2, aniso3d, sphere_layers 2/2b and coarsen3d were still un-re-run since 09-28. Gate ok (83% free), load 2.5 at start, no train_grasp.
+- **Prediction:** frank2 exits 0 and its table matches frank2.log line by line (F = 0.71).
+- **Result (MEASURED):** frank2.py exit 0; all output lines are identical to frank2.log (F = 0.71, rows 0.493/0.785/0.952/0.948). No number changed.
+- **Mistake (again):** wall time was 12 097 s (3.4 h), not ~5 min. The hard kill was `perl -e 'alarm 1200; exec @ARGV' nice -n 15 python ...`; it did not fire (the alarm is lost across the double exec through `nice`, or real time paused during sleep — not diagnosed). Load rose to 8–10 during the run (the student on Chrome). Next time run python in the background and kill it from a watcher (`( sleep 1200; kill $PID ) &`), which does not depend on alarm inheritance.
+- **Skipped:** aniso3d, sphere_layers 2/2b, coarsen3d (load 6–10 at 13:45).
+- **Critic:** skipped — seeded reproduction compared line by line with a committed log.
+- **Next:** aniso3d, sphere_layers 2/2b, coarsen3d one at a time with a watcher kill, only at load < 3. Otherwise IDLE. The wet lab remains.
