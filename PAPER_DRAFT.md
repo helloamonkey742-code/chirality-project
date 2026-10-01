@@ -8,7 +8,7 @@ Life uses left-handed amino acids and right-handed sugars, and no one knows why.
 
 A rule of thumb comes out (§3.0): about 10³³–10³⁴ molecules, a few billion moles, must take part in the decision *together*. That means kilometre-scale volumes of well-mixed water at micromolar to millimolar concentrations. Ponds and single rock pores are many orders of magnitude too small. Icy-moon oceans are big enough, so the answer turns on how well they mix. Their salinity sets how strongly they are stratified, and a stratified ocean mixes slowly up and down. The patchwork of hands then freezes into stacked layers that merge only as fast as vertical mixing allows (§3.3; pictures in Fig. 2). Varying every uncertain input at once, physics wins in 22% (Enceladus), 29% (Europa) and 75% (early Earth) of plausible cases (§3.9).
 
-The racemic amino acids in samples returned from asteroid Bennu, plausibly a fragment of a wet parent body, are a strong test (§3.10). Every amplifier in our assumed rate range would also have finished on Bennu's parent body and left large, measurable excesses there. If the same chemistry ran in both places, only slower amplifiers are allowed, and physics then wins in just 2% (Enceladus), 4% (Europa) and 15% (early Earth) of cases. Connected compartments, such as the pores of a vent mound, help only in proportion to the volume they connect within the decision time (§3.11). Long runs show no late drift or flipping at realistic molecule numbers (§3.12). No known prebiotic reaction amplifies handedness this way, so we pre-register a wet-lab search sized for meteoritic concentrations (≤1 mM) and published measurement precision (§5). All code is public and self-checking (§6).
+The racemic amino acids in samples returned from asteroid Bennu, plausibly a fragment of a wet parent body, are a strong test (§3.10). Every amplifier in our assumed rate range would also have run on Bennu's parent body. If an amplified excess lasted forever, Bennu would rule out nearly all of them and cut physics' odds to 2–15%. But amplification is a non-equilibrium process. In a closed rock whose heat runs out, the same reaction network (run with every step reversible) rises to a large excess and then falls back to 50/50. In an ocean that vents keep driving, the excess holds. With that rule, a racemic Bennu fits the model, and the odds stay at 22% / 29% / 75% (12–25% / 17–31% / 42–75% across the cases tested). The idea makes a testable prediction: amino acids from a driven ocean, such as Enceladus' plume, should carry a lasting excess, while extinct closed parent bodies should be racemic. Connected compartments, such as the pores of a vent mound, help only in proportion to the volume they connect within the decision time (§3.11). Long runs show no late drift or flipping at realistic molecule numbers (§3.12). No known prebiotic reaction amplifies handedness this way, so we pre-register a wet-lab search sized for meteoritic concentrations (≤1 mM) and published measurement precision (§5). All code is public and self-checking (§6).
 
 ## 1 Introduction
 
@@ -135,7 +135,26 @@ Suppose the same chemistry, with the same rate constant, operated on Bennu's par
 - **Rates in the original range (10⁻⁶ to 1 /M/s):** every draw would have finished on Bennu. Taken at face value, Bennu rules out the whole range.
 - **Rates extended down to 10⁻¹² /M/s:** 23% of draws keep Bennu racemic. Among those, physics wins in only **2% (Enceladus), 4% (Europa) and 15% (early Earth)** of cases. An amplifier slow enough to stay idle on Bennu is usually too slow to finish in an icy moon as well. Only 1–5% of icy-moon draws have a larger c·τ than Bennu's maximum.
 
-This is the strongest constraint in the paper. The escape routes all say that the chemistry differed:
+Taken at face value this is the strongest constraint in the paper. But it assumes that an amplified excess, once made, lasts. That is only true while something keeps driving the system.
+
+**Closed rock vs open ocean (`review.py` R6).** Amplification is a non-equilibrium process. At equilibrium, both hands are equal (apart from the 10⁻¹⁷ PVED), so a closed system must end up racemic. To check this, we took the `frank2.py` network, made every step reversible with rates that obey detailed balance, and ran it closed (no feed, no outflow). Starting from a 0.1% seed:
+
+- with reverse steps about 1/2000 the speed of forward ones, the excess peaks at 70% and is back to 50/50 after about 7×10³ reaction times (1/k₂c);
+- with reverse steps 100× slower, it reaches 100% and fades after about 6×10⁷ reaction times;
+- the same network kept open (fed and flushed) holds 99.8% for as long as it is driven.
+
+Bennu's parent body was closed, and its liquid water lasted only while short-lived radioactive heat did. Its excess therefore stays at zero if the reaction never finished (k₂cτ < 10) or if it finished and then faded (k₂cτ above the fade time). The second branch removes most of the conflict:
+
+| k₂ range | fade time (reaction times) | P(win given a racemic Bennu): Enceladus / Europa / Earth |
+|---|---|---|
+| 10⁻⁶ – 1 | 7×10³ | 22% / 29% / 75% (unchanged) |
+| 10⁻⁶ – 1 | 6×10⁷ | 25% / 31% / 75% |
+| 10⁻¹² – 1 | 7×10³ | 15% / 21% / 57% |
+| 10⁻¹² – 1 | 6×10⁷ | 12% / 17% / 42% |
+
+This resolution has two assumptions. First, an icy-moon ocean must be continuously driven; Enceladus' measured plume H₂ points to ongoing water–rock reactions (Waite et al. 2017). Second, Bennu's fluid must have been effectively closed. Its veins and evaporite minerals show that fluid moved and dried out, so it was at best partly open. The resolution also makes a prediction that can be checked: samples from a driven ocean, such as Enceladus' plume, should carry a lasting excess, while those from extinct, closed parent bodies should be racemic. A racemic Enceladus would count against the idea.
+
+If the closed-system argument fails, the other escape routes all say that the chemistry differed:
 
 - the amplifier needed something Bennu's fluid lacked (longer peptides, mineral surfaces, warmer or longer-lived water);
 - Bennu's water was mostly pore water in mud, not a free ocean;
@@ -174,7 +193,7 @@ In a real vent mound (k₂ = 10⁻³ /M/s, c = 1 mM, 10⁵ yr), the decision tak
 - PVED has never been measured directly; its sign for amino acids in water is unsettled (the "conformation problem", 2009), and the sugar PVED sign is also unsettled, with some evidence pointing the "wrong" way, which would partly cancel the amino-acid bias (Part 5).
 - The Enceladus ocean volume (2.7×10¹⁶ m³) is derived indirectly from ice-shell/core geometry (Čadek et al. 2016), self-checked by `ocean.py` against that paper's implied range (2.45–2.93×10¹⁶ m³); the ocean's age is separately debated (1 Myr–1 Gyr).
 - Physics wins for Enceladus/Europa in 22%/29% of the plausible input range, early Earth 75% (Part 8) — not settled, and it falls to 3%/7% if layers never merge; vertical mixing is the key unknown. *History: first reported as 18%, then 43%/58% (corrected 2026-09-25), then 55%/78% (and 100% for Earth) with concentration as the key unknown; corrected 2026-09-26 because layer boundaries on a sphere sink at 2·D_z/R, not 2·D_h/R (`sphere_layers.py`).*
-- **Bennu (§3.10).** If the same amplifying chemistry ran on Bennu's wet parent body, its racemic samples cut physics' win rate to 2%/4%/15%. That result depends on assumed parent-body concentrations and durations, and on the rate constant being the same in both settings.
+- **Bennu (§3.10).** If an amplified excess lasted forever, Bennu's racemic samples would cut physics' win rate to 2%/4%/15%. The closed-rock result removes most of that conflict, but it depends on Bennu's parent body behaving as a closed system and on its reverse reaction rates, which are unmeasured. All Bennu inputs (concentration, duration, same k₂ in both settings) are assumed.
 - Concentrations: meteoritic amino acids reach at most a few hundred nmol/g (J. Dworkin, pers. comm.), or ≤ ~1 mM in parent-body fluid. The pond (10⁻² M) and vent-pore (up to 1 M) values in Part 4 are upper bounds. Lowering them only strengthens the conclusion that small settings are coin flips.
 - The mixing model uses simple eddy diffusion. Salinity-driven stratification enters only through the assumed vertical-diffusivity range (10⁻¹⁰ to 10⁻³ m²/s); no ocean circulation is simulated.
 - Meteorite seeding (Part 4b) predicts the same left-handed outcome throughout the Solar System as the weak-force hypothesis — finding left-handed life on an icy moon can't by itself distinguish the two; only life from another star system could.
@@ -288,3 +307,5 @@ Individual scripts (sim.py, ocean.py, domains.py, patches.py, domains3d.py, coar
 - Glavin et al. 2012, "Unusual nonterrestrial L-proteinogenic amino acid excesses in the Tagish Lake meteorite", *Meteorit. Planet. Sci.* 47:1347, doi:10.1111/j.1945-5100.2012.01400.x
 - Milner-White & Russell 2005, *Orig. Life Evol. Biosph.* (compartments; suggested by A. Brandenburg; not yet read in full)
 - Kramers 1940, *Physica* 7:284 (escape rate over a barrier)
+- Waite et al. 2017, "Cassini finds molecular hydrogen in the Enceladus plume: evidence for hydrothermal processes", *Science* 356:155, doi:10.1126/science.aai8703
+- Blackmond 2004, "Asymmetric autocatalysis and its implications for the origin of homochirality", *PNAS* 101:5732, doi:10.1073/pnas.0308363101 (closed systems and equilibrium)

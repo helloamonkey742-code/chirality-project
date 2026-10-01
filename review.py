@@ -8,9 +8,13 @@ R3 network  connected compartments (Russell-style vent mound) vs one isolated po
             M compartments exchanging at rate q.
 R4 long run does the outcome drift or flip if the simulation runs 10-100x longer? Flip rate vs noise.
 R5 design   experiment sizing at meteoritic concentrations (<= ~1 mM) and published ee precision.
+R6 closed   R2 assumed any amplifier that "finished" leaves a lasting excess. That holds only in an open,
+            driven system (an ocean fed by vents). A closed rock whose drive runs down must return to 50/50
+            (thermodynamics: at equilibrium both hands are equal). Test it, then redo R2 with that rule.
 """
 import numpy as np
 from scipy.stats import norm
+from scipy.integrate import solve_ivp
 from ocean import NA, YR, PREF, delta_at
 from sim import delta
 from design import k2_min
@@ -159,9 +163,56 @@ def r5_design():
     assert best < pond_1mM
 
 
+def frank_closed(a0, slow=1.0, feed=0.0, t_end=1e8):
+    """frank2.py's network with every step reversible and rates obeying detailed balance
+    (both A<->L routes share K = k0/k0r = k/kr = 2), so a closed system's equilibrium is 50/50.
+    feed > 0 makes it open (feedstock topped up to a0, everything flows out at rate feed).
+    slow scales the reverse rates. Returns times and ee, starting from a 0.1% seed."""
+    k, ki, k0r, kr = 1.0, 1.0, 5e-4 * slow, 0.5 * slow
+    k0 = 2 * k0r
+
+    def rhs(t, y):
+        a, L, D = y
+        nl = k0 * a - k0r * L + k * a * L - kr * L * L          # net A -> L
+        nd = k0 * a - k0r * D + k * a * D - kr * D * D
+        return [-nl - nd + feed * (a0 - a), nl - ki * L * D - feed * L, nd - ki * L * D - feed * D]
+    t = np.logspace(-1, np.log10(t_end), 1500)
+    y = solve_ivp(rhs, (0, t_end), [a0, 0.01 * 1.001, 0.01 * 0.999], method="LSODA", t_eval=t, rtol=1e-10, atol=1e-14).y
+    return t, (y[1] - y[2]) / (y[1] + y[2])
+
+
+def r6_closed():
+    print("\nR6. Closed rock vs open ocean: does an amplified excess last? (frank2 network, all steps reversible)")
+    fades = {}
+    for slow, label in ((1.0, "reverse steps ~1/2000 of forward"), (0.01, "reverse steps 100x slower")):
+        t, ee = frank_closed(200.0, slow)
+        on = t[np.abs(ee) > 0.1 * np.abs(ee).max()]
+        fades[slow] = on[-1]
+        print(f"  closed, {label:34}: peak |ee| {np.abs(ee).max():.2f}, back to 50/50 after ~{on[-1]:.0e} "
+              f"(units of 1/(k2 c)); final {ee[-1]:+.3f}")
+        assert abs(ee[-1]) < 0.01, "closed system should end racemic"
+    t, ee = frank_closed(2.0, 1.0, feed=0.05)
+    print(f"  open (fed + outflow)                           : final ee {ee[-1]:+.3f}  (held as long as the drive lasts)")
+    assert ee[-1] > 0.99
+    print("  -> Bennu's parent body (closed, heat gone after ~10 Myr) stays racemic if its reaction never finished")
+    print("     (k2 c tau < 10) OR finished and then faded (k2 c tau > fade time). Redo R2 with that rule:")
+    for k2_rng in ((1e-6, 1.0), (1e-12, 1.0)):
+        for slow, fade in fades.items():
+            row = []
+            for name, args in U.WORLDS.items():
+                x, win, _ = U.sweep(*args, k2_rng=k2_rng)
+                kct = x["rate k2"] * 10 ** U.RNG.uniform(*np.log10(BENNU_C), U.N) * 10 ** U.RNG.uniform(*np.log10(BENNU_T), U.N) * YR
+                rac = (kct < 10) | (kct > fade)
+                row.append(f"{name.split()[0]} {(win & rac).mean() / max(rac.mean(), 1 / U.N):4.0%}")
+            print(f"    k2 {k2_rng[0]:g}..1, fade after {fade:.0e}: Bennu racemic is consistent; P(win | Bennu racemic): "
+                  + ", ".join(row))
+    return fades
+
+
 if __name__ == "__main__":
     r1_scale()
     r2_bennu()
     r3_network()
     r4_longrun()
     r5_design()
+    r6_closed()
