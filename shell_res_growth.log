@@ -1,0 +1,5 @@
+dx=1 dt=0.05 (shell3d.py)        t=25:l=30 t=50:l=37 t=100:l=47 t=200:l=68 t=400:l=91  exponent 0.41
+dx=1 dt=0.0125                   t=25:l=30 t=50:l=37 t=100:l=47 t=200:l=68 t=400:l=91  exponent 0.41
+dx=1/2 dt=0.0125 (512x512x16)    t=25:l=31 t=50:l=39 t=100:l=48 t=200:l=64 t=400:l=93  exponent 0.39
+patch size, fine / coarse grid: 1.03 1.05 1.02 0.95 1.02
+python3 shell_res.py growth  1352.83s user 6.52s system 99% cpu 22:52.58 total

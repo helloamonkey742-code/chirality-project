@@ -1,0 +1,57 @@
+R1. How many molecules must decide together? (Delta >= 2, physics wins 97.7%)
+  PVED taken as 2.3e-14 J/mol (g = 1e-17 at 0 C); modern range spans ~1e-19..1e-16 in g
+  T=273 K: g=1.0e-17, need N >= 3.6e+33 molecules (5.9e+09 mol); at 1e-06 M a well-mixed 6e+12 m^3 (cube 18 km), at 0.001 M a well-mixed 6e+09 m^3 (cube 1.8 km), at 0.1 M a well-mixed 6e+07 m^3 (cube 0.39 km)
+  T=300 K: g=9.1e-18, need N >= 4.3e+33 molecules (7.2e+09 mol); at 1e-06 M a well-mixed 7e+12 m^3 (cube 19 km), at 0.001 M a well-mixed 7e+09 m^3 (cube 1.9 km), at 0.1 M a well-mixed 7e+07 m^3 (cube 0.42 km)
+  T=373 K: g=7.3e-18, need N >= 6.7e+33 molecules (1.1e+10 mol); at 1e-06 M a well-mixed 1e+13 m^3 (cube 22 km), at 0.001 M a well-mixed 1e+10 m^3 (cube 2.2 km), at 0.1 M a well-mixed 1e+08 m^3 (cube 0.48 km)
+  -> a warm little pond (1 m^3 at 1 M holds 6e26) is ~7 orders short; only ocean-scale water that
+     is mixed on the decision time can pool enough molecules. Time helps only as (k tau)^1/4.
+
+R2. Bennu/Ryugu are racemic. Would the same amplifier have finished there?
+  Bennu parent body c*tau = 3e+08 .. 9e+11 M s -> any amplifier with k2 >= 1e-11 .. 3e-08 /M/s would have finished there
+  patches after alteration (pore diffusion only): 977-3090 m across -> a gram sample would sit
+  inside one patch and show a large excess of either hand. Bennu's chiral amino acids (incl. isovaline,
+  which cannot racemize afterwards) are racemic -> no such amplifier finished there.
+  rate k2 drawn over 1e-06..1 /M/s:
+    Enceladus          wins  22% | Bennu stays racemic   0% | both  0.0% | P(win | Bennu racemic)   0% | c*tau above Bennu's max in 1%
+    Europa             wins  28% | Bennu stays racemic   0% | both  0.0% | P(win | Bennu racemic)   0% | c*tau above Bennu's max in 5%
+    Early Earth ocean  wins  75% | Bennu stays racemic   0% | both  0.0% | P(win | Bennu racemic)   0% | c*tau above Bennu's max in 4%
+  rate k2 drawn over 1e-12..1 /M/s:
+    Enceladus          wins  14% | Bennu stays racemic  23% | both  0.4% | P(win | Bennu racemic)   2% | c*tau above Bennu's max in 1%
+    Europa             wins  19% | Bennu stays racemic  23% | both  0.9% | P(win | Bennu racemic)   4% | c*tau above Bennu's max in 5%
+    Early Earth ocean  wins  57% | Bennu stays racemic  23% | both  3.4% | P(win | Bennu racemic)  15% | c*tau above Bennu's max in 4%
+
+R3. Connected compartments vs isolated ones (normal form, M = 16, g = 1e-3, gamma = 0.01)
+  one pool with all the molecules: P = 0.724;  a single isolated compartment: P = 0.559
+  exchange rate q = 0.0   (x decision time  0.00): P(majority favoured) = 0.675, all 16 one hand = 0%
+  exchange rate q = 0.01  (x decision time  0.10): P(majority favoured) = 0.686, all 16 one hand = 0%
+  exchange rate q = 0.1   (x decision time  1.00): P(majority favoured) = 0.724, all 16 one hand = 53%
+  exchange rate q = 1.0   (x decision time 10.00): P(majority favoured) = 0.714, all 16 one hand = 100%
+  vent mound, k2=0.001, c=0.001 M, 1e5 yr: decision time 56 yr, pore exchange x decision time 2e+06 (fully connected); diffusion reach 1.3 m
+    single 1 mm^3 pore               P(physics) = 0.500
+    diffusion-connected (1.3 m)^3    P(physics) = 0.500
+    flow-connected 100 m mound       P(physics) = 0.731
+    flow-connected 1 km^3            P(physics) = 1.000
+
+R4. Long runs: does the decided hand drift or flip later?
+  P(favoured) at end of sweep / +1000 / +10000 time units: 0.730 / 0.730 / 0.730
+  flip rate once decided (lam = 1, no bias) vs noise eps = 1/N:
+    eps=0.2   measured 1.8e-02 per unit time, Kramers 1.8e-02
+    eps=0.15  measured 7.7e-03 per unit time, Kramers 8.0e-03
+    eps=0.12  measured 3.4e-03 per unit time, Kramers 3.5e-03
+    eps=0.1   measured 1.4e-03 per unit time, Kramers 1.5e-03
+  rate ~ exp(-N/2): 1 um^3 at 1 uM holds ~600 molecules (flips possible); any pond or ocean never flips.
+
+R5. Experiment at meteoritic concentrations: smallest detectable k2 (/M/s) in 1 year
+  (ee noise per sample: 0.2% optimistic GC-MS; 1% typical; 2.6% Glavin & Dworkin 2009 replicates)
+     conc  seed       0.2%         1%       2.6%   2.6% n=9
+   0.0001    5%      5e-05      2e-04      4e-04      2e-04
+   0.0001   20%      1e-05      6e-05      1e-04      5e-05
+    0.001    5%      5e-06      2e-05      4e-05      2e-05
+    0.001   20%      1e-06      6e-06      1e-05      5e-06
+     0.01    5%      5e-07      2e-06      4e-06      2e-06
+     0.01   20%      1e-07      6e-07      1e-06      5e-07
+      0.1    5%      5e-08      2e-07      4e-07      2e-07
+      0.1   20%      1e-08      6e-08      1e-07      5e-08
+  nature's floors at realistic concentrations: pond (1 mM, 100 yr) 3e-06; ocean (1 uM, 1e8 yr) 3e-09
+  realistic arm: 1 mM, 20% seed, 3 yr, 9 replicates at 2.6% -> 1.8e-06 (pond floor 3e-06)
+exit 0

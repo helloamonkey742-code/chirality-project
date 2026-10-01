@@ -51,8 +51,8 @@ def depth(V, L):
     return V / (4 * np.pi * (L / np.pi) ** 2)
 
 
-def sweep(V, L, c_rng, dh_rng, dz_rng, t_rng):
-    x = {"bias g": logu(4e-19, 4e-16), "rate k2": logu(1e-6, 1.0), "concentration": logu(*c_rng),
+def sweep(V, L, c_rng, dh_rng, dz_rng, t_rng, k2_rng=(1e-6, 1.0)):
+    x = {"bias g": logu(4e-19, 4e-16), "rate k2": logu(*k2_rng), "concentration": logu(*c_rng),
          "horizontal D_h": logu(*dh_rng), "vertical D_z": logu(*dz_rng), "time": logu(*t_rng) * YR, "volume": V * RNG.uniform(0.7, 1.3, N),
          "chem. factor F": RNG.uniform(0.3, 0.7, N)}
     finishes = x["rate k2"] * x["concentration"] * x["time"] >= 10

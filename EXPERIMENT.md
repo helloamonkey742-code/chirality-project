@@ -7,8 +7,14 @@ speed is never the problem for nature, yet lab searches usually stop after days.
 
 ## Hypothesis (stated before any data)
 At least one prebiotic, water-based peptide-forming system shows **seed-following growth of
-enantiomeric excess** (ee) with an effective rate k2 ≥ 10⁻⁷ /M/s, which is slow enough to be missed
-by short experiments but fast enough to matter in a pond (floor: 3×10⁻⁷ /M/s).
+enantiomeric excess** (ee) at meteoritic concentrations (≤ 1 mM), with an effective rate k2 ≥ 3×10⁻⁶ /M/s.
+That rate is slow enough to be missed by short experiments but fast enough to matter in a 1 mM pond over
+100 years (the "pond floor").
+
+*Revised 2026-09-30 after advice from J. Dworkin (NASA Goddard).* The first version ran at 0.1 M with
+an assumed 0.2% ee precision. Meteoritic amino acids reach at most a few hundred nmol/g of rock,
+which is ≤ ~1 mM in parent-body water. Published ee uncertainties are ±0.01–1.5% (GC-MS) and
+1.2–7.2% (LC-MS), and 2.6% from repeat measurements (Glavin & Dworkin 2009).
 
 ## Why a *seeded* design
 A reaction that only copies itself keeps ee constant, because both hands grow equally. ee *grows*
@@ -18,20 +24,30 @@ combination. Seeding is also far faster than waiting for symmetry to break from 
 From 50/50, noise in a 50 µL, 1 M vial would need about 18 e-foldings of growth to become visible, versus
 under 1 from a 5% seed.
 
-## How long and how concentrated (`design.py`)
-Smallest detectable rate, with a 5% seed and 0.2% ee measurement noise (assumed; confirm
-with the lab's method):
+## How long and how concentrated (`design.py`, `review.py` R5)
+Smallest detectable rate (/M/s) with a **20% seed**, similar to the largest isovaline excesses in
+Murchison. Each time point is measured 9 times, so the noise is σ/3:
 
-| concentration | 1 month | 6 months | 1 year | 3 years |
-|---|---|---|---|---|
-| 0.01 M | 6×10⁻⁶ | 1×10⁻⁶ | 5×10⁻⁷ | 2×10⁻⁷ |
-| **0.1 M** | 6×10⁻⁷ | **1×10⁻⁷** ✓ pond | 5×10⁻⁸ | 2×10⁻⁸ |
-| 1 M | 6×10⁻⁸ | 1×10⁻⁸ | 5×10⁻⁹ | **2×10⁻⁹** ✓ ocean |
+| concentration | ee noise per measurement | 1 month | 6 months | 1 year | 3 years |
+|---|---|---|---|---|---|
+| **1 mM (realistic)** | 2.6% | 6×10⁻⁵ | 1×10⁻⁵ | 5×10⁻⁶ | **2×10⁻⁶** ✓ pond |
+| 1 mM | 1% | 3×10⁻⁵ | 4×10⁻⁶ | 2×10⁻⁶ ✓ | 7×10⁻⁷ |
+| 10 mM (accelerated) | 2.6% | 6×10⁻⁶ | 1×10⁻⁶ | 5×10⁻⁷ | 2×10⁻⁷ |
+| 0.1 M (accelerated) | 2.6% | 6×10⁻⁷ | 1×10⁻⁷ | 5×10⁻⁸ | 2×10⁻⁸ |
+
+Nature's floors at realistic concentrations: **pond 3×10⁻⁶** (1 mM, 100 yr); **ocean 3×10⁻⁹**
+(1 µM, 10⁸ yr). No lab run can reach the ocean floor at natural concentration.
 
 ![design](design.png)
 
-**Choice:** run at **0.1 M for 12 months**. That covers the pond floor with margin by month 2.
-A 1 M sub-arm, run for 1–3 years where solubility allows, reaches the ocean floor.
+**Choice: two tiers.**
+1. **Realistic arm:** 1 mM, 20% seed, 3 years, 9 replicate measurements per time point. Reaches
+   1.8×10⁻⁶, below the pond floor. This asks directly whether amplification happens at meteoritic
+   concentrations.
+2. **Accelerated arm:** 10 mM and 0.1 M for 1 year. These are **not natural conditions**. The arm exists
+   to find any amplifier at all and to measure how the rate of ee growth scales with concentration
+   (the rate law). The model needs that scaling to extrapolate to 1 µM. If ee grows faster at 0.1 M than
+   at 10 mM by exactly 10×, k2 is a true second-order constant and the extrapolation is fair.
 
 ## Arms (chemistries to test)
 Chosen from the scorecard for prebiotic inputs (R4) and biological products (R7):
@@ -48,8 +64,8 @@ Arm C is the priority: it's the only one with a catalytic loop in prebiotic wate
 
 ## Conditions per arm
 For each arm, three seeds × 3 replicates:
-- **+5% L seed**
-- **+5% D seed** (the mirror control, the most important control)
+- **+20% L seed**
+- **+20% D seed** (the mirror control, the most important control)
 - **0% (racemic)**
 
 Plus three negative controls (3 replicates each): no activator / no cycling; sterile-filtered;
@@ -59,19 +75,19 @@ That's 9 + 9 = 18 vials per arm, plus the positive control. Temperature 25 °C, 
 acids, and the "seed alone" vials measure it directly.
 
 ## Sampling
-Days 0, 3, 7, 14, 30, 60, 90, 120, 180, 270, 365 (roughly evenly spaced on a log scale).
+Days 0, 3, 7, 14, 30, 60, 90, 120, 180, 270, 365, then every 6 months to 3 years for the realistic arm (roughly evenly spaced on a log scale). Each sample is measured 9 times.
 Measure ee of the monomers (and of short peptides where possible) by **chiral GC-MS or HPLC**
 on derivatized samples. Keep analysts **blind** to vial labels.
 
 ## Decision rule (fixed in advance)
 Call an arm an **amplifier** only if **all four** hold:
-1. |ee| rises by > 0.85% absolute over its start in both seeded sets (3σ√2 at σ = 0.2%).
+1. |ee| rises by > 3.7% absolute over its start in both seeded sets (3√2 × 2.6%/√9). Use a smaller threshold if the lab's measured precision is better.
 2. The **L-seeded and D-seeded vials change by equal and opposite amounts** (within noise).
 3. The racemic vials stay at 0 within noise.
 4. Sterile and no-activator controls show no change.
 
 Then fit `ee(t) = e0·exp(k·t)` to get k, and k2 = k / c. Compare k2 with the floors
-(3×10⁻⁷ pond, 3×10⁻⁹ ocean).
+(3×10⁻⁶ pond at 1 mM, 3×10⁻⁹ ocean at 1 µM), using the accelerated arm's rate law to extrapolate.
 
 ## Contamination: the main way this goes wrong
 Biology is left-handed, so any microbe, skin trace or reagent impurity adds **L**.
@@ -85,14 +101,15 @@ That would look like "amplification" in the L-seeded vials. Safeguards:
 |---|---|
 | An arm amplifies at k2 ≥ pond floor | First prebiotic, water-based amplifier; pond seeding by meteorites becomes a complete story |
 | An arm amplifies but slower than the floor | Real, but too slow to matter in a pond; ocean-scale only |
-| Nothing amplifies in 1 year at 0.1 M | Rules out these chemistries down to k2 ≈ 5×10⁻⁸. That's still a publishable upper limit, and it tightens the spec |
+| Nothing amplifies at 1 mM in 3 years, or at 0.1 M in 1 year | Rules out these chemistries down to k2 ≈ 2×10⁻⁶ (realistic) or 5×10⁻⁸ (accelerated). That's still a publishable upper limit, and it tightens the spec |
 | Only the positive control amplifies | Pipeline works; the gap in the scorecard is real |
 
 ## Limits and practical notes
 - This needs a chemistry lab with chiral GC-MS or HPLC. It's a proposal for a mentor or a summer lab, not a home experiment.
+  Local groups with chiral GC-MS (suggested by J. Dworkin): NASA Ames (G. Cooper, G. Chaban); San José State (A. Rios).
   Carbonyl sulfide is a toxic gas and needs fume-hood handling (arm A).
-- The 0.2% noise figure is an assumption. If the lab's method is noisier, rates scale up:
-  the smallest detectable k2 grows roughly in proportion to the noise.
+- The 2.6% noise figure comes from published repeat measurements. The lab's own precision sets the
+  real threshold; the smallest detectable k2 grows roughly in proportion to the noise.
 - A null result limits only these specific chemistries, not all possible ones.
 - The rate model is the single-exponential early phase from `sim.py`. Late saturation isn't used for the fit.
 
@@ -103,3 +120,4 @@ That would look like "amplification" in the L-seeded vials. Safeguards:
 - Ozturk et al. 2023, *Sci. Adv.*, doi:10.1126/sciadv.adg8274
 - Viedma 2005, *PRL* 94:065504, doi:10.1103/PhysRevLett.94.065504
 - Frank 1953, *Biochim. Biophys. Acta* 11:459
+- Glavin & Dworkin 2009, *PNAS* 106:5487, doi:10.1073/pnas.0811618106
