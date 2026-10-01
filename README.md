@@ -29,7 +29,9 @@ simulations in 1D and 3D, and against a real reaction scheme) the math for when 
 **Novelty check:** all 435 papers citing Kondepudi & Nelson 1985 (377) and Brandenburg & Multamäki 2004
 (58) were scanned, plus keyword searches. None applies the weak-force criterion to icy-moon oceans, to
 spatial patch formation, or to inheritance by pools. Closest: Sandars 2005 (spatial spread of handedness
-in Earth's ocean, no weak force).
+in Earth's ocean, no weak force). Re-checked 2026-09-30: Cowan & Furnstahl 2022 and Cowan 2023 combine the PVED with
+metal-catalysed autocatalysis in an early-Earth ocean, but with no molecule-number threshold and no icy moons; Hochberg et al. 2022
+(PVED in noisy open systems) and Jannat et al. 2026 (supernova neutrinos) are related but not ocean worlds.
 
 **Robustness (Part 8):** varying every uncertain input at once, physics wins in 75% of plausible cases (the share of
 random, realistic input combinations where it wins) for early Earth's open ocean, 22% for Enceladus and 29% for Europa,
