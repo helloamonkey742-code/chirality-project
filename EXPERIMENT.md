@@ -90,6 +90,20 @@ Call an arm an **amplifier** only if **all four** hold:
 Then fit `ee(t) = e0·exp(k·t)` to get k, and k2 = k / c. Compare k2 with the floors
 (3×10⁻⁶ pond at 1 mM, 3×10⁻⁹ ocean at 1 µM), using the accelerated arm's rate law to extrapolate.
 
+## The eight tests for a credible excess (Dworkin et al. 2024)
+Dworkin et al. (2024) list eight tests that a reported ee should pass, and say that any test not passed should be explained. How this plan handles each:
+
+| test | what it asks | how this plan meets it |
+|---|---|---|
+| 1 Blanks | lab blanks shown | sterile-filtered and no-activator controls (Conditions); **to add:** a procedural blank (no amino acid) at every time point, not yet in Conditions |
+| 2 Isomers | all structural isomers accounted for | defined starting materials, so the possible isomers are known; run standards of every enantiomer the chemistry can make (including peptides measured as monomers) |
+| 3 Co-elution | no unrelated compound under the peak | confirm each peak by mass spectrum, and on a second column or derivatization; the racemic vials show where a peak sits when nothing has changed |
+| 4 Isotopes | δ¹³C of each enantiomer, separately | **does not apply in the usual form**: there is no terrestrial-vs-extraterrestrial question in a lab synthesis. Optional: a ¹³C-labelled seed in one replicate set would show whether new ee comes from the seed or from the feedstock |
+| 5 Errors | statistics from separate replicates, not repeat integrations of one run | **open issue:** the sizing assumes 9 measurements per time point bring the noise down to σ/3, but the plan has only 3 vials per condition. Repeat injections of one vial do not capture vial-to-vial scatter. Either use 9 independent vials per condition, or treat the noise as σ/√3 and recompute the reachable k2 (`design.py`). Report the number of vials and of injections separately |
+| 6 History | contamination sources and sample history | biology adds L, so the D-seeded mirror arm is the key check; sealed vials, a chain-of-custody log, and blind analysts |
+| 7 Context | ee consistent with the rest of the sample | an excess must come with matching chemistry: products form, the yield is sensible, and the excess appears only in the arms that make them; the racemic set staying at 0 is the internal positive and negative check |
+| 8 Multiple examples | same result in several samples or labs | three replicate vials per condition, the mirror arm, and the Viedma positive control; any amplifier found should be re-run in a second lab before it is claimed |
+
 ## Contamination: the main way this goes wrong
 Biology is left-handed, so any microbe, skin trace or reagent impurity adds **L**.
 That would look like "amplification" in the L-seeded vials. Safeguards:
@@ -123,5 +137,6 @@ That would look like "amplification" in the L-seeded vials. Safeguards:
 - Deng, Yu & Blackmond 2024, *Nature* 626:1019, doi:10.1038/s41586-024-07059-y
 - Higgs & Blackmond 2025, *PNAS* 122:e2423683122, doi:10.1073/pnas.2423683122
 - Viedma 2005, *PRL* 94:065504, doi:10.1103/PhysRevLett.94.065504
+- Dworkin, Elsila, Glavin, Aponte, McLain, Simkus, Graham & Parker 2024, "Verification of chiral asymmetry in meteoritic organics", 55th LPSC, Abstract #2645
 - Frank 1953, *Biochim. Biophys. Acta* 11:459
 - Glavin & Dworkin 2009, *PNAS* 106:5487, doi:10.1073/pnas.0811618106

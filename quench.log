@@ -1,0 +1,16 @@
+
+fast reverse (1/2000): peak |ee| 0.70; k2*c*tau window freezing into 5-20%: 1.08 decades; into >20%: 2.14 decades (of 9 simulated)
+  k2 1e-06..1: frozen racemic  96.9% | in meteoritic band   1.2% | above band   1.9%   (k2*c*tau spans 2.6..11.9 decades)
+  k2 1e-12..1: frozen racemic  73.1% | in meteoritic band   9.0% | above band  17.9%   (k2*c*tau spans -3.4..11.9 decades)
+
+slow reverse (100x): peak |ee| 1.00; k2*c*tau window freezing into 5-20%: 0.53 decades; into >20%: 7.75 decades (of 9 simulated)
+  k2 1e-06..1: frozen racemic  40.6% | in meteoritic band   0.1% | above band  59.3%   (k2*c*tau spans 2.6..11.9 decades)
+  k2 1e-12..1: frozen racemic  31.1% | in meteoritic band   4.3% | above band  64.6%   (k2*c*tau spans -3.4..11.9 decades)
+
+Q3. P(win | Bennu frozen racemic), frozen-curve rule vs R6 step rule (same draws per row)
+  k2 1e-06..1, slow=1: Enceladus  22% (step  22%), Europa  29% (step  29%), Early  75% (step  75%)
+  k2 1e-06..1, slow=0.01: Enceladus  25% (step  25%), Europa  31% (step  31%), Early  75% (step  75%)
+  k2 1e-12..1, slow=1: Enceladus  16% (step  16%), Europa  21% (step  21%), Early  57% (step  56%)
+  k2 1e-12..1, slow=0.01: Enceladus  16% (step  12%), Europa  21% (step  17%), Early  50% (step  42%)
+
+selfcheck ok
