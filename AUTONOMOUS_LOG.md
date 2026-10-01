@@ -378,3 +378,13 @@
 - **Open:** "(Russell, *Scientific American*)" in the same sentence has no year and no reference entry — the student should complete or drop it. pdf/ not rebuilt.
 - **Prediction check:** right.
 - **Next:** IDLE unless the paper changes again. The wet lab and the student's paper revision remain.
+
+## 2026-10-01 13:50 — wave d (quality: arm E claims added today; routine, light only)
+- **Why:** the paper/EXPERIMENT changed after the last routine wave (commits 7678840, 41a2487 added arm E) with an unchecked number: "transamination has a measured rate near 10⁻⁴ /M/s (our estimate from Yu et al. 2024, Table 2), well above the 1-year detection floor", and "E is the only network with a published prediction". Gate ok (54% free), load 1.4, but a train_grasp-related job was running → no simulations.
+- **Prediction:** DOIs fine; the rate is a back-calculated estimate, not "measured"; "only" unsupported.
+- **Result (DOCUMENTED, Crossref + Europe PMC PMC10873602 full text):** all three DOIs (Yu 2024 PNAS, Deng 2024 Nature, Higgs & Blackmond 2025 PNAS) CONFIRMED. Higgs & Blackmond abstract says the network "may exhibit symmetry breaking" (model result). Yu et al. Table 2 gives % conversion, not rate constants, and is the **reverse** reaction (alanine + pyridoxal → pyruvate + pyridoxamine). Second-order back-calculation (ASSUMED model k = x/(0.1·(1−x)·t)): 2.2e-5 uncatalysed, 1.4e-4 Pro-Pro, down to ~6e-6 (Val-Ile, 9%/48 h). The "well above the detection floor" comparison was invalid: the floor is for the amplification rate k2, not conversion.
+- **Fix:** EXPERIMENT.md arm table + priority paragraph and PAPER_DRAFT §limitations + arm list reworded with dated corrections: "a" (not "the only") network with a model prediction; range 6e-6–1e-4 /M/s from the reverse reaction, our estimate; no floor claim. Hypothesis and Decision rule untouched. No model number changed; README untouched (it does not contain this claim).
+- **Critic (opus55-low, separate): HOLDS_WITH_FIXES** — caught the reverse-reaction and k2-vs-conversion errors in the first fix; both applied.
+- **Prediction check:** right on "estimate" and "only"; missed the reverse-direction and wrong-benchmark problems (critic found them).
+- **Open for the student:** pdf/ not rebuilt; the forward-rate (Yu Table 1 / SI Fig. 2) was not read.
+- **Next:** IDLE unless the paper changes again.
