@@ -11,11 +11,16 @@ R5 design   experiment sizing at meteoritic concentrations (<= ~1 mM) and publis
 R6 closed   R2 assumed any amplifier that "finished" leaves a lasting excess. That holds only in an open,
             driven system (an ocean fed by vents). A closed rock whose drive runs down must return to 50/50
             (thermodynamics: at equilibrium both hands are equal). Test it, then redo R2 with that rule.
+R7 flipping molecules flipping hand at random (racemization, both ways at rate r): does it bias the outcome,
+            or only add noise and delay the choice? Normal form gets -2r*alpha drift and noise eps*(1+2r).
+R8 beta     beta-decay electrons spin one way and may destroy one hand faster (Vester-Ulbricht; Dreiling &
+            Gay 2014: asymmetry A ~ 3e-4, sub-eV electrons, bromocamphor gas). Destruction at rate d (units
+            of k) with asymmetry A adds a bias g_beta = d*A/2. How big must d be to rival the PVED?
 """
 import numpy as np
 from scipy.stats import norm
 from scipy.integrate import solve_ivp
-from ocean import NA, YR, PREF, delta_at
+from ocean import NA, YR, PREF, delta_at, BODIES
 from sim import delta
 from design import k2_min
 import uncertainty as U
@@ -209,6 +214,58 @@ def r6_closed():
     return fades
 
 
+def sweep_sim(g, eps, gamma, r=0.0, runs=4000, dt=0.01, seed=0):
+    """sim.simulate's sweep (lam from -1 to +1) with symmetric flipping at rate r per molecule:
+    drift -2r*alpha, noise eps*(1+2r) (flips are extra independent events). Returns P(favoured), mean |alpha|."""
+    rng = np.random.default_rng(seed)
+    a = np.zeros(runs)
+    for t in np.arange(-1 / gamma, 1 / gamma, dt):
+        a += ((gamma * t - 2 * r) * a - a**3 + g) * dt + np.sqrt(eps * (1 + 2 * r) * dt) * rng.standard_normal(runs)
+    return (a > 0).mean(), np.abs(a).mean()
+
+
+def r7_flipping():
+    print("\nR7. Molecules flipping hand at random (racemization at rate r, units of k; g = 1e-3, eps = 1e-4)")
+    g, eps, gamma = 1e-3, 1e-4, 0.01
+    print(f"  {'r':>5} {'predicted P':>11} {'simulated P':>11} {'final |ee|':>10}")
+    for r in (0.0, 0.05, 0.2, 0.45, 0.6):
+        p, ee = sweep_sim(g, eps, gamma, r)
+        pred = norm.cdf(delta(g, eps * (1 + 2 * r), gamma))
+        print(f"  {r:5} {pred if 2 * r < 1 else float('nan'):11.3f} {p:11.3f} {ee:10.3f}" + ("  (no choice made)" if 2 * r >= 1 else ""))
+        if 2 * r < 0.9:
+            assert abs(p - pred) < 0.03, "flipping should only add noise, not bias"
+        else:
+            assert ee < 0.2, "flipping faster than amplification should leave the mixture racemic"
+    print("  -> flipping is symmetric: no new bias. It adds noise (P drifts toward 50%) and, if faster than the")
+    print("     amplifier (2r > lam_max), stops the choice altogether. The weak-force tilt is the only bias.")
+
+
+def r8_beta():
+    print("\nR8. Beta-decay electrons as a second weak-force bias (g_beta = d*A/2, d = destruction rate / k)")
+    g_pv, eps, gamma = 1e-3, 1e-4, 0.01           # test case at simulable scale
+    # check the mapping: destruction asymmetry in the drift == a shift of g
+    rng = np.random.default_rng(3)
+    d, A = 0.02, 0.1                               # g_beta = 1e-3, same size as g_pv
+    a = np.zeros(4000)
+    for t in np.arange(-1 / gamma, 1 / gamma, 0.01):
+        a += (gamma * t * a - a**3 + g_pv + d * A / 2 * (1 - a**2)) * 0.01 + np.sqrt(eps * 0.01) * rng.standard_normal(a.size)
+    p_sim, p_pred = (a > 0).mean(), norm.cdf(delta(g_pv + d * A / 2, eps, gamma))
+    print(f"  check (g_beta = g_pv = 1e-3, aligned): simulated P {p_sim:.3f}, predicted {p_pred:.3f}")
+    assert abs(p_sim - p_pred) < 0.03
+    A = 3e-4                                       # Dreiling & Gay 2014, sub-eV electrons, bromocamphor
+    d_match = 2 * 1e-17 / A
+    print(f"  real scale: PVED g = 1e-17. With A = {A:.0e}, beta matches the PVED once d >= {d_match:.0e},")
+    print("  i.e. once about 1 molecule in 1e13 is destroyed by polarized electrons per reaction time.")
+    print("  P(physics) for a borderline ocean (PVED alone gives Delta = 1, P = 0.84), beta aligned / opposed:")
+    for dd in (0.0, 1e-14, d_match, 1e-12):
+        gb = dd * A / 2
+        ps = [norm.cdf(1.0 * (1e-17 + sgn * gb) / 1e-17) for sgn in (1, -1)]   # Delta scales with total g
+        print(f"    d = {dd:7.0e}: g_beta = {gb:.0e}; aligned P = {ps[0]:.3f}, opposed P = {ps[1]:.3f}")
+    print("  -> if the lab asymmetry carried over to amino acids in water, even feeble radiolysis would rival the PVED,")
+    print("     and the answer would hinge on the unknown sign of A. A for amino acids, at beta (keV-MeV) energies, in")
+    print("     water, is unmeasured, so this stays a possible extra bias, not part of the main result.")
+
+
 if __name__ == "__main__":
     r1_scale()
     r2_bennu()
@@ -216,3 +273,5 @@ if __name__ == "__main__":
     r4_longrun()
     r5_design()
     r6_closed()
+    r7_flipping()
+    r8_beta()

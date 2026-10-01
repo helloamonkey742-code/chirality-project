@@ -65,4 +65,27 @@ R6. Closed rock vs open ocean: does an amplified excess last? (frank2 network, a
     k2 1e-06..1, fade after 6e+07: Bennu racemic is consistent; P(win | Bennu racemic): Enceladus  25%, Europa  31%, Early  75%
     k2 1e-12..1, fade after 7e+03: Bennu racemic is consistent; P(win | Bennu racemic): Enceladus  15%, Europa  21%, Early  57%
     k2 1e-12..1, fade after 6e+07: Bennu racemic is consistent; P(win | Bennu racemic): Enceladus  12%, Europa  17%, Early  42%
+
+R7. Molecules flipping hand at random (racemization at rate r, units of k; g = 1e-3, eps = 1e-4)
+      r predicted P simulated P final |ee|
+    0.0       0.724       0.730      0.998
+   0.05       0.715       0.731      0.946
+    0.2       0.693       0.700      0.769
+   0.45       0.667       0.654      0.073
+    0.6         nan       0.580      0.018  (no choice made)
+  -> flipping is symmetric: no new bias. It adds noise (P drifts toward 50%) and, if faster than the
+     amplifier (2r > lam_max), stops the choice altogether. The weak-force tilt is the only bias.
+
+R8. Beta-decay electrons as a second weak-force bias (g_beta = d*A/2, d = destruction rate / k)
+  check (g_beta = g_pv = 1e-3, aligned): simulated P 0.889, predicted 0.883
+  real scale: PVED g = 1e-17. With A = 3e-04, beta matches the PVED once d >= 7e-14,
+  i.e. once about 1 molecule in 1e13 is destroyed by polarized electrons per reaction time.
+  P(physics) for a borderline ocean (PVED alone gives Delta = 1, P = 0.84), beta aligned / opposed:
+    d =   0e+00: g_beta = 0e+00; aligned P = 0.841, opposed P = 0.841
+    d =   1e-14: g_beta = 1e-18; aligned P = 0.875, opposed P = 0.802
+    d =   7e-14: g_beta = 1e-17; aligned P = 0.977, opposed P = 0.500
+    d =   1e-12: g_beta = 1e-16; aligned P = 1.000, opposed P = 0.000
+  -> if the lab asymmetry carried over to amino acids in water, even feeble radiolysis would rival the PVED,
+     and the answer would hinge on the unknown sign of A. A for amino acids, at beta (keV-MeV) energies, in
+     water, is unmeasured, so this stays a possible extra bias, not part of the main result.
 exit 0
