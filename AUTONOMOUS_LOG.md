@@ -369,3 +369,12 @@
 - **Note:** 1070 s is close to the 20-min limit; on a busier machine review.py may need splitting by section. shell_res.py (>1 h) still un-re-run — over the limit, left for a by-hand run. Student's uncommitted EXPERIMENT.md/pdf changes left untouched.
 - **Critic:** skipped (deterministic reproduction compared line by line with a committed log).
 - **Next:** everything re-verifiable within limits is now re-verified. IDLE unless the README/paper changes again. The wet lab and the student's paper revision remain.
+
+## 2026-10-01 08:35 — wave b (literature: compartment citation; routine, light only)
+- **Why:** the 2026-09-30 reviewer revision cited "Milner-White & Russell 2005" for connected compartments, marked "not yet read in full", with no title/volume/DOI. It was the only unverified reference left from that revision. Gate ok (55% free), load 3.0, no train_grasp. No simulations.
+- **Prediction:** the citation exists in OLEB 2005 but may not be the canonical source for the compartment-mound idea.
+- **Result (DOCUMENTED, Crossref + OpenAlex):** Milner-White & Russell 2005 = "Sites for phosphates and iron-sulfur thiolates in the first membranes: 3 to 6 residue anion-binding motifs (nests)", OLEB 35(1) 19–27, doi:10.1007/s11084-005-4582-7. Its subject is peptide motifs in early membranes. Abstract not retrievable (OpenAlex has none; Springer/PubMed/Europe PMC failed or timed out). Added Martin & Russell 2003, Phil. Trans. R. Soc. Lond. B 358(1429) 59–85, doi:10.1098/rstb.2002.1183, the standard hydrothermal-mound compartment source, alongside it in PAPER_DRAFT §3.11 and the reference list. No number changed; README untouched (it does not cite either paper).
+- **Critic (opus55-low, separate): HOLDS_WITH_FIXES.** Fixed: journal abbreviation "Lond.", issue 1429, and dropped the unread negative claim "not a compartment-network model".
+- **Open:** "(Russell, *Scientific American*)" in the same sentence has no year and no reference entry — the student should complete or drop it. pdf/ not rebuilt.
+- **Prediction check:** right.
+- **Next:** IDLE unless the paper changes again. The wet lab and the student's paper revision remain.
