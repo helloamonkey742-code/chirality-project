@@ -352,3 +352,12 @@
 - **Skipped:** aniso3d, sphere_layers 2/2b, coarsen3d (load 6–10 at 13:45).
 - **Critic:** skipped — seeded reproduction compared line by line with a committed log.
 - **Next:** aniso3d, sphere_layers 2/2b, coarsen3d one at a time with a watcher kill, only at load < 3. Otherwise IDLE. The wet lab remains.
+
+## 2026-09-30 23:42 — wave c (finish skipped re-verify; routine) — DONE
+- **Why:** aniso3d, sphere_layers 2/2b and coarsen3d were the last scripts not re-run since 09-28. Gate ok (43% free), load 2.5–4.0 during the pass, no train_grasp.
+- **Prediction:** each exits 0 and its output matches its committed log line by line (seeded, code unchanged).
+- **Result (MEASURED):** aniso3d (155 s), sphere_layers 2 (330 s), sphere_layers 2b (218 s), coarsen3d (390 s, A = 5.48/5.60) all exit 0; every output line matches the log except timing stamps and the log's hand-written trailer. No number changed.
+- **Fix that worked:** each run went in the background with a separate `( sleep 1200; pkill ... ) &` watcher; none needed killing.
+- **Critic:** skipped (seeded reproductions compared line by line with committed logs).
+- **Note:** student's uncommitted EXPERIMENT.md and pdf changes left untouched.
+- **Next:** the wave c re-verify cycle is complete (frank2 09-30, rest now). Newer reviewer-revision scripts (review.py, shell_res.py) were not in this cycle; the next routine could re-verify those, otherwise IDLE. The wet lab remains.
