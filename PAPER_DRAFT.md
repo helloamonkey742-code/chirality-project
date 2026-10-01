@@ -227,12 +227,15 @@ At realistic concentrations the pond floor is 3×10⁻⁶ /M/s (1 mM, 100 yr), a
 1. **Realistic arm:** 1 mM, a 20% seed (similar to Murchison isovaline), 3 years, and 9 replicate measurements at 2.6%. This reaches 1.8×10⁻⁶ /M/s, below the pond floor, and asks directly whether amplification happens at meteoritic concentrations.
 2. **Accelerated arm:** 0.01 M and 0.1 M, stated plainly as *not* natural conditions. It exists to find any amplifier at all and to measure how the ee growth rate scales with concentration. That scaling (the rate law) is what the model needs in order to extrapolate to 1 µM.
 
-Four candidate chemistries are tested, chosen from the Part 6 scorecard:
+Five candidate chemistries are tested, chosen from the Part 6 scorecard:
 
 - (A) amino acids + carbonyl sulfide (Leman, Orgel & Ghadiri 2004);
 - (B) amino acids + hydroxy acids under wet-dry cycling (Forsythe et al. 2015);
-- (C) cysteine peptides catalysing their own joining (Foden et al. 2020). This is the priority arm.
-- (D) an RNA precursor on magnetite (Ozturk et al. 2023).
+- (C) cysteine peptides catalysing their own joining (Foden et al. 2020);
+- (D) an RNA precursor on magnetite (Ozturk et al. 2023);
+- (E) peptide-catalysed transamination coupled to peptide ligation, run fed rather than closed (Yu et al. 2024; Deng, Yu & Blackmond 2024; Higgs & Blackmond 2025).
+
+Arms E and C are the priority. E is the only prebiotic network with a published prediction of symmetry breaking, and a closed vial is predicted to return to 50/50 (`review.py` R6), so it runs in a slowly fed vessel. C is the only other catalytic loop in prebiotic water.
 
 A Viedma (2005) grinding positive control checks that the pipeline can detect real amplification.
 
