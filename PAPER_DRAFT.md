@@ -252,7 +252,7 @@ The D-seed mirror arm is the main safeguard against contamination by biological 
 
 ## 6 Reproducibility
 
-All computational results were produced by the Python scripts in the project folder, each printing and asserting its own self-checks (numpy, scipy and matplotlib are required). The code will be posted publicly on GitHub (link to be added) so that every number can be reproduced:
+All computational results were produced by the Python scripts in the project folder, each printing and asserting its own self-checks (numpy, scipy and matplotlib are required). The code is public at https://github.com/helloamonkey742-code/chirality-project (MIT licence) so that every number can be reproduced:
 
 ```
 ./run_all.sh          # fast subset, ~3 minutes

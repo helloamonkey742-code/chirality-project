@@ -528,6 +528,20 @@ in the cube, so Part 3's healing times are, if anything, optimistic by a modest 
 run in a 256-wide box *failed* (52% → 44%). That was finite-size noise (only ~8 patches), not physics,
 and it's recorded in `AUTONOMOUS_LOG.md` (MEASURED).
 
+## Part 9: newest checks (`review.py` R6–R8, added 2026-09-30)
+- **Closed rock fades, driven ocean holds (R6).** Run with every step reversible, the same amplifier
+  rises to a large excess and then falls back to 50/50 in a closed rock whose heat runs out, but holds
+  in an ocean that vents keep driving. That is why Bennu's racemic amino acids fit the model: odds stay
+  22% / 29% / 75% (Enceladus / Europa / early Earth). Without this rule they would drop to 2% / 4% / 15%.
+- **Molecules flipping hand (R7).** Random racemization adds no bias, only noise: the chance the weak
+  force wins drifts from 72% to 67% as flipping rises to 0.45 of the amplifier rate. If flipping
+  outpaces amplification, no hand is chosen.
+- **Beta-decay electrons (R8).** Spin-polarized electrons from radioactive decay (Vester–Ulbricht) could
+  add a second weak-force bias. With the measured asymmetry (~3 × 10⁻⁴, Dreiling & Gay 2014) it matches
+  the PVED once about 1 molecule in 10¹³ is destroyed per reaction time. In a borderline ocean it moves the
+  odds from 84% to 98% (same direction) or 50% (opposite). Its sign for amino acids in water is unmeasured,
+  so the main model leaves it out.
+
 ## What this means
 *If* a self-amplifying chiral chemistry existed in an icy-moon ocean, the weak force,
 not chance, should decide the hand. Then finding **right-handed** life on Europa
@@ -595,9 +609,12 @@ python frank2.py    # second scheme with back-reactions (asserts), ~5 min
 python shell3d.py   # thin-shell growth + majority test (asserts), ~15 min
 python aniso3d.py   # layered ocean: flat / cube / tall boxes + curvature and wall checks (asserts), ~4–8 min
 python uncertainty.py # uncertainty sweep, ~10 s
+python review.py      # reviewer checks R1–R8 (asserts), ~2 min
 ./run_all.sh        # everything fast (~3 min); ./run_all.sh --full adds the 3D + real-chemistry runs
 ```
 Needs numpy, scipy, matplotlib.
+
+Code: MIT licence (see `LICENSE`).
 
 ## Sources
 - Kondepudi & Nelson 1985, *Nature* 314:438, doi:10.1038/314438a0
