@@ -58,9 +58,10 @@ Chosen from the scorecard for prebiotic inputs (R4) and biological products (R7)
 | B | amino acids + hydroxy acids, **wet-dry cycling** (e.g. daily) | pond-like driving; makes polypeptides | Forsythe et al. 2015 |
 | C | prebiotic cysteine peptides that **catalyse peptide joining** in neutral water | the closest known thing to self-copying in prebiotic water | Foden et al. 2020 |
 | D | RNA precursor (RAO) on **magnetite**, then crystallization | non-autocatalytic route that already breaks symmetry | Ozturk et al. 2023 |
+| E | peptide-catalysed **transamination** (pyruvate + pyridoxamine → alanine) coupled to **peptide ligation**, run **fed (slow flow)** | the one proposed prebiotic network predicted to break symmetry on its own, built from two measured reactions; the model says it must be fed, not closed (`review.py` R6) | Yu et al. 2024; Deng, Yu & Blackmond 2024; Higgs & Blackmond 2025 |
 | + | **Positive control:** Viedma grinding of a known conglomerate | proves the pipeline detects real amplification | Viedma 2005 |
 
-Arm C is the priority: it's the only one with a catalytic loop in prebiotic water.
+Arms E and C are the priority. E is the only prebiotic network with a published prediction of symmetry breaking (Higgs & Blackmond 2025), and its transamination step has a measured rate near 10⁻⁴ /M/s at 0.1 M (our estimate from Yu et al. 2024, Table 2), well above the 1-year detection floor at 1 mM in the table above. Run E in a slowly fed vessel; a closed vial is predicted to return to 50/50. C is the only other catalytic loop in prebiotic water.
 
 ## Conditions per arm
 For each arm, three seeds × 3 replicates:
@@ -118,6 +119,9 @@ That would look like "amplification" in the L-seeded vials. Safeguards:
 - Forsythe et al. 2015, *Angew. Chem.*, doi:10.1002/anie.201503792
 - Foden et al. 2020, *Science*, doi:10.1126/science.abd5680
 - Ozturk et al. 2023, *Sci. Adv.*, doi:10.1126/sciadv.adg8274
+- Yu, Darù, Deng et al. 2024, *PNAS* 121:e2315447121, doi:10.1073/pnas.2315447121
+- Deng, Yu & Blackmond 2024, *Nature* 626:1019, doi:10.1038/s41586-024-07059-y
+- Higgs & Blackmond 2025, *PNAS* 122:e2423683122, doi:10.1073/pnas.2423683122
 - Viedma 2005, *PRL* 94:065504, doi:10.1103/PhysRevLett.94.065504
 - Frank 1953, *Biochim. Biophys. Acta* 11:459
 - Glavin & Dworkin 2009, *PNAS* 106:5487, doi:10.1073/pnas.0811618106

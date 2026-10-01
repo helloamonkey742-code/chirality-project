@@ -169,7 +169,7 @@ Each escape route is testable, but none is shown here. Temperature differences b
 
 ### 3.11 Compartments: can a network of connected pools beat one pond? (`review.py` R3)
 
-Several authors suggest that life began in connected compartments, such as the pores of a hydrothermal mound (Martin & Russell 2003; Milner-White & Russell 2005; Russell, *Scientific American*), acting together as one "reactor". We simulated 16 compartments, each with 1/16 of the molecules, exchanging material at rate q (normal form, g = 10⁻³, γ = 0.01):
+Several authors suggest that life began in connected compartments, such as the pores of a hydrothermal mound (Martin & Russell 2003; Milner-White & Russell 2005; Russell 2006), acting together as one "reactor". We simulated 16 compartments, each with 1/16 of the molecules, exchanging material at rate q (normal form, g = 10⁻³, γ = 0.01):
 
 | exchange rate q × decision time | P(majority favoured) | runs ending all one hand |
 |---|---|---|
@@ -322,6 +322,7 @@ Individual scripts (sim.py, ocean.py, domains.py, patches.py, domains3d.py, coar
 - Elsila et al. 2016, "Meteoritic amino acids: diversity in compositions reflects parent body histories", *ACS Cent. Sci.* 2:370, doi:10.1021/acscentsci.6b00074
 - Glavin et al. 2012, "Unusual nonterrestrial L-proteinogenic amino acid excesses in the Tagish Lake meteorite", *Meteorit. Planet. Sci.* 47:1347, doi:10.1111/j.1945-5100.2012.01400.x
 - Martin, W. & Russell, M. J. 2003, "On the origins of cells: a hypothesis for the evolutionary transitions from abiotic geochemistry to chemoautotrophic prokaryotes, and from prokaryotes to nucleated cells", *Phil. Trans. R. Soc. Lond. B* 358(1429), 59–85, doi:10.1098/rstb.2002.1183 (the hydrothermal-mound compartment hypothesis; metadata checked on Crossref 2026-10-01)
+- Russell, M. J. 2006, "First life", *American Scientist* 94, 32, doi:10.1511/2006.57.32 (popular review of the hydrothermal-mound compartment idea; earlier drafts cited it as "Russell, *Scientific American*"; metadata checked on Crossref 2026-10-01)
 - Milner-White, E. J. & Russell, M. J. 2005, "Sites for phosphates and iron-sulfur thiolates in the first membranes: 3 to 6 residue anion-binding motifs (nests)", *Orig. Life Evol. Biosph.* 35(1), 19–27, doi:10.1007/s11084-005-4582-7 (suggested by A. Brandenburg; metadata checked on Crossref 2026-10-01; its title shows it is about peptide anion-binding motifs in the first membranes, so Martin & Russell 2003 is cited alongside it for the compartment idea; abstract not retrieved)
 - Kramers 1940, *Physica* 7:284 (escape rate over a barrier)
 - Waite et al. 2017, "Cassini finds molecular hydrogen in the Enceladus plume: evidence for hydrothermal processes", *Science* 356:155, doi:10.1126/science.aai8703
