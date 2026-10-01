@@ -361,3 +361,11 @@
 - **Critic:** skipped (seeded reproductions compared line by line with committed logs).
 - **Note:** student's uncommitted EXPERIMENT.md and pdf changes left untouched.
 - **Next:** the wave c re-verify cycle is complete (frank2 09-30, rest now). Newer reviewer-revision scripts (review.py, shell_res.py) were not in this cycle; the next routine could re-verify those, otherwise IDLE. The wet lab remains.
+
+## 2026-10-01 04:45 — wave c (re-verify review.py; routine)
+- **Why:** review.py (reviewer revision R1–R8, Bennu 2/4/15%, scale rule, flips, beta bias) changed 2026-09-30 and was never re-run by the routine. Gate ok (51% free), load 3.4–3.6, no train_grasp.
+- **Prediction (written before the run):** exit 0 and output identical to review.log line by line (deterministic, code unchanged since 28ca8e9).
+- **Result (MEASURED):** exit 0 in 1070 s under nice -n 15 (background run + `( sleep 1200; kill ) &` watcher, not needed). All 90 output lines identical to review.log. No number changed.
+- **Note:** 1070 s is close to the 20-min limit; on a busier machine review.py may need splitting by section. shell_res.py (>1 h) still un-re-run — over the limit, left for a by-hand run. Student's uncommitted EXPERIMENT.md/pdf changes left untouched.
+- **Critic:** skipped (deterministic reproduction compared line by line with a committed log).
+- **Next:** everything re-verifiable within limits is now re-verified. IDLE unless the README/paper changes again. The wet lab and the student's paper revision remain.
