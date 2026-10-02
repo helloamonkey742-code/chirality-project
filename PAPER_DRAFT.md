@@ -78,7 +78,7 @@ The two ingredients that make it amplify are self-copying and mutual destruction
 - `review.py`: the checks added after expert feedback (§3.0, §3.10–3.12, §5).
 - `coarsen_fig.py`, `sketch.py`: the figures.
 - `shell_res.py`: the grid-resolution test.
-- `quench.py`: the excess frozen in when a closed parent body loses its water (§3.10).
+- `quench.py`: the excess frozen in when a closed parent body loses its water (§3.10), and whether an inherited excess survives a closed network (§3.5).
 
 Every script asserts its own checks.
 
@@ -112,7 +112,7 @@ Open ocean gives physics ~100% odds; lake/lagoon 51–100%; warm little pond 50�
 
 ### 3.5 Can small pools inherit a hand? (Part 4b)
 
-A pool that fills with water already carrying a small excess can reliably follow it above a threshold, checked against 4,000 runs/case across 5 cases. Required inherited excess: 3×10⁻¹⁴ (lake/lagoon), 6×10⁻¹² (pond), 1×10⁻⁶ (vent pore). The weak force alone supplies only ~5×10⁻¹⁸ at equilibrium — far too small — but an ocean that already amplified the bias can supply up to ~1, and meteorites (Murchison L-isovaline, Glavin & Dworkin 2009, 18.5% excess) supply enough by 5–13 orders of magnitude. This made meteorite seeding look like the simplest explanation, though isovaline is not itself a protein amino acid and its excess would need catalytic pass-through (shown for isovaline → D-sugar, Pizzarello & Weber 2004). *Update:* samples returned from Bennu contain chiral non-protein amino acids that are racemic or nearly so (Glavin et al. 2025), and Ryugu's are also racemic (Furusho et al. 2024). The Bennu authors conclude that delivered molecules may not explain life's handedness. So meteoritic excesses are not universal; they vary with parent-body history (Elsila et al. 2016; Glavin et al. 2020a). One caveat is that the excess a pond needs (6×10⁻¹²) is some 10 orders of magnitude below what any lab can measure (about ±1%). "Racemic within error" therefore neither supplies nor rules out a pond-sized seed.
+A pool that fills with water already carrying a small excess can reliably follow it above a threshold, checked against 4,000 runs/case across 5 cases. Required inherited excess: 3×10⁻¹⁴ (lake/lagoon), 6×10⁻¹² (pond), 1×10⁻⁶ (vent pore). The weak force alone supplies only ~5×10⁻¹⁸ at equilibrium — far too small — but an ocean that already amplified the bias can supply up to ~1, and meteorites (Murchison L-isovaline, Glavin & Dworkin 2009, 18.5% excess) supply enough by 5–13 orders of magnitude. This made meteorite seeding look like the simplest explanation, though isovaline is not itself a protein amino acid and its excess would need catalytic pass-through (shown for isovaline → D-sugar, Pizzarello & Weber 2004). *Update:* samples returned from Bennu contain chiral non-protein amino acids that are racemic or nearly so (Glavin et al. 2025), and Ryugu's are also racemic (Furusho et al. 2024). The Bennu authors conclude that delivered molecules may not explain life's handedness. So meteoritic excesses are not universal; they vary with parent-body history (Elsila et al. 2016; Glavin et al. 2020a). Not every meteoritic excess was made on the parent body, either: Cooper & Rios (2016) report D excesses in sugar acids that may have formed very early and survived, so some excesses are *inherited*, not amplified in place. The model adds one constraint here (MODEL INFERENCE, `quench.py` Q4): a closed reversible network erases an inherited 20% excess just as it erases a 0.1% one, only 1.6–1.8× later. An inherited excess therefore survives only where no reversible amplifying network acts on it, or where the water left before the network relaxed. One caveat is that the excess a pond needs (6×10⁻¹²) is some 10 orders of magnitude below what any lab can measure (about ±1%). "Racemic within error" therefore neither supplies nor rules out a pond-sized seed.
 
 ### 3.6 Why L-amino acids pair with D-sugars (Part 5)
 
@@ -228,7 +228,7 @@ Because no known prebiotic reaction satisfies the Part 6 requirements, EXPERIMEN
 
 The smallest detectable rate after one year (`review.py` R5) is k₂,min = ln(1 + 3√2 σ/e₀)/(cT), where σ is the ee noise per sample, e₀ the seed excess, c the concentration and T the run length:
 
-| concentration | seed | σ = 0.2% | σ = 1% | σ = 2.6% | 2.6%, 9 replicates |
+| concentration | seed | σ = 0.2% | σ = 1% | σ = 2.6% | 2.6%, 9 vials |
 |---|---|---|---|---|---|
 | 1 mM | 5% | 5×10⁻⁶ | 2×10⁻⁵ | 4×10⁻⁵ | 2×10⁻⁵ |
 | 1 mM | 20% | 1×10⁻⁶ | 6×10⁻⁶ | 1×10⁻⁵ | 5×10⁻⁶ |
@@ -236,7 +236,7 @@ The smallest detectable rate after one year (`review.py` R5) is k₂,min = ln(1 
 
 At realistic concentrations the pond floor is 3×10⁻⁶ /M/s (1 mM, 100 yr), and the ocean floor is 3×10⁻⁹ (1 µM, 10⁸ yr). No lab run can reach the ocean floor at natural concentration. The revised design therefore has two tiers:
 
-1. **Realistic arm:** 1 mM, a 20% seed (similar to Murchison isovaline), 3 years, and 9 replicate measurements at 2.6%. This reaches 1.8×10⁻⁶ /M/s, below the pond floor, and asks directly whether amplification happens at meteoritic concentrations.
+1. **Realistic arm:** 1 mM, a 20% seed (similar to Murchison isovaline), 3 years, and 9 independent vials per condition at 2.6%. This reaches 1.8×10⁻⁶ /M/s, below the pond floor. Repeat injections of one vial are not replicates (Dworkin et al. 2024, test 5); with only 3 vials the same arm reaches 2.9×10⁻⁶, just 8% below the floor, so the plan uses 9 vials. It asks directly whether amplification happens at meteoritic concentrations.
 2. **Accelerated arm:** 0.01 M and 0.1 M, stated plainly as *not* natural conditions. It exists to find any amplifier at all and to measure how the ee growth rate scales with concentration. That scaling (the rate law) is what the model needs in order to extrapolate to 1 µM.
 
 Five candidate chemistries are tested, chosen from the Part 6 scorecard:
@@ -251,7 +251,7 @@ Arms E and C are the priority. E is a prebiotic network with a published model p
 
 A Viedma (2005) grinding positive control checks that the pipeline can detect real amplification.
 
-Each arm gets +L, +D (mirror control) and racemic seedings in triplicate, plus these negative controls:
+Each arm gets +L, +D (mirror control) and racemic seedings in 9 independent vials each (3 in the accelerated arm), plus these negative controls:
 
 - no activator;
 - sterile-filtered;
@@ -378,6 +378,7 @@ Individual scripts (sim.py, ocean.py, domains.py, patches.py, domains3d.py, coar
 - Rosenberg, Abu Haija & Ryan 2008, "Chiral-selective chemistry induced by spin-polarized secondary electrons from a magnetic substrate", *Phys. Rev. Lett.* 101:178301, doi:10.1103/PhysRevLett.101.178301
 - Gidley, Rich, Van House & Zitzewitz 1982, "β decay and the origins of biological chirality: experimental results", *Nature* 297:639–643, doi:10.1038/297639a0
 - Bonner 1991, "The origin and amplification of biomolecular chirality", *Orig. Life Evol. Biosph.* 21:59, doi:10.1007/BF01809580
+- Cooper & Rios 2016, "Enantiomer excesses of rare and common sugar derivatives in carbonaceous meteorites", *PNAS* 113(24):E3322–E3331, doi:10.1073/pnas.1603030113
 - Cowan & Furnstahl 2022, "Origin of chirality in the molecules of life", *ACS Earth Space Chem.* 6:2575–2581, doi:10.1021/acsearthspacechem.2c00032
 - Cowan 2023, "Influence of the weak nuclear force on metal-promoted autocatalytic Strecker synthesis of amino acids", *Life* 14:66, doi:10.3390/life14010066
 - Hochberg, Buhse, Micheau et al. 2022, "Resilience of parity-violation-induced chiral selectivity to nonequilibrium temperature fluctuations in open systems", *Phys. Rev. Research* 4:033183, doi:10.1103/PhysRevResearch.4.033183

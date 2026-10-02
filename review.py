@@ -154,7 +154,7 @@ def r4_longrun():
 def r5_design():
     print("\nR5. Experiment at meteoritic concentrations: smallest detectable k2 (/M/s) in 1 year")
     print("  (ee noise per sample: 0.2% optimistic GC-MS; 1% typical; 2.6% Glavin & Dworkin 2009 replicates)")
-    print(f"  {'conc':>7} {'seed':>5} " + " ".join(f"{s:>10}" for s in ('0.2%', '1%', '2.6%', '2.6% n=9')))
+    print(f"  {'conc':>7} {'seed':>5} " + " ".join(f"{s:>10}" for s in ('0.2%', '1%', '2.6%', '2.6% 9 vials')))
     for c in (1e-4, 1e-3, 1e-2, 1e-1):
         for e0 in (0.05, 0.2):
             row = [k2_min(c, YR, e0, s) for s in (0.002, 0.01, 0.026)] + [k2_min(c, YR, e0, 0.026 / 3)]
@@ -164,15 +164,19 @@ def r5_design():
           f"{10 / (1e-6 * 1e8 * YR):.0e}")
     assert k2_min(1e-3, YR, 0.2, 0.026 / 3) > pond_1mM, "a 1 mM, 1 yr run cannot reach the pond floor"
     best = k2_min(1e-3, 3 * YR, 0.2, 0.026 / 3)
-    print(f"  realistic arm: 1 mM, 20% seed, 3 yr, 9 replicates at 2.6% -> {best:.1e} (pond floor {pond_1mM:.0e})")
+    print(f"  realistic arm: 1 mM, 20% seed, 3 yr, 9 independent vials at 2.6% -> {best:.1e} (pond floor {pond_1mM:.1e})")
     assert best < pond_1mM
+    # Dworkin et al. 2024 test 5: repeat injections of one vial are not replicates, so noise falls as 1/sqrt(vials)
+    three = k2_min(1e-3, 3 * YR, 0.2, 0.026 / np.sqrt(3))
+    print(f"  same arm with 3 vials -> {three:.1e}: only {1 - three / pond_1mM:.0%} below the floor, so the plan uses 9 vials")
+    assert pond_1mM / three < 1.1, "3-vial margin no longer thin; revisit the 9-vial choice"
 
 
-def frank_closed(a0, slow=1.0, feed=0.0, t_end=1e8):
+def frank_closed(a0, slow=1.0, feed=0.0, t_end=1e8, seed=0.001):
     """frank2.py's network with every step reversible and rates obeying detailed balance
     (both A<->L routes share K = k0/k0r = k/kr = 2), so a closed system's equilibrium is 50/50.
     feed > 0 makes it open (feedstock topped up to a0, everything flows out at rate feed).
-    slow scales the reverse rates. Returns times and ee, starting from a 0.1% seed."""
+    slow scales the reverse rates. Returns times and ee, starting from seed (default 0.1%)."""
     k, ki, k0r, kr = 1.0, 1.0, 5e-4 * slow, 0.5 * slow
     k0 = 2 * k0r
 
@@ -182,7 +186,7 @@ def frank_closed(a0, slow=1.0, feed=0.0, t_end=1e8):
         nd = k0 * a - k0r * D + k * a * D - kr * D * D
         return [-nl - nd + feed * (a0 - a), nl - ki * L * D - feed * L, nd - ki * L * D - feed * D]
     t = np.logspace(-1, np.log10(t_end), 1500)
-    y = solve_ivp(rhs, (0, t_end), [a0, 0.01 * 1.001, 0.01 * 0.999], method="LSODA", t_eval=t, rtol=1e-10, atol=1e-14).y
+    y = solve_ivp(rhs, (0, t_end), [a0, 0.01 * (1 + seed), 0.01 * (1 - seed)], method="LSODA", t_eval=t, rtol=1e-10, atol=1e-14).y
     return t, (y[1] - y[2]) / (y[1] + y[2])
 
 

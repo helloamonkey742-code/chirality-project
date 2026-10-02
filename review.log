@@ -43,7 +43,7 @@ R4. Long runs: does the decided hand drift or flip later?
 
 R5. Experiment at meteoritic concentrations: smallest detectable k2 (/M/s) in 1 year
   (ee noise per sample: 0.2% optimistic GC-MS; 1% typical; 2.6% Glavin & Dworkin 2009 replicates)
-     conc  seed       0.2%         1%       2.6%   2.6% n=9
+     conc  seed       0.2%         1%       2.6% 2.6% 9 vials
    0.0001    5%      5e-05      2e-04      4e-04      2e-04
    0.0001   20%      1e-05      6e-05      1e-04      5e-05
     0.001    5%      5e-06      2e-05      4e-05      2e-05
@@ -53,7 +53,8 @@ R5. Experiment at meteoritic concentrations: smallest detectable k2 (/M/s) in 1 
       0.1    5%      5e-08      2e-07      4e-07      2e-07
       0.1   20%      1e-08      6e-08      1e-07      5e-08
   nature's floors at realistic concentrations: pond (1 mM, 100 yr) 3e-06; ocean (1 uM, 1e8 yr) 3e-09
-  realistic arm: 1 mM, 20% seed, 3 yr, 9 replicates at 2.6% -> 1.8e-06 (pond floor 3e-06)
+  realistic arm: 1 mM, 20% seed, 3 yr, 9 independent vials at 2.6% -> 1.8e-06 (pond floor 3.2e-06)
+  same arm with 3 vials -> 2.9e-06: only 8% below the floor, so the plan uses 9 vials
 
 R6. Closed rock vs open ocean: does an amplified excess last? (frank2 network, all steps reversible)
   closed, reverse steps ~1/2000 of forward  : peak |ee| 0.70, back to 50/50 after ~7e+03 (units of 1/(k2 c)); final +0.000

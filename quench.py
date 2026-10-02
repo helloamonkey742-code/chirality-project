@@ -63,6 +63,16 @@ for slow, label in ((1.0, "fast reverse (1/2000)"), (0.01, "slow reverse (100x)"
         print(f"  k2 {k2_rng[0]:g}..1: frozen racemic {f[0]:6.1%} | in meteoritic band {f[1]:6.1%} | above band {f[2]:6.1%}"
               f"   (k2*c*tau spans {np.log10(kct.min()):.1f}..{np.log10(kct.max()):.1f} decades)")
 
+print("\nQ4. Inherited excess (Cooper & Rios 2016: sugar-acid excesses may predate the parent body)")
+for slow, (t0, ee0) in curves.items():
+    t, ee = frank_closed(200.0, slow, seed=0.20, t_end=1e10)   # a bigger seed fades later than 1e8
+    a, a0 = np.abs(ee), np.abs(ee0)
+    ratio = t[a > 0.1 * a.max()][-1] / t0[a0 > 0.1 * a0.max()][-1]
+    print(f"  20% seed in the closed network (slow={slow:g}): final {ee[-1]:+.3f}, fades {ratio:.1f}x later than a 0.1% seed")
+    assertTrue(abs(ee[-1]) < 0.01, f"closed network should erase an inherited 20% seed too (slow {slow:g})")
+    assertTrue(1 < ratio < 3, f"inherited seed changes the fade time by {ratio:.1f}x, not ~2x (slow {slow:g})")
+print("  so an inherited excess survives only outside a reversible amplifying network, or if the water left first")
+
 R6 = {(1e-6, 1.0): (.22, .29, .75), (1e-6, 0.01): (.25, .31, .75), (1e-12, 1.0): (.15, .21, .57), (1e-12, 0.01): (.12, .17, .42)}  # review.py R6 / PAPER table
 print("\nQ3. P(win | Bennu frozen racemic), frozen-curve rule vs R6 step rule (same draws per row)")
 for k2_rng in ((1e-6, 1.0), (1e-12, 1.0)):
