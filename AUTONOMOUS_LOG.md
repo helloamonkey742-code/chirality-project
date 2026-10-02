@@ -397,3 +397,6 @@
 - **Prediction check:** right (the signed-zero flip was not predicted; harmless).
 - **Note:** review.py now takes 215 s (was 1070 s on 10-01 under heavier load). Student's uncommitted files left untouched.
 - **Next:** IDLE unless the paper/scripts change again. The wet lab and the student's paper revision remain.
+
+## 2026-10-02 08:30 — IDLE: nothing worth doing
+- Gate ok (69% free), load 6.57 (student active → light only). No commits or script changes since 5b40a5d; quench.py/review.py (the only scripts changed since 30312d9) were re-verified at 03:56. Waves a–g done.
