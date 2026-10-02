@@ -388,3 +388,12 @@
 - **Prediction check:** right on "estimate" and "only"; missed the reverse-direction and wrong-benchmark problems (critic found them).
 - **Open for the student:** pdf/ not rebuilt; the forward-rate (Yu Table 1 / SI Fig. 2) was not read.
 - **Next:** IDLE unless the paper changes again.
+
+## 2026-10-02 03:56 — wave c (re-verify quench.py + review.py after 10-01 edits; routine)
+- **Why:** five interactive commits after the last routine wave (8b2a8a8 … b183d53) changed quench.py and review.py; b183d53 edited quench.py without regenerating quench.log. Gate ok (44% free), load 1.4, no train_grasp.
+- **Prediction (before the runs):** both exit 0 and match their committed logs line by line (deterministic code; b183d53 changed only comments/labels in quench.py).
+- **Result (MEASURED):** quench.py exit 0 (1 s), review.py exit 0 (215 s, nice -n 15, background + `( sleep 1200; kill ) &` watcher, not needed). Every line matches quench.log / review.log except three `final +0.000` → `-0.000` (sign of a value that rounds to zero; floating-point noise, not a number change) and review.log's hand-added `exit 0` trailer. No number changed; no repo file changed except this log.
+- **Critic:** skipped (deterministic reproductions compared line by line with committed logs).
+- **Prediction check:** right (the signed-zero flip was not predicted; harmless).
+- **Note:** review.py now takes 215 s (was 1070 s on 10-01 under heavier load). Student's uncommitted files left untouched.
+- **Next:** IDLE unless the paper/scripts change again. The wet lab and the student's paper revision remain.
