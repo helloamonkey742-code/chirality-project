@@ -42,7 +42,7 @@ R4. Long runs: does the decided hand drift or flip later?
   rate ~ exp(-N/2): 1 um^3 at 1 uM holds ~600 molecules (flips possible); any pond or ocean never flips.
 
 R5. Experiment at meteoritic concentrations: smallest detectable k2 (/M/s) in 1 year
-  (ee noise per sample: 0.2% optimistic GC-MS; 1% typical; 2.6% Glavin & Dworkin 2009 replicates)
+  (ee noise per sample: 0.2% optimistic GC-MS; 1% typical; 2.6% = Glavin & Dworkin 2009 standard error (n=20), assumed per sample)
      conc  seed       0.2%         1%       2.6% 2.6% 9 vials
    0.0001    5%      5e-05      2e-04      4e-04      2e-04
    0.0001   20%      1e-05      6e-05      1e-04      5e-05

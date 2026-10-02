@@ -22,6 +22,8 @@ depth" thresholds from README Part 3; the critic caught this before commit.)
 | Kang, Mittal, Bire, Campin & Marshall 2022, Sci. Adv. 8, eabm4665 | 10.1126/sciadv.abm4665 | 5e-3 | model input (3D run, S = 20 g/kg) | per Jansen et al. 2023 | SECONDARY (paper not opened) |
 | Wong, Hansen, Wiesehöfer & McKinnon 2022, JGR Planets | 10.1029/2022je007316 | none given | dimensionless only | abstract | not convertible |
 | Rovira-Navarro et al. 2019, Icarus | 10.1016/j.icarus.2018.11.010 | - | - | - | not read |
+| Zhang, Bire, Wang, Nath, Ramadhan, Kang & Marshall 2025, MNRAS 541:859 | 10.1093/mnras/staf1008 | none; "transit time of tens of years or more" seafloor → ocean top | convection from uneven bottom heating, scales with the natural Rossby number | abstract | yes (abstract, 2026-10-01) |
+| Kang & Zhang 2026, arXiv:2603.22602 (preprint) | 10.48550/arXiv.2603.22602 | κ_z < 1e-3 unless mean salinity is around 10 psu | upper bound from ice-shell morphology (too much equatorward ocean heat transport would erase the poleward-thinning shell) | Sec. 5, arXiv HTML v1 | yes, primary (2026-10-01); their MITgcm runs use 1e-3 and 1e-2, an idealized setup 0.1 and 0.01, "considerably larger than the values expected for Enceladus" |
 
 No Europa-specific κ_z value was found. Europa is treated with the Enceladus range, which is an ASSUMED transfer.
 
@@ -29,7 +31,8 @@ No Europa-specific κ_z value was found. Europa is treated with the Enceladus ra
 
 Nobody has measured how fast water mixes up and down inside Enceladus or Europa. The one real estimate (Zeng &
 Jansen 2021) works backwards from how much tidal energy might stir the ocean. That energy is uncertain by about
-7 powers of ten, so the mixing estimate spans 3e-10 to 3e-3 m²/s. The project's 1e-10 to 1e-3 range matches it.
+7 powers of ten, so the mixing estimate spans 3e-10 to 3e-3 m²/s. The project's 1e-10 to 1e-3 range matches it. A 2026 preprint (Kang & Zhang) bounds it below 1e-3 unless the
+ocean's salinity is around 10 psu, which matches the top of that range.
 A 2025 paper quotes the range as 1e-7 to 1e-3, but it cites the same study, so it is not a second opinion.
 
 The lowest values are not physical for our molecules. A dissolved molecule always spreads by itself at about 1e-9 m²/s

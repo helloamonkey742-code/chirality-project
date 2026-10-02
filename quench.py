@@ -7,7 +7,7 @@ whatever the closed network had reached when the water left. Here the frozen val
 closed-network curve (review.frank_closed) at k2*c*tau, instead of the step rule.
 
 Questions:
- Q1 What share of Bennu-like draws freeze racemic (|ee| < 5.2%, i.e. 2 x the 2.6% measurement error),
+ Q1 What share of Bennu-like draws freeze racemic (|ee| < 5.2%, i.e. 2 x the 2.6% standard error),
     inside the isovaline band seen in meteorites (5-20%; Dworkin et al. 2024: L-Iva 0-20% in 17 meteorites),
     or above it (> 20%)?
  Q2 How wide (in decades of k2*c*tau) is the window that freezes into the 5-20% band? A narrow window means
@@ -23,7 +23,7 @@ from review import frank_closed, BENNU_C, BENNU_T
 from ocean import YR
 import uncertainty as U
 
-RAC, BAND = 0.052, 0.20          # 2 x 2.6% (Glavin & Dworkin 2009); upper edge of meteoritic Iva ee
+RAC, BAND = 0.052, 0.20          # 2 x 2.6% standard error (Glavin & Dworkin 2009, n = 20); upper edge of meteoritic Iva ee
 failures = []
 
 
@@ -100,7 +100,7 @@ for k2_rng in ((1e-6, 1.0), (1e-12, 1.0)):
             assertTrue(abs(ps - ref) < 0.02, f"step rule {ps:.0%} does not reproduce R6 {ref:.0%} ({name}, k2 {k2_rng[0]:g}, slow {slow:g})")
         print(f"  k2 {k2_rng[0]:g}..1, slow={slow:g}: " + ", ".join(row))
 
-LIT_C, LIT_T = (7e-5, 7e-4), (1e2, 1e7)   # Bennu's 70 nmol/g at water/rock 0.1-1 (Glavin 2025; Lee 2025); water 100 yr..10 Myr
+LIT_C, LIT_T = (7e-5, 7e-4), (1e2, 1e7)   # Bennu's 70 nmol/g at water/rock 0.1-1 (Glavin 2025; McCoy 2025; Zega 2025); water 100 yr (CM, Glavin & Dworkin 2009)..10 Myr
 RAC2 = 2 * 0.062                          # 2 x Bennu's own isovaline ee error (Glavin 2025, Extended Data Table 4)
 print("\nQ5. How robust is Q1? Frozen racemic | in meteoritic band | above band, same k2 draws as Q1")
 for slow, (t, ee) in curves.items():

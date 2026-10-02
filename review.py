@@ -1,4 +1,4 @@
-"""Checks added after expert feedback (A. Brandenburg, J. Dworkin, 2026-09-30).
+"""Checks added after expert feedback (A. Brandenburg, 2026-09-30).
 
 R1 scale    rule of thumb: how many molecules must decide together, by concentration and temperature?
 R2 Bennu    Bennu/Ryugu amino acids are racemic, and Bennu is plausibly a piece of a wet parent body.
@@ -52,8 +52,9 @@ def r1_scale():
 
 
 # Bennu parent body (all ASSUMED ranges; see paper Sec. 3.10):
-#   amino acids 10-330 nmol/g rock, bracketing Bennu (70) and Murchison (253) (Glavin et al. 2025; CR chondrites
-#   reach 3,300, Aponte et al. 2020), water/rock 0.1-1 by mass (Lee et al. 2025) -> 1e-5 .. 3e-3 M in the fluid
+#   one chiral amino acid 10-300 nmol/g rock, bracketing Bennu's total (70, Glavin et al. 2025) and isovaline alone
+#   in CR2 EET 92042 (244, Glavin & Dworkin 2009; CR totals 17-3,300, Aponte et al. 2020); water/rock 0.1-1 by mass
+#   (McCoy et al. 2025: 0.5-1; Zega et al. 2025: CI 0.5-1, CM1 0.2-0.7) -> 1e-5 .. 3e-3 M in the fluid
 #   (Bennu alone: 7e-5 .. 7e-4 M); aqueous alteration lasting 1-10 Myr. quench.py Q5 tests other choices.
 BENNU_C, BENNU_T = (1e-5, 3e-3), (1e6, 1e7)
 
@@ -154,7 +155,7 @@ def r4_longrun():
 
 def r5_design():
     print("\nR5. Experiment at meteoritic concentrations: smallest detectable k2 (/M/s) in 1 year")
-    print("  (ee noise per sample: 0.2% optimistic GC-MS; 1% typical; 2.6% Glavin & Dworkin 2009 replicates)")
+    print("  (ee noise per sample: 0.2% optimistic GC-MS; 1% typical; 2.6% = Glavin & Dworkin 2009 standard error (n=20), assumed per sample)")
     print(f"  {'conc':>7} {'seed':>5} " + " ".join(f"{s:>10}" for s in ('0.2%', '1%', '2.6%', '2.6% 9 vials')))
     for c in (1e-4, 1e-3, 1e-2, 1e-1):
         for e0 in (0.05, 0.2):

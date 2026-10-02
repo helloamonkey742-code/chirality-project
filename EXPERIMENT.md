@@ -11,10 +11,12 @@ enantiomeric excess** (ee) at meteoritic concentrations (≤ 1 mM), with an effe
 That rate is slow enough to be missed by short experiments but fast enough to matter in a 1 mM pond over
 100 years (the "pond floor").
 
-*Revised 2026-09-30 after advice from J. Dworkin (NASA Goddard).* The first version ran at 0.1 M with
-an assumed 0.2% ee precision. Meteoritic amino acids reach at most a few hundred nmol/g of rock,
-which is ≤ ~1 mM in parent-body water. Published ee uncertainties are ±0.01–1.5% (GC-MS) and
-1.2–7.2% (LC-MS), and 2.6% from repeat measurements (Glavin & Dworkin 2009).
+*Revised 2026-09-30 after expert feedback.* The first version ran at 0.1 M with
+an assumed 0.2% ee precision. Meteoritic isovaline reaches about 20 nmol/g of rock where it carries an excess
+(Murchison) and 244 nmol/g where it is racemic (EET 92042), about 0.2–2 mM in parent-body water at a
+water-to-rock ratio of 0.1. Published ee uncertainties are ±0.01–1.5% (GC-MS) and 1.2–7.2% (LC-MS),
+and 2.6% is the standard error of 20 measurements of Murchison isovaline (Glavin & Dworkin 2009;
+their racemic standard read −2.3 ± 1.3%, n = 14).
 
 ## Why a *seeded* design
 A reaction that only copies itself keeps ee constant, because both hands grow equally. ee *grows*
@@ -82,7 +84,7 @@ on derivatized samples. Keep analysts **blind** to vial labels.
 
 ## Decision rule (fixed in advance)
 Call an arm an **amplifier** only if **all four** hold:
-1. |ee| rises by > 3.7% absolute over its start in both seeded sets (3√2 × 2.6%/√9). Use a smaller threshold if the lab's measured precision is better.
+1. |ee| rises by > 3.7% absolute over its start in both seeded sets (3√2 × 2.6%/√9, taking 2.6% per vial). Use a smaller threshold if the lab's measured precision is better.
 2. The **L-seeded and D-seeded vials change by equal and opposite amounts** (within noise).
 3. The racemic vials stay at 0 within noise.
 4. Sterile and no-activator controls show no change.
@@ -121,9 +123,10 @@ That would look like "amplification" in the L-seeded vials. Safeguards:
 
 ## Limits and practical notes
 - This needs a chemistry lab with chiral GC-MS or HPLC. It's a proposal for a mentor or a summer lab, not a home experiment.
-  Local groups with chiral GC-MS (suggested by J. Dworkin): NASA Ames (G. Cooper, G. Chaban); San José State (A. Rios).
+  Local groups with chiral GC-MS: NASA Ames (G. Cooper, G. Chaban); San José State (A. Rios).
   Carbonyl sulfide is a toxic gas and needs fume-hood handling (arm A).
-- The 2.6% noise figure comes from published repeat measurements. The lab's own precision sets the
+- The 2.6% noise figure is a published standard error (20 measurements), used here as an assumed per-vial error;
+  a single measurement scatters more. The lab's own precision sets the
   real threshold; the smallest detectable k2 grows roughly in proportion to the noise.
 - A null result limits only these specific chemistries, not all possible ones.
 - The rate model is the single-exponential early phase from `sim.py`. Late saturation isn't used for the fit.
@@ -139,4 +142,4 @@ That would look like "amplification" in the L-seeded vials. Safeguards:
 - Viedma 2005, *PRL* 94:065504, doi:10.1103/PhysRevLett.94.065504
 - Dworkin, Elsila, Glavin, Aponte, McLain, Simkus, Graham & Parker 2024, "Verification of chiral asymmetry in meteoritic organics", 55th LPSC, Abstract #2645
 - Frank 1953, *Biochim. Biophys. Acta* 11:459
-- Glavin & Dworkin 2009, *PNAS* 106:5487, doi:10.1073/pnas.0811618106
+- Glavin & Dworkin 2009, "Enrichment of the amino acid L-isovaline by aqueous alteration on CI and CM meteorite parent bodies", *PNAS* 106:5487–5492, doi:10.1073/pnas.0811618106
