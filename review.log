@@ -56,16 +56,16 @@ R5. Experiment at meteoritic concentrations: smallest detectable k2 (/M/s) in 1 
   realistic arm: 1 mM, 20% seed, 3 yr, 9 independent vials at 2.6% -> 1.8e-06 (pond floor 3.2e-06)
   same arm with 3 vials -> 2.9e-06: only 8% below the floor, so the plan uses 9 vials
 
-R6. Closed rock vs open ocean: does an amplified excess last? (frank2 network, all steps reversible)
-  closed, reverse steps ~1/2000 of forward  : peak |ee| 0.70, back to 50/50 after ~7e+03 (units of 1/(k2 c)); final +0.000
-  closed, reverse steps 100x slower         : peak |ee| 1.00, back to 50/50 after ~6e+07 (units of 1/(k2 c)); final +0.000
+R6. Closed rock vs open ocean: does an amplified excess last? (frank2 network, A<->L/D reversible)
+  closed, s = 1: K = 2                      : peak |ee| 0.70, above 10% of peak from ~8e+00 to ~7e+03 (model time ~ k2 c tau, see quench.py Q5); final +0.000
+  closed, s = 0.01: K = 200 (slow reverse)  : peak |ee| 1.00, above 10% of peak from ~6e-01 to ~2e+06 (model time ~ k2 c tau, see quench.py Q5); final +0.000
   open (fed + outflow)                           : final ee +0.998  (held as long as the drive lasts)
-  -> Bennu's parent body (closed, heat gone after ~10 Myr) stays racemic if its reaction never finished
-     (k2 c tau < 10) OR finished and then faded (k2 c tau > fade time). Redo R2 with that rule:
-    k2 1e-06..1, fade after 7e+03: Bennu racemic is consistent; P(win | Bennu racemic): Enceladus  22%, Europa  29%, Early  75%
-    k2 1e-06..1, fade after 6e+07: Bennu racemic is consistent; P(win | Bennu racemic): Enceladus  25%, Europa  31%, Early  75%
-    k2 1e-12..1, fade after 7e+03: Bennu racemic is consistent; P(win | Bennu racemic): Enceladus  15%, Europa  21%, Early  57%
-    k2 1e-12..1, fade after 6e+07: Bennu racemic is consistent; P(win | Bennu racemic): Enceladus  12%, Europa  17%, Early  42%
+  -> Bennu's parent body (closed, heat gone after ~10 Myr) stays racemic if its excess never rose
+     (k2 c tau < rise time) OR rose and then faded (k2 c tau > fade time). Redo R2 with that rule:
+    k2 1e-06..1, excess 8e+00..7e+03: Bennu racemic is consistent; P(win | Bennu racemic): Enceladus  22%, Europa  29%, Early  75%
+    k2 1e-06..1, excess 6e-01..2e+06: Bennu racemic is consistent; P(win | Bennu racemic): Enceladus  23%, Europa  30%, Early  75%
+    k2 1e-12..1, excess 8e+00..7e+03: Bennu racemic is consistent; P(win | Bennu racemic): Enceladus  15%, Europa  21%, Early  57%
+    k2 1e-12..1, excess 6e-01..2e+06: Bennu racemic is consistent; P(win | Bennu racemic): Enceladus  17%, Europa  22%, Early  55%
 
 R7. Molecules flipping hand at random (racemization at rate r, units of k; g = 1e-3, eps = 1e-4)
       r predicted P simulated P final |ee|

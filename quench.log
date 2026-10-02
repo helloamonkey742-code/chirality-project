@@ -1,21 +1,55 @@
 
-fast reverse (1/2000): peak |ee| 0.70; k2*c*tau window freezing into 5-20%: 1.08 decades; into >20%: 2.14 decades (of 9 simulated)
+s = 1 (K = 2): peak |ee| 0.70; k2*c*tau window freezing into 5-20%: 1.08 decades; into >20%: 2.14 decades (of 9 simulated)
   k2 1e-06..1: frozen racemic  96.9% | in meteoritic band   1.2% | above band   1.9%   (k2*c*tau spans 2.6..11.9 decades)
   k2 1e-12..1: frozen racemic  73.1% | in meteoritic band   9.0% | above band  17.9%   (k2*c*tau spans -3.4..11.9 decades)
 
-slow reverse (100x): peak |ee| 1.00; k2*c*tau window freezing into 5-20%: 0.53 decades; into >20%: 7.75 decades (of 9 simulated)
-  k2 1e-06..1: frozen racemic  40.6% | in meteoritic band   0.1% | above band  59.3%   (k2*c*tau spans 2.6..11.9 decades)
-  k2 1e-12..1: frozen racemic  31.1% | in meteoritic band   4.3% | above band  64.6%   (k2*c*tau spans -3.4..11.9 decades)
+s = 0.01 (K = 200, reverse 100x slower): peak |ee| 1.00; k2*c*tau window freezing into 5-20%: 0.61 decades; into >20%: 6.23 decades (of 9 simulated)
+  k2 1e-06..1: frozen racemic  64.2% | in meteoritic band   1.2% | above band  34.7%   (k2*c*tau spans 2.6..11.9 decades)
+  k2 1e-12..1: frozen racemic  43.1% | in meteoritic band   4.9% | above band  51.9%   (k2*c*tau spans -3.4..11.9 decades)
 
 Q4. Inherited excess (Cooper & Rios 2016: sugar-acid excesses may predate the parent body)
-  20% seed in the closed network (slow=1): final -0.000, fades 1.6x later than a 0.1% seed
-  20% seed in the closed network (slow=0.01): final -0.000, fades 1.8x later than a 0.1% seed
+  20% seed in the closed network (slow=1): final +0.000, fades 1.6x later than a 0.1% seed
+  20% seed in the closed network (slow=0.01): final +0.000, fades 1.2x later than a 0.1% seed
   so an inherited excess survives only outside a reversible amplifying network, or if the water left first
 
 Q3. P(win | Bennu frozen racemic), frozen-curve rule vs R6 step rule (same draws per row)
   k2 1e-06..1, slow=1: Enceladus  22% (step  22%), Europa  29% (step  29%), Early  75% (step  75%)
-  k2 1e-06..1, slow=0.01: Enceladus  25% (step  25%), Europa  31% (step  31%), Early  75% (step  75%)
-  k2 1e-12..1, slow=1: Enceladus  16% (step  16%), Europa  21% (step  21%), Early  57% (step  56%)
-  k2 1e-12..1, slow=0.01: Enceladus  16% (step  12%), Europa  21% (step  17%), Early  50% (step  42%)
+  k2 1e-06..1, slow=0.01: Enceladus  23% (step  23%), Europa  30% (step  30%), Early  75% (step  75%)
+  k2 1e-12..1, slow=1: Enceladus  16% (step  16%), Europa  21% (step  21%), Early  57% (step  57%)
+  k2 1e-12..1, slow=0.01: Enceladus  17% (step  17%), Europa  23% (step  22%), Early  57% (step  55%)
+
+Q5. How robust is Q1? Frozen racemic | in meteoritic band | above band, same k2 draws as Q1
+
+  slow=1: chiral material still free while |ee| >= 5.2%: at most 0.28% (Bennu: 45 of 70 nmol/g), after the excess fades: at most 0.0002%; |ee| if the waste were counted: at most 0.06%
+   k2 1e-06..1:
+     baseline (= Q1)                       96.9% |   1.2% |   1.9%
+     c = whole budget a0 (time /200)       67.2% |   6.3% |  26.4%
+     c = free L+D at peak (time x160)     100.0% |   0.0% |   0.0%
+     racemic below 12.4%                   97.6% |   0.5% |   1.9%
+     Bennu-only c, water 1e2..1e7 yr       73.7% |   6.6% |  19.8%
+     waste reversible (kw = 1e-6)         100.0% |   0.0% |   0.0%
+   k2 1e-12..1:
+     baseline (= Q1)                       73.1% |   9.0% |  17.9%
+     c = whole budget a0 (time /200)       73.2% |   9.0% |  17.8%
+     c = free L+D at peak (time x160)      75.1% |   7.2% |  17.7%
+     racemic below 12.4%                   78.7% |   3.4% |  17.9%
+     Bennu-only c, water 1e2..1e7 yr       73.2% |   9.0% |  17.8%
+     waste reversible (kw = 1e-6)          83.0% |  10.1% |   6.9%
+
+  slow=0.01: chiral material still free while |ee| >= 5.2%: at most 3.38% (Bennu: 45 of 70 nmol/g), after the excess fades: at most 1e-06%; |ee| if the waste were counted: at most 0.18%
+   k2 1e-06..1:
+     baseline (= Q1)                       64.2% |   1.2% |  34.7%
+     c = whole budget a0 (time /200)       25.8% |   1.2% |  73.0%
+     c = free L+D at peak (time x3)        71.6% |   1.2% |  27.1%
+     racemic below 12.4%                   64.9% |   0.5% |  34.7%
+     Bennu-only c, water 1e2..1e7 yr       33.2% |   1.3% |  65.5%
+     waste reversible (kw = 1e-6)          82.0% |   0.9% |  17.1%
+   k2 1e-12..1:
+     baseline (= Q1)                       43.1% |   4.9% |  51.9%
+     c = whole budget a0 (time /200)       43.1% |   5.1% |  51.9%
+     c = free L+D at peak (time x3)        43.5% |   4.7% |  51.9%
+     racemic below 12.4%                   46.2% |   1.8% |  51.9%
+     Bennu-only c, water 1e2..1e7 yr       43.2% |   5.0% |  51.7%
+     waste reversible (kw = 1e-6)          52.2% |   4.8% |  43.0%
 
 selfcheck ok

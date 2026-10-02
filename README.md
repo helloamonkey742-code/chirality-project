@@ -531,7 +531,7 @@ run in a 256-wide box *failed* (52% → 44%). That was finite-size noise (only ~
 and it's recorded in `AUTONOMOUS_LOG.md` (MEASURED).
 
 ## Part 9: newest checks (`review.py` R6–R8, added 2026-09-30)
-- **Closed rock fades, driven ocean holds (R6).** Run with every step reversible, the same amplifier
+- **Closed rock fades, driven ocean holds (R6).** Run with its making steps reversible (detailed balance), the same amplifier
   rises to a large excess and then falls back to 50/50 in a closed rock whose heat runs out, but holds
   in an ocean that vents keep driving. That is why Bennu's racemic amino acids fit the model: odds stay
   22% / 29% / 75% (Enceladus / Europa / early Earth). Without this rule they would drop to 2% / 4% / 15%.
@@ -612,6 +612,7 @@ python shell3d.py   # thin-shell growth + majority test (asserts), ~15 min
 python aniso3d.py   # layered ocean: flat / cube / tall boxes + curvature and wall checks (asserts), ~4–8 min
 python uncertainty.py # uncertainty sweep, ~10 s
 python review.py      # reviewer checks R1–R8 (asserts), ~2 min
+python quench.py      # Bennu freeze-in, inherited seed, robustness Q1–Q5 (asserts), ~2 s
 ./run_all.sh        # everything fast (~3 min); ./run_all.sh --full adds the 3D + real-chemistry runs
 ```
 Needs numpy, scipy, matplotlib.
