@@ -73,6 +73,9 @@ For each arm, three seeds × 9 independent vials (realistic arm; 3 suffice for t
 
 Plus three negative controls (3 vials each): no activator / no cycling; sterile-filtered;
 and the seed amino acid alone (to measure plain racemization).
+At every time point, also run a procedural blank: no amino acid, carried through the same
+sampling, workup and analysis as the real vials. It should show no amino acids; any L or D
+it shows is contamination from handling or reagents and sets the floor for that time point.
 That's 27 + 9 = 36 vials per realistic arm (9 + 9 = 18 per accelerated arm), plus the positive control. Temperature 25 °C, with an optional
 40 °C set to speed things up. Racemization is then negligible over a year for most amino
 acids, and the "seed alone" vials measure it directly.
@@ -87,7 +90,7 @@ Call an arm an **amplifier** only if **all four** hold:
 1. |ee| rises by > 3.7% absolute over its start in both seeded sets (3√2 × 2.6%/√9, taking 2.6% per vial). Use a smaller threshold if the lab's measured precision is better.
 2. The **L-seeded and D-seeded vials change by equal and opposite amounts** (within noise).
 3. The racemic vials stay at 0 within noise.
-4. Sterile and no-activator controls show no change.
+4. Sterile and no-activator controls show no change, and the procedural blanks show no amino acids.
 
 Then fit `ee(t) = e0·exp(k·t)` to get k, and k2 = k / c. Compare k2 with the floors
 (3×10⁻⁶ pond at 1 mM, 3×10⁻⁹ ocean at 1 µM), using the accelerated arm's rate law to extrapolate.
@@ -97,7 +100,7 @@ Dworkin et al. (2024) list eight tests that a reported ee should pass, and say t
 
 | test | what it asks | how this plan meets it |
 |---|---|---|
-| 1 Blanks | lab blanks shown | sterile-filtered and no-activator controls (Conditions); **to add:** a procedural blank (no amino acid) at every time point, not yet in Conditions |
+| 1 Blanks | lab blanks shown | sterile-filtered and no-activator controls, plus a procedural blank (no amino acid) at every time point (Conditions) |
 | 2 Isomers | all structural isomers accounted for | defined starting materials, so the possible isomers are known; run standards of every enantiomer the chemistry can make (including peptides measured as monomers) |
 | 3 Co-elution | no unrelated compound under the peak | confirm each peak by mass spectrum, and on a second column or derivatization; the racemic vials show where a peak sits when nothing has changed |
 | 4 Isotopes | δ¹³C of each enantiomer, separately | **does not apply in the usual form**: there is no terrestrial-vs-extraterrestrial question in a lab synthesis. Optional: a ¹³C-labelled seed in one replicate set would show whether new ee comes from the seed or from the feedstock |
