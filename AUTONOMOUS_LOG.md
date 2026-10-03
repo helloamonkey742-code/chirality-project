@@ -400,3 +400,13 @@
 
 ## 2026-10-02 08:30 — IDLE: nothing worth doing
 - Gate ok (69% free), load 6.57 (student active → light only). No commits or script changes since 5b40a5d; quench.py/review.py (the only scripts changed since 30312d9) were re-verified at 03:56. Waves a–g done.
+
+## 2026-10-02 18:35 — wave b (literature: check the student's new meteorite-heterogeneity sentence; routine, light only)
+- **Why:** PAPER_DRAFT.md has an uncommitted edit (saved 18:11 today, student's) adding: Tagish Lake L-isovaline 7.0 ± 1.9% vs −0.9 ± 2.6% in two specimens (Glavin et al. 2012), Murchison 0.2–15.2% (Pizzarello, Zolensky & Turk 2003), and a new reference entry. Unchecked new numbers → cheapest useful wave. Gate ok (46% free), load 2.0, no train_grasp. No simulations.
+- **Prediction:** reference metadata correct; the specific percentages live only in full texts that are paywalled, so they will stay unconfirmed.
+- **Result (DOCUMENTED, Crossref + OpenAlex + NCBI efetch):** Pizzarello, Zolensky & Turk 2003 reference CONFIRMED exactly (GCA 67(8):1589–1595, doi:10.1016/S0016-7037(02)01283-8). Glavin et al. 2012 (MAPS, doi:10.1111/j.1945-5100.2012.01400.x) abstract confirms three Tagish Lake fragments were analysed but does not give isovaline values. The 7.0 ± 1.9 / −0.9 ± 2.6 and 0.2–15.2% values: NOT CONFIRMED (full texts closed; Semantic Scholar abstract elided; NTRS has no PDF; open papers PMC2667035/PMC3409747 not retrievable as full text).
+- **Flag for the student:** Glavin & Dworkin 2009 (PNAS, already cited in the same paragraph) report Murchison L-isovaline 18.5 ± 2.6% (abstract, MEASURED by them). That is above the "0.2–15.2% across Murchison samples" range, so the sentence should say "0.2–15.2% across the Murchison samples of Pizzarello et al. (2003); 18.5% in Glavin & Dworkin (2009)" or similar. The "dilute or hide but cannot create" logic is sound for a weighted average of excesses that share one sign convention.
+- **No repo file changed except this log.** The student's uncommitted PAPER_DRAFT.md edit was left untouched (they are mid-edit).
+- **Critic:** skipped — no claim was changed, only flagged.
+- **Prediction check:** right.
+- **Next:** IDLE unless the paper changes again. Open for the student: confirm the two Tagish Lake values from Glavin 2012 Table 1, widen the Murchison range, pdf/ not rebuilt.
