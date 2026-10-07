@@ -1,0 +1,13 @@
+Europa (check): 28.6%  (21.7% after strat_sweep.py's salinity lid)
+
+Ganymede, ocean 100 km: physics wins in 28.5%  (D_z low/high half 0% / 57%)
+  each condition alone: creep in time 31%, finishes 92%, heals across 100%, layers (column) 85%, strong enough 93%, flat-layer bound 13%
+  ocean 50 km: 32.5%
+  ocean 300 km: 21.8%
+  if salt layering pins it with probability p: p=0.25: 21.3%, p=0.5: 14.2%, p=0.75: 7.1%
+
+Callisto, ocean 30 km: physics wins in 35.9%  (D_z low/high half 0% / 71%)
+  each condition alone: creep in time 39%, finishes 92%, heals across 100%, layers (column) 74%, strong enough 90%, flat-layer bound 22%
+  ocean 10 km: 42.9%
+  ocean 100 km: 28.5%
+  if salt layering pins it with probability p: p=0.25: 26.9%, p=0.5: 17.9%, p=0.75: 9.0%
