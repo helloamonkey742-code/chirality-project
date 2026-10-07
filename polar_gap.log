@@ -1,0 +1,24 @@
+(1) controls: R=4.0, depth 1.0, lid 0.4 thick, D_hi=0.01, grid 50x314, dt=0.1
+  no lid                         ratio 1    gap   0 deg -> TAKEOVER   t=   105  + share 1.000  + reaches depth 1.00 at the pole, side wall at 90.0 deg  [1s]
+  no lid, dt/2                   ratio 1    gap   0 deg -> TAKEOVER   t=   102  + share 1.000  + reaches depth 1.00 at the pole, side wall at 90.0 deg  [3s]
+  lid, no gap                    ratio 10   gap   0 deg -> STUCK      t=  1505  + share 0.383  + reaches depth 0.31 at the pole, side wall at  0.0 deg  [24s]
+
+(2) polar gap; predicted critical gap 27 deg (ratio 10), 58 deg (ratio 100)
+  lid with polar gap             ratio 10   gap  15 deg -> STUCK      t=  1505  + share 0.386  + reaches depth 0.45 at the pole, side wall at  0.0 deg  [22s]
+  lid with polar gap             ratio 10   gap  20 deg -> STUCK      t=  1505  + share 0.392  + reaches depth 0.55 at the pole, side wall at  0.0 deg  [28s]
+  lid with polar gap             ratio 10   gap  25 deg -> STUCK      t=  1505  + share 0.404  + reaches depth 0.69 at the pole, side wall at  3.9 deg  [27s]
+  lid with polar gap             ratio 10   gap  30 deg -> TAKEOVER   t=  1170  + share 1.000  + reaches depth 1.00 at the pole, side wall at 90.0 deg  [21s]
+  lid with polar gap             ratio 10   gap  35 deg -> TAKEOVER   t=   940  + share 1.000  + reaches depth 1.00 at the pole, side wall at 90.0 deg  [16s]
+  lid with polar gap             ratio 100  gap  45 deg -> STUCK      t=  4360  + share 0.578  + reaches depth 0.99 at the pole, side wall at 45.7 deg  [82s]
+  lid with polar gap             ratio 100  gap  55 deg -> STUCK      t=  1930  + share 0.673  + reaches depth 0.99 at the pole, side wall at 56.6 deg  [47s]
+  lid with polar gap             ratio 100  gap  70 deg -> TAKEOVER   t=  1105  + share 1.000  + reaches depth 1.00 at the pole, side wall at 90.0 deg  [13s]
+
+(3) bias needed to push the wall through a full lid (two_zone.py 1D, ratio 10, lid on top)
+  h = 0.2000: pinned
+  h = 0.3000: pushed through
+  h = 0.2500: pushed through
+  h = 0.2250: pushed through
+  h = 0.2125: pushed through
+  h = 0.2063: pushed through
+  critical bias h_c between 0.2000 and 0.2063; real parity bias g ~ 1e-19..1e-16
+total 291s

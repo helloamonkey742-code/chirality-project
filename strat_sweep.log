@@ -1,0 +1,10 @@
+Enceladus: old win 21.8%  P(stratified top, S<20 g/kg) 100.0%  new win 0.0%  (old x (1-p) = 0.0%)
+Europa: old win 28.6%  P(stratified top, S<3 g/kg) 23.9%  new win 21.7%  (old x (1-p) = 21.8%)
+
+sensitivity (new win):
+  Enceladus S   5-20  g/kg, S* 18.0: p_strat 92.4%  win  1.6%
+  Enceladus S   5-40  g/kg, S* 20.0: p_strat 66.6%  win  7.4%
+  Enceladus S   1-100 g/kg, S* 20.0: p_strat 65.0%  win  7.7%
+  Europa    S   1-100 g/kg, S*  1.5: p_strat  8.8%  win 26.0%
+  Europa    S   1-100 g/kg, S* 19.5: p_strat 64.6%  win 10.1%
+  Europa    S   3-100 g/kg, S*  3.0: p_strat  0.0%  win 28.5%

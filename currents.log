@@ -1,0 +1,20 @@
+(1) controls
+  lid, no current            ratio 10   W 0       Pe    0.00 -> STUCK         t=  1505  + share 0.383  [46s]
+  no lid, current            ratio 1    W 0.01    Pe     nan -> DEEP HAND WON t=   150  + share 0.000  [6s]
+
+(2) lid 10x slower, current strength sweep
+  lid + current              ratio 10   W 0.0001  Pe    0.04 -> STUCK         t=  1505  + share 0.383  [43s]
+  lid + current              ratio 10   W 0.001   Pe    0.40 -> STUCK         t=  1710  + share 0.354  [26s]
+  lid + current              ratio 10   W 0.003   Pe    1.20 -> DEEP HAND WON t=   475  + share 0.000  [9s]
+  lid + current              ratio 10   W 0.01    Pe    4.00 -> DEEP HAND WON t=   140  + share 0.000  [4s]
+  lid + current              ratio 10   W 0.03    Pe   12.00 -> DEEP HAND WON t=    60  + share 0.000  [2s]
+  lid + current, dt/2        ratio 10   W 0.01    Pe    4.00 -> DEEP HAND WON t=   135  + share 0.000  [6s]
+  lid + current reversed     ratio 10   W -0.01   Pe   -4.00 -> DEEP HAND WON t=   130  + share 0.000  [4s]
+
+(3) stronger lids
+  lid + current              ratio 30   W 0.003   Pe    3.60 -> DEEP HAND WON t=   545  + share 0.000  [10s]
+  lid + current              ratio 30   W 0.01    Pe   12.00 -> DEEP HAND WON t=   160  + share 0.000  [3s]
+  lid + current              ratio 100  W 0.001   Pe    4.00 -> STUCK         t=  1505  + share 0.300  [23s]
+  lid + current              ratio 100  W 0.01    Pe   40.00 -> STUCK         t=  1505  + share 0.157  [26s]
+  lid + current              ratio 100  W 0.02    Pe   80.00 -> STUCK         t=  1505  + share 0.062  [25s]
+total 231s
