@@ -1,0 +1,27 @@
+(1) threshold Pe vs wall thickness, lid 10x slower, dt=0.4
+  base walls                   ratio 10  Pe   0.4 (W 1.00e-03) -> STUCK         t=   1860  + share 0.354  [5s]
+  base walls                   ratio 10  Pe   1.2 (W 3.00e-03) -> DEEP HAND WON t=    540  + share 0.000  [2s]
+  walls 1.4x thinner           ratio 10  Pe   0.4 (W 5.00e-04) -> STUCK         t=   3800  + share 0.364  [28s]
+  walls 1.4x thinner           ratio 10  Pe   1.2 (W 1.50e-03) -> DEEP HAND WON t=   1520  + share 0.000  [11s]
+  walls 1.4x thinner           ratio 10  Pe   4.0 (W 5.00e-03) -> DEEP HAND WON t=    340  + share 0.000  [2s]
+  walls 2x thinner             ratio 10  Pe   0.4 (W 2.50e-04) -> STUCK         t=   7720  + share 0.371  [127s]
+  walls 2x thinner             ratio 10  Pe   1.2 (W 7.50e-04) -> STUCK         t=   8020  + share 0.180  [127s]
+  walls 2x thinner             ratio 10  Pe   4.0 (W 2.50e-03) -> DEEP HAND WON t=    700  + share 0.000  [10s]
+
+(2) Earth-like column: mixed layer 0.1 / lid 0.3 (10x slower) / abyss, base walls
+  three zones, no current      ratio 10  Pe   0.0 (W 0.00e+00) -> STUCK         t=   1500  + share 0.383  [4s]
+  three zones, current         ratio 10  Pe   4.0 (W 1.33e-02) -> STUCK         t=   1500  + share 0.250  [5s]
+  three zones, current         ratio 10  Pe  12.0 (W 4.00e-02) -> STUCK         t=   1500  + share 0.374  [5s]
+  three zones, current         ratio 10  Pe  40.0 (W 1.33e-01) -> DEEP HAND WON t=     40  + share 0.000  [0s]
+
+(3) Earth-like column with a 20 deg polar outcrop of the lid, base walls
+  three zones + gap, no current ratio 10  Pe   0.0 (W 0.00e+00) -> STUCK         t=   1500  + share 0.392  [5s]
+  three zones + gap, sink at pole ratio 10  Pe   1.2 (W 4.00e-03) -> TAKEOVER      t=    580  + share 1.000  [2s]
+  three zones + gap, rise at pole ratio 10  Pe   1.2 (W 4.00e-03) -> DEEP HAND WON t=    240  + share 0.000  [1s]
+  three zones + gap, sink at pole ratio 10  Pe   4.0 (W 1.33e-02) -> TAKEOVER      t=    240  + share 1.000  [1s]
+  three zones + gap, rise at pole ratio 10  Pe   4.0 (W 1.33e-02) -> DEEP HAND WON t=    120  + share 0.000  [0s]
+
+(4) same with walls 2x thinner
+  three zones + gap, sink at pole ratio 10  Pe   1.2 (W 1.00e-03) -> TAKEOVER      t=   2600  + share 1.000  [41s]
+  three zones + gap, rise at pole ratio 10  Pe   1.2 (W 1.00e-03) -> STUCK         t=   6020  + share 0.306  [105s]
+total 480s

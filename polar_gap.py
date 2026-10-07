@@ -45,14 +45,17 @@ R, H, D_HI, LAYER, DT = 4.0, 1.0, 1e-2, 0.4, 0.1
 NR, NTH = 50, 314                                   # dr = 0.02, R*dth = 0.02 (wall width sqrt(2 D_HI) = 0.14)
 
 
-def run(ratio, gap_deg, lid=True, dt=DT, t_max=4000.0, W=0.0):
+def run(ratio, gap_deg, lid=True, dt=DT, t_max=4000.0, W=0.0, d_hi=D_HI, grid=1.0, top=0.0):
     """gap_deg: polar gap half-width in degrees of colatitude (0 = no gap). W: overturning current (currents.py),
-    psi = -W R^2 sin(pi (r - r_in)/H) sin^2(th) cos(th): sinks at the pole at speed ~2W, rises at low latitudes. Returns (outcome, t, plus share, pole depth, side angle)."""
+    psi = -W R^2 sin(pi (r - r_in)/H) sin^2(th) cos(th): sinks at the pole at speed ~2W, rises at low latitudes.
+    d_hi, grid: thinner walls (realistic.py) with grid refined by `grid`; top: fast mixed layer above the lid. Returns (outcome, t, plus share, pole depth, side angle)."""
     r_in = R - H
-    dr, dth = H / NR, (np.pi / 2) / NTH
-    rc = r_in + (np.arange(NR) + 0.5) * dr
-    tc = (np.arange(NTH) + 0.5) * dth
-    rf, tf = r_in + np.arange(1, NR) * dr, np.arange(1, NTH) * dth
+    nr, nth = int(round(NR * grid)), int(round(NTH * grid))
+    slow_t = D_HI / d_hi                                          # stuck test window scales with the diffusion time
+    dr, dth = H / nr, (np.pi / 2) / nth
+    rc = r_in + (np.arange(nr) + 0.5) * dr
+    tc = (np.arange(nth) + 0.5) * dth
+    rf, tf = r_in + np.arange(1, nr) * dr, np.arange(1, nth) * dth
     w = 0.02
     s = lambda x, wid: 0.5 * (1 + np.tanh(x / wid))
     gap = np.radians(gap_deg)
@@ -61,12 +64,12 @@ def run(ratio, gap_deg, lid=True, dt=DT, t_max=4000.0, W=0.0):
         if not lid:
             return np.zeros(np.broadcast(r, th).shape)
         on = s(th - gap, w / R) if gap > 0 else np.ones_like(th)
-        return s(r - (R - LAYER), w) * on
+        return s(r - (R - LAYER), w) * (s((R - top) - r, w) if top else 1) * on
 
-    lnDr = np.log(D_HI) - slow(rf[:, None], tc[None, :]) * np.log(ratio)  # radial faces (NR-1, NTH)
+    lnDr = np.log(d_hi) - slow(rf[:, None], tc[None, :]) * np.log(ratio)  # radial faces (NR-1, NTH)
     Dr = np.exp(lnDr)
-    I, J = np.meshgrid(np.arange(NR), np.arange(NTH), indexing="ij")
-    k = lambda i, j: i * NTH + j
+    I, J = np.meshgrid(np.arange(nr), np.arange(nth), indexing="ij")
+    k = lambda i, j: i * nth + j
     rows, cols, vals = [], [], []
 
     def couple(ka, kb, ca, cb):                                   # flux between cells a and b, coefficients seen from a, b
@@ -76,28 +79,28 @@ def run(ratio, gap_deg, lid=True, dt=DT, t_max=4000.0, W=0.0):
     couple(k(i, j).ravel(), k(i + 1, j).ravel(),
            (Dr * rf[:, None] ** 2 / (rc[:-1, None] ** 2 * dr ** 2)).ravel(),
            (Dr * rf[:, None] ** 2 / (rc[1:, None] ** 2 * dr ** 2)).ravel())
-    i, j = I[:, :-1], J[:, :-1]                                   # colatitude neighbours, D_th = D_HI everywhere
+    i, j = I[:, :-1], J[:, :-1]                                   # colatitude neighbours, D_th = d_hi everywhere
     couple(k(i, j).ravel(), k(i, j + 1).ravel(),
-           (D_HI * np.sin(tf)[None, :] / (rc[:, None] ** 2 * np.sin(tc[:-1])[None, :] * dth ** 2)).ravel(),
-           (D_HI * np.sin(tf)[None, :] / (rc[:, None] ** 2 * np.sin(tc[1:])[None, :] * dth ** 2)).ravel())
+           (d_hi * np.sin(tf)[None, :] / (rc[:, None] ** 2 * np.sin(tc[:-1])[None, :] * dth ** 2)).ravel(),
+           (d_hi * np.sin(tf)[None, :] / (rc[:, None] ** 2 * np.sin(tc[1:])[None, :] * dth ** 2)).ravel())
     if W:                                                         # centred advection, face fluxes from psi at corners
         psi = lambda r, th: -W * R ** 2 * np.sin(np.pi * (r - r_in) / H) * np.sin(th) ** 2 * np.cos(th)
         V = rc[:, None] ** 2 * np.sin(tc)[None, :] * dr * dth
-        tb = np.arange(NTH + 1) * dth
+        tb = np.arange(nth + 1) * dth
         Fr = psi(rf[:, None], tb[None, 1:]) - psi(rf[:, None], tb[None, :-1])          # outward, (NR-1, NTH)
-        rb = r_in + np.arange(NR + 1) * dr
+        rb = r_in + np.arange(nr + 1) * dr
         Ft = -(psi(rb[1:, None], tf[None, :]) - psi(rb[:-1, None], tf[None, :]))       # equatorward, (NR, NTH-1)
         for (ka, kb, F, Va, Vb) in ((k(I[:-1], J[:-1]), k(I[1:], J[1:]), Fr, V[:-1], V[1:]),
                                     (k(I[:, :-1], J[:, :-1]), k(I[:, 1:], J[:, 1:]), Ft, V[:, :-1], V[:, 1:])):
             ka, kb, F, Va, Vb = ka.ravel(), kb.ravel(), F.ravel(), Va.ravel(), Vb.ravel()
             rows.extend([ka, ka, kb, kb]); cols.extend([ka, kb, ka, kb])
             vals.extend([-F / (2 * Va), -F / (2 * Va), F / (2 * Vb), F / (2 * Vb)])
-    n = NR * NTH
+    n = nr * nth
     A = coo_matrix((np.concatenate(vals), (np.concatenate(rows), np.concatenate(cols))), shape=(n, n)).tocsc()
     lu = splu((identity(n, format="csc") - dt * A).tocsc())
 
     r0 = R - 0.25
-    Dc = np.exp(np.log(D_HI) - slow(rc[:, None], tc[None, :]) * np.log(ratio))
+    Dc = np.exp(np.log(d_hi) - slow(rc[:, None], tc[None, :]) * np.log(ratio))
     a = np.tanh((rc[:, None] - r0) / np.sqrt(2 * Dc)).ravel()
     vol = (rc[:, None] ** 2 * np.sin(tc)[None, :]).ravel()
     i_mid = np.searchsorted(rc, r_in + 0.3)                       # side wall measured 0.3 above the floor
@@ -112,10 +115,10 @@ def run(ratio, gap_deg, lid=True, dt=DT, t_max=4000.0, W=0.0):
                 return "TAKEOVER", t, 1.0, H, 90.0
             if a.max() < 0:
                 return "DEEP HAND WON", t, 0.0, 0.0, 0.0
-            old = [f for tt, f in hist if tt <= t - 500]
-            if t > 1500 and old and abs(frac - old[-1]) < 2e-4:
+            old = [f for tt, f in hist if tt <= t - 500 * slow_t]
+            if t > 1500 * slow_t and old and abs(frac - old[-1]) < 2e-4:
                 break
-    g = a.reshape(NR, NTH)
+    g = a.reshape(nr, nth)
     pole = R - rc[np.flatnonzero(g[:, 0] > 0)[0]] if (g[:, 0] > 0).any() else 0.0
     side = np.degrees(tc[np.flatnonzero(g[i_mid] > 0)[-1]]) if (g[i_mid] > 0).any() else 0.0
     return ("STUCK" if t < t_max else "unfinished"), t, hist[-1][1], pole, side
