@@ -1,7 +1,6 @@
 # Which Solar System Ocean Could Let the Weak Force Choose Life's Handedness?
 
-**[Author 1: Saptarshi Ghosh]**, Cupertino High School, Cupertino, CA, USA
-**[Author 2: friend's name and school, if agreed]**
+**Saptarshi Ghosh**, Cupertino High School, Cupertino, CA, USA
 
 *Draft for Research Notes of the AAS. Limit: 1,500 words total, abstract 150, one figure. Not yet submitted.*
 
