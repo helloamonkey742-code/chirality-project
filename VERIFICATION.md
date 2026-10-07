@@ -21,7 +21,7 @@ A separate agent rebuilt the model from PAPER_DRAFT.md and README.md without ope
 - **Cause:** the text never gave the concentration range, the bias range, Earth's mixing ranges, Europa's age range or the exact win rule. With c = 10⁻¹² – 10⁻³ M it got 22.8%/29.4%, so the model is consistent and only the description was incomplete.
 - **Fix:** §2.2 now lists every input and the exact win rule.
 - **Second blind rebuild, from the paper with the table only:** Enceladus 21.8% (paper 22%), Europa 28.6% (29%), Early Earth 74.6% (75%), Europa with lid 21.9% (22%), Enceladus with lid 0.0% (0%). All within 0.4 points; changing the order of the random draws moves them by at most 0.2. The only missing details were units, now stated.
-- **Still not reproducible from the text alone:** the §3.15 worlds (their R, H and age live in `ocean_worlds.py`), the §3.9 per-input effects, and the 33%/34% merge shares, which the second rebuild did not check.
+- **Third pass (2026-10-07), after the §3.15 input table and §2.2 diagnostic definitions were added:** every §3.9 figure and every §3.15 world reproduced from the text within 1 point. Examples: merge shares 33.4/33.6 (paper 33/34), D_z halves 0/43, 0/57, 52/97 (exact), concentration +21/+10, Ganymede 28.5 (22.0–32.7), Mimas 4.7 with 68% pinned. S\* values came from the paper's table and were not recomputed in this pass (see the TEOS-10 row above). The last two ambiguities it found (the volume factor for these worlds, and which depth gives which end of the range) are now stated.
 
 ## Not verified (cannot be by re-running code)
 

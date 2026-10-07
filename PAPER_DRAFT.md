@@ -61,6 +61,12 @@ For a body of water, N = c · V · f · 1000 · N_A, where V is the volume (m³)
 
 Depth H = V / (4π(L/π)²); stretched depth H' = H·√(D_h/D_z). With Δ(f) = √2 π^¼ g (k₂cτ)^¼ (c·V·f·1000·N_A)^½, a draw wins when k₂cτ ≥ 10 and either (i) H' ≤ L, (L/5.5)²/D_h ≤ τ and F·Δ(1) ≥ 2; or (ii) H' > L, (L/5.5)²/D_h ≤ τ, H·(L/π)/(2D_z) ≤ τ and F·Δ(min(1, L/H')) ≥ 2. The stratified lid then removes draws with salinity < S\*, drawn independently. The other worlds of §3.15 use Europa's c, D_h, D_z and g, with R, H and age from the table in `ocean_worlds.py`. All quantities are in SI units: τ in seconds (1 yr = 3.156×10⁷ s), R and H in metres. The salinity draw is log-uniform as well.
 
+Diagnostics used in §3.9:
+- **Merge-in-time share:** the fraction of draws with (L/5.5)²/D_h ≤ τ and H·(L/π)/(2D_z) ≤ τ.
+- **Layered share:** the fraction of draws with H' > L.
+- **Never-merge bound:** the win rate when draws with H' > L always lose, i.e. k₂cτ ≥ 10, H' ≤ L, healing in time and F·Δ(1) ≥ 2.
+- **Effect of an input:** split the draws at that input's median, then subtract the win rate in the lower half from the win rate in the upper half. Each input is split on its drawn value, with time in seconds and volume after the ×U(0.7, 1.3) factor.
+
 ### 2.3 Space and mixing (`domains.py`, `domains3d.py`, `coarsen3d.py`, `k3.py`, `shell3d.py`, `aniso3d.py`, `sphere_layers.py`)
 
 With mixing, α becomes a field α(x, t):
@@ -263,6 +269,23 @@ What this means for each ocean. Early Earth's thermocline mixes about 10⁻⁵ m
 ### 3.15 Every ocean world in the Solar System (`jupiter_moons.py`, `ocean_worlds.py`)
 
 The same sweep (§3.9) and stratified-lid test (§3.14) were run for every moon or dwarf planet thought to have, or to have had, a liquid-water ocean. Only the size, ocean depth, ice thickness, ocean age and (where a lid is possible) salinity change. The chemistry and mixing ranges are Europa's for every world, an ASSUMPTION: nothing in the literature sets these worlds apart on those inputs. Each input was checked against published interior models before the final run, and predictions were written down before each run. With no measured salinity, worlds where a lid can form get a log-uniform 1–100 g/kg prior (ASSUMED). Under more than about 28 MPa of ice, freezing-point water sinks as it cools at any salinity, so no thermal lid can form (TEOS-10, extrapolated past its 100 MPa range for Ganymede and Callisto).
+
+**Exact inputs** (from `ocean_worlds.py`; added 2026-10-07 so the table below can be rebuilt from the text). Every world except Enceladus and Europa uses V = 4πR²H (times the same U(0.7, 1.3) factor as §2.2) and L = πR, with R the body radius. It uses Europa's c, D_h, D_z, g, k₂ and F ranges (§2.2) and the win rule of §2.2. Age is log-uniform. "Depth sweep" re-runs the world with H at each end of the range. In the results table, "across ocean depths" is the range of those two runs, and the shallower ocean always gives the higher number. Where a lid is possible, salinity is log-uniform 1–100 g/kg and the draw is pinned when salinity < S\*. S\* is TEOS-10 at the ocean-top pressure, 920 kg/m³ × g × ice thickness.
+
+| World | R (km) | H (km) | depth sweep (km) | age (yr) | S\* (g/kg) |
+|---|---|---|---|---|---|
+| Ganymede | 2631 | 100 | 50, 300 | 10⁸ – 4×10⁹ | none |
+| Titan | 2575 | 200 | 50, 400 | 10⁸ – 4×10⁹ | none |
+| Callisto | 2410 | 100 | 20, 300 | 10⁸ – 4×10⁹ | none |
+| Triton | 1353 | 150 | 30, 200 | 10⁸ – 4×10⁹ | none |
+| Pluto | 1188 | 100 | 50, 200 | 10⁸ – 4×10⁹ | none |
+| Titania | 789 | 30 | 10, 50 | 10⁸ – 4×10⁹ | none |
+| Oberon | 761 | 30 | 10, 50 | 10⁸ – 4×10⁹ | none |
+| Umbriel | 585 | 20 | 10, 30 | 10⁸ – 4×10⁹ | none |
+| Ariel | 579 | 30 | 5, 30 | 10⁸ – 4×10⁹ | none |
+| Dione | 561 | 65 | 30, 100 | 10⁸ – 4×10⁹ | 5.6 |
+| Miranda | 236 | 100 | 100, 150 | 10⁸ – 5×10⁸ | 21.9 |
+| Mimas | 198 | 45 | 35, 55 | 2×10⁶ – 2.5×10⁷ | 22.6 |
 
 | World | ocean | ocean depth (km) | stratified top | physics wins | across ocean depths |
 |---|---|---|---|---|---|
