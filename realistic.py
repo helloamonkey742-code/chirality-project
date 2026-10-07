@@ -22,6 +22,9 @@ PREDICTIONS (written before any run, 2026-10-06):
       three-zone column: Pe 4 now frees the wall in both current directions. Low confidence.
  (P5, added after section 3, before section 4 ran) With the outcrop the current goes around the slow layer instead of
       through it, so thinner walls (2x) should NOT raise the threshold: Pe 1.2 still frees the wall, both directions.
+ (P6, 2026-10-06, before section 5 ran) Walls 4x thinner (grid 200x1256), outcrop, sinking at the pole: the current goes
+      around the lid, so Pe 1.2 still frees the wall and the top hand wins, later than at 2x (t ~ 2x 2600 or more).
+      Rising at the pole: not run (stuck runs at this grid take ~30 min each; 2x thinner was already stuck).
  Not run: an Enceladus-like 1000x lid; its lid wall (width 0.0045) is below the grid spacing, so the run would not be
  resolved (ratio 100 already is only marginally).
 
@@ -38,9 +41,13 @@ RESULTS (realistic.log, 2026-10-06):
  Meaning for Earth: its deep overturning SINKS at the poles where the thermocline outcrops, the direction that frees
  the wall at the lowest Pe tested even with thinner walls, and hands the ocean to the top hand, which matches the
  "top layer decides" assumption of uncertainty.py. Earth's 75% survives in this model, on the outcrop + sinking branch.
- Ceilings: one flow cell, axisymmetric, R/depth 4, walls still ~5-50x too thick relative to a real thermocline, and a
+ P6 held (realistic5.log, 1615 s): walls 4x thinner, outcrop, sinking at the pole: Pe 1.2 frees it (t = 11800) and
+ Pe 4 too (t = 4880); top hand wins both. Takeover times 580 / 2600 / 11800 at 1x / 2x / 4x thinner track the slower
+ diffusion (x1, x4, x16 -> 580, 650, 740 in diffusion-time units), so on this branch thinner walls do not raise the threshold.
+ Ceilings: one flow cell, axisymmetric, R/depth 4, walls still ~1-12x too thick relative to a real thermocline, and a
  diffusive (not adiabatic, along-isopycnal) outcrop.
 """
+import sys
 import time
 
 from polar_gap import run, D_HI
@@ -62,6 +69,12 @@ def show(label, ratio, pe, div, **kw):
 
 def main():
     t0 = time.time()
+    if sys.argv[1:] == ["5"]:                                     # slow: ~10-30 min, logged to realistic5.log
+        print("(5) walls 4x thinner, three zones + 20 deg outcrop, sinking at the pole")
+        for pe in (1.2, 4.0):
+            show("three zones + gap, sink at pole", 10, pe, 16, top=0.1, gap=20)
+        print(f"total {time.time() - t0:.0f}s")
+        return
     print(f"(1) threshold Pe vs wall thickness, lid 10x slower, dt={DT}")
     for div, label in LEVELS:
         for pe in ((0.4, 1.2) if div == 1 else (0.4, 1.2, 4.0)):
