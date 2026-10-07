@@ -42,7 +42,7 @@ RESULTS (ocean_worlds.log, 2026-10-06): P1-P4 held (Pluto 30.2%, just over P1's 
  Umbriel 21.9, Europa 21.7, Dione 21.0, Miranda 9.4, Mimas 5.2, Enceladus 0.0 (%).
  Pattern: two things set the number. (1) A salt lid (only small/low-pressure moons can have one) cuts or kills it.
  (2) Without a lid, thinner oceans score higher (layers merge faster); spread 24-37%. Every top-three ocean is
- unconfirmed or only likely; among confirmed oceans Ganymede leads, then Titan.
+ unconfirmed or only likely; among confirmed oceans Ganymede leads, then Titan. (Superseded by V2 and robust_ranking.py.)
 
 V2: LITERATURE CHECK (2026-10-06, three parallel searches; key DOIs re-fetched from OpenAlex). Changes to the inputs:
   Titan     ocean DISPUTED: Petricca et al. 2025 Nature 10.1038/s41586-025-09818-x, "Titan's strong tidal dissipation
