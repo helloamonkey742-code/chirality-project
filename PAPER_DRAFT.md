@@ -102,6 +102,7 @@ The two ingredients that make it amplify are self-copying and mutual destruction
 - `coarsen_fig.py`, `sketch.py`: the figures.
 - `shell_res.py`: the grid-resolution test.
 - `quench.py`: the excess frozen in when a closed parent body loses its water (§3.10), and whether an inherited excess survives a closed network (§3.5).
+- `crystal_check.py`, `soai_check.py`, `viedma_check.py`: post-hoc checks of the counting rule against published lab data (§3.8).
 
 Every script asserts its own checks.
 
@@ -148,6 +149,8 @@ Seven requirements for a self-amplifying prebiotic chiral reaction were derived 
 ### 3.8 Does real chemistry follow the formula? (Part 7)
 
 The network (§2.4, table) is the classic Frank (1953) scheme: an achiral feedstock A turns into L or D, each hand copies itself from A, and the two hands destroy each other on contact. Self-copying makes whichever hand leads grow faster, and mutual destruction removes the minority. Together they turn a small lead into a one-handed outcome. The network, simulated with molecular counting noise from every reaction step, follows the simplified formula within ~1 percentage point in the slow (natural) limit (2.5 points near saturation); a fast sweep selects *more* strongly than predicted, so the formula is conservative. The real network's selection strength is lower by a conversion factor F ≈ 0.7, because every reaction adding/removing a chiral molecule adds noise, not just self-copying ones — so every concentration in Parts 1–4 should rise by about 1.6×. No conclusion changes, since margins there were 10×–10⁶×, except the Europa mixing margin (not concentration-based).
+
+**Checks against published lab data (post-hoc, `crystal_check.py`, `soai_check.py`, `viedma_check.py`).** Three real amplifiers were checked against the counting rule of §3.0, that a bias controls the outcome only when it exceeds the chance excess of about 1/√N. The expectations were written in each script before it ran, but these are reanalyses of published numbers, not pre-registered tests. With no added bias, outcomes split as chance predicts: 46 S of 91 spontaneous Soai-reaction runs (Singleton & Vo 2003; Soai et al. 2003, as quoted in Soai 2019) and 37 L of 73 crystal-deracemization runs (Miyagawa et al. 2019), both p = 1.00 against 50/50. Of 25 side-by-side identical Soai pairs, 12 gave opposite hands, which rejects a bias shared within each pair strong enough to steer (P = 0.018). A 5% crystal excess over more than 10⁶ crystals (Δ ≥ 50) always won (Viedma 2005). Stirring alone left the starting excess unchanged, while stirring with grinding reached one hand. In stirred sodium chlorate crystallization, the same pattern holds: the whole beaker behaves as about one decision (n_eff ≈ 1.0–1.1) when the stirrer breaks crystals, a few decisions when it floats, and about 17 when unstirred (Kondepudi, Kaufman & Singh 1990; Martin, Tharrington & Wu 1996). So both a self-copying step and transport are needed, as the model assumes. These checks support the rule the model uses, at lab scale (10⁶–10¹² units). They do not test the weak force, the 10³³-molecule threshold or any ocean. A 50/50 split is also predicted by most rival ideas, so the 50/50 results are weak evidence; the paired-run and crushing results discriminate more.
 
 ### 3.9 Robustness checks (Part 8)
 
@@ -432,6 +435,11 @@ Individual scripts (sim.py, ocean.py, domains.py, patches.py, domains3d.py, coar
 - Frank 1953, *Biochim. Biophys. Acta* 11:459
 - Soai et al. 1995, *Nature* 378:767, doi:10.1038/378767a0; Sato et al. 2003, *Angew. Chem.* 42:315, doi:10.1002/anie.200390105
 - Viedma 2005, *PRL* 94:065504, doi:10.1103/PhysRevLett.94.065504
+- Kondepudi, Kaufman & Singh 1990, "Chiral symmetry breaking in sodium chlorate crystallization", *Science* 250:975, doi:10.1126/science.250.4983.975
+- Martin, Tharrington & Wu 1996, *PRL* 77:2826, doi:10.1103/PhysRevLett.77.2826
+- Singleton & Vo 2003, *Org. Lett.* 5:4337, doi:10.1021/ol035605p
+- Soai et al. 2003, *Tetrahedron: Asymmetry* 14:185, doi:10.1016/S0957-4166(02)00791-7 (run counts as quoted in Soai 2019, *Proc. Jpn. Acad. B* 95:89, doi:10.2183/pjab.95.009)
+- Miyagawa, Aiba, Kawamoto, Tokunaga & Kawasaki 2019, *Org. Biomol. Chem.* 17:1238, doi:10.1039/c8ob03092h
 - Noorduin et al. 2008, *Angew. Chem.* 47:6445, doi:10.1002/anie.200801846
 - Saghatelian et al. 2001, *Nature* 409:797, doi:10.1038/35057238
 - Joyce et al. 1984, *Nature* 310:602, doi:10.1038/310602a0

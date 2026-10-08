@@ -1,0 +1,17 @@
+S1  spontaneous runs, no chiral additive
+    Singleton&Vo 2003              S=27/54  fraction=0.500  p(50/50)=1.00
+    Soai 2003 (via 2019 review)    S=19/37  fraction=0.514  p(50/50)=1.00
+    pooled                         S=46/91  fraction=0.505  p(50/50)=1.00
+
+S2  pooled 46/91: P(split | S favoured, Delta=1)=9.4e-14, P(split | R favoured)=1.7e-14
+
+S3  pairs: 12/25 opposite. vs chance (0.5): p=1.00; vs shared Delta=1 bias (P_opp=0.27): P(>=12 opposite)=0.018
+
+S4  Delta=1: N_d <= 3.6e+09 molecules = 6.0e-15 mol
+    Delta=2: N_d <= 9.0e+08 molecules = 1.5e-15 mol  (inference only)
+
+S5  ee=5e-7 beats sqrt(N) noise once N >= 4.0e+12 molecules = 6.6e-12 mol = 1.5 ng of alkanol
+    (catalyst amount not in open text; 1 microgram floor is an assumption)
+
+expectations: S1 held, S2 held, S3a held, S3b held, S5 held
+S4 not scored (no flask amount in open text).

@@ -1,0 +1,10 @@
+V1  5% excess: ee=0.050, Delta >= 50 (N >= 1e6). Reported: majority always won.
+
+V2  symmetric: weighing ee <= 8.3e-06, Delta <= 0.008 at N=1e6; would steer only if N > 1.4e+10. Reported: random hand (no counts given).
+
+V3  stirring only -> changed: False; stirring + balls -> one hand: True
+
+V4  Strecker: D=36, L=37 of 73: p(50/50)=1.00; P(split | Delta=1 bias)=3.0e-11
+
+expectations: V1 held, V2 held, V3 held, V4a held, V4b held
+V2 and V3 are qualitative: the paper gives no run-by-run counts.

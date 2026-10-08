@@ -1,0 +1,11 @@
+condition                    crystals/run   n_eff  note
+K90 unstirred                          59       -  pooled O=+0.050, 1.6 sigma
+K90 stirred 100 rpm                   370     1.0  32/32 runs >99% one hand
+M96 quiescent                          57    17.1  pooled O=+0.065, 4.8 sigma
+M96 5 cc 1 Hz (crushing)                -     1.1  8 L / 12 R
+M96 7.5 cc 1 Hz (afloat)                -     3.0  flat PDF
+
+E4: p(L)=0.532; P(<=8 L of 20)=0.17 (p=0.5: 0.25)
+    runs needed to see this bias at 3 sigma: 2151
+
+E1-E4 consistent.
