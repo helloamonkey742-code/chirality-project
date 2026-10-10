@@ -44,6 +44,23 @@ P3. At grain-sized patches (d = 100 um, equal output) the allowed share runs fro
 P4. Field, worst case (A = 0.5, R = 1, 100 nm grains): Enceladus 2e-15..5e-15 and Europa 1e-15..3e-15, i.e. 2-8x
     Early Earth's 6.0e-16; Ganymede 1.5e-16..4e-16, below Earth's. With earth.py's A, R spread, Enceladus and Europa
     allow 1e-14..5e-14. Elongated grains (1e-20 m^3) bring every moon to within x2 of Earth or below it.
+
+RESULTS (nudge_realism.log, 2026-10-10): P1 and P4 held; P2 held but for Early Earth's top end; P3 failed in part.
+ P1 held: the log reads back exactly (asserted).
+ P2 held but for one end: with f = 1 and equal output d_c is Enceladus 1.4-15 um, Europa 0.031-33 um, Ganymede
+    0.036-38 um, Early Earth 0.11-120 um (above the predicted 100 um). sigma = 2 shrinks each by 7.4x. At f = 0.01,
+    d_c is 100x larger: 3 um to 12 mm.
+ P3 failed in part: at d = 100 um the smallest-S share is 3e-4 (Europa), 4e-4 (Ganymede), 1e-3 (Early Earth) and
+    1e-2 (Enceladus, whose porous core gives it far more surface), so Enceladus and Earth are not below 1e-3; the
+    largest-S share is 0.2-1 everywhere. The point held: the model does not decide it; geology does.
+ P4 held: worst case (A = 0.5, R = 1, 100 nm grains) Enceladus 3.5e-15 (5.8x Earth's 6.0e-16), Europa 1.6e-15
+    (2.7x), Ganymede 1.9e-16..3.4e-16 (0.3-0.6x); with earth.py's A, R spread 2.8e-14 and 2.1e-14. Elongated grains:
+    3.7e-16, 1.9e-16, 9.4e-17, all at or below Earth.
+ So random-handed surfaces are not fatal: they average out if one hand holds over less than about 1-40 um (all
+ chemistry on surfaces) or 0.1-4 mm (1% on surfaces) on the moons; what is unknown is how far one hand extends. The
+ push with a shared hand is the real limit: below ~1e-15 of the deciding molecules on field-aligned magnetite on
+ Enceladus and Europa (a few times looser than Earth, because their parent planets' fields are ~100x weaker),
+ tighter than Earth on Ganymede, and no better than Earth if the magnetite is elongated single-domain grains.
 """
 import re
 
@@ -112,9 +129,9 @@ def main():
         a = [[np.tanh(MS * v * b / (KB * T)) for b in FIELDS[w]] for v in VOLS]  # [vol][low B, high B]
         assert abs(a[0][0] / (MS * VOLS[0] * FIELDS[w][0] / (KB * T)) - 1) < 0.01  # weak field: a ~ x
         worst = [[one / (x * 0.5) for x in row] for row in a]
-        rng = lambda p: f"{min(p):.1e}" if np.isclose(min(p), max(p)) else f"{min(p):.1e}..{max(p):.1e}"
+        rng = lambda p: f"{min(p):.1e}" if np.isclose(min(p), max(p), atol=0) else f"{min(p):.1e}..{max(p):.1e}"
         print(f"{w:18} {FIELDS[w][0]*1e9:5.0f}..{FIELDS[w][1]*1e9:<5.0f} | "
-              + " ".join(f"{rng(r):>7}" if np.isclose(min(r), max(r)) else f"{min(r):.2f}-{max(r):.2f}" for r in a)
+              + " ".join(f"{rng(r):>7}" if np.isclose(min(r), max(r), atol=0) else f"{min(r):.2f}-{max(r):.2f}" for r in a)
               + f" | {rng(worst[1]):>18} {rng(worst[2]):>17} | {rng([x / EARTH_FIELD for x in worst[1]]):>15}"
               + f" | {rng([field / x for x in a[1]])}")
     aE = [np.tanh(MS * VOLS[1] * b / (KB * T)) for b in FIELDS["Early Earth ocean"]]
