@@ -38,6 +38,8 @@ random, realistic input combinations where it wins) for early Earth's open ocean
 with vertical mixing the deciding input. The layers-merge-in-time condition holds in only 33% (Enceladus) and 34% (Europa) of all draws (Part 3b).
 If they never merged, it would be only 3% and 7%.
 A second reaction scheme and a thin-shell ocean both confirm the results.
+Break-even checks (2026-10-09): a moon passes 50% only if vertical mixing beats 2.7×10⁻⁵ (Enceladus) or 6×10⁻⁶ m²/s
+(Europa); the two assumed rules move the results by about 2 points at most, and even an unlimited weak force caps the moons near 30%.
 *(Corrections 2026-09-25: this first said 18% for both moons, which used a vertical-mixing range for sideways healing
 (see Part 3). It then said 43% and 58%, before layering was modelled (see Part 3b).)*
 *(Correction 2026-09-26: on a round moon a layer boundary sinks at 2·D_z/R (vertical mixing), not 2·D_h/R as first written; on a sphere "down" follows the radius, so sideways mixing drops out (MEASURED, `sphere_layers.py`). So the numbers above went 55% → 22% (Enceladus), 78% → 29% (Europa) and 100% → 75% (early Earth),
@@ -512,6 +514,28 @@ when the ocean layers. `uncertainty.py` checks the current numbers with asserts.
 *(Correction 2026-09-26: on a round moon a layer boundary sinks at 2·D_z/R (vertical mixing), not 2·D_h/R as first written; on a sphere "down" follows the radius, so sideways mixing drops out (MEASURED, `sphere_layers.py`). With layering modelled, this table said 100% / 55% / 78% with concentration deciding (21% vs 89%, 57% vs
 99%), bias g +18 to +23, k2 +14, vertical mixing +10 to +14, and "layer merging always finishes in time".)*
 
+**What would the unknowns have to be? (`breakeven.py`, `assumed_rules.py`, `earth_breakeven.py`, added 2026-10-09.)**
+Model results. Each script's predictions were written in its docstring before the first run, and all 13 held. Each
+script first reproduces the published numbers exactly (asserted); the headline numbers above do not change.
+- **Break-even values** (`breakeven.py`). With every other input still drawn over its range, a moon passes 50% only
+  through vertical mixing: D_z above 2.7×10⁻⁵ m²/s (Enceladus) or 6.1×10⁻⁶ m²/s (Europa). No slice of any other
+  input's range takes either moon above 38%. Even in the fastest tenth of vertical mixing the moons level off at 66%
+  and 86%: there the reaction still fails to finish in 17% / 8% of draws, and finishes but loses in 16% / 6%. Early
+  Earth stays above 50% unless D_z is below 2.9×10⁻⁶ m²/s (around Ledwell's measured 1.1×10⁻⁵ it wins 87%) or the
+  time is under 1.4×10⁷ yr.
+- **The two assumed rules** (`assumed_rules.py`). Scaling the deciding top layer's share by 0.1, 0.28 or 2.1 (the last
+  two measured in `sphere_layers.py`), letting the whole ocean decide, or moving the bar to Δ ≥ 1 or Δ ≥ 3, changes a
+  moon by at most 2.2 points and never changes the order.
+- **A bigger weak force** (`assumed_rules.py`). The bias range used (about 0.01–10 aeV) is at or below the low end of
+  current calculations: "aeV to feV" for molecules of light atoms, and up to ~200 aeV for molecules with S, Cl or Br
+  (Quack, Seyfang & Wichmann 2022). Ten or a hundred times larger raises Enceladus to 26% / 28% and Europa to 31%;
+  even an unlimited bias stops at 29% and 31%, because the reaction must still finish and the layers must still merge
+  in time. Earth stays at 75% in every case.
+- **Earth's magnetic field** (`earth_breakeven.py`; a property of `earth.py`'s model, not of real magnetite). The coin
+  flip does not hinge on `earth.py`'s assumed lower bound for the field's share (10⁻⁸): from about 10⁻¹³ up, Earth
+  splits evenly (L 37%, D 37%). For the weak force to keep deciding Earth's hand, fewer than about 2 in 10¹⁵ of the
+  deciding molecules could have formed on magnetized magnetite.
+
 **Second reaction scheme (`frank2.py`).** Frank's scheme plus wasted back-reactions (L → A, 2L → A + L). It
 matches the formula within 1.7 points in the slow limit, and the conversion factor is **F = 0.71**, the same as
 scheme 1 (0.70). The 1.6× concentration correction from Part 7 holds for both schemes tested (MEASURED).
@@ -613,7 +637,10 @@ python aniso3d.py   # layered ocean: flat / cube / tall boxes + curvature and wa
 python uncertainty.py # uncertainty sweep, ~10 s
 python review.py      # reviewer checks R1–R8 (asserts), ~2 min
 python quench.py      # Bennu freeze-in, inherited seed, robustness Q1–Q5 (asserts), ~2 s
-./run_all.sh        # everything fast (~3 min); ./run_all.sh --full adds the 3D + real-chemistry runs
+python breakeven.py   # what each unknown input would have to be (asserts), ~5 s
+python assumed_rules.py # the two assumed rules and a bigger weak force (asserts), ~5 s
+python earth_breakeven.py # how small Earth's magnetic-field share must be (asserts), ~1–2 min
+./run_all.sh        # everything fast (~4–7 min); ./run_all.sh --full adds the 3D + real-chemistry runs
 ```
 Needs numpy, scipy, matplotlib.
 

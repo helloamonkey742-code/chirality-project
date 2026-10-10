@@ -103,6 +103,7 @@ The two ingredients that make it amplify are self-copying and mutual destruction
 - `shell_res.py`: the grid-resolution test.
 - `quench.py`: the excess frozen in when a closed parent body loses its water (§3.10), and whether an inherited excess survives a closed network (§3.5).
 - `crystal_check.py`, `soai_check.py`, `viedma_check.py`: post-hoc checks of the counting rule against published lab data (§3.8).
+- `breakeven.py`, `assumed_rules.py`, `earth_breakeven.py`: what each unknown input, assumed rule and Earth's magnetic-field share would have to be to change the results (§3.9, §3.13).
 
 Every script asserts its own checks.
 
@@ -157,6 +158,8 @@ The network (§2.4, table) is the classic Frank (1953) scheme: an achiral feedst
 Varying every uncertain input at once (200,000 draws/world), physics wins in **75%** of plausible cases for early Earth's open ocean, **22%** for Enceladus and **29%** for Europa on a round moon (3% and 7% if layers never merged); the merge-in-time condition holds in 33%/34% of draws. Vertical mixing is the most decisive input (0%/0%/52% win rate in the low half of its range vs. 43%/57%/97% in the high half, Enceladus/Europa/Earth); concentration (+21/+10) and time (+15/+11; +32 for Earth) come next, then bias g (+8/+4) and rate k2 (+5); faster sideways mixing lowers the rate slightly (−2 to −9); F and volume ≤2 for the moons. *(Corrections 2026-09-25: first reported as 18% for both moons, from a run that used the vertical-mixing range for sideways healing; then 43%/58% before layering was modelled. Correction 2026-09-26: then 100%/55%/78% with concentration deciding (21%/57% vs. 89%/99%), bias g +18 to +23, k2 +14, vertical mixing +10 to +14, from a run that let layer boundaries sink at 2·D_h/R instead of 2·D_z/R.)* A second reaction scheme with back-reactions matches the formula within 1.7 points and gives F = 0.71 (vs. 0.70). A thin, wide "shell" shape closer to a real ocean's proportions still shows the majority taking over, just more slowly (growth exponent 0.41 vs. 0.45–0.49 in a cube).
 
 *Slowly swinging conditions* (`wobble.py`, `wobble_sweep.py`). Real oceans are not steady: tides, orbital cycles and climate make the amplifier's drive swing back and forth while it slowly ramps. A simulation of the core model with a periodic swing added recovers the steady result with no swing (P = 0.934 against the formula's 0.933) and shows a swing only weakens the effective bias, by a factor of 0.44–0.85 across the cases run. Using the worst case of that rule, Δ × (1 + r)^(−¼) with r = swing × 2πτ/period, in the full sweep: a mild swing (0.1–1%, periods 10⁵–10⁸ yr) gives 21%/28%/75% for Enceladus/Europa/Earth, a plausible one (0.1–30%, 10³–10⁸ yr) 20%/26%/75%, and a harsh one (10–30%, 10³–10⁵ yr) 17%/24%/75%. Swinging conditions cost the icy moons at most 5 points and leave Earth unchanged.
+
+*What would the unknowns have to be?* (`breakeven.py`, `assumed_rules.py`; predictions written in each script before the first run, all held.) With every other input still drawn over its range, a moon passes 50% only through vertical mixing: D_z ≥ 2.7×10⁻⁵ m²/s for Enceladus and ≥ 6.1×10⁻⁶ m²/s for Europa. No slice of any other input's range takes either moon above 38%. Even in the fastest tenth of vertical mixing the moons level off at 66% and 86%; there the reaction fails to finish in 17%/8% of draws and finishes but loses in 16%/6%. Early Earth stays above 50% unless D_z < 2.9×10⁻⁶ m²/s (it wins 87% around Ledwell et al.'s measured 1.1×10⁻⁵ m²/s) or the time is under 1.4×10⁷ yr. The two rules that were assumed rather than measured matter little. Scaling the deciding top layer's share by 0.1, 0.28 or 2.1 (the last two measured by `sphere_layers.py`), letting the whole ocean decide, or moving the bar to Δ ≥ 1 or Δ ≥ 3 changes a moon by at most 2.2 points and never changes the order. The bias range used (≈0.01–10 aeV) lies at or below the low end of current calculations: "aeV to feV" for molecules of light atoms, and up to ~200 aeV with S, Cl or Br (Quack, Seyfang & Wichmann 2022). A bias 10× or 100× larger raises Enceladus to 25.7%/27.8% and Europa to 30.7%/31.2%. Even an unlimited bias stops at 28.6% and 31.2%, because the reaction must still finish and the layers must still merge in time. Earth is 74.7% in every case.
 
 ### 3.10 Reconciling the model with racemic Bennu and Ryugu (`review.py` R2)
 
@@ -247,6 +250,8 @@ Early Earth had one chiral push the icy moons lack: magnetite magnetized by the 
 | weak force (D) + magnetic field + meteorites | 66% | 4% | 31% |
 
 In 7% of the draws with the field, the field pins two hands (counted as "no one hand"). Where it acts, the field outweighs the weak force, and because its polarity at the time is random, it picks L or D equally often. Earth's one unique push therefore does not explain why life is left-handed; it would make the outcome a coin flip. An L-excess delivered by meteorites (assumed 10⁻⁴–1 share of amino acids, 0.1–10% excess) restores a strong L preference, but meteorites fell on every Solar System body, so that is not unique to Earth either.
+
+How small would the field's share have to be for the weak force to keep deciding? `earth_breakeven.py` fixes f_mag, the share of the deciding molecules made on magnetized magnetite (drawn from an assumed 10⁻⁸–10⁻² in `earth.py`), at each value from 10⁻²⁰ to 10⁻², leaving every other draw unchanged. L keeps winning in most draws only for f_mag below 1.9×10⁻¹⁵. With the time between reversals fixed at 10⁵–10⁸ yr instead of drawn, the threshold is 1.7–2.7×10⁻¹⁵; at 10⁴ yr it is 5.8×10⁻¹⁵. From about 10⁻¹³ up, the field splits Earth evenly (L 37.3%, D 37.3%). The coin flip therefore does not depend on the assumed lower bound: the weak force could still decide Earth's hand only if fewer than about 2 in 10¹⁵ of the deciding molecules formed on magnetized magnetite. This is a property of the model (predictions written before the run, all held), not a measurement of real magnetite.
 
 ### 3.14 A stratified lid traps the wall (`two_zone.py`, `strat_sweep.py`, `polar_gap.py`, `currents.py`, `realistic.py`)
 
@@ -382,7 +387,7 @@ The D-seed mirror arm is the main safeguard against contamination by biological 
 All computational results were produced by the Python scripts in the project folder, each printing and asserting its own self-checks (numpy, scipy and matplotlib are required). The code is public at https://github.com/helloamonkey742-code/chirality-project (MIT licence) so that every number can be reproduced:
 
 ```
-./run_all.sh          # fast subset, ~3 minutes
+./run_all.sh          # fast subset, 4–7 minutes
 ./run_all.sh --full   # adds the slow 3D and real-chemistry runs
 ```
 
