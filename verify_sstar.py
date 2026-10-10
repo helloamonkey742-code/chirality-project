@@ -8,7 +8,8 @@ def sstar(p_mpa):
     if alpha(0.01, p) > 0: return None  # fresh water already sinks when cooled
     return brentq(alpha, 0.01, 60, args=(p,))
 claims = {"Mimas":(1.5,22.6),"Enceladus top":(2,22.5),"Miranda":(2.2,21.9),"Dione":(21,5.6),
-          "Umbriel":(21,5.6),"Europa (20 km ice)":(25,3.0),"Ariel":(25,2.7)}
+          "Umbriel":(21,5.6),"Europa (20 km ice)":(24.2,3.0),"Europa at ~25 MPa":(25,3.0),"Ariel":(25,2.7)}
+# Europa: 917 kg/m3 ice * 1.315 m/s2 * 20 km = 24.2 MPa; strat_sweep.py rounds this to ~25. S* falls steeply here.
 print(gsw.__version__)
 for k,(p,c) in claims.items():
     s=sstar(p); print(f"{k:20} {p:5} MPa  paper {c:5}  independent {s:6.2f}")
