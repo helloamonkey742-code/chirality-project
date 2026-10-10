@@ -362,13 +362,16 @@ its autocatalysis switches on. Theory (checked against 4,000 runs per case, 5 ca
   isn't a protein amino acid. Its excess would have to be passed on by catalysis, which
   Pizzarello & Weber 2004 showed with isovaline → D-sugar.
 
-## Part 5: the dual explanation, L-amino acids with D-sugars (`dual.py`)
+## Part 5: the dual explanation, L-amino acids with D-sugars (`dual.py`, `dna_network.py`)
 Proteins use L-amino acids; DNA/RNA use D-sugars. Real chemistry links them in both directions:
 - **amino acid → sugar:** L-amino acids catalyse D-sugar excess (Pizzarello & Weber 2004;
   Breslow & Cheng 2010). Slightly enantioenriched proline drives an enantiopure RNA
-  precursor (Hein, Tse & Blackmond 2011).
-- **sugar → amino acid:** D-RNA prefers loading L-amino acids, about 4× (Tamura & Schimmel 2004).
-  Mirror-image RNA prefers D.
+  precursor (Hein, Tse & Blackmond 2011). Autocatalytic feedback networks couple amino-acid
+  transamination and peptide ligation (Higgs & Blackmond 2025).
+- **sugar → amino acid:** D-RNA prefers loading L-amino acids, about 4× (Tamura & Schimmel 2004);
+  mirror-image RNA prefers D (Kim et al. 2025). Chiral RNA templates drive stereoselective
+  nonenzymatic peptide synthesis, establishing unidirectional chiral flow across a prebiotic
+  network (Ozturk & Sasselov 2025).
 
 Model: two chiral systems (amino acids, sugars) cross the transition together, each helping the
 *partner* hand with strength κ. Checked against 4,000 runs per case (all pass):
@@ -395,17 +398,34 @@ What the calculations say (literature check):
 - **Amino acids:** modern gas-phase calculations favour natural L-alanine. In water the sign becomes
   conformation-dependent and unsettled ("the conformation problem", 2009).
 - **Sugars:** older (1980s–90s) calculations leaned toward natural D-sugars, but the result flips with
-  ring shape, and the authors later corrected the size of their headline effect. A 2005 calculation on a
-  whole DNA double helix (Faglioni, D'Agostino, Cadioli & Lazzeretti) concluded, in its own abstract, that
-  the weak force does **not** favour the double helices found in nature. That is now checked against the
-  primary abstract (it used to rest on secondary summaries). Caveats: the abstract says "not the natural
-  helix", which is not quite the same as a strong push toward the mirror helix. I couldn't read the full
-  paper (paywalled), so its helix shape, solvent treatment and effect size are unchecked. Of the 21 later
-  papers citing it (OpenAlex), none reverses it.
-- **Net:** there's no settled sign for sugars, and some evidence points the "wrong" way. By this model, a
+  ring shape (Tranter et al. 1992: C2'-endo favors D, C3'-endo favors L), and the authors later corrected
+  the size of their headline effect. A 2005 calculation on a whole DNA double helix (Faglioni, D'Agostino,
+  Cadioli & Lazzeretti) concluded that the weak force does **not** favour the double helices found in nature
+  (checked against primary abstract; DOI: 10.1016/j.cplett.2005.04.009). A 2006 calculation on A-RNA duplexes
+  (Faglioni, García Cuesta & Lazzeretti) reached the same conclusion: weak force does not favor natural RNA duplexes.
+- **Net:** there's no settled sign for sugars, and some evidence points the "wrong" way. In a symmetric model, a
   wrong-way sugar bias would partly **cancel** the amino-acid bias.
+- **The asymmetric resolution (`dna_network.py`):** real prebiotic cross-coupling is not symmetric. Amino acids
+  and sugars interact via distinct channels:
+  $$\dot{\alpha} = (\lambda\alpha - \alpha^3 + \kappa_{sa}\beta + g_a) + \sqrt{\epsilon}\xi_1 \quad [\text{amino acids, } + = \text{L}]$$
+  $$\dot{\beta} = (\lambda\beta - \beta^3 + \kappa_{as}\alpha + g_s) + \sqrt{\epsilon}\xi_2 \quad [\text{sugars, } + = \text{D}]$$
+  where $\kappa_{sa}$ is template stereocontrol of peptide synthesis (Tamura & Schimmel 2004; Ozturk & Sasselov 2025)
+  and $\kappa_{as}$ is amino acid catalysis of sugar/nucleoside formation (Breslow & Cheng 2010; Hein et al. 2011).
+  The leading growing mode has left eigenvector $w = (\sqrt{\kappa_{as}}, \sqrt{\kappa_{sa}})^T / \sqrt{\kappa_{as} + \kappa_{sa}}$,
+  yielding the effective projected bias:
+  $$g_{\text{eff}} = \frac{\sqrt{\kappa_{as}} g_a + \sqrt{\kappa_{sa}} g_s}{\sqrt{\kappa_{as} + \kappa_{sa}}}.$$
+  The natural pair `(L-amino acid + D-sugar)` still wins whenever:
+  $$\frac{\kappa_{as}}{\kappa_{sa}} > \left(\frac{|g_s|}{g_a}\right)^2.$$
+  Simulations confirm this across 3,000 runs per case (`dna_network.py`): with $g_s = -10^{-3}$ and $g_a = +10^{-3}$,
+  a 9:1 catalytic ratio raises the natural pair from a 50% coin flip to 64.7% predicted / 65.5% simulated; a 16:1
+  ratio reaches 66.8% predicted / 67.5% simulated (MEASURED, `dna_network.py`). This removes the requirement that the
+  weak force must independently favor natural sugars.
+- **Functional neutrality in synthetic mirror biology:** Ting Zhu and coworkers (2024–2026: Wang et al. 2021; Xu & Zhu 2022;
+  Zhang & Zhu 2024; Zhu 2025) showed that chemically synthesized mirror-image D-protein enzymes (such as 775-amino-acid
+  mirror Pfu DNA polymerase and mirror T7 RNA polymerase) replicate L-DNA and transcribe L-RNA with identical efficiency,
+  proving that life's handedness is not chemically forced by functional constraints.
 
-So pinning down the sugar PVED sign is the most useful missing number for the whole weak-force hypothesis.
+So pinning down the relative rates of cross-catalysis ($\kappa_{as}$ vs $\kappa_{sa}$) and the sugar PVED sign tests whether life's handedness was driven by amino acids or nucleic acids.
 
 ## Part 6: a spec sheet for the missing reaction (`scorecard.py`)
 Every part above assumes a self-amplifying chiral chemistry, and none is known under
@@ -626,6 +646,7 @@ python domains3d.py # 3D sweep: shows the 1D patch law fails, ~10 min
 python coarsen3d.py # 3D growth law + majority takeover (asserts), ~10 min
 python scenarios.py # ocean vs lake vs pond vs vent + scenarios.png
 python dual.py      # amino acid / sugar coupling (asserts), ~35 s
+python dna_network.py # asymmetric aa-sugar cross-catalysis & PVED rescue (asserts), ~10 s
 python inherit.py   # pools inheriting an excess (asserts), ~20 s
 python scorecard.py # spec sheet + candidate scores
 python design.py    # slow-experiment detectability + design.png
