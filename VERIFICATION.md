@@ -9,6 +9,7 @@ What was checked for the numbers in RNAAS_DRAFT.md / PAPER_DRAFT.md §3.14–3.1
 | Salt thresholds (S\*) | `verify_sstar.py`: recomputed from TEOS-10 (gsw 3.6.23) without project code | Match to rounding of ice pressure (Europa 3.2 vs 3.0 g/kg at 24 MPa; Dione 5.75 vs 5.6); no S\* above 28–29 MPa, as claimed |
 | Core model suite | `./run_all.sh` (fast set, now 19 scripts; needs `PYTHON=/opt/anaconda3/bin/python`) | All self-checks pass |
 | References | Crossref lookup of each DOI in the RNAAS draft | All resolve to the cited paper |
+| References, all documents (2026-10-09) | Crossref lookup of all 149 DOIs in PAPER_DRAFT, RNAAS_DRAFT, README, EXPERIMENT, vertical_mixing_lit and script docstrings; arXiv API for the three 2026 preprints cited without a DOI | 148 resolve to the cited paper. One was wrong: Charette & Smith 2010 was cited as 10.5670/oceanog.2010.09, which is Yoder et al. 2010; fixed to 10.5670/oceanog.2010.51. Five older references now carry their checked DOIs. `pdf/chirality_paper_draft.pdf` keeps the wrong DOI until it is rebuilt |
 | Ranking vs newest measurements | `robust_ranking.py`: Europa ice from Juno (29 ± 10 km, Levin et al. 2025); Enceladus salinity 5–20, 7–30, 17–40 g/kg (Kang et al. 2022) | Predictions held. Europa 26% vs Ganymede 28% is a tie, not a clear lead; Enceladus is last under every estimate (0–18%) |
 
 Now in `run_all.sh`: the three ocean-world scripts (previously not run by it), plus `robust_ranking.py`.

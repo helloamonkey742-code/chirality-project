@@ -636,7 +636,7 @@ Code: MIT licence (see `LICENSE`).
 - Zeng & Jansen 2021, *PSJ* 2:151, doi:10.3847/PSJ/ac1114 (Enceladus ocean model; **vertical** diffusivity κ_z ~3×10⁻¹⁰–3×10⁻³ m²/s, Sec. II.2; low-salinity run uses 5×10⁻⁵; sideways mixing across a hemisphere ~1000 yr in their simulation)
 - Zhang, Kang & Marshall 2024, *Science Advances* 10, doi:10.1126/sciadv.adn6857 (Enceladus sideways eddy diffusivity "of order ~0.1 m²/s" from scaling + eddy-resolving simulations; vertical κ runs use 10⁻³–10⁻¹ m²/s)
 - Allen & Cahn 1979, *Acta Metallurgica* 27:1085, doi:10.1016/0001-6160(79)90196-2 (boundaries move at D × curvature)
-- Charette & Smith 2010, *Oceanography* 23(2), doi:10.5670/oceanog.2010.09 (Earth ocean volume)
+- Charette & Smith 2010, *Oceanography* 23(2), doi:10.5670/oceanog.2010.51 (Earth ocean volume)
 - Ledwell, Watson & Law 1993, *Nature* 364:701, doi:10.1038/364701a0 (vertical diffusivity 1.1×10⁻⁵ m²/s)
 - Abernathey & Marshall 2013, *JGR Oceans* 118:901 (surface eddy diffusivity ≲10³–10⁴ m²/s)
 - Bray 1994, "Theory of phase-ordering kinetics", *Adv. Phys.* 43:357 (curvature-driven coarsening, l ∝ t^½)

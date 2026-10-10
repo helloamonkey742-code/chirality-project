@@ -407,7 +407,7 @@ Individual scripts (sim.py, ocean.py, domains.py, patches.py, domains3d.py, coar
 - Hochberg, Buhse, Micheau & Ribó 2023, "Chiral selectivity vs. noise in spontaneous mirror symmetry breaking", *PCCP* 25:31583, doi:10.1039/d3cp03311b
 - Čadek et al. 2016, *Geophysical Research Letters* 43, doi:10.1002/2016GL068634
 - Postberg et al. 2018, *Nature*, doi:10.1038/s41586-018-0246-4
-- Anderson et al. 1998, *Science* 281:2019
+- Anderson et al. 1998, *Science* 281:2019, doi:10.1126/science.281.5385.2019
 - Brandenburg & Multamäki 2004, *Int. J. Astrobiology*, doi:10.1017/s1473550404001983
 - Sandars 2005, *Int. J. Astrobiol.*, doi:10.1017/s1473550405002338
 - Gleiser & Walker 2008, "Punctuated chirality", *OLEB*, doi:10.1007/s11084-008-9147-0
@@ -415,10 +415,10 @@ Individual scripts (sim.py, ocean.py, domains.py, patches.py, domains3d.py, coar
 - Zeng & Jansen 2021, *PSJ* 2:151, doi:10.3847/PSJ/ac1114
 - Zhang, Kang & Marshall 2024, *Science Advances* 10, doi:10.1126/sciadv.adn6857
 - Allen & Cahn 1979, *Acta Metallurgica* 27:1085, doi:10.1016/0001-6160(79)90196-2 (boundaries move at D × curvature)
-- Charette & Smith 2010, *Oceanography* 23(2), doi:10.5670/oceanog.2010.09
+- Charette & Smith 2010, *Oceanography* 23(2), doi:10.5670/oceanog.2010.51
 - Ledwell, Watson & Law 1993, *Nature* 364:701, doi:10.1038/364701a0
-- Abernathey & Marshall 2013, *JGR Oceans* 118:901
-- Bray 1994, "Theory of phase-ordering kinetics", *Adv. Phys.* 43:357
+- Abernathey & Marshall 2013, *JGR Oceans* 118:901, doi:10.1002/jgrc.20066
+- Bray 1994, "Theory of phase-ordering kinetics", *Adv. Phys.* 43:357, doi:10.1080/00018739400101505
 - Stribling & Miller 1987, *OLEB* 17:261, doi:10.1007/BF02386466
 - Pearce et al. 2017, *PNAS* 114:11327, doi:10.1073/pnas.1710339114
 - Baaske et al. 2007, *PNAS* 104:9346, doi:10.1073/pnas.0609592104
@@ -432,7 +432,7 @@ Individual scripts (sim.py, ocean.py, domains.py, patches.py, domains3d.py, coar
 - Glavin & Dworkin 2009, "Enrichment of the amino acid L-isovaline by aqueous alteration on CI and CM meteorite parent bodies", *PNAS* 106:5487–5492, doi:10.1073/pnas.0811618106
 - Connolly et al. 2025, "An overview of the petrography and petrology of particles from aggregate sample from asteroid Bennu", *Meteorit. Planet. Sci.* 60:979–996, doi:10.1111/maps.14335
 - Dworkin, Elsila, Glavin, Aponte, McLain, Simkus, Graham & Parker 2024, "Verification of chiral asymmetry in meteoritic organics", 55th Lunar and Planetary Science Conference, Abstract #2645
-- Frank 1953, *Biochim. Biophys. Acta* 11:459
+- Frank 1953, *Biochim. Biophys. Acta* 11:459, doi:10.1016/0006-3002(53)90082-1
 - Soai et al. 1995, *Nature* 378:767, doi:10.1038/378767a0; Sato et al. 2003, *Angew. Chem.* 42:315, doi:10.1002/anie.200390105
 - Viedma 2005, *PRL* 94:065504, doi:10.1103/PhysRevLett.94.065504
 - Kondepudi, Kaufman & Singh 1990, "Chiral symmetry breaking in sodium chlorate crystallization", *Science* 250:975, doi:10.1126/science.250.4983.975
@@ -455,7 +455,7 @@ Individual scripts (sim.py, ocean.py, domains.py, patches.py, domains3d.py, coar
 - Martin, W. & Russell, M. J. 2003, "On the origins of cells: a hypothesis for the evolutionary transitions from abiotic geochemistry to chemoautotrophic prokaryotes, and from prokaryotes to nucleated cells", *Phil. Trans. R. Soc. Lond. B* 358(1429), 59–85, doi:10.1098/rstb.2002.1183 (the hydrothermal-mound compartment hypothesis; metadata checked on Crossref 2026-10-01)
 - Russell, M. J. 2006, "First life", *American Scientist* 94, 32, doi:10.1511/2006.57.32 (popular review of the hydrothermal-mound compartment idea; earlier drafts cited it as "Russell, *Scientific American*"; metadata checked on Crossref 2026-10-01)
 - Milner-White, E. J. & Russell, M. J. 2005, "Sites for phosphates and iron-sulfur thiolates in the first membranes: 3 to 6 residue anion-binding motifs (nests)", *Orig. Life Evol. Biosph.* 35(1), 19–27, doi:10.1007/s11084-005-4582-7 (suggested by A. Brandenburg; metadata checked on Crossref 2026-10-01; its title shows it is about peptide anion-binding motifs in the first membranes, so Martin & Russell 2003 is cited alongside it for the compartment idea; abstract not retrieved)
-- Kramers 1940, *Physica* 7:284 (escape rate over a barrier)
+- Kramers 1940, *Physica* 7:284, doi:10.1016/S0031-8914(40)90098-2 (escape rate over a barrier)
 - Waite et al. 2017, "Cassini finds molecular hydrogen in the Enceladus plume: evidence for hydrothermal processes", *Science* 356:155, doi:10.1126/science.aai8703
 - Glein & Zolotov 2020, "Hydrogen, hydrocarbons, and habitability across the Solar System", *Elements* 16:47–52, doi:10.2138/gselements.16.1.47
 - Mora, Kok, Noell & Willis 2022, "Detection of biosignatures by capillary electrophoresis mass spectrometry in the presence of salts relevant to ocean worlds missions", *Astrobiology* 22:914, doi:10.1089/ast.2021.0091
