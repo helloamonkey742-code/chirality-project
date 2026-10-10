@@ -1,0 +1,29 @@
+weak force alone (favours L), L wins: Enceladus 21.8%, Europa 28.6%, Early Earth ocean 74.7%, Ganymede 28.3%
+
+weak force's lead left (L wins minus D wins, as a share of its value with no push), whole decades of f
+      f |           one source            |          many sources           |              field             
+        | Encelad  Europa   Early Ganymed | Encelad  Europa   Early Ganymed | Encelad  Europa   Early Ganymed
+  1e-19 |    1.00    1.00    1.00    1.00 |    1.00    1.00    1.00    1.00 |    1.00    1.00    1.00    1.00
+  1e-18 |    0.99    0.99    0.99    0.99 |    0.99    0.99    0.98    0.99 |    1.00    1.00    1.00    1.00
+  1e-17 |    0.78    0.75    0.70    0.74 |    0.83    0.81    0.78    0.80 |    0.98    0.98    0.96    0.98
+  1e-16 |    0.45    0.40    0.36    0.38 |    0.54    0.49    0.46    0.48 |    0.82    0.82    0.75    0.83
+  1e-15 |    0.06    0.05    0.04    0.04 |    0.18    0.15    0.14    0.14 |    0.52    0.54    0.43    0.54
+  1e-14 |   -0.01   -0.00   -0.00   -0.00 |    0.02    0.02    0.02    0.01 |    0.20    0.23    0.13    0.22
+  1e-13 |   -0.01   -0.00   -0.00   -0.00 |   -0.00    0.00    0.00   -0.01 |    0.02    0.04    0.01    0.04
+  1e-12 |   -0.01   -0.00   -0.00   -0.00 |   -0.00   -0.00    0.00   -0.01 |   -0.01    0.00   -0.00    0.00
+  1e-11 |   -0.01   -0.00   -0.00   -0.00 |   -0.00   -0.00    0.00   -0.01 |   -0.01   -0.00   -0.00   -0.00
+  1e-10 |   -0.01   -0.00   -0.00   -0.00 |   -0.00   -0.00    0.00   -0.01 |   -0.01   -0.00   -0.00   -0.00
+
+break-even share f* (the lead halves; * = curve crosses 0.5 more than once). Many sources: f*_G * sqrt(M)
+                     one src      f*_G  M=1e+03  M=1e+06  M=1e+12  M=1e+20     field   f*_G/one  field/one
+Enceladus           7.3e-17   1.3e-16   4.1e-15  1.3e-13  1.3e-10  1.3e-06  1.2e-15        1.79       15.9
+Europa              5.2e-17   9.4e-17   3.0e-15  9.4e-14  9.4e-11  9.4e-07  1.3e-15        1.80       25.2
+Early Earth ocean   3.9e-17   7.4e-17   2.3e-15  7.4e-14  7.4e-11  7.4e-07  6.0e-16        1.89       15.5
+Ganymede            4.7e-17   8.7e-17   2.8e-15  8.7e-14  8.7e-11  8.7e-07  1.3e-15        1.86       27.8
+
+Early Earth, field: L below 50% (earth_breakeven.py's rule) for f above 1.85e-15 (earth_breakeven.py: 1.9e-15)
+pinning floor, field case (earth.py's rule at the thinnest wall: lowest D_h, k2*c = c_max):
+  Enceladus          3.4e-07  (3e+08 x the field break-even)
+  Europa             5.4e-08  (4e+07 x the field break-even)
+  Early Earth ocean  7.3e-07  (1e+09 x the field break-even)
+  Ganymede           3.0e-08  (2e+07 x the field break-even)

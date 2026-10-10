@@ -32,6 +32,24 @@ P3. Many sources: f*_G is 1.2-2x the one-source value in every world (median |nu
     which were scaled from Earth's field limit, a push already shrunk by hemisphere imbalance.
 P4. Field: f* is 10-80x the one-source value in every world (A and R shrink the push); Ganymede 5e-16..4e-14; Early
     Earth 2e-16..1.5e-15 by the lead-halving rule, and within x1.3 of earth_breakeven.py's 1.9e-15 by its L < 50% rule.
+
+RESULTS (moon_nudges.log, 2026-10-09): P1, P3 and P4 held; P2 failed in part.
+ P1 held: no push gives Enceladus 21.8%, Europa 28.6%, Early Earth 74.7%, Ganymede 28.3%; no D wins.
+ P2 failed in part: one source halves the lead at Enceladus 7.3e-17, Europa 5.2e-17, Ganymede 4.7e-17, Early Earth
+    3.9e-17. Early Earth (best guess 3.6e-17) and Europa fell in range, Ganymede is within x2 of Europa and the order
+    held, but Enceladus fell below its 1e-16..1e-15 range and Ganymede just below 5e-17: the moons' wins need only
+    slightly larger g than Earth's, so all four worlds sit within x1.9 of each other.
+ P3 held: f*_G is 1.79-1.89x the one-source value. A thousand sources: 2.8e-15..4.1e-15 on the moons (chat said
+    1e-13); 1e20 sources: 8.7e-7..1.3e-6 (chat said 2e-5). The chat figures were 15-36x too lenient.
+ P4 held: the field's break-even is 16-28x the one-source value; Ganymede 1.3e-15 (Early Earth 6.0e-16 by the same
+    rule); Early Earth 1.85e-15 by earth_breakeven.py's L < 50% rule (published 1.9e-15). The pinning floors sit
+    2e7-1e9x above every field break-even.
+ So a push whose hand is set locally outvotes the weak force unless it is very rare: if one source dominates, fewer
+ than about 5 in 10^17 of the deciding molecules may form on it; with M equal independent sources the limit grows as
+ sqrt(M), to about 1 in 10^6 at M = 1e20. For such surfaces to make even 1% of the deciding molecules without
+ outvoting the weak force, the moons would need 6e27-1.3e28 independent sources. Ganymede's own field (if its ocean
+ touched magnetite-bearing rock) allows about twice Earth's share under the same rule. None of this says how much
+ chemistry happened on such surfaces; it says how little the weak-force hypothesis can allow.
 """
 import numpy as np
 
