@@ -7,7 +7,7 @@ What was checked for the numbers in RNAAS_DRAFT.md / PAPER_DRAFT.md §3.14–3.1
 | Reproducible | Re-ran `strat_sweep.py`, `jupiter_moons.py`, `ocean_worlds.py` from scratch; diffed against committed logs | Identical |
 | Not a lucky random seed | `verify_seeds.py`: seeds 1–5 | Every world within 0.3 points of the seed-0 value; all ordering checks pass |
 | Salt thresholds (S\*) | `verify_sstar.py`: recomputed from TEOS-10 (gsw 3.6.23) without project code | Match to rounding of ice pressure (Europa 3.2 vs 3.0 g/kg at 24 MPa; Dione 5.75 vs 5.6); no S\* above 28–29 MPa, as claimed |
-| Core model suite | `./run_all.sh` (fast set, now 16 scripts; needs `PYTHON=/opt/anaconda3/bin/python`) | All self-checks pass |
+| Core model suite | `./run_all.sh` (fast set, now 19 scripts; needs `PYTHON=/opt/anaconda3/bin/python`) | All self-checks pass |
 | References | Crossref lookup of each DOI in the RNAAS draft | All resolve to the cited paper |
 | Ranking vs newest measurements | `robust_ranking.py`: Europa ice from Juno (29 ± 10 km, Levin et al. 2025); Enceladus salinity 5–20, 7–30, 17–40 g/kg (Kang et al. 2022) | Predictions held. Europa 26% vs Ganymede 28% is a tie, not a clear lead; Enceladus is last under every estimate (0–18%) |
 
