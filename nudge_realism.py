@@ -56,8 +56,8 @@ RESULTS (nudge_realism.log, 2026-10-10): P1 and P4 held; P2 held but for Early E
  P4 held: worst case (A = 0.5, R = 1, 100 nm grains) Enceladus 3.5e-15 (5.8x Earth's 6.0e-16), Europa 1.6e-15
     (2.7x), Ganymede 1.9e-16..3.4e-16 (0.3-0.6x); with earth.py's A, R spread 2.8e-14 and 2.1e-14. Elongated grains:
     3.7e-16, 1.9e-16, 9.4e-17, all at or below Earth.
- So random-handed surfaces are not fatal: they average out if one hand holds over less than about 1-40 um (all
- chemistry on surfaces) or 0.1-4 mm (1% on surfaces) on the moons; what is unknown is how far one hand extends. The
+ So random-handed surfaces are not fatal: they average out if one hand holds over less than about 0.03-40 um (all
+ chemistry on surfaces) or 3 um-4 mm (1% on surfaces) on the moons; what is unknown is how far one hand extends. The
  push with a shared hand is the real limit: below ~1e-15 of the deciding molecules on field-aligned magnetite on
  Enceladus and Europa (a few times looser than Earth, because their parent planets' fields are ~100x weaker),
  tighter than Earth on Ganymede, and no better than Earth if the magnetite is elongated single-domain grains.
