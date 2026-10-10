@@ -658,7 +658,7 @@ Code: MIT licence (see `LICENSE`).
 - Anderson et al. 1998, *Science* 281:2019 (Europa H₂O layer 80–170 km)
 - Brandenburg & Multamäki 2004, *Int. J. Astrobiology*, doi:10.1017/s1473550404001983 (closest prior work: L/R coexistence with diffusion on Earth, no weak-force bias)
 - Sandars 2005, *Int. J. Astrobiol.*, doi:10.1017/s1473550405002338 (spatial homochiralization in Earth's ocean; closest prior work)
-- Gleiser & Walker 2008, "Punctuated chirality", *OLEB*, doi:10.1007/s11084-008-9147-0
+- Gleiser, Thorarinson & Walker 2008, "Punctuated chirality", *OLEB* 38:499-508, doi:10.1007/s11084-008-9147-0
 - Jafarpour, Biancalani & Goldenfeld 2017, *PRE* 95:032407, doi:10.1103/PhysRevE.95.032407
 - Zeng & Jansen 2021, *PSJ* 2:151, doi:10.3847/PSJ/ac1114 (Enceladus ocean model; **vertical** diffusivity κ_z ~3×10⁻¹⁰–3×10⁻³ m²/s, Sec. II.2; low-salinity run uses 5×10⁻⁵; sideways mixing across a hemisphere ~1000 yr in their simulation)
 - Zhang, Kang & Marshall 2024, *Science Advances* 10, doi:10.1126/sciadv.adn6857 (Enceladus sideways eddy diffusivity "of order ~0.1 m²/s" from scaling + eddy-resolving simulations; vertical κ runs use 10⁻³–10⁻¹ m²/s)

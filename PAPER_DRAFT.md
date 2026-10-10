@@ -415,7 +415,7 @@ Individual scripts (sim.py, ocean.py, domains.py, patches.py, domains3d.py, coar
 - Anderson et al. 1998, *Science* 281:2019, doi:10.1126/science.281.5385.2019
 - Brandenburg & Multamäki 2004, *Int. J. Astrobiology*, doi:10.1017/s1473550404001983
 - Sandars 2005, *Int. J. Astrobiol.*, doi:10.1017/s1473550405002338
-- Gleiser & Walker 2008, "Punctuated chirality", *OLEB*, doi:10.1007/s11084-008-9147-0
+- Gleiser, Thorarinson & Walker 2008, "Punctuated chirality", *OLEB* 38:499-508, doi:10.1007/s11084-008-9147-0
 - Jafarpour, Biancalani & Goldenfeld 2017, *PRE* 95:032407, doi:10.1103/PhysRevE.95.032407
 - Zeng & Jansen 2021, *PSJ* 2:151, doi:10.3847/PSJ/ac1114
 - Zhang, Kang & Marshall 2024, *Science Advances* 10, doi:10.1126/sciadv.adn6857

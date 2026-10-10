@@ -1,0 +1,15 @@
+1. Lente: does the open class keep its sqrt(N) gain at large N? (frank.py, g*sqrt(Omega) = 0.3, tau = 800)
+ molecules   bias g  formula simulated
+     1e+04  3.0e-03    0.737     0.733
+     1e+08  3.0e-05    0.733     0.733
+     1e+12  3.0e-07    0.733     0.762
+     1e+16  3.0e-09    0.733     0.742
+     1e+20  3.0e-11    0.733     0.753
+     1e+20  0.0e+00    0.500     0.493   (control: no bias)
+
+2. Gleiser & Walker: the last choice made fast
+share of draws where physics wins            Enceladus              Europa   Early Earth ocean
+as published (uncertainty.py)           21.8% ( +0.0)      28.6% ( +0.0)      74.7% ( +0.0)
+fast last choice (k*tau = 10)           17.3% ( -4.5)      26.0% ( -2.7)      74.7% ( -0.0)
+sudden last choice (g*sqrt(N)/2)        11.2% (-10.6)      20.7% ( -7.9)      73.2% ( -1.5)
+median slow-passage gain among published wins, (k*tau/10)^(1/4): Enceladus x15, Europa x18, Early Earth ocean x36
