@@ -4,37 +4,68 @@
 
 ## Abstract
 
-The weak nuclear force makes one mirror-image form of a chiral molecule very slightly lower in energy. A large, slowly driven, self-amplifying reaction could in principle turn that bias into a one-handed outcome, but only if enough molecules decide together. We apply a stochastic model of this process, with every uncertain input varied, to fourteen Solar System worlds known or suspected to hold liquid-water oceans. Two factors set the result. Where the ice shell is thin and the ocean only mildly salty, a stably stratified layer can form beneath the ice; it traps the boundary between regions of opposite hand. Without such a layer, thinner oceans merge their layers of opposite hand faster. Among confirmed oceans, Ganymede (28% of plausible cases) and Europa (22–26%) score highest; Enceladus scores lowest (0–18%). The highest values (36–39%) belong to the Uranian moons, whose oceans are unconfirmed.
+The weak nuclear force makes one mirror-image form of a chiral molecule slightly lower in energy. A large, slow, self-amplifying reaction can turn this small bias into a one-handed result, but only if enough molecules decide together. I apply a stochastic model of this process to fourteen Solar System worlds that have, or may have, liquid-water oceans. I vary every uncertain input. Two factors set the result. First, under a thin ice shell, a mildly salty ocean can form a stable layer below the ice. This layer traps the boundary between regions of opposite hand. Second, without this layer, a thinner ocean merges its layers of opposite hand faster. Of the confirmed oceans, Ganymede (28% of plausible cases) and Europa (22–26%) score highest. Enceladus scores lowest (0–18%). The Uranian moons score highest of all (36–39%), but their oceans are not confirmed.
 
 ## Introduction
 
-Life uses left-handed amino acids and right-handed sugars. Kondepudi & Nelson (1985) proposed that the parity-violating energy difference (PVED) between mirror-image molecules, about 10⁻¹⁷ kT, could select life's hand if a self-amplifying reaction were large and slow enough. Our model (Ghosh, in prep.; code below) finds that about 10³³–10³⁴ molecules must decide together, which means kilometre-scale volumes of well-mixed water. Ponds and pores are too small, but icy-world oceans are not. Stochastic models show a small bias selects the hand when it exceeds the noise (Hochberg et al. 2023). Lente (2007) concluded the PVED cannot be amplified when self-copying starts from a few chiral molecules; the reaction modelled here is open and fed, with the whole population choosing at once (an assumption). Lunine et al. (1999) discussed abiotic homochirality on Titan; we consider liquid-water oceans only. Here we ask which ocean world is most favourable.
+Life uses left-handed amino acids and right-handed sugars. The parity-violating energy difference (PVED) between mirror-image molecules is about 10⁻¹⁷ kT. Kondepudi & Nelson (1985) proposed that it can select life's hand in a large, slow, self-amplifying reaction. My model (Ghosh, in prep.; code below) finds that about 10³³–10³⁴ molecules must decide together. That needs kilometres of well-mixed water: ponds and pores are too small, but icy-world oceans are not.
+
+Stochastic models show that a small bias selects the hand when it exceeds the noise (Hochberg et al. 2023). Lente (2007) found that the PVED cannot be amplified when self-copying starts from a few chiral molecules. My model instead assumes an open, fed reaction in which the whole population chooses at once. Lunine et al. (1999) discussed abiotic homochirality on Titan. I consider liquid-water oceans only. I ask which ocean world is the most favourable.
 
 ## Method
 
-Near the threshold where amplification switches on, any such reaction reduces to dα = (γtα − α³ + g)dt + √ε dW. Here α is the excess of one hand, g = PVED/kT is the bias, ε ≈ 1/N is molecule-counting noise, and γ sets how fast conditions sweep through the threshold. The chance that the favoured hand wins is P = Φ(√2 π^(1/4) g (kτ)^(1/4) √N), checked against brute-force simulations. Physics "wins" when this probability reaches 97.7% and the reaction finishes in the time available.
+Near the threshold where amplification starts, any such reaction reduces to one equation: dα = (γtα − α³ + g)dt + √ε dW. Here α is the excess of one hand, g = PVED/kT is the bias, ε ≈ 1/N is the noise from counting N molecules, and γ sets how fast conditions sweep through the threshold. The probability that the favoured hand wins is P = Φ(√2 π^(1/4) g (kτ)^(1/4) √N), where k is the reaction rate and τ is the time available. Brute-force simulations confirm it. The weak force "wins" when two conditions are true: P is 97.7% or more, and the reaction finishes in the time available.
 
-In a real ocean, mixing is finite. The decision is made in many patches at once, and the patches then coarsen; boundaries move at a rate set by eddy diffusivity times curvature (Allen & Cahn 1979). Stratification makes vertical mixing slow, so the ocean freezes into stacked horizontal layers of opposite hand, which merge only as fast as vertical mixing allows. A stably stratified layer at the top of the ocean pins the boundary entirely. Such a layer forms when the salinity is below a threshold S\*, where water at its freezing point gets lighter as it cools (Zeng & Jansen 2021). We test for such a layer with the TEOS-10 equation of state (McDougall & Barker 2011): under more than about 28 MPa of ice, water at its freezing point sinks as it cools at any salinity, so no layer can form.
+Real oceans mix slowly, so the decision occurs in many patches at once. The patches then coarsen: their boundaries move at a rate set by eddy diffusivity times curvature (Allen & Cahn 1979). Stratification slows vertical mixing, so the ocean freezes into stacked layers of opposite hand. These layers merge only as fast as vertical mixing allows.
 
-For each world we draw 200,000 input sets, log-uniform over plausible ranges of bias, rate constant, concentration, horizontal and vertical mixing, time and volume. Only the body's size, ocean depth, ice thickness, age and salinity change between worlds. All worlds share Europa's chemistry and mixing ranges, an assumption, since no measurement distinguishes them. Ocean depths come from published interior models (Saur et al. 2015; Vance et al. 2018; Sohl et al. 2014; Hansen et al. 2021; Johnson et al. 2016; Castillo-Rogez et al. 2023; Beuthe et al. 2016; Lainey et al. 2024; Strom et al. 2024). Worlds without a measured salinity receive a 1–100 g/kg prior.
+A stably stratified layer at the top of the ocean (a "lid") stops the boundary completely. A lid forms when the salinity is below a threshold S\*. Below S\*, water at its freezing point becomes lighter as it cools (Zeng & Jansen 2021). I test for a lid with the TEOS-10 equation of state (McDougall & Barker 2011). Under more than about 28 MPa of ice, water at its freezing point sinks as it cools at any salinity, so no lid can form.
+
+For each world, I draw 200,000 input sets. Each input is log-uniform over its plausible range: bias, rate constant, concentration, horizontal mixing, vertical mixing, time and volume. Only five properties change between worlds: body size, ocean depth, ice thickness, age and salinity. All worlds use Europa's chemistry and mixing ranges. This is an assumption, because no measurement tells them apart. Ocean depths come from published interior models (Saur et al. 2015; Vance et al. 2018; Sohl et al. 2014; Hansen et al. 2021; Johnson et al. 2016; Castillo-Rogez et al. 2023; Beuthe et al. 2016; Lainey et al. 2024; Strom et al. 2024). Worlds with no measured salinity get a prior of 1–100 g/kg.
 
 ## Results
 
-Figure 1 shows the winning fraction per world. Lid-free worlds fall between 24% and 39%, ordered mostly by ocean depth: a thinner ocean has fewer layers to merge. Depth uncertainty moves each value by up to about ten points (Ganymede 22–33% for 50–300 km). Five worlds can form a stratified lid in some draws, and their scores drop: Europa from 29% to 22% (lid in 24% of draws), Dione from 34% to 21% (38%), Miranda from 27% to 9% (67%), Mimas from 15% to 5% (68%), and Enceladus from 22% to 0% (100%). Enceladus forms one in every draw: its measured salinity, 5–20 g/kg (Postberg et al. 2009), lies below S\* (18–22.5 g/kg under its thin shell; 20 g/kg used). Across those choices its score stays at 0–8%.
+Figure 1 shows the winning fraction for each world. Worlds without a lid score between 24% and 39%. Ocean depth sets most of this order, because a thinner ocean has fewer layers to merge. Depth uncertainty moves each value by up to about ten points (Ganymede: 22–33% for depths of 50–300 km).
 
-Two inputs were then replaced by newer measurements (`robust_ranking.py`). Europa's lid result assumed 20 km of ice; Juno measured 29 ± 10 km (Levin et al. 2025). Above about 23 km no lid can form, so drawing the thickness from that measurement pins Europa in only 9% of draws and raises it to 26%. That is within Ganymede's own spread (22–33%), so the two tie. Other salinity estimates for Enceladus are higher (Kang et al. 2022): with 7–30 g/kg it scores 4–6%, and with 17–40 g/kg it scores 15–18%.
+Five worlds form a lid in some draws. Their scores drop (share of draws with a lid in brackets):
 
-Among the three confirmed oceans, Ganymede (28%) and Europa (22–26%) are therefore the most favourable, and Enceladus (0–18%) the least under every salinity estimate. Ganymede's ~200 MPa ice shell rules out a top lid. For comparison, early Earth's open ocean gives 75%.
+- Europa: 29% to 22% (24%)
+- Dione: 34% to 21% (38%)
+- Miranda: 27% to 9% (67%)
+- Mimas: 15% to 5% (68%)
+- Enceladus: 22% to 0% (100%)
+
+The measured salinity of Enceladus, 5–20 g/kg (Postberg et al. 2009), is below S\* (18–22.5 g/kg under its thin shell; I use 20 g/kg). Across these choices, its score stays at 0–8%.
+
+I then replaced two inputs with newer measurements (`robust_ranking.py`):
+
+- **Europa.** The lid result assumed 20 km of ice; Juno measured 29 ± 10 km (Levin et al. 2025). No lid can form under more than about 23 km, so with the Juno value Europa has a lid in only 9% of draws and scores 26%. This is within Ganymede's own spread (22–33%), so the two tie.
+- **Enceladus.** Higher salinity estimates (Kang et al. 2022) give 4–6% for 7–30 g/kg and 15–18% for 17–40 g/kg.
+
+Of the three confirmed oceans, Ganymede (28%) and Europa (22–26%) are the most favourable. Enceladus (0–18%) is the least favourable under every salinity estimate. Ganymede's ice shell exerts about 200 MPa, which rules out a top lid. Early Earth's open ocean scores 75% for comparison.
 
 ## Caveats
 
-These numbers are model results, not detections, and none includes the probability that the ocean exists. The Uranian oceans are predictions whose present-day thicknesses disagree between models. Titan's ocean is disputed (Petricca et al. 2025). Not modelled: salt layering deep in large oceans (Vance et al. 2014), which would lower Ganymede to 14% if it pinned the boundary half the time; ammonia, likely present in outer-Solar-System oceans but omitted by TEOS-10; and real mixing rates, which are unmeasured for every world. Magnetized mineral surfaces can also favour one hand (Ozturk et al. 2023); if a planet's field aligns magnetite across a hemisphere, the weak force keeps its lead in the worst case only if under about 2–4 × 10⁻¹⁵ of the deciding chemistry occurs there (Europa, Enceladus). No measured prebiotic reaction yet amplifies handedness in this way, although a recent two-reaction network could (Higgs & Blackmond 2025). The testable result is a ranking, not an absolute probability: a deep, unstratified ocean like Ganymede's or a thick-shelled Europa is a better place to look for a weak-force-chosen hand than Enceladus. Silica nanoparticles suggest Enceladus' ocean mixes within years (Hsu et al. 2015), which may rule out a stratified top; if so, its salinity is high and its score near the upper end above.
+These numbers are model results, not detections. None includes the probability that the ocean exists. The Uranian oceans are predictions, and models disagree on their present-day thickness. Titan's ocean is disputed (Petricca et al. 2025).
 
-Acknowledgments: an AI assistant (Claude, Anthropic) helped write code and text; the author directed the work and checked all results and references.
+The model does not include:
+
+- Salt layers deep in large oceans (Vance et al. 2014). If these layers pinned the boundary half of the time, Ganymede would drop to 14%.
+- Ammonia, which is likely in outer-Solar-System oceans but missing from TEOS-10.
+- Real mixing rates. They are unmeasured for every world.
+
+Magnetized mineral surfaces can also favour one hand (Ozturk et al. 2023). Suppose a planet's magnetic field aligns magnetite across a hemisphere. In the worst case, the weak force keeps its lead only if less than about 2–4 × 10⁻¹⁵ of the deciding chemistry occurs there (Europa, Enceladus).
+
+No measured prebiotic reaction does this yet, although a recent two-reaction network could (Higgs & Blackmond 2025).
+
+Silica nanoparticles suggest that the Enceladus ocean mixes within years (Hsu et al. 2015), which may rule out a stratified top. If so, its salinity is high and it scores near the upper end above.
+
+The testable result is a ranking, not an absolute probability. A deep, unstratified ocean (Ganymede) or a thick-shelled Europa is a better place than Enceladus to look for a hand chosen by the weak force.
+
+Acknowledgments: An AI assistant (Claude, Anthropic) helped write the code and text. I directed the work and checked all results and references.
 
 Code and data: https://github.com/helloamonkey742-code/chirality-project (`ocean_worlds.py`, `robust_ranking.py`, `uncertainty.py`).
 
-![Figure 1. Percentage of 200,000 plausible input draws in which the weak-force-favoured hand wins, by world. Solid bars include the stratified-lid test; hatched bars show the value if no lid formed. Colour gives ocean status.](rnaas_fig.png)
+![Figure 1. Percentage of 200,000 plausible input draws in which the hand favoured by the weak force wins, for each world. Solid bars include the lid test. Hatched bars show the value if no lid formed. Colour shows the ocean status.](rnaas_fig.png)
 
 ## References
 
