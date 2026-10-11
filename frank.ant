@@ -1,0 +1,18 @@
+// Frank-type scheme from frank.py, in Antimony (converts to SBML; runs in Tellurium, COPASI, etc.).
+// Concentrations; the weak-force bias is g. a0 ramps from 0.8 to 1.6 over tau, sweeping k*A through kd.
+// Check against frank.py: frank_sbml.py.
+model frank
+  J_in: -> A;        F_in*(a0 - A)       // feed (net in/out flow of A)
+  J0L:  A -> L;      k0*A                // slow uncatalysed production
+  J0D:  A -> D;      k0*A
+  JL:   A + L -> 2L; k*(1 + g)*A*L       // self-copying, favoured hand
+  JD:   A + D -> 2D; k*(1 - g)*A*D       // self-copying, other hand
+  Ji:   L + D -> ;   ki*L*D              // the two hands destroy each other
+  JoL:  L -> ;       kd*L                // outflow
+  JoD:  D -> ;       kd*D
+
+  a0 := 0.8 + 0.8*time/tau
+  k = 1; kd = 1; ki = 1; k0 = 1e-3; F_in = 1
+  g = 0.003; tau = 800
+  A = 0.8; L = sqrt(k0); D = sqrt(k0)
+end
