@@ -1,0 +1,7 @@
+P1. SBML written to frank.xml; libRoadRunner loaded 8 reactions
+P2. g = 0.003: SBML  A, x, dA/dt = 1, 0.027889, 0.00048831
+    g = 0.003: frank A, x, dA/dt = 1, 0.027889, 0.00048831   (max rel diff 2.84e-06)
+P3. g = 0.003: (L-D)/L at the crossing 2.12e-01; final L = 0.596663, D = 0.00166645
+P2. g = 0.0: SBML  A, x, dA/dt = 1, 0.027613, 0.00049965
+    g = 0.0: frank A, x, dA/dt = 1, 0.027613, 0.00049965   (max rel diff 3.37e-06)
+P3. g = 0.0: (L-D)/L at the crossing 5.03e-16; final L = 0.00169734, D = 0.593583

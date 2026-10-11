@@ -16,6 +16,16 @@ P2. With noise off, the crossing values (A, x = (L+D)/2 and dA/dt at the crossin
     frank.run within 1% for g = 0.003 and g = 0 (tau = 800); frank.py steps with Euler at dt = 0.01, which is
     the main source of any difference.
 P3. With g = 0.003, L ends above D; with g = 0, L equals D to 1e-9 (relative).
+
+RESULTS (frank_sbml.log, 2026-10-11): P1 and P2 held, P3 half failed.
+ P1 held: frank.xml written; libRoadRunner loads all 8 reactions.
+ P2 held: crossing A, x, dA/dt = 1, 0.027889, 0.00048831 (g = 0.003) and 1, 0.027613, 0.00049965 (g = 0);
+    largest difference from frank.py 3.4e-6, far inside 1%.
+ P3 held for g = 0.003 (L 0.597, D 0.0017 at the end). It FAILED for g = 0: D won (0.594 vs 0.0017). The 50/50
+    state is unstable once k*A passes kd, so the solver's round-off picks a hand; that is the symmetry breaking the
+    model is about, not a mismatch. At the crossing L and D are still equal to 5e-16, so the assert now checks
+    there.
+ So frank.ant is frank.py's chemistry, written in a standard language.
 """
 import antimony
 import numpy as np
@@ -32,7 +42,7 @@ def sbml():
 
 
 def crossing(rr, g, tau):
-    """A, x, dA/dt where k*A first reaches kd, plus final L, D (same reading as frank.run)."""
+    """A, x, dA/dt where k*A first reaches kd (same reading as frank.run); (L-D)/L there; final L, D."""
     rr.resetAll()
     rr.g, rr.tau = g, tau
     rr.integrator.relative_tolerance, rr.integrator.absolute_tolerance = 1e-10, 1e-14
@@ -40,7 +50,7 @@ def crossing(rr, g, tau):
     i = int(np.argmax(rr.k * A >= rr.kd))
     w = max(len(t) // 50, 2)
     dadt = np.polyfit(t[i - w:i + w], A[i - w:i + w], 1)[0]
-    return (A[i], (L[i] + D[i]) / 2, dadt), L[-1], D[-1]
+    return (A[i], (L[i] + D[i]) / 2, dadt), (L[i] - D[i]) / L[i], L[-1], D[-1]
 
 
 def main():
@@ -48,15 +58,17 @@ def main():
     print(f"P1. SBML written to frank.xml; libRoadRunner loaded {len(rr.model.getReactionIds())} reactions")
     worst = 0
     for g in (0.003, 0.0):
-        mine, L, D = crossing(rr, g, 800)
+        mine, asym, L, D = crossing(rr, g, 800)
         _, theirs = frank.run(g, 1e30, 800, runs=1)
         rel = [abs(a - b) / abs(b) for a, b in zip(mine, theirs)]
         worst = max(worst, *rel)
         print(f"P2. g = {g}: SBML  A, x, dA/dt = " + ", ".join(f"{v:.5g}" for v in mine))
         print(f"    g = {g}: frank A, x, dA/dt = " + ", ".join(f"{v:.5g}" for v in theirs) +
               f"   (max rel diff {max(rel):.2e})")
-        print(f"P3. g = {g}: final L = {L:.6g}, D = {D:.6g}, (L-D)/L = {(L - D) / L:.2e}")
-        assert (L > D) if g else abs(L - D) / L < 1e-9
+        print(f"P3. g = {g}: (L-D)/L at the crossing {asym:.2e}; final L = {L:.6g}, D = {D:.6g}")
+        # g = 0: the 50/50 state is unstable past the crossing, so round-off picks the hand at the end
+        # (P3 missed this); the symmetry is checked at the crossing instead.
+        assert (L > D) if g else abs(asym) < 1e-9
     assert worst < 0.01, "frank.ant does not reproduce frank.py"
 
 

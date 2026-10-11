@@ -657,6 +657,7 @@ python design.py    # slow-experiment detectability + design.png
 python k3.py        # 3D per-patch selection constant (asserts), ~3 min
 python frank.py     # real reaction scheme vs formula (asserts), ~5 min
 python frank2.py    # second scheme with back-reactions (asserts), ~5 min
+python frank_sbml.py # frank.ant (Antimony) -> frank.xml (SBML) matches frank.py; needs antimony + libroadrunner, ~5 s
 python shell3d.py   # thin-shell growth + majority test (asserts), ~15 min
 python aniso3d.py   # layered ocean: flat / cube / tall boxes + curvature and wall checks (asserts), ~4–8 min
 python uncertainty.py # uncertainty sweep, ~10 s
