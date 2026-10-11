@@ -92,8 +92,19 @@ The PVED's exact size matters only if theory is off by more than 1000×.
 - A lander that could test the plume prediction: MacKenzie et al. 2021, *PSJ* 2:77, doi:10.3847/psj/abe4da (Orbilander;
   the abstract names no chiral measurement).
 
-## Not read
+## Read 2026-10-11 (full text; PDF from Dr. McKay)
 Lunine, Beauchamp, Smith & Nikolaev 1999, "The Abiotic Generation of Homochirality on Saturn's Moon Titan",
-*Advances in BioChirality* pp. 257–270, doi:10.1016/B978-008043404-9/50017-6. Closed access; its content is unknown
-beyond its reference list (weak neutral currents, Frank 1953, low-temperature racemization). Cite it as prior work on
-Titan only.
+*Advances in BioChirality* pp. 257–270, doi:10.1016/B978-008043404-9/50017-6. A perspective chapter; no model, no data.
+- **Same question, no answer.** It asks whether the PVED decides the hand during amplification (citing Kondepudi &
+  Nelson 1985) and proposes Titan as a natural lab for abiotic organic chemistry, too cold for life. It computes nothing.
+- **Scale.** It cites Zanasi (same conference) for the idea that seeing PVED-driven symmetry breaking needs a system much
+  larger than a lab but smaller than a planet's surface: a qualitative version of the model's 10³³–10³⁴ molecules.
+  The Zanasi chapter is not read; it is in the same book.
+- **Low-temperature rates.** Arrhenius extrapolation puts racemization at Titan temperatures beyond the age of the
+  Universe, but the chapter warns that extrapolating one Arrhenius law that far is not justified: other pathways,
+  including rates that rise as temperature falls in hydrocarbon liquids, may take over. This is the same caveat as
+  the 94 K result (titan_95k.py): the rates there are assumed, not measured.
+- **Liquid water on Titan.** A 1 km impactor could melt crater ice for thousands of years (longer with ammonia). The
+  model has not been run on such a pool.
+- **Effect on the project.** None on any number. The RNAAS sentence ("discussed abiotic homochirality on Titan; we
+  consider liquid-water oceans only") is accurate.
