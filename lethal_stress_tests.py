@@ -34,8 +34,16 @@ from scipy.integrate import solve_ivp
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+from scipy.optimize import brentq
 
 R_GAS = 8.314
+
+
+def refine_crossing(f, xs, i):
+    """Exact root of f between grid points xs[i-1] (passes) and xs[i] (first failure)."""
+    if i == 0:
+        return xs[0]
+    return brentq(f, xs[i - 1], xs[i], xtol=1e-12 * max(1.0, abs(xs[i])), rtol=1e-6)
 
 
 # ==============================================================================
@@ -58,10 +66,14 @@ def run_test1_background_leak():
         amplifies.append(lam > 0.0)
 
     lam_vals = np.array(lam_vals)
-    k0_crit = k0_vals[np.where(lam_vals <= 0.0)[0][0]] if np.any(lam_vals <= 0.0) else None
+    k0_crit = None
+    if np.any(lam_vals <= 0.0):
+        i = int(np.where(lam_vals <= 0.0)[0][0])
+        lam_of = lambda k0: PrebioticNetworkModel(S=2.47, F0=5e-3, k0=k0).difference_jacobian_eigenvalue()[0]
+        k0_crit = refine_crossing(lam_of, k0_vals, i)
 
     if k0_crit is not None:
-        print(f"  * BREAKING POINT FOUND: Background leak k0_crit = {k0_crit:.2e} s^-1")
+        print(f"  * BREAKING POINT (brentq-refined, lambda = 0): k0_crit = {k0_crit:.2e} s^-1")
         print(f"    (System breaks if uncatalyzed rate exceeds {k0_crit/0.10*100.0:.3f}% of catalytic rate)")
     else:
         print("  * System remained supercritical across tested k0 range.")
@@ -142,10 +154,13 @@ def run_test2_leaky_sink():
     final_ees = np.array(final_ees)
     # Find breaking point where final ee drops below initial seed
     break_idx = np.where(final_ees < 0.005)[0]
-    alpha_crit = alphas[break_idx[0]] if len(break_idx) > 0 else None
+    alpha_crit = None
+    if len(break_idx) > 0:
+        f = lambda a: LeakySinkModel(alpha=a).test_bifurcation(seed_ee=0.005, t_days=40.0) - 0.005
+        alpha_crit = refine_crossing(f, alphas, int(break_idx[0]))
 
     if alpha_crit is not None:
-        print(f"  * BREAKING POINT FOUND: Critical Heterochiral Leak alpha_crit = {alpha_crit*100.0:.1f}%")
+        print(f"  * BREAKING POINT (brentq-refined, final ee = seed): alpha_crit = {alpha_crit*100.0:.2f}%")
         print(f"    (If LD retain >{alpha_crit*100.0:.1f}% of catalytic activity, homochiral amplification collapses!)")
     else:
         print("  * Amplification survived all tested alpha levels.")
@@ -170,7 +185,7 @@ def run_test3_heat_shock_pulses():
 
     cycle_trajectories = {}
 
-    for d_h in shock_durations_hours:
+    def trajectory(d_h):
         # Kinetic rates at 0 °C (cold bulk ocean)
         k_rac_cold = 1e10 * np.exp(-115000.0 / (R_GAS * 273.15))  # ~ 5.3e-13 s^-1
         k_hyd_cold = 1.2e6 * np.exp(-95000.0 / (R_GAS * 273.15))  # ~ 8.4e-13 s^-1
@@ -199,16 +214,20 @@ def run_test3_heat_shock_pulses():
             
             ee = ee * decay_factor
             ee_history.append(ee * 100.0)
+        return ee_history
 
-        cycle_trajectories[d_h] = ee_history
+    for d_h in shock_durations_hours:
+        cycle_trajectories[d_h] = trajectory(d_h)
 
     # Find the critical shock duration where final ee < initial ee
     final_ees_at_cycle = [cycle_trajectories[d][-1] for d in shock_durations_hours]
     f_crit_idx = np.where(np.array(final_ees_at_cycle) < 5.0)[0]
-    d_crit = shock_durations_hours[f_crit_idx[0]] if len(f_crit_idx) > 0 else None
+    d_crit = None
+    if len(f_crit_idx) > 0:
+        d_crit = refine_crossing(lambda d: trajectory(d)[-1] - 5.0, shock_durations_hours, int(f_crit_idx[0]))
 
     if d_crit is not None:
-        print(f"  * BREAKING POINT FOUND: Critical Vent Shock Duration d_crit = {d_crit:.1f} hours at 120 °C")
+        print(f"  * BREAKING POINT (brentq-refined, final ee = initial 5%): d_crit = {d_crit:.2f} hours at 120 °C")
         print(f"    (If an ocean parcel stays in the hot vent longer than {d_crit:.1f} hours, chiral memory is permanently erased!)")
 
     return shock_durations_hours, cycle_trajectories, d_crit
@@ -285,10 +304,13 @@ def run_test4_chiral_poisoning():
 
     final_ees = np.array(final_ees)
     break_idx = np.where(final_ees < 0.005)[0]
-    K_crit = K_I_vals[break_idx[0]] if len(break_idx) > 0 else None
+    K_crit = None
+    if len(break_idx) > 0:
+        f = lambda K: ChiralPoisoningModel(K_I=K).test_amplification(seed_ee=0.005, t_days=40.0) - 0.005
+        K_crit = refine_crossing(f, K_I_vals, int(break_idx[0]))
 
     if K_crit is not None:
-        print(f"  * BREAKING POINT FOUND: Critical Poisoning Affinity K_I_crit = {K_crit:.1f} M^-1")
+        print(f"  * BREAKING POINT (brentq-refined, final ee = seed): K_I_crit = {K_crit:.1f} M^-1")
         print(f"    (If opposing enantiomer binds catalyst with K_I > {K_crit:.1f} M^-1, amplification is poisoned!)")
     else:
         print("  * System survived all tested poisoning affinities.")
@@ -327,7 +349,7 @@ def run_all_lethal_tests():
     ax2.plot(alphas * 100.0, final_ees_t2 * 100.0, "m-s", lw=2.0, markersize=5)
     ax2.axhline(0.5, color="gray", linestyle=":", label="Initial 0.5% Seed")
     if alpha_crit is not None:
-        ax2.axvline(alpha_crit * 100.0, color="purple", linestyle="--", lw=2, label=f"Breaking Point: $\\alpha_{{\\mathrm{{crit}}}} = {alpha_crit*100:.1f}\\%$")
+        ax2.axvline(alpha_crit * 100.0, color="purple", linestyle="--", lw=2, label=f"Breaking Point: $\\alpha_{{\\mathrm{{crit}}}} = {alpha_crit*100:.2f}\\%$")
     ax2.set_xlabel("Residual Heterochiral Dimer Activity $\\alpha$ (%)", fontsize=10)
     ax2.set_ylabel("Final Monomer ee (%)", fontsize=10)
     ax2.set_title("2. Lethal Test 2: Leaky Heterochiral Sink", fontsize=11, weight="bold")
@@ -369,7 +391,7 @@ def run_all_lethal_tests():
     fig.savefig(output_png, dpi=160)
     print(f"\nSaved lethal stress-tests master figure to: {output_png}")
 
-    print("\nALL LETHAL TESTS COMPLETED. EXACT BREAKING POINTS SUCCESSFULLY MAPPED.")
+    print("\nALL LETHAL TESTS COMPLETED (breaking points refined between grid points with brentq).")
 
 
 if __name__ == "__main__":

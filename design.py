@@ -31,8 +31,9 @@ ARM_F = {
     "name": "Arm F: Prebiotic RAO synthesis + dipeptide catalysis (fed regime)",
     "c_realistic": 1e-3,            # 1 mM realistic meteoritic / prebiotic concentration
     "c_accelerated": [1e-2, 1e-1],   # 10 mM and 100 mM accelerated tiers
-    "e0_seed": 0.20,                # 20% enantiomeric seed (matching Murchison isovaline)
-    "sigma_per_vial": 0.026,        # 2.6% per-vial ee noise (Glavin & Dworkin 2009 standard error)
+    "e0_seed": 0.20,                # 20% enantiomeric seed, ASSUMED (chosen near Murchison isovaline 18.5%)
+    "sigma_per_vial": 0.026,        # ASSUMED per-vial ee noise. 0.026 is the Murchison isovaline
+                                    # uncertainty (Glavin & Dworkin 2009), NOT a measured per-vial lab noise.
     "n_vials": 9,                   # 9 independent reactors per condition (Dworkin test 5)
     "flow_rate_uL_h": 5.0,          # 5 uL/h fed flow rate
     "reactor_volume_mL": 2.0,       # 2 mL reactor working volume

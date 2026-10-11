@@ -1,0 +1,49 @@
+================================================================================
+TITAN 94 K CRYOGENIC & QUANTUM TUNNELING AUDIT (Dr. Chris McKay Follow-Up)
+================================================================================
+
+[AUDIT 1] Electroweak PVED Scaling with Temperature:
+  * Earth (273.15 K) : g = 1.000e-17
+  * Titan (94.0 K)   : g = 2.906e-17
+  * Titan PVED boost : 2.91x stronger bias at cryogenic temperatures!
+
+[AUDIT 2] Classical Arrhenius Kinetics at 94 K vs 273 K (P1 check):
+  * Ea =  20.0 kJ/mol | k(273 K) =   1.50e+05 /M/s | k(94 K) =   7.70e-03 /M/s | 1-Gyr k*c*tau =   2.43e+10
+  * Ea =  40.0 kJ/mol | k(273 K) =   2.24e+01 /M/s | k(94 K) =   5.93e-14 /M/s | 1-Gyr k*c*tau =   1.87e-01
+  * Ea =  50.0 kJ/mol | k(273 K) =   2.75e-01 /M/s | k(94 K) =   1.64e-19 /M/s | 1-Gyr k*c*tau =   5.19e-07
+  * Ea =  80.0 kJ/mol | k(273 K) =   5.03e-07 /M/s | k(94 K) =   3.51e-36 /M/s | 1-Gyr k*c*tau =   1.11e-23
+  * Ea = 120.0 kJ/mol | k(273 K) =   1.13e-14 /M/s | k(94 K) =   2.08e-58 /M/s | 1-Gyr k*c*tau =   6.57e-46
+  -> P1 partly held: at Ea = 40 kJ/mol 1-Gyr k*c*tau < 0.2 (frozen), but k(94 K) is 5.9e-14,
+     not < 1e-18 /M/s; that bound holds only from Ea >= 50 kJ/mol.
+
+[AUDIT 3] Quantum Tunneling Crossover Temperatures T_c (P2 check):
+  * HCN tautomerization / fast proton transfer: V0=15.0 kJ, d=0.6 A -> T_c =  78.2 K | Tunnel/Arrhenius ratio = 6.2e+06
+  * H-transfer addition (assumed barrier)     : V0=25.0 kJ, d=0.7 A -> T_c =  86.5 K | Tunnel/Arrhenius ratio = 3.6e+10
+  * Prebiotic condensation step               : V0=35.0 kJ, d=0.8 A -> T_c =  89.6 K | Tunnel/Arrhenius ratio = 1.7e+14
+  * Enol-keto isomerization                   : V0=50.0 kJ, d=0.9 A -> T_c =  95.2 K | Tunnel/Arrhenius ratio = 1.2e+20
+  -> P2 FAILED: predicted T_c = 120-240 K, computed T_c = 78-95 K. Titan (94 K) is near or above T_c,
+     not deep in the tunnelling regime.
+
+[AUDIT 4] Tunneling-Driven Bifurcation in Kraken Mare (P3 check):
+  * At k_tunnel = 1.0e-08 /M/s, c = 3.2 uM, tau = 100 Myr:
+    k*c*tau = 100.98 (Threshold to cross bifurcation is k*c*tau >= 10.0)
+  -> P3 holds only for the ASSUMED k_tunnel = 1e-8 /M/s (no measured or published rate).
+
+[AUDIT 5] Coherence Volume & Lake Capacity (P4 check):
+  * Molecules needed at 273 K (Earth) : N = 1.040e+34
+  * Molecules needed at 94 K (Titan)  : N = 1.231e+33
+  * Coherence reduction factor        : 8.44x fewer molecules needed at 94 K!
+  * Volume required at 1 uM in Titan methane : 2.04e+12 m^3 (2044.614 km^3)
+  * Kraken Mare actual volume                : 1.60e+14 m^3 (160000 km^3)
+  * Kraken Mare capacity margin              : 78x greater than minimum required volume!
+  -> P4 held: the 1/T scaling of g gives the predicted (g_boost)^2 reduction (algebraic).
+
+[AUDIT 6] Racemization Longevity at 94 K (P5 check):
+  * Proton abstraction tunneling limit (m=m_p) : P = 8.86e-26 | t_1/2 = 2.48e+06 yr
+  * Heavy stereocenter inversion (m=m_C)       : P = 3.39e-87 | t_1/2 = 6.48e+67 yr
+  -> P5 (post hoc, not a prediction): the limiting channel is proton abstraction,
+     t_1/2 = 2.5e+06 yr; heavy-atom inversion alone is 6.5e+67 yr.
+     Racemization is slow on Myr scales, not frozen out.
+
+Saved Titan audit master figure to: titan_95k_audit.png
+================================================================================

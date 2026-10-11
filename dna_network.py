@@ -17,7 +17,7 @@ Linearized mode analysis:
   Condition to rescue natural (L-aa, D-sugar) homochirality when g_s < 0 (DNA PVED opposing):
       kappa_as / kappa_sa > ( |g_s| / g_a )^2
 
-This resolves the dilemma where DNA double-helix PVED opposes the natural form:
+Within this model, the case where DNA double-helix PVED opposes the natural form is handled:
 as long as amino-acid-to-sugar transmission exceeds the squared bias ratio, L-aa drags DNA sugars into D!
 """
 import numpy as np
@@ -86,7 +86,7 @@ def main():
     assert thy_sub < 0.40, "Expected mirror pair to dominate when template transmission is reversed"
     assert thy_sup > 0.60, "Expected natural pair to dominate when aa catalysis rescues"
 
-    print("\nAll theoretical predictions confirmed by stochastic simulations!")
+    print("\nInternal self-consistency check passed: linear theory agrees with this model's own stochastic runs.")
 
 
 if __name__ == "__main__":

@@ -4,7 +4,7 @@ Resolves:
 1. Challenge 2: Titan 94 K Cryogenic Solubility Problem
    - Solubilities of small prebiotic nitriles (HCN, CH3CN, HC3N, C2H3CN) in liquid CH4 at 94 K.
    - Heterogeneous solid-liquid Viedma deracemization on Titan lakebed sediments/shorelines,
-     proving low solution solubility is an asset (drives crystal attrition-ripening to 99% ee).
+     modelling the idea that low solution solubility is an asset (drives crystal attrition-ripening to 99% ee).
 2. Challenge 3: The Bennu Paradox Resolution (Relaxed vs. Never-Amplified Discriminator)
    - Aqueous alteration duration vs. relaxation timescale: why Murchison froze at 18.5% ee
      while Bennu relaxed to 0% ee.
@@ -120,7 +120,7 @@ def run_challenge_resolution():
     print(f"\n  Heterogeneous Shoreline Ripening Result:")
     print(f"    * Seed: 0.1% ee | Dissolved saturation: 15 uM")
     print(f"    * Time to reach 99% solid-phase homochirality: {t_99:.1f} years!")
-    print("    -> CONCLUSION: Insolubility is NOT a barrier; it is the exact engine of Viedma ripening.")
+    print("    -> In this model (k_attr ASSUMED), low solubility does not block solid-phase deracemization.")
     
     # 2. Audit Bennu Relaxation vs Never-Amplified
     print("\n--- 2. BENNU DISCRIMINATOR: RELAXED VS NEVER-AMPLIFIED HYPOTHESES ---")
@@ -137,11 +137,12 @@ def run_challenge_resolution():
     iso_bennu = iso_offset[idx_bennu]
     
     print(f"  Murchison (Alteration ~ 1.5 Myr):")
-    print(f"    * Predicted Frozen ee           : {ee_murchison*100:.1f}% (Matches measured 18.5% ± 2.6% isovaline!)")
+    print(f"    * Predicted Frozen ee           : {ee_murchison*100:.1f}% (does NOT match measured isovaline 18.5% ± 2.6%;")
+    print(f"      ee_peak and tau_relax are ASSUMED hand-set values)")
     print(f"    * Predicted Delta delta13C (L-D): {iso_murchison:.2f} per mil")
     print(f"  Bennu / Ryugu (Alteration ~ 6.0 Myr):")
     print(f"    * Predicted Enantiomeric Excess : {ee_bennu*100:.2f}% (Fully relaxed to racemic < 0.1%!)")
-    print(f"    * Predicted Delta delta13C (L-D): {iso_bennu:.2f} per mil (Fossil isotopic signature!)")
+    print(f"    * Predicted Delta delta13C (L-D): {iso_bennu:.2f} per mil (model prediction; untested)")
     print("    -> DISCRIMINATOR: If Bennu never amplified, Delta delta13C == 0.0.")
     print("                      If Bennu amplified and relaxed, Delta delta13C is non-zero (~1-2 per mil)!")
 
@@ -185,7 +186,7 @@ def run_challenge_resolution():
     # Panel 4: The Empirical Discriminator (Delta delta13C_L-D)
     ax4.plot(t_myr, iso_offset, "g-", linewidth=2.5, label="Fossil Isotopic Offset $\\Delta\\delta^{13}\\mathrm{C}_{L-D}$ (Relaxed Model)")
     ax4.axhline(0.0, color="gray", linestyle="--", label="Never-Amplified Baseline ($\\Delta\\delta^{13}\\mathrm{C} \\equiv 0$)")
-    ax4.scatter([6.0], [iso_bennu], color="black", s=120, zorder=5, label=f"Bennu Fossil Signal ({iso_bennu:.2f} ‰)")
+    ax4.scatter([6.0], [iso_bennu], color="black", s=120, zorder=5, label=f"Predicted Bennu signal ({iso_bennu:.2f} ‰)")
     ax4.set_xlabel("Hydrothermal Alteration Duration (Myr)", fontsize=11)
     ax4.set_ylabel("Enantiomeric $\\Delta\\delta^{13}\\mathrm{C}_{L-D}$ (‰)", fontsize=11)
     ax4.set_title("4. Smoking-Gun Test: Enantiomer-Specific Isotope Ratio", fontsize=12, weight="bold")

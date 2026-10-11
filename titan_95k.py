@@ -2,8 +2,12 @@
 
 Tests Dr. Chris McKay's (NASA Ames) suggestion:
 1. Classical Arrhenius freeze-out at Titan's surface temperature (94 K).
-2. Quantum mechanical proton/hydrogen tunneling (Longo & Remsing 2024 arXiv:2405.19195;
-   Trixler 2013 doi:10.2174/13852728113179990083) bypassing classical thermal barriers.
+2. Quantum mechanical proton/hydrogen tunneling bypassing classical thermal barriers.
+   Refs: H. W. Longo & Remsing 2024 arXiv:2405.19195, "Quantum Tunneling Could Enable
+   Proton Transfer Reactions on Titan" (path-integral MD of proton-transfer thermodynamics
+   in liquid ethane; it gives NO rate constants and no WKB, so every rate/barrier below is
+   ASSUMED, not taken from it). Trixler 2013 Current Organic Chemistry 17:1758-1770,
+   doi:10.2174/13852728113179990083 (generic tunnelling review; no rates or T_c values).
 3. Temperature scaling of electroweak parity-violating energy difference (PVED): g ~ 1/T.
 4. Coherence volume and Frank bifurcation thresholds in Titan's hydrocarbon lakes
    (Kraken Mare: V ~ 1.6e14 m^3, T = 94 K, liquid methane-ethane).
@@ -30,18 +34,20 @@ P3. Bifurcation threshold: Tunneling rate constants (1e-10 to 1e-6 /M/s, consist
     threshold (k_2 * c * tau >= 10) for prebiotic concentrations c >= 3.2 uM over 10^8 yr.
 P4. PVED temperature boost: Because g ~ 1/T, g(94 K) = 2.91e-17 (2.91x higher than 273 K),
     reducing the critical coherence volume N_needed by (2.91)^2 = 8.47x.
-RESULTS (titan_95k.log, 2026-10-10): All 5 predictions held or refined cleanly:
-  P1 held: At 94 K, Ea = 40 kJ/mol gives 1-Gyr k*c*tau = 0.19 << 10; Ea >= 50 kJ/mol gives
-     k <= 1.6e-19 /M/s. Classical thermal chemistry is completely frozen (bifurcation impossible).
-  P2 held in tunneling dominance: Light-atom proton transfer exhibits crossover Tc = 78-95 K for
-     d = 0.6-0.9 A. At 94 K, tunneling exceeds classical Arrhenius by 6.2e6x (at 15 kJ/mol) to
-     1.2e20x (at 50 kJ/mol), entering the temperature-independent quantum plateau.
-  P3 held: At Longo & Remsing (2024) tunneling rate k_tunnel = 1e-8 /M/s, a concentration of
-     3.2 uM over 100 Myr gives k*c*tau = 101.0 >= 10, achieving spontaneous symmetry breaking.
-  P4 held: g(94 K) = 2.91e-17 (2.91x higher than 273 K); required coherence molecules drops by
-     (2.91)^2 = 8.44x. In Kraken Mare (1.6e14 m^3), the volume margin is 78x above critical threshold.
-  P5 held: Proton abstraction tunneling t_1/2 is 2.5 Myr (longer than impact melt lifetimes);
-     heavy-atom stereocenter inversion (m = m_C) gives t_1/2 = 6.5e67 yr. Racemization is zero.
+RESULTS (titan_95k.log, corrected 2026-10-10). Four predictions (P1-P4) were made;
+P5 below was added after the run and is not a prediction.
+  P1 partly held: at 94 K, Ea = 40 kJ/mol gives 1-Gyr k*c*tau = 0.19 < 1 (no bifurcation), but
+     k(94 K, 40 kJ/mol) = 5.9e-14 /M/s, NOT below 1e-18; the 1e-18 bound holds only from
+     Ea >= 50 kJ/mol (k = 1.6e-19 /M/s).
+  P2 FAILED: predicted T_c = 120-240 K; computed T_c = 78-95 K for d = 0.6-0.9 A. Titan (94 K)
+     is near or above T_c (above 3 of 4 cases), not deep in the tunnelling regime. The tunnel/Arrhenius ratio at 94 K
+     is 6.2e6x (15 kJ/mol) to 1.2e20x (50 kJ/mol), so the predicted > 1e15x also fails at low barriers.
+  P3 held only for an ASSUMED rate: k_tunnel = 1e-8 /M/s is hand-set (Longo & Remsing 2024 gives
+     no rate constants). With it, 3.2 uM over 100 Myr gives k*c*tau = 101 >= 10.
+  P4 held: g(94 K) = 2.91e-17 (2.91x the 273 K value); molecules needed drop by 8.44x
+     (predicted 8.47x, rounding). Kraken Mare volume margin at 1 uM is 78x.
+  P5 (post hoc): proton-abstraction tunnelling t_1/2 = 2.5e6 yr (the limiting channel);
+     heavy-atom inversion (m = m_C) t_1/2 = 6.5e67 yr. Racemization is slow, not zero.
 """
 
 import numpy as np
@@ -138,13 +144,14 @@ def run_titan_audit():
     k_50_94 = arrhenius_rate(T_TITAN, 50.0)
     assert k_40_94 * c_nom * tau_age < 1.0, "P1 check failed: at 40 kJ/mol 1-Gyr k*c*tau is below bifurcation threshold"
     assert k_50_94 < 1.0e-18, "P1 check failed: classical rate at 50 kJ/mol should be below 1e-18"
-    print("  -> P1 CONFIRMED: Classical thermal chemistry with Ea >= 40 kJ/mol is frozen dead (k*c*tau < 0.2 << 10).")
+    print("  -> P1 partly held: at Ea = 40 kJ/mol 1-Gyr k*c*tau < 0.2 (frozen), but k(94 K) is 5.9e-14,")
+    print("     not < 1e-18 /M/s; that bound holds only from Ea >= 50 kJ/mol.")
 
     # 3. Quantum Tunneling Crossover Temperature (P2)
     print(f"\n[AUDIT 3] Quantum Tunneling Crossover Temperatures T_c (P2 check):")
     proton_barriers = [
         (15.0, 0.6, "HCN tautomerization / fast proton transfer"),
-        (25.0, 0.7, "H-transfer addition (Longo & Remsing 2024)"),
+        (25.0, 0.7, "H-transfer addition (assumed barrier)"),
         (35.0, 0.8, "Prebiotic condensation step"),
         (50.0, 0.9, "Enol-keto isomerization"),
     ]
@@ -156,21 +163,24 @@ def run_titan_audit():
         k_arr = arrhenius_rate(T_TITAN, V0)
         k_tun = 1e11 * P_tun
         print(f"  * {label:42}: V0={V0:4.1f} kJ, d={d:3.1f} A -> T_c = {Tc:5.1f} K | Tunnel/Arrhenius ratio = {k_tun / max(k_arr, 1e-99):.1e}")
-    assert all(75.0 <= tc <= 200.0 for tc in tc_list), "P2 check failed: T_c should be 75-200 K"
-    print("  -> P2 CONFIRMED: Titan (94 K) sits right at/below the quantum crossover threshold (T_c = 78-95 K),")
-    print("     where proton tunneling exceeds classical Arrhenius by 1e6x to 1e20x!")
+    p2_held = all(120.0 <= tc <= 240.0 for tc in tc_list)  # the PREDICTED range
+    # Regression check on what the model actually computes (recorded 78-95 K), not on P2.
+    assert all(75.0 <= tc <= 100.0 for tc in tc_list), "T_c moved from the recorded 78-95 K"
+    print(f"  -> P2 {'HELD' if p2_held else 'FAILED'}: predicted T_c = 120-240 K, computed "
+          f"T_c = {min(tc_list):.0f}-{max(tc_list):.0f} K. Titan (94 K) is near or above T_c,")
+    print("     not deep in the tunnelling regime.")
 
     # 4. Bifurcation Window in Kraken Mare (P3)
     print(f"\n[AUDIT 4] Tunneling-Driven Bifurcation in Kraken Mare (P3 check):")
-    # Longo & Remsing 2024 parameter regime: k_tunnel ~ 1e-10 to 1e-6 /M/s
+    # ASSUMED: k_tunnel is hand-set. Longo & Remsing 2024 gives no rate constants.
     tau_100myr = 1.0e8 * YR
     c_thresh_p3 = 3.2e-6  # 3.2 uM
-    k_tunnel_nom = 1.0e-8  # 1e-8 /M/s
+    k_tunnel_nom = 1.0e-8  # 1e-8 /M/s, ASSUMED
     kct_p3 = k_tunnel_nom * c_thresh_p3 * tau_100myr
     print(f"  * At k_tunnel = {k_tunnel_nom:.1e} /M/s, c = {c_thresh_p3*1e6:.1f} uM, tau = 100 Myr:")
     print(f"    k*c*tau = {kct_p3:.2f} (Threshold to cross bifurcation is k*c*tau >= 10.0)")
     assert kct_p3 >= 10.0, "P3 check failed: bifurcation threshold not crossed"
-    print("  -> P3 CONFIRMED: Prebiotic networks cross the Frank threshold for c >= 3.2 uM.")
+    print("  -> P3 holds only for the ASSUMED k_tunnel = 1e-8 /M/s (no measured or published rate).")
 
     # 5. Coherence Volume & Molecule Sizing (P4)
     print(f"\n[AUDIT 5] Coherence Volume & Lake Capacity (P4 check):")
@@ -186,7 +196,7 @@ def run_titan_audit():
     print(f"  * Volume required at 1 uM in Titan methane : {vol_needed_1uM:.2e} m^3 ({vol_needed_1uM/1e9:.3f} km^3)")
     print(f"  * Kraken Mare actual volume                : {V_KRAKEN:.2e} m^3 ({V_KRAKEN/1e9:.0f} km^3)")
     print(f"  * Kraken Mare capacity margin              : {V_KRAKEN / vol_needed_1uM:.0f}x greater than minimum required volume!")
-    print("  -> P4 CONFIRMED: Kraken Mare comfortably pools enough molecules for weak-force parity selection.")
+    print("  -> P4 held: the 1/T scaling of g gives the predicted (g_boost)^2 reduction (algebraic).")
 
     # 6. Racemization Freedom Check (P5)
     print(f"\n[AUDIT 6] Racemization Longevity at 94 K (P5 check):")
@@ -202,8 +212,9 @@ def run_titan_audit():
     print(f"  * Heavy stereocenter inversion (m=m_C)       : P = {P_rac_C:.2e} | t_1/2 = {t_half_C_yr:.2e} yr")
     assert t_half_H_yr > 1.0e6, "P5 check failed: even light proton abstraction t_1/2 must exceed 1 Myr at 94 K"
     assert t_half_C_yr > 1.0e30, "P5 check failed: heavy atom inversion must be completely frozen (> 1e30 yr)"
-    print("  -> P5 CONFIRMED: In cryogenic hydrocarbons (no basic solvent) and with heavy-atom barriers,")
-    print("     racemization is strictly frozen out (t_1/2 >> 1e30 yr). Chiral memory is permanent.")
+    print(f"  -> P5 (post hoc, not a prediction): the limiting channel is proton abstraction,")
+    print(f"     t_1/2 = {t_half_H_yr:.1e} yr; heavy-atom inversion alone is {t_half_C_yr:.1e} yr.")
+    print("     Racemization is slow on Myr scales, not frozen out.")
 
     # Plot comprehensive diagnostic figure
     fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, figsize=(14, 11))
@@ -271,7 +282,9 @@ def run_titan_audit():
     # Panel 4: Comparison of Titan 94 K vs Earth 273 K vs Enceladus 273 K
     environments = ["Earth (273 K)", "Enceladus (273 K)", "Titan Melt (250 K)", "Titan Surface (94 K)"]
     g_vals = [pved_g(273.15)*1e17, pved_g(273.15)*1e17, pved_g(250.0)*1e17, pved_g(94.0)*1e17]
-    rac_rates = [1e-12, 1e-12, 1e-13, 1e-35]  # Racemization rate (/s)
+    # ASSUMED illustrative racemization rates (/s); Titan uses this script's own
+    # proton-channel tunnelling rate (the limiting channel), not a hand-set 1e-35.
+    rac_rates = [1e-12, 1e-12, 1e-13, np.log(2) / (t_half_H_yr * YR)]
 
     x_pos = np.arange(len(environments))
     width = 0.35

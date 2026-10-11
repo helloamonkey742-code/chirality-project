@@ -11,7 +11,7 @@ Evaluates:
 3. The critical bifurcation boundary (lambda_max > 0) separating racemic decay
    from spontaneous homochiral amplification.
 4. Nonlinear ODE verification confirming ee growth from a tiny seed (1e-3).
-5. Mapping of real experimentally measured catalyst data against the boundary.
+5. Mapping of an ASSUMED lab-baseline catalyst point (not a measured S) against the boundary.
 """
 
 import numpy as np
@@ -219,9 +219,10 @@ def generate_search_figure():
              fontsize=9.5, weight="bold", color="navy", ha="center")
 
     # Lab frontiers
-    # Yu et al. 2024 transamination dipeptide stereocontrol: S ~ 1.5 - 2.5
-    ax1.plot([2.0], [5.0], "y*", markersize=14, markeredgecolor="black", label="Yu et al. 2024 Dipeptides")
-    ax1.annotate("Yu et al. 2024 (PNAS)\nCurrent Lab Baseline", xy=(2.0, 5.0), xytext=(2.6, 4.2),
+    # ASSUMED placeholder S = 2.0 at 5 mM. Yu et al. 2024 PNAS (e2315447121) does not report S;
+    # the dipeptide values once attributed to it were not in the paper.
+    ax1.plot([2.0], [5.0], "y*", markersize=14, markeredgecolor="black", label="Assumed lab baseline (S=2.0)")
+    ax1.annotate("Assumed lab baseline\n(S not measured)", xy=(2.0, 5.0), xytext=(2.6, 4.2),
                  arrowprops=dict(facecolor="black", shrink=0.08, width=1, headwidth=5),
                  fontsize=8.5, weight="bold")
 

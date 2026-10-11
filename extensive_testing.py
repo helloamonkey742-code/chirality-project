@@ -6,8 +6,8 @@ TEST 1: Chemical Clutter & Competitive Inhibition Matrix
   - 16-species kinetic ODE simulation including 6 competing "junk" and sequence-scrambled
     peptides (Pro-Val-Ala, Gly-Val-Val, Ala-Ala-Ala, Val-Gly-Ala, etc.) competing for
     the same ketoacid substrate via competitive Michaelis-Menten inhibition.
-  - Sweeps the "junk peptide" fraction from 0% up to 98% to find the exact chemical clutter
-    breakdown threshold.
+  - Sweeps the "junk peptide" fraction from 0% up to 95% (5% grid) to locate the chemical
+    clutter breakdown threshold (reported as the first failing grid point).
 
 TEST 2: 2D Spatial Reaction-Diffusion-Advection PDE with Turbulent Eddies & Langevin Noise
   - Solves the full spatial field equation on a 64x64 grid:
@@ -15,7 +15,7 @@ TEST 2: 2D Spatial Reaction-Diffusion-Advection PDE with Turbulent Eddies & Lang
   - Uses an advecting turbulent eddy velocity field (Kolmogorov-like streamfunction).
   - Tests whether Allen-Cahn domain walls survive turbulent shear or get shredded into dispersion.
 
-TEST 3: Global Monte Carlo Latin Hypercube Parameter Sweep (3,000 runs)
+TEST 3: Global Monte Carlo Parameter Sweep (1,000 runs)
   - Simultaneous multi-dimensional variation of:
     * Feed concentration F0 in [0.2, 10.0] mM
     * Residence time tau in [20, 1000] hours
@@ -30,7 +30,8 @@ TEST 4: Asteroid Parent-Body 26Al Thermal Evolution & Intermediate Chiral Freezi
   - Solves radial thermal diffusion in a 50-km radius asteroid heated by radioactive 26Al decay
     (t_1/2 = 7.17e5 yr) over 4 million years.
   - Couples temperature T(r, t) to the Arrhenius kinetics of isovaline amplification.
-  - Numerically explains why Murchison isovaline halted at ~18.5% ee rather than running away to 100%.
+  - Growth and feed-drain constants are hand-tuned so the freeze-out lands in 12-24% ee
+    (asserted below). The Murchison 18.5% value is therefore FIT, not predicted.
 """
 
 import numpy as np
@@ -269,7 +270,8 @@ def run_asteroid_thermal_evolution():
 
     print(f"  * Core reached peak temp: {peak_T:.1f} °C")
     print(f"  * Liquid water lasted: {aqueous_myr:.2f} Million Years")
-    print(f"  * Chiral amplification naturally FROZE OUT at: {final_ee_murchison:.1f}% ee (Matches Murchison 18.5% ± 2.6%!)")
+    print(f"  * Chiral amplification froze out at: {final_ee_murchison:.1f}% ee (FIT: constants tuned to land in 12-24%;")
+    print(f"    not a prediction of Murchison isovaline 18.5% ± 2.6%)")
 
     return t_yr / 1e6, T_core_C, ee_history
 
@@ -290,7 +292,12 @@ def run_all_extensive_tests():
     ax1 = axes[0, 0]
     ax1.plot(j_fracs * 100.0, final_ees * 100.0, "r-o", lw=2.2, markersize=6)
     ax1.axhline(0.5, color="gray", linestyle=":", label="Initial 0.5% Seed")
-    ax1.axvline(82.0, color="black", linestyle="--", lw=1.8, label="Critical Clutter Boundary (82% Junk)")
+    # Breaking point = first grid junk fraction where final ee falls below the 0.5% seed.
+    below = final_ees < 0.005
+    j_break = 100.0 * j_fracs[np.argmax(below)] if below.any() else float("nan")
+    print(f"  * Clutter breaking point: final ee first drops below the 0.5% seed at {j_break:.0f}% junk "
+          f"(first failing grid point, 5% steps)")
+    ax1.axvline(j_break, color="black", linestyle="--", lw=1.8, label=f"First grid point below seed ({j_break:.0f}% junk)")
     ax1.fill_between(j_fracs * 100.0, 0.0, final_ees * 100.0, color="crimson", alpha=0.15)
     ax1.set_xlabel("Inactive / Junk Peptide Fraction in Pool (%)", fontsize=10)
     ax1.set_ylabel("Final Monomer ee (%) after 40 Days", fontsize=10)
@@ -316,7 +323,7 @@ def run_all_extensive_tests():
     ax3.set_yscale("log")
     ax3.set_xlabel(r"Catalytic Stereospecificity $S$", fontsize=10)
     ax3.set_ylabel(r"Feedstock Concentration $[F]_0$ (mM)", fontsize=10)
-    ax3.set_title("3. Global Multi-Dimensional Parameter Sweep (1,500 Draws)", fontsize=11, weight="bold")
+    ax3.set_title(f"3. Global Multi-Dimensional Parameter Sweep ({len(S_mc):,} Draws)", fontsize=11, weight="bold")
     ax3.grid(True, linestyle=":", alpha=0.6)
     ax3.legend(loc="upper left", fontsize=8.5)
 
@@ -328,12 +335,12 @@ def run_all_extensive_tests():
     p1 = ax4.plot(t_myr, T_c, "b-", lw=2.2, label="Asteroid Core Temp (°C)")
     p2 = ax4_twin.plot(t_myr, ee_ast, "darkred", lw=2.5, label="Isovaline ee (%) [Chiral Memory]")
     ax4.axhline(0.0, color="blue", linestyle=":", alpha=0.6, label="Liquid Water Freezing (0 °C)")
-    ax4_twin.axhline(18.5, color="crimson", linestyle="--", alpha=0.7, label="Actual Murchison Measured ee (18.5%)")
+    ax4_twin.axhline(18.5, color="crimson", linestyle="--", alpha=0.7, label="Murchison isovaline measured ee (18.5%, Glavin & Dworkin 2009)")
 
     ax4.set_xlabel("Time after Asteroid Formation (Million Years)", fontsize=10)
     ax4.set_ylabel("Core Temperature (°C)", color="blue", fontsize=10)
     ax4_twin.set_ylabel("Isovaline Enantiomeric Excess ee (%)", color="darkred", fontsize=10)
-    ax4.set_title("4. Asteroid 26Al Evolution: Natural Chiral Freezing at ~18.5%", fontsize=11, weight="bold")
+    ax4.set_title("4. Asteroid 26Al Evolution: Chiral Freeze-Out (tuned to 12-24%)", fontsize=11, weight="bold")
     ax4.grid(True, linestyle=":", alpha=0.6)
 
     lines = p1 + p2
@@ -352,7 +359,7 @@ def run_all_extensive_tests():
     permissive_mask = (F0_mc >= 2e-3) & (S_mc >= 2.5) & (T_mc <= 35.0)
     cond_win = np.mean(wins_mc[permissive_mask])
     assert cond_win > 0.50, f"Over 50% of draws in permissive window must win, got {cond_win*100:.1f}%"
-    assert 12.0 <= ee_ast[-1] <= 24.0, f"Asteroid thermal model must reproduce empirical 18.5% plateau, got {ee_ast[-1]:.1f}%"
+    assert 12.0 <= ee_ast[-1] <= 24.0, f"Fit constraint: tuned asteroid constants must keep the plateau in 12-24%, got {ee_ast[-1]:.1f}%"
 
     print("\nALL EXTENSIVE STRESS-TESTS NUMERICALLY COMPLETED AND PASSED.")
 

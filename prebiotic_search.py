@@ -11,7 +11,8 @@ Evaluates two distinct regimes:
    Physical organic chemistry screening of all 100 dipeptides and 1,000 tripeptides
    derived from the 10 prebiotic amino acids (Gly, Ala, Val, Leu, Ile, Pro, Asp, Glu, Ser, Thr).
    Uses Taft steric parameters (E_s), conformational rigidity, and transition-state steric
-   clash models calibrated against Yu et al. 2024 (PNAS) to compute stereoselectivity S,
+   clash models with HAND-SET (assumed, not fitted or validated) coefficients to compute
+   stereoselectivity S,
    cross-referencing against Murchison meteorite prebiotic abundance data to identify
    the Pareto-optimal candidates crossing S_crit >= 2.4.
 """
@@ -109,12 +110,13 @@ AMINO_ACIDS = {
     "Thr": {"name": "Threonine",     "abund": 0.008, "Es": -2.40, "beta_branch": 1, "ring": 0},
 }
 
-# Empirical calibration factors to match experimental dipeptide stereoselectivity:
-# Yu et al. 2024 (PNAS):
-# Ala-Ala: ee ~ 11% -> S = (1+ee)/(1-ee) = 1.11 / 0.89 = 1.25
-# Val-Val: ee ~ 33% -> S = 1.33 / 0.67 = 1.99 ~ 2.0
-# Leu-Phe: ee ~ 37% -> S = 1.37 / 0.63 = 2.17 ~ 2.2
-# Gly-Gly: S = 1.0 (achiral)
+# The steric coefficients below are ASSUMED (hand-set). They are NOT calibrated or
+# validated against any experiment. (An earlier version claimed a Yu et al. 2024 PNAS
+# fit; those dipeptide ee values are not in that paper and were removed.)
+# Untested out-of-sample benchmark for later: the real Yu, Daru, Deng & Blackmond
+# 2024 PNAS e2315447121 (doi 10.1073/pnas.2315447121) Table 1 ee values (see
+# FINDINGS / audit notes). Note that Table 1 reports the ee (and hand) of product Ala
+# per added catalyst, not the self-selectivity S used here, so a comparison needs a mapping.
 # S_crit for spontaneous bifurcation in CSTR is ~ 2.40 at 5 mM feed, 200 h residence.
 
 R_GAS = 8.314  # J/mol/K

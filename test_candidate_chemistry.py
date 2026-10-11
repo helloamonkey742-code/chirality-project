@@ -10,6 +10,8 @@ Executes physical-chemical simulations of the two identified candidates:
    - 12-species CSTR chemical kinetic model with mutual heterochiral inhibition.
    - Stochastic Langevin integration (Monte Carlo, 50 runs each) from exact 50:50 racemic state.
    - Tests whether Pro-Val-Val (S = 2.47) spontaneously bifurcates while Val-Val (S = 2.00) decays.
+     These S values are ASSUMED (hand-set steric model in prebiotic_search.py), not measured;
+     S = 2.47 sits only ~4% above the computed S_crit (~2.37-2.42), so the call is fragile.
 
 3. Geophysical Temperature Sensitivity (0 °C to 120 °C)
    - Arrhenius racemization vs peptide hydrolysis vs CSTR residence time.
@@ -235,7 +237,7 @@ def run_all_tests():
     axes[0, 0].axhline(100.0, color="gray", linestyle=":", alpha=0.6)
     axes[0, 0].set_xlabel("Attrition / Stirring Time (hours)", fontsize=10)
     axes[0, 0].set_ylabel("Solid Crystal ee (%)", fontsize=10)
-    axes[0, 0].set_title("1. RAO Viedma Deracemization in Slurry (Hein et al. 2011)", fontsize=11, weight="bold")
+    axes[0, 0].set_title("1. RAO Viedma Deracemization in Slurry (model; cf. Hein et al. 2011)", fontsize=11, weight="bold")
     axes[0, 0].grid(True, linestyle=":", alpha=0.6)
     axes[0, 0].legend(loc="center left", fontsize=8.5)
 
@@ -246,7 +248,7 @@ def run_all_tests():
 
     print(f"  * Seed 1e-4 reached 99% ee in: {t99_1}")
     print(f"  * Seed 1e-5 reached 99% ee in: {t99_2}")
-    print(f"  * Zero racemization control final ee: {ee3[-1]*100.0:.4f}% (Confirmed: deracemization stalls without solution exchange!)")
+    print(f"  * Zero racemization control final ee: {ee3[-1]*100.0:.4f}% (model result: deracemization stalls without solution exchange)")
 
     # -------------------------------------------------------------------------
     # TEST 2: CSTR REACTION NETWORK DYNAMICS (VAL-VAL vs PRO-VAL-VAL vs OPTIMIZED)
@@ -364,7 +366,7 @@ def run_all_tests():
     assert opt_final_ee > 2.00, "Pro-Val-Ile from 0.25% monomer seed must amplify by over an order of magnitude"
     assert ee1[-1] > 0.95, "RAO Viedma ripening must reach enantiopurity (>95% ee)"
     assert ee3[-1] < 0.001, "RAO control without solution racemization must stall near initial seed"
-    print("\nAll candidate tests PASSED successfully and numerically verified.")
+    print("\nAll candidate model self-checks PASSED (model-internal; S values are assumed).")
 
 
 if __name__ == "__main__":

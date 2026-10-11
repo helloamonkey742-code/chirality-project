@@ -54,7 +54,7 @@ V2: LITERATURE CHECK (2026-10-06, three parallel searches; key DOIs re-fetched f
   Ganymede  R 2634 -> 2631 km (Vance 2018). Ocean 100 km under ~140 km ice confirmed (Vance 2018: 75-117 km).
   Triton    ocean 100 -> 150 km: "~150 km [ice] above an ocean of a similar thickness" (Hansen et al. 2021 PSJ,
             quoting Nimmo & Spencer 2015). Ocean likely, not detected; ~10% ammonia in models.
-  Pluto     ice 150-200 -> ~90 km (40-180; Nguyen & McGovern 2024 Icarus, EPSL 2024 10.1016/j.epsl.2024.118974).
+  Pluto     ice 150-200 -> ~90 km (40-180; Nguyen & McGovern 2024 Icarus; Schmidt et al. EPSL 2024 10.1016/j.epsl.2024.118974).
             Still 51 MPa at the ocean top -> no lid. Ocean > 100 km (Johnson et al. 2016 GRL) confirmed; still disputed.
   Mimas     ocean 30 -> 45 km (35-55): water+ice layer ~70 km (Denton & Rhoden 2025 EPSL 10.1016/j.epsl.2025.119614)
             minus the 20-30 km shell. Age < 25 Myr confirmed.

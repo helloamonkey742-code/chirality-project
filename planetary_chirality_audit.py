@@ -111,10 +111,11 @@ def compute_nuv_flux():
 # ==============================================================================
 
 def audit_martian_geochemistry():
-    """Compiles and audits actual NASA Curiosity and Perseverance geochemical data."""
+    """Compiles cited Curiosity/Perseverance geochemical values against ASSUMED thresholds."""
     print("\n--- 2. MARTIAN ROVER GEOCHEMICAL AUDIT ---")
 
-    # Actual published rover measurements:
+    # Rover rows are values as cited (not re-verified in this audit). The Earth rows and every
+    # "Required for ..." threshold are ASSUMED (hand-set), not measured.
     martian_data = {
         "Boron (ppm)": {
             "Gale Mudstones (Curiosity ChemCam, Gasda et al. 2017)": 300.0,
