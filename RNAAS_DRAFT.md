@@ -10,7 +10,7 @@ The weak nuclear force makes one mirror-image form of a chiral molecule very sli
 
 ## Introduction
 
-Life uses left-handed amino acids and right-handed sugars. Kondepudi & Nelson (1985) proposed that the parity-violating energy difference (PVED) between mirror-image molecules, about 10⁻¹⁷ kT, could select life's hand if a self-amplifying reaction were large and slow enough. Our model (Ghosh, in prep.; code below) finds that about 10³³–10³⁴ molecules must decide together, which means kilometre-scale volumes of well-mixed water. Ponds and pores are too small, but icy-world oceans are not. Here we ask which ocean world is most favourable.
+Life uses left-handed amino acids and right-handed sugars. Kondepudi & Nelson (1985) proposed that the parity-violating energy difference (PVED) between mirror-image molecules, about 10⁻¹⁷ kT, could select life's hand if a self-amplifying reaction were large and slow enough. Our model (Ghosh, in prep.; code below) finds that about 10³³–10³⁴ molecules must decide together, which means kilometre-scale volumes of well-mixed water. Ponds and pores are too small, but icy-world oceans are not. Stochastic models show that a small bias selects the hand when it exceeds the noise (Hochberg et al. 2023). Lente (2007) concluded that the PVED cannot be amplified under realistic conditions; that holds where self-copying starts from the first few chiral molecules, whereas the reaction modelled here is open and fed, with the whole population choosing at once (an assumption about early chemistry). Lunine et al. (1999) discussed abiotic homochirality on Titan; we consider liquid-water oceans only. Here we ask which ocean world is most favourable.
 
 ## Method
 
@@ -30,7 +30,9 @@ Among the three confirmed oceans, Ganymede (28%) and Europa (22–26%) are there
 
 ## Caveats
 
-These numbers are model results, not detections, and none includes the probability that the ocean exists. The Uranian oceans are predictions whose present-day thicknesses disagree between models. Titan's ocean is disputed (Petricca et al. 2025). Not modelled: salt layering deep in large oceans (Vance et al. 2014), which would lower Ganymede to 14% if it pinned the boundary half the time; ammonia, which TEOS-10 omits and which is likely present in the outer-Solar-System oceans; and real mixing rates, which are unmeasured for every world. No measured prebiotic reaction yet amplifies handedness in this way, although a recent two-reaction network could (Higgs & Blackmond 2025). The result to test is a ranking, not an absolute probability: if the weak force ever chose a hand in an icy ocean, a deep, unstratified ocean like Ganymede's or a thick-shelled Europa is a better place to look than Enceladus. A low-salinity Enceladus with a stratified top may conflict with the silica nanoparticles, which suggest the ocean mixes within years (Zeng & Jansen 2021); if so, its salinity is high and its score is near the upper end above.
+These numbers are model results, not detections, and none includes the probability that the ocean exists. The Uranian oceans are predictions whose present-day thicknesses disagree between models. Titan's ocean is disputed (Petricca et al. 2025). Not modelled: salt layering deep in large oceans (Vance et al. 2014), which would lower Ganymede to 14% if it pinned the boundary half the time; ammonia, which TEOS-10 omits and which is likely present in the outer-Solar-System oceans; and real mixing rates, which are unmeasured for every world. Magnetized mineral surfaces can also favour one hand (Ozturk et al. 2023); where a planet's field aligns magnetite across a hemisphere, the same model keeps the weak force's lead in the worst case only if less than about 2–4 × 10⁻¹⁵ of the deciding chemistry happens on such surfaces (Europa, Enceladus). No measured prebiotic reaction yet amplifies handedness in this way, although a recent two-reaction network could (Higgs & Blackmond 2025). The result to test is a ranking, not an absolute probability: if the weak force ever chose a hand in an icy ocean, a deep, unstratified ocean like Ganymede's or a thick-shelled Europa is a better place to look than Enceladus. A low-salinity Enceladus with a stratified top may conflict with the silica nanoparticles, which suggest the ocean mixes within years (Hsu et al. 2015); if so, its salinity is high and its score is near the upper end above.
+
+Acknowledgments: an AI coding assistant (Claude, Anthropic) was used to write code and draft text; the author directed the work and checked all results and references.
 
 Code and data: https://github.com/helloamonkey742-code/chirality-project (`ocean_worlds.py`, `robust_ranking.py`, `uncertainty.py`).
 
@@ -43,12 +45,17 @@ Code and data: https://github.com/helloamonkey742-code/chirality-project (`ocean
 - Castillo-Rogez, J. C., et al. 2023, JGRE, 128, e2022JE007432, doi:10.1029/2022JE007432
 - Hansen, C. J., et al. 2021, PSJ, 2, 137, doi:10.3847/PSJ/abffd2
 - Higgs, P. G., & Blackmond, D. G. 2025, PNAS, 122, e2423683122, doi:10.1073/pnas.2423683122
+- Hochberg, D., Buhse, T., Micheau, J.-C., & Ribó, J. M. 2023, PCCP, 25, 31583, doi:10.1039/d3cp03311b
+- Hsu, H.-W., et al. 2015, Natur, 519, 207, doi:10.1038/nature14262
 - Johnson, B. C., et al. 2016, GeoRL, 43, 10068, doi:10.1002/2016GL070694
 - Kang, W., Mittal, T., Bire, S., Campin, J.-M., & Marshall, J. 2022, SciA, 8, eabm4665, doi:10.1126/sciadv.abm4665
 - Kondepudi, D. K., & Nelson, G. W. 1985, Natur, 314, 438, doi:10.1038/314438a0
 - Lainey, V., et al. 2024, Natur, 626, 280, doi:10.1038/s41586-023-06975-9
+- Lente, G. 2007, PCCP, 9, 6134, doi:10.1039/b711546f
 - Levin, S. M., et al. 2025, NatAs, 10, 84, doi:10.1038/s41550-025-02718-0
+- Lunine, J. I., Beauchamp, J., Smith, M. A., & Nikolaev, E. 1999, in Advances in BioChirality, ed. G. Pályi, C. Zucchi, & L. Caglioti (Amsterdam: Elsevier), 257, doi:10.1016/B978-008043404-9/50017-6
 - McDougall, T. J., & Barker, P. M. 2011, Getting Started with TEOS-10 and the GSW Oceanographic Toolbox, SCOR/IAPSO WG127
+- Ozturk, S. F., et al. 2023, NatCo, 14, 6351, doi:10.1038/s41467-023-42130-8
 - Petricca, F., et al. 2025, Natur, 648, 556, doi:10.1038/s41586-025-09818-x
 - Postberg, F., et al. 2009, Natur, 459, 1098, doi:10.1038/nature08046
 - Saur, J., et al. 2015, JGRA, 120, 1715, doi:10.1002/2014JA020778
