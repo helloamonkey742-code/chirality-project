@@ -104,7 +104,9 @@ Lunine, Beauchamp, Smith & Nikolaev 1999, "The Abiotic Generation of Homochirali
   Universe, but the chapter warns that extrapolating one Arrhenius law that far is not justified: other pathways,
   including rates that rise as temperature falls in hydrocarbon liquids, may take over. This is the same caveat as
   the 94 K result (titan_95k.py): the rates there are assumed, not measured.
-- **Liquid water on Titan.** A 1 km impactor could melt crater ice for thousands of years (longer with ammonia). The
-  model has not been run on such a pool.
+- **Liquid water on Titan.** A 1 km impactor could melt crater ice for thousands of years (longer with ammonia). Run
+  on such pools 2026-10-11 (impact_melt.py): weak force wins in 33% of input space for a 1 km-impactor crater,
+  51% for Selk (Wakita et al. 2023 melt volumes) and 74% for Menrva; concentration decides most, and any inherited
+  excess above ~1e-16 overrides it.
 - **Effect on the project.** None on any number. The RNAAS sentence ("discussed abiotic homochirality on Titan; we
   consider liquid-water oceans only") is accurate.

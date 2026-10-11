@@ -1,0 +1,36 @@
+
+Small crater (1 km impactor): physics wins in 33% of plausible input space
+  each condition alone: finishes 78%, heals 100%, strong enough 33%
+  needs c >= 1.5e-04 M at g=1e-17, k2=1e-3, F=0.5 (V=4.24 km^3, 3162 yr)
+  inherited excess that overrides the weak force (c=1e-4 M): e0 >= 1e-15
+  concentration   low half    5%  high half   60%   (effect +55%)
+  bias g          low half   17%  high half   49%   (effect +32%)
+  rate k2         low half   25%  high half   41%   (effect +16%)
+  chem. factor F  low half   31%  high half   35%   (effect +3%)
+
+Selk melt pool: physics wins in 51% of plausible input space
+  each condition alone: finishes 79%, heals 98%, strong enough 54%
+  needs c >= 7.7e-06 M at g=1e-17, k2=1e-3, F=0.5 (V=276 km^3, 5196 yr)
+  inherited excess that overrides the weak force (c=1e-4 M): e0 >= 2e-16
+  concentration   low half   20%  high half   83%   (effect +62%)
+  bias g          low half   37%  high half   66%   (effect +29%)
+  rate k2         low half   42%  high half   61%   (effect +19%)
+  lifetime        low half   46%  high half   57%   (effect +11%)
+
+Menrva melt zone: physics wins in 74% of plausible input space
+  each condition alone: finishes 91%, heals 100%, strong enough 76%
+  needs c >= 2.6e-07 M at g=1e-17, k2=1e-3, F=0.5 (V=1e+04 km^3, 100000 yr)
+  inherited excess that overrides the weak force (c=1e-4 M): e0 >= 6e-17
+  concentration   low half   51%  high half   98%   (effect +47%)
+  bias g          low half   62%  high half   87%   (effect +25%)
+  rate k2         low half   65%  high half   83%   (effect +18%)
+  volume          low half   70%  high half   78%   (effect +8%)
+
+Lake 1 km^2 x 10 m (reference): physics wins in 11% of plausible input space
+  each condition alone: finishes 78%, heals 100%, strong enough 11%
+  needs c >= 8.3e-03 M at g=1e-17, k2=1e-3, F=0.5 (V=0.01 km^3, 3162 yr)
+  inherited excess that overrides the weak force (c=1e-4 M): e0 >= 2e-14
+  concentration   low half    0%  high half   21%   (effect +21%)
+  bias g          low half    1%  high half   20%   (effect +19%)
+  rate k2         low half    6%  high half   15%   (effect +9%)
+  chem. factor F  low half   10%  high half   12%   (effect +2%)

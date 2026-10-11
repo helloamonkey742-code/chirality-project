@@ -38,6 +38,20 @@ PREDICTIONS (written 2026-10-11, before the first run):
   P7. Concentration is the most decisive input for Selk (largest low-half/high-half gap).
   P8. The inherited excess that would override the weak force in Selk (c = 1e-4 M, k2 = 1e-3, 1e4 yr)
       is below 1e-12, i.e. far below what meteorites carry (0.185): any seeded excess wins.
+
+RESULTS (impact_melt.log, 2026-10-11):
+  P1 PASS  Selk wins in 51%.
+  P2 PASS  small crater 33%, below Selk.
+  P3 PASS  Menrva 74%.
+  P4 PASS  Menrva 74% > Selk 51% > small crater 33% > lake 11%.
+  P5 PASS  heals 100% / 98% / 100% / 100%.
+  P6 FAIL  Selk needs c >= 7.7e-6 M, just under the predicted 1e-5..1e-3 (bigger volume than guessed helps).
+  P7 PASS  concentration decides most for every pool (Selk: 20% low half vs 83% high half).
+  P8 PASS  override excess 2e-16 for Selk (1e-15 small crater, 6e-17 Menrva, 2e-14 lake).
+  Reading: a Selk-size pool is a coin flip that leans to the weak force (needs ~10 uM organics); the lake
+  reference needs ~8 mM, matching README Part 4 ("needs >~ mM"). The whole result hangs on two things
+  nobody has measured: the pool's organic concentration, and whether it inherits any excess at all
+  (anything above ~1e-16, e.g. from the impactor, overrides the weak force).
 """
 import numpy as np
 from ocean import delta_at, YR
