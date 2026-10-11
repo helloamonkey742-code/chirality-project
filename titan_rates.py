@@ -35,6 +35,20 @@ P5. titan_95k.py's assumed racemization half-life 2.5e6 yr equals a unimolecular
     The same tunnelling that helps cuts both ways: an alpha-C-H proton abstraction with a 2.8 kcal/mol barrier
     would racemize in ~1 us. So titan_95k.py's numbers assume bond forming <= 9.2 and racemization ~11.3 kcal/mol
     (effective, quantum-corrected): a gap of ~2 kcal/mol between two unmeasured barriers.
+
+RESULTS (titan_rates.log, 2026-10-11): all five held.
+ P1 held: 15.0 and 96.4 kT; ln(kq/kc) = 81.4 = 10^35.3 (paper: ~82, ~35; predicted 10^35.6).
+ P2 held: the 100 Myr bar 9.9e-10 /M/s is dG <= 9.16 kcal/mol (49 kT); the 4 Gyr bar 2.5e-11 is <= 9.85. Both sit
+    between the quantum 2.8 and classical 18.0 kcal/mol.
+ P3 held: 6.0e5 /s inside a complex (half-life 1.1 us); encounter cap 1.9e9 /M/s (ethane) to 1.2e10 (methane),
+    18.3-19.1 decades above the bar.
+ P4 held: classical k2 = 2.8e-30 /M/s, 20.6 decades short.
+ P5 held: the assumed 2.5e6 yr racemization half-life is an 11.33 kcal/mol barrier; gap to the bond-forming bar
+    2.17 kcal/mol.
+ So for a proton-transfer-limited step, the one published 94 K calculation clears the model's bar by ~18 decades
+ with tunnelling and misses it by ~21 without: tunnelling, not the cold, decides. It says nothing yet about
+ heavy-atom bond forming, the step a Frank network actually needs, and the same tunnelling would make any
+ proton-abstraction racemization fast. Both remain unmeasured; the hand-set 1e-8 /M/s is unchanged.
 """
 import numpy as np
 
@@ -88,8 +102,8 @@ def main():
     rac = barrier(np.log(2) / T_HALF_RAC)
     print(f"  half-life 2.5e6 yr  <=>  dG = {rac:.2f} kcal/mol; a 2.8 kcal/mol abstraction would take "
           f"{np.log(2) / k_in * 1e6:.2f} us")
-    print(f"  window: bond forming <= {bars['100 Myr']:.2f}, racemization >= {rac:.2f} kcal/mol "
-          f"(width {rac - bars['100 Myr']:.2f} kcal/mol)")
+    print(f"  window: bond forming <= {bars['100 Myr']:.2f}, assumed racemization {rac:.2f} kcal/mol "
+          f"(gap {rac - bars['100 Myr']:.2f} kcal/mol)")
     assert bars["100 Myr"] < rac
 
 

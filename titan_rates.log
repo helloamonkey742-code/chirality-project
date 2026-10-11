@@ -1,0 +1,20 @@
+T = 94.0 K, kT = 0.1868 kcal/mol, kT/h = 1.959e+12 /s
+
+P1. Longo & Remsing barriers in kT, and the TST enhancement
+  quantum 2.8 kcal/mol = 15.0 kT; classical 18.0 kcal/mol = 96.4 kT; ln(kq/kc) = 81.4, 10^35.3
+
+P2. The model's bar k2*c*tau >= 10 at c = 3.2 uM, as an effective barrier at 94 K
+  100 Myr : k2 >= 9.90e-10 /M/s  <=>  dG <= 9.16 kcal/mol (49.0 kT)
+  4 Gyr   : k2 >= 2.48e-11 /M/s  <=>  dG <= 9.85 kcal/mol (52.7 kT)
+
+P3. Quantum barrier: rate inside a complex, and the encounter cap in Titan liquids
+  in-complex step: 6.05e+05 /s (half-life 1.14 us)
+  encounter cap, ethane : k_d = 1.90e+09 /M/s, 18.3 decades above the 100 Myr bar
+  encounter cap, methane: k_d = 1.21e+10 /M/s, 19.1 decades above the 100 Myr bar
+
+P4. Classical barrier as a bimolecular TST step
+  k2 = 2.8e-30 /M/s, 20.6 decades short of the 100 Myr bar
+
+P5. Racemization: the barrier behind titan_95k.py's assumed half-life
+  half-life 2.5e6 yr  <=>  dG = 11.33 kcal/mol; a 2.8 kcal/mol abstraction would take 1.14 us
+  window: bond forming <= 9.16, assumed racemization 11.33 kcal/mol (gap 2.17 kcal/mol)
