@@ -75,6 +75,32 @@ PREDICTIONS (written 2026-10-12, before any result-producing run):
  (P15) Section 4, final: Ganymede > Europa > Enceladus.
  (P16) Section 4: seeds 1-3 reproduce every multiwall share (P_pved / P_chance / P_none, no lid and final) within
       0.5 points of seed 0.
+
+RESULTS (multiwall.log, 2026-10-12): 5 of 16 held. Run order 3, 1, 2, 4 (sequential, nice -n 10; 1 s, 82 s, 6 s,
+11 s). Two post-hoc tables, marked "not pre-registered" in the log: the section-2 domain-thickness diagnostic (d/w)
+and section 4 with cascade time x5.
+ (P1) held. Deepest hand fills 336/336, 0 unfinished; "largest volume" fails 161 (47.9 %), "top layer" 196 (58.3 %).
+ (P2) FAILED. Largest loss 0.083; > 0.01 in 119 runs: same-hand domains higher up are squeezed into the ice, and the
+      check counted the whole hand, not the bottom domain.
+ (P3) FAILED. Median 0.927, max 1.028 in range, but min 0.007 (74 runs < 0.5: opposite domains squeezed out early,
+      mostly alternating / random hands and increasing / random x). RMS log10: sum 0.910 vs max 0.678 (1.34x, not
+      > 2x). T_deep is an upper bound (<= 1.03x), not an estimate; the sum rule is always worse.
+ (P4) FAILED. Range 0.007-17.4; > 3 only for x increasing with depth (23 runs) and random x (8); otherwise <= 4.4.
+ (P5) FAILED. 94/108 (87.0 +- 3.2 %). All 14 failures have the r* domain <= 4.4 wall widths thick; >= 5: 63/63.
+ (P6) FAILED. Min 0.003 (the failures and squeezed domains), median 0.948, max 1.182.
+ (P7) FAILED narrowly. Max 5.054, min 0.006; median 1.196.
+ (P8) FAILED. T_conv > T_end in 75.0 % (< 80 %).
+ (P9) held. -1.83 %, same final hand.
+ (P10) held. EXACT; 0 mismatched draws in every world.
+ (P11) FAILED. Multiwall exceeds bound (iii) in 14 of 15 worlds (Earth +14.3, Ganymede +11.0); only Miranda stays
+      below (27.1 < 27.7; final 9.0 < 9.2). The bound charged the bulk's full sink time; with every wall past onset
+      (93-100 % of recursion draws, Miranda 56 %) nothing sinks.
+ (P12) FAILED. Gains >= 3 held (smallest +10.1, Mimas), but Earth 99.9 is outside 75-86 and the moons end above,
+      not below, their bound.
+ (P13) FAILED. x10 lowers worlds by up to 10.6 (Ganymede, Oberon); Earth 0.2.
+ (P14) FAILED. P_chance > 5 in 9 worlds (no lid), up to 14.9 (Umbriel): the deciding bottom remnant is thin, f <= d_w/H.
+ (P15) held. 44.1 > 30.1 > 0.0.
+ (P16) held. Max diff 0.36 / 0.38 / 0.35.
 """
 import os
 import re
