@@ -67,6 +67,28 @@ PREDICTIONS (written 2026-10-12, before any full run; points are percentage poin
       Earth, 1-4 points for Enceladus no-lid; so the unlimited column for Earth is within 1 point of P_pved.
  (P8) Ganymede stays the highest confirmed ocean at the final step: Ganymede > Europa > Enceladus = 0.
  (P9) Seeds 1-3 reproduce every final-step share (no-lid and final) within 0.5 points of seed 0.
+
+RESULTS (sweep2.log, 2026-10-12): 7 of 9 held, 2 failed. Regression passed (all-off step bit-for-bit equal to
+uncertainty.sweep; every logged share reproduced within 0.3 points, including assumed_rules' unlimited 28.6/31.2/74.7).
+ P1 FAILED (one part): Enceladus +2.3 and Earth 0.0 held, but Europa rose +1.8 (28.6 -> 30.4), above the +1.5 cap.
+ P2 held: eta moves every world by 0.0-0.8 points (largest Enceladus -0.8).
+ P3 held: step c multiplies every icy-moon share by 1.16-1.18 (7/6 = 1.167); Earth unchanged.
+ P4 held: Earth unchanged; 4-Gyr worlds lose 7-12 % relative (Umbriel 7.4 % .. Titan 11.6 %); Enceladus 2.9 %; Mimas 0 %.
+ P5 held: Enceladus -1.9, Europa -0.9, Earth 0.0 points.
+ P6 FAILED (two parts, narrowly): pinning is the largest step for every world; Earth 39.9, Europa 9.3 / 7.1, Ganymede
+    14.0, Callisto 13.4, Titania 13.7, Oberon 13.5, Ariel 11.7, Miranda 12.4 / 4.1, Mimas 1.7 all inside their ranges,
+    but Enceladus no-lid is 3.9 (< 4; seeds 1-3: 3.8-3.9) and Umbriel final 14.4 (> 14).
+ P7 held: P_chance (final) Europa 0.2, Earth 0.0, Enceladus no-lid 2.0 points; Earth unlimited = P_pved = 39.9.
+ P8 held: Ganymede 14.0 > Europa 7.1 > Enceladus 0.0.
+ P9 held: seeds 1-3 differ from seed 0 by at most 0.29 points.
+ Final step (no lid / final, %): Earth 39.9; Umbriel 14.4, Ganymede 14.0, Titania 13.7, Oberon 13.5, Callisto 13.4,
+ Ariel 11.7, Pluto 9.5, Titan 9.4, Triton 8.4, Europa 9.3 / 7.1, Dione 8.9 / 5.5, Miranda 12.4 / 4.1, Mimas 5.4 / 1.7,
+ Enceladus 3.9 / 0.0. Each of steps a-e moves a moon by at most 7 points and together they add 1-4; step f (depth
+ pinning) cuts every world by 11-35 points and decides the answer. Eq. 20 threshold x5 lifts the moons to 14-30 % no-lid; Asp k_rac
+ moves nothing by more than 0.7. Unlimited bias adds at most 2.9 points anywhere: where one hand forms, PVED almost
+ always picks it; the share is set by whether one hand forms. Scale rule: at g = 1e-17 a 1 km3 lake at 1 mM is 5.9x
+ short and 10 km3 suffices; at g_min (4.4e-18) 10 km3 is 3.1x short; at g_max = alanine (2.64e-16) a 1 km3 lake has
+ ~120x more than needed (cube side 204 m at 1 mM).
 """
 import sys
 

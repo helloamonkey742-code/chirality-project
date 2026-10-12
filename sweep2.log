@@ -1,0 +1,85 @@
+regression: all-off step matches ocean_worlds/strat_sweep/assumed_rules logs within 0.3 points; bit-for-bit vs uncertainty.sweep
+
+Ladder, NO LID, % (cumulative: 0 published, a PVED, b eta, c D_z floor, d racemization, e p/a, f depth pinning)
+world                   0      a      b      c      d      e      f
+Early Earth ocean    74.7   74.7   74.7   74.7   74.7   74.7   39.9
+Umbriel              38.7   42.2   41.6   48.5   44.9   42.3   14.4
+Ganymede             28.3   29.6   29.3   34.3   30.4   29.9   14.0
+Titania              36.4   39.5   38.9   45.4   41.6   39.5   13.7
+Oberon               36.5   39.5   38.9   45.5   41.7   39.6   13.5
+Callisto             28.5   29.8   29.5   34.5   30.6   30.0   13.4
+Ariel                37.0   40.2   39.7   46.2   42.7   40.2   11.7
+Pluto                30.2   32.3   31.8   37.2   33.5   32.3    9.5
+Titan                24.3   25.4   25.1   29.3   25.9   25.5    9.4
+Triton               27.7   29.5   29.1   34.0   30.4   29.5    8.4
+Europa               28.6   30.4   30.0   35.0   31.3   30.4    9.3
+Dione                33.6   36.6   36.0   42.1   38.7   36.5    8.9
+Miranda              26.9   29.7   29.3   34.3   32.8   30.1   12.4
+Mimas                14.7   16.3   16.0   18.7   18.7   16.9    5.4
+Enceladus            21.8   24.1   23.3   27.2   26.4   24.5    3.9
+
+Ladder, FINAL (salt lid), % (cumulative: 0 published, a PVED, b eta, c D_z floor, d racemization, e p/a, f depth pinning)
+world                   0      a      b      c      d      e      f
+Early Earth ocean    74.7   74.7   74.7   74.7   74.7   74.7   39.9
+Umbriel              38.7   42.2   41.6   48.5   44.9   42.3   14.4
+Ganymede             28.3   29.6   29.3   34.3   30.4   29.9   14.0
+Titania              36.4   39.5   38.9   45.4   41.6   39.5   13.7
+Oberon               36.5   39.5   38.9   45.5   41.7   39.6   13.5
+Callisto             28.5   29.8   29.5   34.5   30.6   30.0   13.4
+Ariel                37.0   40.2   39.7   46.2   42.7   40.2   11.7
+Pluto                30.2   32.3   31.8   37.2   33.5   32.3    9.5
+Titan                24.3   25.4   25.1   29.3   25.9   25.5    9.4
+Triton               27.7   29.5   29.1   34.0   30.4   29.5    8.4
+Europa               21.7   23.0   22.7   26.6   23.8   23.1    7.1
+Dione                21.0   22.9   22.5   26.3   24.2   22.8    5.5
+Miranda               8.9    9.8    9.7   11.3   10.8   10.0    4.1
+Mimas                 4.7    5.2    5.1    6.0    6.0    5.4    1.7
+Enceladus             0.0    0.0    0.0    0.0    0.0    0.0    0.0
+
+Final step split (g), %: P_pved / P_chance / P_none [unlimited = P_pved + P_chance]; step-0 unlimited for reference
+Early Earth ocean  no lid  39.9 /   0.0 /  60.1 [ 39.9]   final  39.9 /   0.0 /  60.1 [ 39.9]   step-0 unlimited (no lid)  74.7
+Umbriel            no lid  14.4 /   1.4 /  84.2 [ 15.8]   final  14.4 /   1.4 /  84.2 [ 15.8]   step-0 unlimited (no lid)  46.9
+Ganymede           no lid  14.0 /   0.3 /  85.7 [ 14.3]   final  14.0 /   0.3 /  85.7 [ 14.3]   step-0 unlimited (no lid)  29.9
+Titania            no lid  13.7 /   1.0 /  85.3 [ 14.7]   final  13.7 /   1.0 /  85.3 [ 14.7]   step-0 unlimited (no lid)  42.7
+Oberon             no lid  13.5 /   1.0 /  85.4 [ 14.6]   final  13.5 /   1.0 /  85.4 [ 14.6]   step-0 unlimited (no lid)  42.8
+Callisto           no lid  13.4 /   0.3 /  86.4 [ 13.6]   final  13.4 /   0.3 /  86.4 [ 13.6]   step-0 unlimited (no lid)  30.2
+Ariel              no lid  11.7 /   1.1 /  87.2 [ 12.8]   final  11.7 /   1.1 /  87.2 [ 12.8]   step-0 unlimited (no lid)  44.6
+Pluto              no lid   9.5 /   0.4 /  90.1 [  9.9]   final   9.5 /   0.4 /  90.1 [  9.9]   step-0 unlimited (no lid)  33.5
+Titan              no lid   9.4 /   0.2 /  90.4 [  9.6]   final   9.4 /   0.2 /  90.4 [  9.6]   step-0 unlimited (no lid)  25.6
+Triton             no lid   8.4 /   0.3 /  91.3 [  8.7]   final   8.4 /   0.3 /  91.3 [  8.7]   step-0 unlimited (no lid)  30.4
+Europa             no lid   9.3 /   0.3 /  90.4 [  9.6]   final   7.1 /   0.2 /  92.7 [  7.3]   step-0 unlimited (no lid)  31.3
+Dione              no lid   8.9 /   0.8 /  90.3 [  9.7]   final   5.5 /   0.5 /  93.9 [  6.1]   step-0 unlimited (no lid)  40.2
+Miranda            no lid  12.4 /   2.9 /  84.7 [ 15.3]   final   4.1 /   0.9 /  95.0 [  5.0]   step-0 unlimited (no lid)  35.5
+Mimas              no lid   5.4 /   1.4 /  93.2 [  6.8]   final   1.7 /   0.5 /  97.8 [  2.2]   step-0 unlimited (no lid)  19.0
+Enceladus          no lid   3.9 /   2.0 /  94.1 [  5.9]   final   0.0 /   0.0 / 100.0 [  0.0]   step-0 unlimited (no lid)  28.6
+
+Sensitivity at step f, no lid / final, %: Eq. 20 threshold x5 | Asp k_rac
+Early Earth ocean   40.0 /  40.0 |  39.9 /  39.9
+Umbriel             17.9 /  17.9 |  13.9 /  13.9
+Ganymede            16.2 /  16.2 |  13.3 /  13.3
+Titania             17.3 /  17.3 |  13.1 /  13.1
+Oberon              17.3 /  17.3 |  13.0 /  13.0
+Callisto            15.9 /  15.9 |  12.7 /  12.7
+Ariel               17.0 /  17.0 |  11.2 /  11.2
+Pluto               16.9 /  16.9 |   9.0 /   9.0
+Titan               14.1 /  14.1 |   8.9 /   8.9
+Triton              17.7 /  17.7 |   8.0 /   8.0
+Europa              16.3 /  12.3 |   8.9 /   6.7
+Dione               21.7 /  13.5 |   8.5 /   5.3
+Miranda             30.1 /  10.0 |  12.1 /   4.0
+Mimas               16.0 /   5.1 |   5.4 /   1.7
+Enceladus           16.9 /   0.0 |   3.8 /   0.0
+
+chain A (uncertainty.py order), step 0: win / unlimited %: Enceladus 21.8 / 28.6, Europa 28.6 / 31.2, Early Earth ocean 74.7 / 74.7
+
+Scale rule (Eq. 13, k tau = 10): N = 2/(sqrt(pi) g^2 sqrt(10))
+         g   N needed | cube side at 1 uM / 1 mM / 0.1 M (m)  | shortfall N/N_avail: 1 m3 @1 M, 1 km3 @1 mM, 10 km3 @1 mM
+1e-17 1.00e-17   3.57e+33 | 1.81e+04 / 1.81e+03 /      390  | 5.93e+06 /     5.93 /    0.593
+g_min 4.40e-18   1.84e+34 | 3.13e+04 / 3.13e+03 /      674  | 3.06e+07 /     30.6 /     3.06
+g_max 2.64e-16   5.12e+30 | 2.04e+03 /      204 /       44  |  8.5e+03 /   0.0085 /  0.00085
+  Ala 2.64e-16   5.12e+30 | 2.04e+03 /      204 /       44  |  8.5e+03 /   0.0085 /  0.00085
+
+Seed stability, step f (no lid / final), max |seed k - seed 0| over worlds, points:
+  seed 1: max diff 0.29   Enceladus 3.8/0.0, Europa 9.3/7.1, Ganymede 14.1/14.1, Titan 9.5/9.5, Callisto 13.5/13.5, Triton 8.5/8.5, Pluto 9.5/9.5, Titania 13.7/13.7, Oberon 13.5/13.5, Umbriel 14.3/14.3, Ariel 11.7/11.7, Dione 8.8/5.4, Miranda 12.4/4.1, Mimas 5.3/1.7, Early Earth ocean 40.2/40.2
+  seed 2: max diff 0.18   Enceladus 3.9/0.0, Europa 9.3/7.0, Ganymede 14.0/14.0, Titan 9.4/9.4, Callisto 13.3/13.3, Triton 8.4/8.4, Pluto 9.5/9.5, Titania 13.5/13.5, Oberon 13.4/13.4, Umbriel 14.3/14.3, Ariel 11.7/11.7, Dione 8.8/5.5, Miranda 12.3/4.0, Mimas 5.4/1.8, Early Earth ocean 39.8/39.8
+  seed 3: max diff 0.16   Enceladus 3.9/0.0, Europa 9.4/7.2, Ganymede 14.2/14.2, Titan 9.4/9.4, Callisto 13.3/13.3, Triton 8.4/8.4, Pluto 9.4/9.4, Titania 13.7/13.7, Oberon 13.5/13.5, Umbriel 14.3/14.3, Ariel 11.7/11.7, Dione 8.8/5.4, Miranda 12.3/4.1, Mimas 5.3/1.7, Early Earth ocean 40.0/40.0
