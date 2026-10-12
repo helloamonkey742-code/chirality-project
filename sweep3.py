@@ -52,6 +52,31 @@ unless "final"):
  (P9) Ganymede stays the highest confirmed ocean at the final (lid) share: Ganymede > Europa > Enceladus.
  (P10) P_chance rises by <= 1.5 points over sweep2 step f's P_chance in every world (no lid and final).
  (P11) Seeds 1-3 reproduce every sweep3 share (no lid and final) within 0.5 points of seed 0.
+
+RESULTS (sweep3.log, 2026-10-12): 8 of 11 held, 3 failed. Runtime 9 s for seeds 0-3. Exact differences below were
+computed from run(0) after the log (same numbers, more decimals).
+ P1 held: recount OFF = sweep2.outcome step f bit for bit; pinned mask, g, D_z and Delta reproduce sweep2's step e/f
+    arrays exactly; sweep2.log steps e and f reproduced within 0.05 for all 15 worlds.
+ P2 held: Early Earth 67.0 % (step f 39.9), P_chance 0.0.
+ P3 FAILED (one world): gains +1.3 (Miranda) to +6.2 (Ganymede, +6.21 > 6); Callisto +5.97, Umbriel +5.87; Enceladus
+    +2.8 held; final gains scale with the lid-free share (Europa +3.5, Dione +2.4, Miranda +0.4, Mimas +0.6); Enceladus
+    final 0.0.
+ P4 held: recursion is 90.0 % (Umbriel) to 96.5 % (Miranda) of reversed draws on the moons, 54.9 % on Earth.
+ P5 held: every sweep3 share stays below its step e share (Earth 67.0 < 74.7; Ganymede 20.2 < 29.9; Europa 13.9 < 30.4).
+ P6 held: t_rise x10 lowers worlds by 0.12 (Earth) to 1.50 (Ganymede, -1.498).
+ P7 FAILED: racemization on the deep layer lowers 8 moons by 0.32-0.57 points (Ganymede -0.57, Callisto -0.51);
+    the rest by <= 0.29; Earth 0.0.
+ P8 FAILED (one part): the recursion-counted bound is >= main everywhere and Earth 85.6 >= 70 held, but 11 of 14 moons
+    exceed their step e (by 0.03 Dione to 3.2 Ganymede): the reversed path does not need the top layer's full-depth
+    sink time, and t_rise is short. Only Enceladus, Miranda and Mimas stay below step e.
+ P9 held: Ganymede 20.2 > Europa 10.5 > Enceladus 0.0 (final).
+ P10 held: P_chance rises by 0.003 (Earth) to 1.40 (Umbriel).
+ P11 held: seeds 1-3 within 0.23 points of seed 0.
+ Headline (no lid / final, %): Early Earth 67.0; Ganymede 20.2, Umbriel 20.3, Titania 19.5, Callisto 19.3, Oberon
+ 19.3, Ariel 16.9, Pluto 14.2, Titan 14.1, Triton 12.4, Europa 13.9 / 10.5, Dione 12.7 / 7.9, Miranda 13.7 / 4.5,
+ Mimas 7.2 / 2.3, Enceladus 6.6 / 0.0. Moons gain 1-6 points, Earth 27. On the moons 90-97 % of reversed draws have
+ a second wall past onset too (counted P_none, as specified); counting them instead gives 15-43 % (moons, no lid) and
+ 86 % (Earth), so that rule, not the threshold, now decides the moon numbers.
 """
 import sys
 
