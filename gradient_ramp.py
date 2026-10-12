@@ -41,6 +41,34 @@ PREDICTIONS (written 2026-10-12, before any result-producing run):
  P7. Convergence: halving dt and halving dx at L = 16 xi, u = 1 change P by less than 2 combined SE.
 
 Usage: python gradient_ramp.py [L4] [L16] [L64a] [L64b] [conv]   (default: all; check always runs last)
+
+RESULTS (gradient_ramp.log, 2026-10-12):
+ Five sections run in parallel, each exit 0; check() passed (P = 0.8433 +- 0.0057 vs 0.8413, +0.33 SE). Wall times
+ 115-1177 s.
+ P1 HELD. +0.33 SE.
+ P2 HELD. 4 xi: u = 30 P = 0.985 +- 0.005 vs v = inf 0.975 +- 0.006 (1.28 SE). 16 xi: both 1.000 +- 0.001
+    (saturated, uninformative).
+ P3 FAILED. Single hand in 1.000 of runs at every L for u <= 0.3. But inheritance is 0.548 / 0.558 (u = 0.03) and
+    0.802 / 0.787 (u = 0.1) at 4 / 16 xi; only u = 0.3 passes (0.993, 0.987, 0.983). The reference moment
+    lam(0) = 0.4 is too early for slow fronts. By this file's own Airy argument the ground state at the wall is
+    unstable only once lam(0) > 1.02 D/w^2 (~0.47 at u = 0.1, > 1 at u = 0.03), so the sign of cell 0 at
+    lam(0) = 0.4 is still mostly noise.
+ P4 HELD. L-independence: u = 0.03: 0.837 +- 0.015 vs 0.785 +- 0.017 (2.29 SE); u = 0.1: 0.833 vs 0.838 (0.24 SE);
+    u = 0.3: 0.897 / 0.887 / 0.907 at 4 / 16 / 64 xi (max 1.06 SE). Below Phi(Delta_total) = 1.000 at 16 xi by
+    12.6, 10.8 and 8.7 SE.
+ P5 HELD. l_eff / l_A = 1.37, 0.90, 1.06 (4 xi), 0.90, 0.94, 0.97 (16 xi), 1.17 (64 xi, u = 0.3); all in [0.67, 1.5].
+    The Airy length also matches at u = 1 (27.0, 30.5, 24.9 vs 28.3). v gamma^-1/2 underestimates l_eff by 9-30x at
+    u <= 0.1.
+ P6 FAILED. At 64 xi (Delta_total = 8) the single-hand fraction never falls below 0.958, even at v = inf: every
+    patch picks the favoured hand, so this diagnostic cannot show the crossover. Post hoc (not pre-registered):
+    the single-hand fraction drops from 1.000 at u = 1 to 0.965 at u = 3 (64 xi, 3.8 SE) and to 0.958 (16 xi, 5.1 SE),
+    and l_eff leaves l_A between u = 1 (30.5 +- 3.2 vs 28.3) and u = 3 (92.9 +- 16 vs 40.9) at 16 xi. So the
+    crossover u* lies in (1, 3], just below the pulled-front estimate of 3.5.
+ P7 HELD. At L = 16 xi, u = 1: dt/2 gives 0.945 +- 0.009 (+0.37 SE) and dx/2 gives 0.915 +- 0.011 (-1.68 SE)
+    against 0.940 +- 0.010.
+ Net: for a transition front slower than u ~ 1-3 (u = front advance per selection window in coherence lengths),
+ the whole-volume rule fails. N is the Airy front-set length l_A = 2.24 (D v / gamma)^(1/3), independent of L.
+ The first-crossing length v gamma^-1/2 is far too small.
 """
 import sys
 import time

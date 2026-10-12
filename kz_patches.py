@@ -45,6 +45,34 @@ PREDICTIONS (written 2026-10-12, before any result-producing run):
      each change P by less than 2 combined SE.
 
 Usage: python kz_patches.py [1d] [2d] [imb2] [imb4] [check]   (default: all; check always runs last)
+
+RESULTS (kz_patches.log, 2026-10-12):
+ Four sections run in parallel, each exit 0; check() passed in every section (P = 0.8478 +- 0.0057 vs 0.8413,
+ +1.13 SE). Wall times 1407 s (1d), 1245 s (2d), 964 s (imb2), 961 s (imb4); the 1d and 2d sections ran over the
+ 20-minute budget under 9-way parallel load.
+ P1 HELD. Uniform limit +1.13 SE.
+ P2 HELD. c(128 xi) = 0.876 +- 0.029, c(512 xi) = 0.882 +- 0.029 (end of sweep); diff 0.15 combined SE.
+ P3 FAILED (second clause). Plateau c = 0.879 +- 0.021 (128 and 512 xi pooled; theory 0.914, -1.7 SE) lies in
+    0.91 +- 0.05, but at 512 xi alone 0.80 is excluded by only 2.90 SE, short of the 3 SE required. (Pooling the
+    two plateau points gives 3.95 SE; that pooling was not pre-registered.)
+ P4 FAILED. c(0.5 xi) = 0.986 +- 0.033 but c(2 xi) = 0.936 +- 0.031 < 0.97. c(L) is not monotone either:
+    c(8 xi) = 1.015 +- 0.034, c(32 xi) = 0.941 +- 0.031.
+ P5 HELD. early == end majority in 1.0000, 1.0000, 0.9988, 0.9921, 0.9900, 0.9908 of runs (0.5 .. 512 xi);
+    the 128 xi value sits exactly on the 0.99 threshold.
+ P6 FAILED. c_early(n = 64) = 1.031 +- 0.053, outside 0.96 +- 0.05; it is consistent with 0.958 at 1.4 SE.
+ P7 FAILED. c_final = 0.981 +- 0.050 < c_early = 1.031, but c_final is not in [0.6, 0.9]. Coarsening during the
+    hold changed nothing: P_end = 0.843 / 0.973 vs P_final = 0.844 / 0.973 (Delta = 1 / 2), from the same runs,
+    while the single-hand fraction rose 0.15 -> 0.81.
+ P8 FAILED (collapse clause). Monotone in x, P(x = 0) = 0.483 +- 0.029 (w = 2) and 0.533 +- 0.029 (w = 4), P(3) = 1.000,
+    kappa = 1.45 +- 0.07 (w = 2) and 2.12 +- 0.12 (w = 4), both in [0.7, 3]. But the curves do not collapse in units of
+    1/sqrt(M_eff): at x = 0.5, P = 0.790 +- 0.024 vs 0.915 +- 0.016 (4.3 combined SE). P is the same at t = 150, 300 and
+    600, so the whole loss happens in the first relaxation of the thresholded patchwork, not in late coarsening.
+ P9 AMBIGUOUS. kappa (w) was not specified. c_early * kappa/sqrt(1 + kappa^2) = 0.849 (w = 2, off by 0.13: fails)
+    or 0.933 (w = 4, off by 0.05: holds) against c_final = 0.981. The mechanism behind P9 (coarsening reduces c) is
+    contradicted by P7: c_end = 0.979 and c_final = 0.981.
+ P10 HELD. 1D dt/2 -1.03 SE, 1D dx/2 +0.23 SE, 2D dt/2 -1.70 SE, 2D dx/2 +1.29 SE (all < 2).
+ Net: the whole-volume Delta survives patching with a factor c on Delta. In 1D, c = 0.88 +- 0.02, flat from 10 to 40
+ patches. In 2D, c = 0.98 +- 0.05 after coarsening. The box patch-sum value 0.80 is a lower bound, not the answer.
 """
 import sys
 import time
