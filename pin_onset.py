@@ -47,6 +47,32 @@ PREDICTIONS (written 2026-10-12, before any result-producing run):
  (P8) sweep2 at eq20 = kappa (and kappa +- SE): every world's step-f share, no lid and final, is within 1.0 point of
       sweep2.log step f (Earth 39.9, Europa 9.3 / 7.1, Enceladus 3.9 / 0.0, Ganymede 14.0); the x5 sensitivity is
       not supported. Earth: 100.0 % of layered draws pinned.
+
+RESULTS (pin_onset.log, 2026-10-12): 8 of 8 held (P4 only after a harness fix, P5 only in the 8 of 12 cells that
+could be measured). Run 1 crashed in section 3 and was rerun with two harness fixes, predictions untouched:
+(i) the speed window now stops when the wall comes within 3 local widths of the floor or ice (run 1: at R = 2 the
+wall reached the floor inside the window); (ii) fate t_max now uses the smallest D in the shell (run 1 used D_top, so
+the x = 20 "D falls with depth" runs were cut at t = 421 and logged "stalled 6/6"). Sections 1-2 were otherwise
+identical in both runs.
+ P1 held: kappa = 0.9999 +- 0.0001 (SE, n = 8; range 0.9995-1.0001). The sharp criterion is exact for a smooth profile;
+    two_zone's 2-5x belongs to its sharp joint (narrower than the wall), not to Eq. 20.
+ P2 held: pooled fit s = 0.9617 - 0.9618 x_w (slope and intercept 3.8 % below 1; the root is unaffected).
+ P3 held: x <= 0.9 over 6/6 at every point; x >= 1.1 reversed 6/6 at every point; 0 stalled runs anywhere. Above
+    onset the wall does not stall; it rises to the ice and the deep hand fills the shell.
+ P4 held after fix (ii): D falling with depth, x = 5 and 20: over 6/6 (run 1: x = 20 cut short, see above).
+ P5 held where measurable: kappa 1.0043 and 1.0124 at R = 2, 0.9998-1.0020 for R = 4, 16, 64 (D_top 6.25e-4, 2.5e-3).
+    D_top = 1e-2 was NOT measurable at any R: the wall (width >= 0.14, growing with depth) came within 3 widths of a
+    boundary inside the window (0-1 valid configurations of 4).
+ P6 held: (kappa - 1)/(Eq. 18 prediction - 1) = 0.999-1.002 for h = +-3e-4, +-1e-3. Real bias, computed after the run
+    (not in the log): shift = (3/sqrt 2) g r~/2 with r~ = R sqrt(k/D_z) in reaction units; at g = 2.64e-15 (g_max x
+    eta_max) the largest is 2.3e-6 (Ganymede, k = 1e-4/s, D_z = 1e-9), Earth 3.1e-7: < 1e-3.
+ P7 held: dz/2 and dt/2 move kappa by +0.0000.
+ P8 held: at kappa, kappa +- SE and the section-3 band (0.9998-1.0124) every world is within 0.2 points of sweep2.log
+    step f (largest: Miranda 12.6 at 1.0124); Earth 100.0 % of layered draws pinned (median x = 1370). The x5 case is
+    not supported. Layered draws pinned at kappa: moons 62-97 % (Miranda 61.9, Enceladus 84.7, Europa 92.7, Ganymede 96.6).
+ Caveat this run adds (not predicted as a share change): sweep2 counts a pinned draw as "no single hand" (P_none). In a
+ smooth monotone profile the wall does not stay; it reverses and the deep hand fills the ocean. Whether that hand is
+ PVED-selected was not modelled here.
 """
 import os
 import sys
@@ -105,8 +131,12 @@ def speed(x, R=R0, d0=0.5, Dt=D_TOP, h=0.0, dz=DZ, dt=DT, seed=0):
     for k in range(n1 + n2):
         a = lu.solve(a + dt * (a - a ** 3 + h))
         if k >= n1 and (k - n1) % every == 0:
-            ts.append((k + 1) * dt); rw.append(wall(a, rc))
-    assert None not in rw, f"hand vanished during speed window (x={x}, R={R}, Dt={Dt})"
+            w = wall(a, rc)   # stop before the floor or ice (3 local wall widths) bends the wall's path (fix after run 1)
+            if w is None or min(w - rc[0], rc[-1] - w) < 3 * np.sqrt(2 * D(w)):
+                break
+            ts.append((k + 1) * dt); rw.append(w)
+    if len(rw) < 20:
+        return None
     v = -np.polyfit(ts, rw, 1)[0]
     rm = float(np.mean(rw))
     return G * rm / 2, v / (D(rm) * 2 / rm), rm, D(rm)
@@ -118,7 +148,9 @@ def root(xw, s):
 
 
 def kappa(R=R0, Dt=D_TOP, h=0.0, d0=0.5, seed=0, **kw):
-    pts = [speed(x, R, d0, Dt, h, seed=seed, **kw) for x in XS_K]
+    pts = [p for p in (speed(x, R, d0, Dt, h, seed=seed, **kw) for x in XS_K) if p is not None]
+    if len(pts) < 3:
+        return (np.nan,) * 6
     xw, s, rm, Dw = map(np.array, zip(*pts))
     k, b1, b0 = root(xw, s)
     k_th = root(xw, 1 - xw + C18 * h * rm / (2 * np.sqrt(Dw)))[0]   # sharp theory + Eq. 18, same points
@@ -133,7 +165,8 @@ def configs(n, seed):
 def fate(x, sign=+1, R=R0, d0=0.5, Dt=D_TOP, seed=0):
     rc, r0, G, D, lu = setup(x, R, d0, Dt, DZ, DT, sign)
     a = start(rc, r0, D, seed)
-    t_max = 200 + 1.5 / (Dt * 2 / r0 * abs(1 - sign * x))
+    D_min = min(D(rc[0]), D(rc[-1]))   # run 1 used D_top here, too short when D falls with depth (fix after run 1)
+    t_max = 200 + 1.5 / (D_min * 2 / r0 * abs(1 - sign * x))
     t, k = 0.0, 0
     while t < t_max:
         a = lu.solve(a + DT * (a - a ** 3))
@@ -189,9 +222,13 @@ def section3(n=4):
         for Dt in Ds:
             t0 = time.time()
             ks = [kappa(R=R, Dt=Dt, d0=d, seed=s)[0] for d, s in configs(2 if SMOKE else n, 11)]
+            ks = [q for q in ks if np.isfinite(q)]
+            if len(ks) < 2:
+                print(f"  R={R:3g}  D_top={Dt:.2e}: NOT MEASURABLE (wall within 3 widths of floor/ice; {len(ks)} valid)", flush=True)
+                continue
             cells[(R, Dt)] = (np.mean(ks), np.std(ks, ddof=1) / np.sqrt(len(ks)))
             print(f"  R={R:3g} (r/H~{R - 0.5:.1f})  D_top={Dt:.2e} (width {np.sqrt(2 * Dt):.3f}): kappa {cells[(R, Dt)][0]:.4f} "
-                  f"+- {cells[(R, Dt)][1]:.4f}  [{time.time() - t0:.0f}s]", flush=True)
+                  f"+- {cells[(R, Dt)][1]:.4f} (n={len(ks)})  [{time.time() - t0:.0f}s]", flush=True)
     print(f"\n(3b) bias h at R={R0}, D_top={D_TOP}: measured kappa vs sharp theory + Eq. 18 shift")
     bias = {}
     for h in ((1e-3,) if SMOKE else (-1e-3, -3e-4, 3e-4, 1e-3)):

@@ -1,0 +1,91 @@
+(1) fate scan, R=16.0, H=1.0, D_top=0.0025, dz=0.002, dt=0.1; 6 runs per point, d0 ~ U(0.3,0.7)
+  x=  0.1 D grows with depth: over 6/6  reversed 0/6  stalled 0/6  P(over) 1.00 +- 0.00  mean end time     1193  [2s]
+  x=  0.2 D grows with depth: over 6/6  reversed 0/6  stalled 0/6  P(over) 1.00 +- 0.00  mean end time      824  [1s]
+  x=  0.3 D grows with depth: over 6/6  reversed 0/6  stalled 0/6  P(over) 1.00 +- 0.00  mean end time     1332  [1s]
+  x=  0.5 D grows with depth: over 6/6  reversed 0/6  stalled 0/6  P(over) 1.00 +- 0.00  mean end time     2201  [2s]
+  x=  0.7 D grows with depth: over 6/6  reversed 0/6  stalled 0/6  P(over) 1.00 +- 0.00  mean end time     2838  [3s]
+  x=  0.8 D grows with depth: over 6/6  reversed 0/6  stalled 0/6  P(over) 1.00 +- 0.00  mean end time     4337  [4s]
+  x=  0.9 D grows with depth: over 6/6  reversed 0/6  stalled 0/6  P(over) 1.00 +- 0.00  mean end time     8774  [7s]
+  x=  1.1 D grows with depth: over 0/6  reversed 6/6  stalled 0/6  P(over) 0.00 +- 0.00  mean end time     7738  [6s]
+  x=  1.2 D grows with depth: over 0/6  reversed 6/6  stalled 0/6  P(over) 0.00 +- 0.00  mean end time     3975  [3s]
+  x=  1.3 D grows with depth: over 0/6  reversed 6/6  stalled 0/6  P(over) 0.00 +- 0.00  mean end time     2858  [2s]
+  x=  1.5 D grows with depth: over 0/6  reversed 6/6  stalled 0/6  P(over) 0.00 +- 0.00  mean end time     1966  [2s]
+  x=    2 D grows with depth: over 0/6  reversed 6/6  stalled 0/6  P(over) 0.00 +- 0.00  mean end time      881  [1s]
+  x=    3 D grows with depth: over 0/6  reversed 6/6  stalled 0/6  P(over) 0.00 +- 0.00  mean end time      433  [0s]
+  x=    5 D grows with depth: over 0/6  reversed 6/6  stalled 0/6  P(over) 0.00 +- 0.00  mean end time      189  [0s]
+  x=   10 D grows with depth: over 0/6  reversed 6/6  stalled 0/6  P(over) 0.00 +- 0.00  mean end time       77  [0s]
+  x=   20 D grows with depth: over 0/6  reversed 6/6  stalled 0/6  P(over) 0.00 +- 0.00  mean end time       21  [0s]
+  x=    5 D falls with depth: over 6/6  reversed 0/6  stalled 0/6  P(over) 1.00 +- 0.00  mean end time      572  [0s]
+  x=   20 D falls with depth: over 6/6  reversed 0/6  stalled 0/6  P(over) 1.00 +- 0.00  mean end time     4501  [4s]
+
+(2) kappa from wall speed, R=16.0, D_top=0.0025, h=0; x = (0.6, 0.8, 1.0, 1.2, 1.4); 8 configurations d0 ~ U(0.3,0.7)
+  d0=0.550: kappa 1.0000 (sharp theory 1.0000)  s at x_w: 0.598:+0.386 0.799:+0.193 1.000:-0.000 1.202:-0.194 1.404:-0.388
+  d0=0.610: kappa 1.0000 (sharp theory 1.0000)  s at x_w: 0.598:+0.386 0.799:+0.193 1.000:-0.000 1.202:-0.194 1.404:-0.388
+  d0=0.390: kappa 1.0000 (sharp theory 1.0000)  s at x_w: 0.598:+0.386 0.799:+0.193 1.000:-0.000 1.202:-0.194 1.404:-0.388
+  d0=0.649: kappa 1.0001 (sharp theory 1.0000)  s at x_w: 0.598:+0.386 0.799:+0.193 1.000:+0.000 1.202:-0.194 1.404:-0.388
+  d0=0.302: kappa 0.9995 (sharp theory 1.0000)  s at x_w: 0.598:+0.386 0.799:+0.193 1.000:-0.000 1.202:-0.194 1.404:-0.390
+  d0=0.619: kappa 1.0000 (sharp theory 1.0000)  s at x_w: 0.598:+0.386 0.799:+0.193 1.000:-0.000 1.202:-0.194 1.404:-0.388
+  d0=0.487: kappa 1.0000 (sharp theory 1.0000)  s at x_w: 0.598:+0.386 0.799:+0.193 1.000:-0.000 1.202:-0.194 1.404:-0.388
+  d0=0.411: kappa 1.0000 (sharp theory 1.0000)  s at x_w: 0.598:+0.386 0.799:+0.193 1.000:-0.000 1.202:-0.194 1.404:-0.388
+  KAPPA = 0.9999 +- 0.0001 (SE, n=8);  pooled fit s = 0.9617 -0.9618 x_w (theory 1 - x_w)
+  convergence (d0=0.5): dz=0.002, dt=0.1: 1.0000;  dz/2, dt/2: 1.0000;  shift +0.0000
+
+(3a) radius and wall width: kappa mean +- SE over 4 configurations (h=0)
+  R=  2 (r/H~1.5)  D_top=6.25e-04 (width 0.035): kappa 1.0043 +- 0.0027 (n=4)  [0s]
+  R=  2 (r/H~1.5)  D_top=2.50e-03 (width 0.071): kappa 1.0124 +- 0.0070 (n=3)  [0s]
+  R=  2  D_top=1.00e-02: NOT MEASURABLE (wall within 3 widths of floor/ice; 0 valid)
+  R=  4 (r/H~3.5)  D_top=6.25e-04 (width 0.035): kappa 1.0001 +- 0.0000 (n=4)  [1s]
+  R=  4 (r/H~3.5)  D_top=2.50e-03 (width 0.071): kappa 1.0020 +- 0.0014 (n=4)  [0s]
+  R=  4  D_top=1.00e-02: NOT MEASURABLE (wall within 3 widths of floor/ice; 0 valid)
+  R= 16 (r/H~15.5)  D_top=6.25e-04 (width 0.035): kappa 0.9998 +- 0.0000 (n=4)  [8s]
+  R= 16 (r/H~15.5)  D_top=2.50e-03 (width 0.071): kappa 1.0000 +- 0.0001 (n=4)  [2s]
+  R= 16  D_top=1.00e-02: NOT MEASURABLE (wall within 3 widths of floor/ice; 1 valid)
+  R= 64 (r/H~63.5)  D_top=6.25e-04 (width 0.035): kappa 0.9998 +- 0.0000 (n=4)  [33s]
+  R= 64 (r/H~63.5)  D_top=2.50e-03 (width 0.071): kappa 0.9998 +- 0.0003 (n=4)  [8s]
+  R= 64  D_top=1.00e-02: NOT MEASURABLE (wall within 3 widths of floor/ice; 1 valid)
+
+(3b) bias h at R=16.0, D_top=0.0025: measured kappa vs sharp theory + Eq. 18 shift
+  h=-1e-03: kappa 0.6899 +- 0.0031; predicted 0.6899; (kappa-1)/(pred-1) = 1.000
+  h=-3e-04: kappa 0.9085 +- 0.0011; predicted 0.9084; (kappa-1)/(pred-1) = 0.999
+  h=+3e-04: kappa 1.0905 +- 0.0011; predicted 1.0904; (kappa-1)/(pred-1) = 1.002
+  h=+1e-03: kappa 1.2962 +- 0.0043; predicted 1.2961; (kappa-1)/(pred-1) = 1.000
+
+(4) sweep2 step f with eq20 = kappa (sweep2.py imported, not edited); N=200000, seed 0
+  multipliers: kappa-SE 0.9999, kappa 0.9999, kappa+SE 1.0000, band lo 0.9998, band hi 1.0124, x1 (log) 1.0000, x5 (log) 5.0000
+  regression: eq20 = 1 and 5 reproduce sweep2.log step f (5 worlds, within rounding)
+
+  step-f share, P_pved %, no lid / final | layered % of draws, % of layered pinned at kappa, median x over layered
+  world                     kappa-SE           kappa        kappa+SE         band lo         band hi        x1 (log)        x5 (log)   layered  pinned@k  median x
+  Early Earth ocean    39.9 /  39.9    39.9 /  39.9    39.9 /  39.9    39.9 /  39.9    39.9 /  39.9    39.9 /  39.9    40.0 /  40.0     60.1    100.0   1.37e+03
+  Umbriel              14.4 /  14.4    14.4 /  14.4    14.4 /  14.4    14.4 /  14.4    14.4 /  14.4    14.4 /  14.4    17.9 /  17.9     81.8     97.0       16.7
+  Ganymede             14.0 /  14.0    14.0 /  14.0    14.0 /  14.0    14.0 /  14.0    14.0 /  14.0    14.0 /  14.0    16.2 /  16.2     83.1     96.6         15
+  Titania              13.7 /  13.7    13.7 /  13.7    13.7 /  13.7    13.7 /  13.7    13.7 /  13.7    13.7 /  13.7    17.3 /  17.3     83.0     96.7       14.9
+  Oberon               13.5 /  13.5    13.5 /  13.5    13.5 /  13.5    13.5 /  13.5    13.5 /  13.5    13.5 /  13.5    17.3 /  17.3     83.3     96.6       14.5
+  Callisto             13.4 /  13.4    13.4 /  13.4    13.4 /  13.4    13.4 /  13.4    13.4 /  13.4    13.4 /  13.4    15.9 /  15.9     83.9     96.3       13.7
+  Ariel                11.7 /  11.7    11.7 /  11.7    11.7 /  11.7    11.7 /  11.7    11.7 /  11.7    11.7 /  11.7    17.0 /  17.0     86.1     95.5         11
+  Pluto                 9.5 /   9.5     9.5 /   9.5     9.5 /   9.5     9.5 /   9.5     9.5 /   9.5     9.5 /   9.5    16.9 /  16.9     90.2     92.5       6.72
+  Titan                 9.4 /   9.4     9.4 /   9.4     9.4 /   9.4     9.4 /   9.4     9.4 /   9.4     9.4 /   9.4    14.1 /  14.1     89.7     93.1       7.31
+  Triton                8.4 /   8.4     8.4 /   8.4     8.4 /   8.4     8.4 /   8.4     8.4 /   8.4     8.4 /   8.4    17.7 /  17.7     92.4     90.1       5.11
+  Europa                9.3 /   7.1     9.3 /   7.1     9.3 /   7.1     9.3 /   7.1     9.3 /   7.1     9.3 /   7.1    16.3 /  12.3     90.3     92.7       6.75
+  Dione                 8.9 /   5.5     8.9 /   5.5     8.9 /   5.5     8.9 /   5.5     8.9 /   5.6     8.9 /   5.5    21.7 /  13.5     92.6     89.7       4.89
+  Miranda              12.4 /   4.1    12.4 /   4.1    12.4 /   4.1    12.4 /   4.1    12.6 /   4.1    12.4 /   4.1    30.1 /  10.0     98.8     61.9       1.32
+  Mimas                 5.4 /   1.7     5.4 /   1.7     5.4 /   1.7     5.4 /   1.7     5.5 /   1.7     5.4 /   1.7    16.0 /   5.1     96.5     79.8       2.48
+  Enceladus             3.9 /   0.0     3.9 /   0.0     3.9 /   0.0     3.9 /   0.0     3.9 /   0.0     3.9 /   0.0    16.9 /   0.0     95.0     84.7       3.29
+
+  three-way split at kappa, %: P_pved / P_chance / P_none (no lid) | (final)
+  Early Earth ocean   39.9 /   0.0 /  60.1 |  39.9 /   0.0 /  60.1
+  Umbriel             14.4 /   1.4 /  84.2 |  14.4 /   1.4 /  84.2
+  Ganymede            14.0 /   0.3 /  85.7 |  14.0 /   0.3 /  85.7
+  Titania             13.7 /   1.0 /  85.3 |  13.7 /   1.0 /  85.3
+  Oberon              13.5 /   1.0 /  85.4 |  13.5 /   1.0 /  85.4
+  Callisto            13.4 /   0.3 /  86.4 |  13.4 /   0.3 /  86.4
+  Ariel               11.7 /   1.1 /  87.2 |  11.7 /   1.1 /  87.2
+  Pluto                9.5 /   0.4 /  90.1 |   9.5 /   0.4 /  90.1
+  Titan                9.4 /   0.2 /  90.4 |   9.4 /   0.2 /  90.4
+  Triton               8.4 /   0.3 /  91.3 |   8.4 /   0.3 /  91.3
+  Europa               9.3 /   0.3 /  90.4 |   7.1 /   0.2 /  92.7
+  Dione                8.9 /   0.8 /  90.3 |   5.5 /   0.5 /  93.9
+  Miranda             12.4 /   2.9 /  84.7 |   4.1 /   0.9 /  95.0
+  Mimas                5.4 /   1.4 /  93.2 |   1.7 /   0.5 /  97.8
+  Enceladus            3.9 /   2.0 /  94.1 |   0.0 /   0.0 / 100.0
+total 106s
