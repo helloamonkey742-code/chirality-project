@@ -23,6 +23,20 @@ PREDICTIONS (written 2026-10-12, before any result-producing run):
  P9. Wall time under 20 minutes (nice -n 10, 2 threads).
 
 Usage: OMP_NUM_THREADS=2 NUMBA_NUM_THREADS=2 nice -n 10 /opt/anaconda3/bin/python kz_large.py > kz_large.log
+
+RESULTS (kz_large.log, 2026-10-12): c_end(1024 xi) = 0.918 +- 0.021 (c_early 0.930 +- 0.022); all 9 predictions HELD.
+ P1 HELD   check P = 0.8478 +- 0.0057 vs Phi(Delta) = 0.8413, +1.13 SE.
+ P2 HELD   +1.31 combined SE from the 0.879 +- 0.021 plateau (but see note).
+ P3 HELD   (c - 0.798) / SE = 5.65 from this single system.
+ P4 HELD   (c - 0.914) / SE = +0.19.
+ P5 HELD   early == end majority in 0.9922 of runs.
+ P6 HELD   single-hand fraction 0.00 at all three Delta.
+ P7 HELD   P(Delta) - Phi(c Delta) = -0.73, +0.32, +0.30 SE at Delta = 1.0, 1.5, 2.0.
+ P8 HELD   pool 128/512/1024 xi: c = 0.898 +- 0.015, (c - 0.798) / SE = 6.77.
+ P9 HELD   619 s by the script's own clock (10:19 wall from `time`), 196% CPU.
+Note: the sequence 0.876, 0.882, 0.918 at 128, 512, 1024 xi passes both P2 and P4 and cannot tell a flat plateau
+from a slow drift toward 0.914; the 1024 xi value alone sits on the Gaussian-field theory. The box patch-sum 0.798 is
+excluded either way. The pool in P8 mixes two Delta designs (kz_patches vs this script); P3 does not depend on it.
 """
 import time
 from concurrent.futures import ThreadPoolExecutor
