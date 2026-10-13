@@ -53,6 +53,27 @@ rule "max", scale 1; "x10" = cascade time x10; "final" = after the salt lid; "mi
       every world, and it raises every world's two-sided main P_pved by 0 to 3 points (never lowers it).
  (P9) Seeds 1-3 reproduce every two-sided main share (P_pved / P_chance / P_none, no lid and final) within 0.5 points
       of seed 0.
+
+RESULTS (rho2side.log, 2026-10-12): 5 of 9 held. Seed 0, N = 200000; main run 1:50 wall.
+ Disclosure: a 2000-draw smoke run (python rho2side.py 2000) ran before the predictions commit and showed the rough
+ size of the P8 sensitivity; the predictions were not changed after it. posthoc() was written after the main run
+ and is not pre-registered.
+ (P1) HELD. "EXACT" against multiwall.log Section 4 (main split and x10 column) and against multiwall.run4(0) floats.
+ (P2) HELD. Asserted for every world at seeds 0-3: rho < 1 draws (about 50 % per world) unpinned, masks = step e.
+ (P3) FAILED (one of six cells). Ganymede 37.1 / 31.7 -> 37 / 32 and Europa final 26.6 / 22.6 -> 27 / 23 held;
+      Enceladus no lid main 26.48 -> 26 held, x10 20.78 -> 21 is below 22-26.
+ (P4) FAILED. Max |two-sided - mixture| = 1.45 points, Enceladus x10 no lid (20.8 vs 22.2); every other cell <= 0.1.
+      Cause (post-hoc): world index 0's extra-draw stream default_rng([seed, 0]) equals default_rng(seed), Enceladus's
+      own chain stream, so its eta, r, rho are the quantiles of its g, k2, concentration (a pre-existing collision in
+      sweep2, sweep3 and multiwall too). With an independent stream [seed, 0, 1] Enceladus x10 is 22.1 vs mixture
+      (24.7 + 19.4) / 2 = 22.05, and main 25.6 vs 25.55.
+ (P5) HELD. No lid: Earth 87.3 > Ganymede 37.1 > Europa 35.0 > Titan 30.7 > Enceladus 26.5; final: Ganymede 37.1 >
+      Europa 26.6 > Enceladus 0.0.
+ (P6) FAILED. Umbriel P_chance 10.3 (no lid and final); next highest Ariel 9.4; every other world below 10.
+ (P7) HELD. Ganymede -7.0, Callisto -6.8, Umbriel -5.8, Oberon -5.9, Titania -5.9; Miranda +1.5; Earth -12.6.
+ (P8) FAILED. Real sink <= convention in 100 % of rho < 1 column draws except Miranda 96.02 %; it never lowers P_pved
+      but raises it by up to +12.65 (Earth, to 100.0) and by +3.2 to +5.2 in ten moons (> 3).
+ (P9) HELD. Max seed 1-3 difference from seed 0: 0.24 / 0.28 / 0.23 points.
 """
 import os
 import sys
@@ -214,6 +235,34 @@ def main():
     return one, two
 
 
+def posthoc():
+    """POST-HOC (written after the run; not pre-registered). numpy SeedSequence ignores trailing zeros, so the extra-
+    draw generator default_rng([seed, 0]) of world index 0 (Enceladus) is default_rng(seed), the generator that drew
+    Enceladus's own chain: eta, r, rho reuse the quantiles of bias g, rate k2, concentration (sweep2, sweep3, multiwall
+    and this script alike). Rerun Enceladus with an independent stream default_rng([seed, 0, 1])."""
+    print("\nPOST-HOC (not pre-registered): world index 0 = Enceladus; default_rng([s, 0]) == default_rng(s) for s = 0-3: "
+          + str(all(np.array_equal(np.random.default_rng([s, 0]).uniform(size=8), np.random.default_rng(s).uniform(size=8))
+                    for s in range(4))))
+    print("Enceladus, no lid, P_pved / P_chance / P_none %: step e | step f | one-sided main | two-sided main | "
+          "one-sided x10 | two-sided x10")
+    for seed in range(4):
+        _, W = S.chains(seed)
+        x, _, a, _ = W["Enceladus"]
+        assert list(W).index("Enceladus") == 0
+        none = np.zeros(U.N, bool)
+        for lab, ss in (("collided (as logged)", [seed, 0]), ("independent [s, 0, 1]", [seed, 0, 1])):
+            rows = []
+            for lg in (ONE, TWO):
+                rng = np.random.default_rng(ss)
+                ex = {"eta": 10 ** rng.uniform(-1, 1, U.N), "r": 10 ** rng.uniform(-2, 0, U.N),
+                      "rho": 10 ** rng.uniform(*lg, U.N)}
+                if lg == ONE:
+                    rows += [S3.split(*S.outcome(x, a[1], a[4], st, ex, none)) for st in ("e", "f")]
+                rows += [S3.split(*M.multi(x, a[1], a[4], ex, none, **kw)[:2]) for kw in ({}, {"scale": 10.0})]
+            rows = [rows[i] for i in (0, 1, 2, 4, 3, 5)]
+            print(f"  seed {seed} {lab:22} " + " | ".join(f"{p:4.1f}/{c:4.1f}/{n:4.1f}" for p, c, n in rows))
+
+
 def selfcheck():
     """t_sink: rho -> 1 gives the uniform-D curvature integral (R^2 - (R-H)^2)/(4D); rho = 0.01 matches a dense sum."""
     R, H, Dz = np.array([10.0]), np.array([1.0]), np.array([2e-3])
@@ -225,6 +274,9 @@ def selfcheck():
 
 
 if __name__ == "__main__":
+    if sys.argv[1:] == ["posthoc"]:                 # appended to rho2side.log after the main run
+        posthoc()
+        sys.exit()
     U.N = int(sys.argv[1]) if len(sys.argv) > 1 else U.N  # smoke test: python rho2side.py 2000
     selfcheck()
     main()
