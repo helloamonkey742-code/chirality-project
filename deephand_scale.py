@@ -66,6 +66,38 @@ PREDICTIONS (written 2026-10-12, before any result-producing run):
        widths thick in every icy moon; <= 5 % on Early Earth.
  (P14) Section 3, ocean-scale (d/w-weighted, fitted h): Early Earth P_pved >= 95 % (no lid and final); every icy
        moon loses >= 5 points against multiwall main (no lid).
+
+RESULTS (deephand_scale.log, 2026-10-12):
+ (P1) HELD. d/w >= 5: 284/284 filled (100.0 +- 0.0 %), every w level 100 % (n = 20, 52, 93, 93, 26). In fact
+      d/w >= 3: 365/365; the thickest failing domain was 2.85 wall widths.
+ (P2) HELD. d/w < 2: 55/167 = 32.9 +- 3.6 % (d/w < 1: 8.0 +- 2.9 %; 1-2: 60.8 +- 5.5 %).
+ (P3) HELD. d/w >= 5: 100.0 +- 0.0 at w <= 0.01 and at w >= 0.02; difference / combined SE = 0.00.
+ (P4) HELD. w <= 0.005 pooled: 141/150 = 94.0 +- 1.9 % (>= 85, and > 67.3 +- 3.8 % at w = 0.035). The overall
+      fraction rises as w shrinks only because more layers are many wall widths thick at small w.
+ (P5) HELD. K >= 5 and d/w >= 5: 81/81.
+ (P6) HELD. sub-onset wall in the stack and d/w >= 5: 0 failures in 44 (all d/w: 54/57 = 94.7 +- 3.0 %).
+ (P7) HELD. 0 unfinished at every w.
+ (P8) HELD. 486 finished rule-held runs: T_end / T_c median 1.731, max 11.1 (min 0.004: a run whose minority hand
+      was thin layers that died at t = 16 before any wall moved).
+ (P9) FAILED (half). c1 = +0.183 > 0 held, but residual RMS log10 0.392 is 0.79 x the h = 1 RMS 0.494 (needed
+      <= 0.6). Fit: log10(T_end/T_c) = -0.570 + 0.183 ln rho - 0.048 log10(K+1) + 0.343 log10(d/w). The scatter
+      is mostly at large w (residual RMS 0.60 at w = 0.035, 0.12 at w = 0.0025); median T_end/T_c drifts up with
+      shrinking w (1.25 -> 2.21), a trend the fit has no w term for.
+ (P10) HELD. dt/2, dz/2 changes T_end by -1.72, -1.93, -1.93, -1.93 % at w = 0.035, 0.01, 0.005, 0.0025; same
+       final hand each time.
+ (P11) HELD. "EXACT": h = 1 arrays equal multiwall run4(0) main, and all 15 worlds match multiwall.log to 0.1.
+ (P12) HELD. Fitted h moves P_pved by 0.0 (Early Earth, 99.9) to -1.4 points (Ganymede, Titan); every world, no lid
+       and final, lies in [x10 - 0.2, main + 0.2].
+ (P13) FAILED (half). Icy moons: 59-74 % of rule-decided P_pved draws have the deciding layer < 5 wall widths
+       (>= 20 % held). Early Earth: 51.7 % (needed <= 5 %); 29.4 % are < 1 wall width. The deciding layer is the
+       bottom remnant H - K d_w, drawn anywhere between 0 and one full layer, so about half are thin on every world.
+ (P14) FAILED (half). Ocean-scale Early Earth P_pved 89.0 % (no lid and final; needed >= 95). Every icy moon loses
+       >= 5 points no lid (Mimas -5.8 to Umbriel -15.3) - held.
+ Run notes: section 1 was run in chunks (resumable per (w, i); each ROW is deterministic in (w, i)); jobs at
+ w = 0.005 / 0.0025 were killed under machine load 17-18 and resumed from the first missing i, so no run was
+ repeated or dropped (600 ROW lines, each (w, i) once). w = 0.0025 has only 30 runs. Section 3 ran in 12 s.
+ The ocean-scale variant moves a failed thin-remnant draw to P_none; in the simulations the next layer up then
+ fills, and in the wrapper that layer may itself be PVED-set, so 89.0 is a floor, not an estimate.
 """
 import json
 import os
