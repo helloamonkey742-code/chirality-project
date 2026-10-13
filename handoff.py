@@ -61,6 +61,34 @@ PREDICTIONS (written 2026-10-12, before any result-producing run):
  (P11) THR = 3: fitted h and h = 1 differ by <= 2 points in P_pved on every world (no lid and final, seed 0).
  (P12) THR = 3, fitted h: P_pved over seeds 0-3 spans <= 0.5 points on every world (no lid and final).
  (P13) THR = 1 (fitted h) is within 3 points of THR = 3 (fitted h) in P_pved on every world (no lid and final).
+
+RESULTS (handoff.log, 2026-10-12):
+ (P1) HELD. THR = 3: 76.8 +- 1.7 % overall (below the plain rule's 81.0 +- 1.6 %); fired runs 96/235 = 40.9 +- 3.2 %.
+      By the rule domain's d/w: [0,1) 68.2 %, [1,2) 44.3 %, [2,3) 1.5 % - the 3-width cut overrules thin domains
+      that won; 63 runs predicted "no hand" (no domain >= 3 widths), all misses since every run ended with a hand.
+ (P2) HELD. THR = 3 NOT validated (76.8 / 40.9 vs >= 95 / >= 85).
+ (P3) HELD. THR = 1: 93.3 +- 1.0 % overall, fired 92.0 +- 2.9 % (n = 88), 0 "no hand"; NOT validated (overall < 95).
+      Exploratory (post hoc) scan: overall agreement peaks at 94.8 % at THR = 1.25 (fired 88.3 %); no threshold
+      reaches 95 %.
+ (P4) HELD. THR = 0 reproduces the ROW "ok" flag in all 600 runs; the rebuilt rule-domain d/w matched every ROW
+      (the in-code assertion passed 600 times).
+ (P5) HELD. Regression (A) EXACT, 15 worlds.
+ (P6) HELD. Regressions (B) and (C) EXACT, worlds 1-14.
+ (P7) FAILED (narrowly). The handoff fires in 44.4 (Early Earth) to 65.3 % (Enceladus) of recursion draws; Enceladus
+      is 0.3 above the 65 bound (Mimas 64.4).
+ (P8) FAILED. No layer >= 3 wall widths in 17.1 (Early Earth) to 41.1 % (Miranda) of recursion draws, not <= 5 %:
+      on most draws the full layers near the floor are also thin, and often every layer up to the ice is.
+ (P9) HELD. THR = 3, fitted h, every world (no lid and final) lies between the floor and multiwall main: Early
+      Earth 94.3 (floor 89.0, main 99.9); icy moons 2.5-5.9 points above the floor, 3.2-9.4 below main (no lid).
+ (P10) FAILED. Early Earth 94.3 % with fitted h and with h = 1 (needed >= 97); the 5.7 % P_none is the "no layer
+       >= 3 wall widths" draws (17.1 % of its 33 % recursion draws).
+ (P11) FAILED. Fitted h vs h = 1 differs by up to 3.0 points (Ganymede, Titan; most icy moons 2.2-3.0); Early
+       Earth 0.0.
+ (P12) HELD. Seeds 0-3 span <= 0.37 points (Pluto) for every world, fitted h and h = 1.
+ (P13) FAILED. THR = 1 is 0.0 (Enceladus final) to 4.1 points (Umbriel) above THR = 3; more than 3 on Early
+       Earth (97.6 vs 94.3), Umbriel, Oberon, Titania, Ariel, Dione and Pluto (no lid).
+ Run notes: one SMOKE=1 run (self-checks only: handoff off == multiwall.multi on Europa at N = 2000, the closed-form
+ j_max against the next layer down; prints only "smoke ok") before the predictions commit. The result run took 18 s.
 """
 import os
 import re
