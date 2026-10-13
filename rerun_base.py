@@ -56,6 +56,31 @@ PREDICTIONS (written before the first result-producing run; never edited):
  P15 Temperature, Early Earth, Ala, T uniform 273-343 K (main): the pipeline k_rac cut drops 1-5 points; the k_rac
      cut applied to every draw (g and k_rac both at T) drops 4-10; g alone <= 0.3; the all-draw cut at 273 K changes
      nothing; Asp all-draw drops 8-25. Moons unchanged.
+
+RESULTS (rerun_base.log, 2026-10-12):
+ P1  HELD: all 15 worlds exact, main and x10, no lid and final, three-way split (log:4-18).
+ P2  FAILED: D_z is the top input for both moons at both scales and the Enceladus low half is 5.8%, but Europa's
+     main low half is 6.7% (> 5). High halves 50.7 / 72.5.
+ P3  HELD: Earth max |effect| 0.63 points (Earth sits at 99.9%).
+ P4  HELD: D_h effects -3.4, -3.8 (Enceladus), -1.3, -2.9 (Europa).
+ P5  FAILED: crossings in range (Enceladus 1.6e-5, Europa 1.7e-6), Earth lowest bin 99.5%, but the top
+     concentration (= rho, see the seed collision) bin for Enceladus is 52% (>= 50); Europa's top time bin 50%.
+ P6  HELD: largest rule move 2.9 points, whole ocean 3.6; Earth > Europa > Enceladus, Earth >= 99 in every row.
+ P7  HELD: unlimited 37.0 / 44.5; x10 recovers 55% / 73% of P_chance, x100 87% / 96%.
+ P8  FAILED: moons held (harsh drop <= 7.9) but Earth drops 0.5 points rounded, just above the 0.5 bound.
+ P9  HELD: c = 0.88 moves at most 0.59 points, c = 0.98 at most 0.09.
+ P10 HELD: product rule within 0.08; every expected value within 1 point (Juno 36.0, club sandwich 22.1).
+ P11 HELD: floored creep 39.1% / 39.3% (raw D_z reproduces 33.4 / 33.6).
+ P12 FAILED: shallow >= deep everywhere, but the largest main spread is 30.4 points (Callisto 60.9 vs 30.6).
+ P13 FAILED: R2 extended 1.9 / 4.6 / 13.9 and Q1 (96.9 / 73.3 / 64.3 / 43.3) held, frozen within 2.7 of step;
+     R6 over the original k2 at s = 0.01 is 3.1 points above the no-lid share for both moons (> 3), and R6 extended
+     Enceladus at s = 0.01 is 23.3 (> 22).
+ P14 FAILED: Earth field L 46.6 / D 46.4 / pinned 6.9 held, L reaches the 50% plateau at f_mag 3.2e-13 (>= 1e-14),
+     Earth field f* 1.6e-15 (x2.7 of 6.0e-16); Enceladus M = 1e3 1.5e-14 (x3.7) and field 4.0e-15 (x3.3) exceed x3.
+     Europa x2.5 / x2.5, Ganymede x2.5 / x2.4 held.
+ P15 HELD: drops Ala pipeline 2.4, Ala all-draw 6.0, g only 0.0, 273 K all-draw 0.0, Asp all-draw 13.5.
+ Unplanned finding: default_rng([0, 0]) is default_rng(0), so Enceladus's eta, r, rho in sweep2.run/multiwall.run4
+ are the same uniforms as its bias g, k2, concentration (log:21). It affects every Enceladus pipeline number.
 """
 import os
 import re
@@ -80,7 +105,7 @@ SCALES = (("main", 1.0), ("x10", 10.0))
 THREE = ("Enceladus", "Europa", "Early Earth ocean")
 E = "Early Earth ocean"
 MODS = (S, S3, MW)
-LINES, MDROWS, CHECKS = [], [], []
+LINES, MDROWS, CHECKS, CAVEAT = [], [], [], {}
 FH = None
 
 
@@ -94,7 +119,8 @@ def say(s=""):
 
 
 def md(sec, item, old, new, line, note=""):
-    MDROWS.append((sec, item, old, new, f"rerun_base.log:{line}", note))
+    esc = lambda t: str(t).replace("|", "\\|")
+    MDROWS.append((sec, esc(item), esc(old), esc(new), f"rerun_base.log:{line}", esc(note)))
 
 
 def check(p, ok, detail):
@@ -210,6 +236,13 @@ def section0():
              f"Enceladus {pc(W['Enceladus'][3]):.1f}%")
     md("Unchanged", "Europa stratified share", "23.9% (strat_sweep.log:2)", f"{pc(salt):.1f}%", ln,
        "salinity draw only; base label can be dropped")
+    x = W["Enceladus"][0]
+    cc = [np.corrcoef(np.log10(x[k]), np.log10(EX["Enceladus"][e]))[0, 1]
+          for k, e in (("bias g", "eta"), ("rate k2", "r"), ("concentration", "rho"))]
+    same = (np.random.default_rng([SEED, 0]).uniform(size=8) == np.random.default_rng(SEED).uniform(size=8)).all()
+    CAVEAT["ln"] = say(f"Seed check: default_rng([{SEED}, 0]) == default_rng({SEED}): {same}; so Enceladus (world 0) extras "
+                       f"repeat its own chain draws: corr(log g, log eta) {cc[0]:.6f}, (log k2, log r) {cc[1]:.6f}, "
+                       f"(log c, log rho) {cc[2]:.6f}")
 
 
 # ---------------------------------------------------------------- 1 sensitivities (Figure 5)
@@ -712,11 +745,15 @@ def section10():
             Ls.append(pc(run(E, sc, delta=earth_field(1, np.zeros(N, bool), fm))[0]) / 100)
         c = cross(EGRID, np.array(Ls))
         ecross[s] = c
+        ecross[s, "flat"] = EGRID[np.argmax(np.array(Ls) <= 0.505)]
+        ecross[s, "ln"] = say(f"  Earth {s:4} L share first within 0.5 point of 50% at f_mag {ecross[s, 'flat']:.1e}")
         ecross[s, "ln"] = say(f"  Earth {s:4} L share over f_mag 1e-20..1e-2 (half decades): " + " ".join(f"{100 * v:.0f}" for v in Ls)
                               + f" -> L < 50% for f_mag above {'never' if c is None else f'{c[0]:.2e}'}")
     md("Magnetite (4)", "Earth f_mag where L < 50%", "1.88e-15 (earth_breakeven.log:44)",
        f"{'never' if ecross['main'] is None else f'{ecross[chr(109) + chr(97) + chr(105) + chr(110)][0]:.2e}'} "
-       f"(x10 {'never' if ecross['x10'] is None else f'{ecross[chr(120) + chr(49) + chr(48)][0]:.2e}'})", ecross["main", "ln"])
+       f"(x10 {'never' if ecross['x10'] is None else f'{ecross[chr(120) + chr(49) + chr(48)][0]:.2e}'})", ecross["main", "ln"],
+       f"L sits on the coin-flip plateau (within 0.5 point of 50%) from f_mag {ecross['main', 'flat']:.1e} "
+       f"(x10 {ecross['x10', 'flat']:.1e}); the formal crossing is where it finally dips below 50")
     star = {}
     for s, sc in SCALES:
         base = {n: pc(run(n, sc, delta=nudge("one source", 0.0, 1))[0]) for n in NW}
@@ -828,6 +865,16 @@ def write_md():
             "- Robert & Chaussidon 2006, Nature 443, 969, 10.1038/nature05239: ~70 C at 3.5 Ga (cherts, Si and O isotopes).",
             "- Knauth & Lowe 2003, GSA Bulletin 115, 566, 10.1130/0016-7606(2003)115<0566:HACTIF>2.0.CO;2: 55-85 C (Onverwacht cherts).",
             "", "The sampled range 273-343 K spans the cool and the hot readings.", "",
+            "## Caveats", "",
+            f"- Seed collision (rerun_base.log:{CAVEAT['ln']}): numpy treats default_rng([0, 0]) as default_rng(0), so in "
+            "sweep2.run / multiwall.run4 Enceladus (world index 0) draws eta, r and rho from the same uniforms as its own "
+            "bias g, k2 and concentration. Each pair is perfectly rank-correlated, which is why the Enceladus "
+            "sensitivity rows come in identical pairs. Every Enceladus pipeline number, including the regression "
+            "targets in multiwall.log, carries this; the other 14 worlds do not.",
+            "- Assumed-rule share rows multiply every layer share below 1 (sweep2 top layer, sweep3 deep layer, cascade "
+            "recursion layer); assumed_rules.py scaled only the top-layer share.",
+            "- Old Earth values (74.7, 75) predate the cascade; the pipeline Earth sits at 99.9, so Earth rows mostly "
+            "show a ceiling.", "",
             "## Predictions", ""]
     out += [f"- {p}: {'held' if ok else 'FAILED'}" for p, ok in CHECKS]
     out.append("")
