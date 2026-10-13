@@ -64,6 +64,43 @@ PREDICTIONS (written 2026-10-12, before any result-producing run):
  P15. Seed 1: front-rule shares within 0.5 points of seed 0 in every world.
 
 Usage: python front2d.py [W1] [W2] [W8a] [W8b] [L] [conv] [3Da] [3Db] [worlds]   (check() always runs last)
+
+RESULTS (front2d.log, 2026-10-12): 11 of 15 held, 4 failed. Nine sections in parallel, each exit 0; check() passed in
+ every section. Wall times 42-1485 s; conv (1485 s), 3Da (1398 s), 3Db (1207 s) and W8b (1205 s) ran past the
+ ~20 min budget because the machine load reached ~38 from other jobs.
+ P1 HELD. P = 0.8367 +- 0.0058 vs 0.8413 (-0.79 SE).
+ P2 HELD. W = 1 cell: l_eff / l_A = 1.04, 0.80, 0.85 at u = 0.1, 0.3, 1.
+ P3 HELD. W = 2 xi: 0.95, 0.70; W = 8 xi: 1.16, 1.30 (u = 0.1, 0.3). N = l_A x W across the whole width.
+ P4 HELD. W = 2 xi, u = 0.3: P = 0.797 / 0.765 / 0.825 at 4 / 8 / 16 xi (max 2.12 combined SE); 16 xi lies 9.1 SE
+    below Phi(Delta_total) = 0.998.
+ P5 FAILED. At L = 8 xi, l_eff / l_A at u = 3 is 1.20 (2 xi) and 1.12 (8 xi), not > 1.5. The criterion was badly
+    sized: l_A(u = 3) = 20 cells is already 0.4 L at 8 xi, so the ratio cannot separate front from whole volume
+    there (the W = 1 cell row gives 1.23 too). The size part held: at u = 3, P(16 xi) - P(4 xi) = 0.975 - 0.905
+    (+4.1 SE), l_eff 21.9 -> 49.0 (l_eff / l_A 1.07 -> 2.40), while at u = 0.3 l_eff stays 8.8 -> 11.1. So in 2D
+    u* lies in (0.3, 3] from this file (u = 1 was not size-scanned), consistent with 1D's (1, 3].
+ P6 HELD. u = infinity: l_eff / L = 1.11 (2 xi), 0.88 (8 xi).
+ P7 FAILED. W = 8 xi one-hand fraction 0.930 (u = 0.1), 0.955 (u = 0.3) vs 1.000 at W = 1: drops of 0.07 and 0.045,
+    not >= 0.1. Patches along the front occur but are rare at 8 xi.
+ P8 FAILED (dx/2, narrowly). Against P = 0.765 +- 0.021: dt/2 0.807 +- 0.020 (+1.45 SE), dx/2 0.825 +- 0.019
+    (+2.12 SE). l_eff / l_A moves 0.70 -> 1.01 -> 1.17, all inside P3's band; a grid bias of up to ~30 % low in
+    l_eff at D = 4 (xi = 6.3 cells) cannot be excluded.
+ P9 FAILED (u = 3 part only). 3D l_eff / l_A = 0.86 (u = 0.3), 1.16 (u = 1), 0.96 (u = 3, not > 1.5, same sizing
+    problem as P5); u = infinity l_eff / L = 1.05.
+ P10 HELD. Front rule off = multiwall.run4(0) main (equal floats) and multiwall.log Section 4: EXACT, 15 worlds.
+ P11 HELD. u < 3 in 2.0 % (Miranda) to 17.2 % (Ganymede) of draws; Early Earth 2.8 %; Enceladus 4.2 < Europa 11.2 <
+    Ganymede 17.2. t_mix > tau in 0.0 % of draws in every world.
+ P12 HELD. Among draws reaching one hand: 2.5-19.2 %, >= the all-draw fraction everywhere (Early Earth equal, 2.817).
+ P13 HELD (at the bottom of the range). P_pved changes by -0.01 to +0.00 points in every world, no lid and final;
+    P_none identical (asserted); Early Earth 99.9; Ganymede 44.1 > Europa 30.1 > Enceladus 0.0 (final). Post hoc
+    (scratch diagnostic, not in this file): front-flagged draws are fast-reaction draws (median k 1e-8 - 2e-5 /s vs
+    3e-11 - 6e-9 for all reached draws) with F Delta / 2 ~ 10^3.7 - 10^5.6, so the front cut (sqrt factor ~0.3)
+    flips almost none; 99.9-100 % of front-flagged reached draws still win.
+ P14 HELD. v / A: -0.00 to -0.08 points. u* = 1 and v x A: 0.00.
+ P15 HELD. Seed 1 vs seed 0, front rule on: max 0.36 points.
+ Net: the 1D front result carries over to a planar front in 2D and 3D: below u* ~ 1-3 the deciding volume is the
+ Airy layer times the full front width (or cross-section), independent of system size. In the ocean model, under
+ F1-F3 only 2-17 % of draws are fronts, and those draws win by such large margins that no share moves by more than
+ 0.1 points. Fronts do not change the headlines.
 """
 import sys
 import time

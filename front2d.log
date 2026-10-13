@@ -1,0 +1,166 @@
+front2d.py, 2026-10-12. Nine sections run in parallel as separate processes (nice -n 10, OMP/NUMBA threads 2), each to its own
+file, concatenated here in section order. Machine load average rose to ~38 from other jobs during the runs.
+
+################ python front2d.py W1
+gamma=0.01 eps=0.0001/cell D=4.0 dt=0.05: xi=6.32 cells, V0=0.632 cells/time, L=8xi=51 cells; sections ['W1']
+
+1D limit (W = 1 cell)
+  2D L=8  xi ( 51) W=  1 u=0.1  n=400 dt=0.05 h=1  P=0.767+-0.021 | Phi(D_tot)=0.977 Phi(D_A)=0.764 | l_eff=   6.8+-  1.3 l_A=  6.6 ratio= 1.04+-0.20 l_eff/L=0.13 | 1hand 1.000  [16s]
+  2D L=8  xi ( 51) W=  1 u=0.3  n=400 dt=0.05 h=1  P=0.780+-0.021 | Phi(D_tot)=0.977 Phi(D_A)=0.806 | l_eff=   7.6+-  1.4 l_A=  9.5 ratio= 0.80+-0.15 l_eff/L=0.15 | 1hand 1.000  [8s]
+  2D L=8  xi ( 51) W=  1 u=1    n=400 dt=0.05 h=1  P=0.835+-0.019 | Phi(D_tot)=0.977 Phi(D_A)=0.854 | l_eff=  12.1+-  1.9 l_A= 14.2 ratio= 0.85+-0.13 l_eff/L=0.24 | 1hand 0.998  [5s]
+  2D L=8  xi ( 51) W=  1 u=3    n=400 dt=0.05 h=1  P=0.920+-0.014 | Phi(D_tot)=0.977 Phi(D_A)=0.897 | l_eff=  25.2+-  3.3 l_A= 20.4 ratio= 1.23+-0.16 l_eff/L=0.49 | 1hand 0.930  [4s]
+  2D L=8  xi ( 51) W=  1 u=10   n=400 dt=0.05 h=1  P=0.975+-0.008 | Phi(D_tot)=0.977 Phi(D_A)=0.939 | l_eff=  49.0+-  6.7 l_A= 30.5 ratio= 1.61+-0.22 l_eff/L=0.96 | 1hand 0.892  [3s]
+  2D L=8  xi ( 51) W=  1 u=inf  n=400 dt=0.05 h=1  P=0.980+-0.007 | Phi(D_tot)=0.977 Phi(D_A)=0.977 | l_eff=  53.8+-  7.6 l_A= 51.0 ratio= 1.05+-0.15 l_eff/L=1.05 | 1hand 0.890  [3s]
+
+check: uniform limit (2x2 cells, v=inf) P=0.8367+-0.0058, sim.py Phi(Delta)=0.8413, diff -0.79 SE
+total 42s
+exit 0
+
+################ python front2d.py W2
+gamma=0.01 eps=0.0001/cell D=4.0 dt=0.05: xi=6.32 cells, V0=0.632 cells/time, L=8xi=51 cells; sections ['W2']
+
+2D, W = 2 xi = 13 cells
+  2D L=8  xi ( 51) W= 13 u=0.1  n=400 dt=0.05 h=1  P=0.757+-0.021 | Phi(D_tot)=0.977 Phi(D_A)=0.764 | l_eff=   6.2+-  1.2 l_A=  6.6 ratio= 0.95+-0.19 l_eff/L=0.12 | 1hand 1.000  [204s]
+  2D L=8  xi ( 51) W= 13 u=0.3  n=400 dt=0.05 h=1  P=0.765+-0.021 | Phi(D_tot)=0.977 Phi(D_A)=0.806 | l_eff=   6.7+-  1.3 l_A=  9.5 ratio= 0.70+-0.13 l_eff/L=0.13 | 1hand 1.000  [108s]
+  2D L=8  xi ( 51) W= 13 u=1    n=400 dt=0.05 h=1  P=0.868+-0.017 | Phi(D_tot)=0.977 Phi(D_A)=0.854 | l_eff=  15.8+-  2.2 l_A= 14.2 ratio= 1.12+-0.16 l_eff/L=0.31 | 1hand 1.000  [59s]
+  2D L=8  xi ( 51) W= 13 u=3    n=400 dt=0.05 h=1  P=0.917+-0.014 | Phi(D_tot)=0.977 Phi(D_A)=0.897 | l_eff=  24.6+-  3.2 l_A= 20.4 ratio= 1.20+-0.16 l_eff/L=0.48 | 1hand 0.927  [49s]
+  2D L=8  xi ( 51) W= 13 u=10   n=400 dt=0.05 h=1  P=0.958+-0.010 | Phi(D_tot)=0.977 Phi(D_A)=0.939 | l_eff=  37.8+-  4.9 l_A= 30.5 ratio= 1.24+-0.16 l_eff/L=0.74 | 1hand 0.905  [40s]
+  2D L=8  xi ( 51) W= 13 u=inf  n=400 dt=0.05 h=1  P=0.983+-0.007 | Phi(D_tot)=0.977 Phi(D_A)=0.977 | l_eff=  56.7+-  8.2 l_A= 51.0 ratio= 1.11+-0.16 l_eff/L=1.11 | 1hand 0.902  [40s]
+
+check: uniform limit (2x2 cells, v=inf) P=0.8367+-0.0058, sim.py Phi(Delta)=0.8413, diff -0.79 SE
+total 503s
+exit 0
+
+################ python front2d.py W8a
+gamma=0.01 eps=0.0001/cell D=4.0 dt=0.05: xi=6.32 cells, V0=0.632 cells/time, L=8xi=51 cells; sections ['W8a']
+
+2D, W = 8 xi = 51 cells (a)
+  2D L=8  xi ( 51) W= 51 u=0.1  n=400 dt=0.05 h=1  P=0.780+-0.021 | Phi(D_tot)=0.977 Phi(D_A)=0.764 | l_eff=   7.6+-  1.4 l_A=  6.6 ratio= 1.16+-0.21 l_eff/L=0.15 | 1hand 0.930  [923s]
+
+check: uniform limit (2x2 cells, v=inf) P=0.8367+-0.0058, sim.py Phi(Delta)=0.8413, diff -0.79 SE
+total 927s
+exit 0
+
+################ python front2d.py W8b
+gamma=0.01 eps=0.0001/cell D=4.0 dt=0.05: xi=6.32 cells, V0=0.632 cells/time, L=8xi=51 cells; sections ['W8b']
+
+2D, W = 8 xi = 51 cells (b)
+  2D L=8  xi ( 51) W= 51 u=0.3  n=400 dt=0.05 h=1  P=0.838+-0.018 | Phi(D_tot)=0.977 Phi(D_A)=0.806 | l_eff=  12.4+-  1.9 l_A=  9.5 ratio= 1.30+-0.20 l_eff/L=0.24 | 1hand 0.955  [445s]
+  2D L=8  xi ( 51) W= 51 u=1    n=400 dt=0.05 h=1  P=0.885+-0.016 | Phi(D_tot)=0.977 Phi(D_A)=0.854 | l_eff=  18.4+-  2.5 l_A= 14.2 ratio= 1.30+-0.18 l_eff/L=0.36 | 1hand 0.970  [274s]
+  2D L=8  xi ( 51) W= 51 u=3    n=400 dt=0.05 h=1  P=0.910+-0.014 | Phi(D_tot)=0.977 Phi(D_A)=0.897 | l_eff=  22.9+-  3.0 l_A= 20.4 ratio= 1.12+-0.15 l_eff/L=0.45 | 1hand 0.953  [191s]
+  2D L=8  xi ( 51) W= 51 u=10   n=400 dt=0.05 h=1  P=0.965+-0.009 | Phi(D_tot)=0.977 Phi(D_A)=0.939 | l_eff=  41.9+-  5.5 l_A= 30.5 ratio= 1.37+-0.18 l_eff/L=0.82 | 1hand 0.945  [144s]
+  2D L=8  xi ( 51) W= 51 u=inf  n=400 dt=0.05 h=1  P=0.970+-0.009 | Phi(D_tot)=0.977 Phi(D_A)=0.977 | l_eff=  45.1+-  6.0 l_A= 51.0 ratio= 0.88+-0.12 l_eff/L=0.88 | 1hand 0.917  [147s]
+
+check: uniform limit (2x2 cells, v=inf) P=0.8367+-0.0058, sim.py Phi(Delta)=0.8413, diff -0.79 SE
+total 1205s
+exit 0
+
+################ python front2d.py L
+gamma=0.01 eps=0.0001/cell D=4.0 dt=0.05: xi=6.32 cells, V0=0.632 cells/time, L=8xi=51 cells; sections ['L']
+
+2D size scan, W = 2 xi, g fixed (Delta_total = 1.41 / 2.83 at 4 / 16 xi)
+  2D L=4  xi ( 25) W= 13 u=0.3  n=400 dt=0.05 h=1  P=0.797+-0.020 | Phi(D_tot)=0.919 Phi(D_A)=0.806 | l_eff=   8.8+-  1.5 l_A=  9.5 ratio= 0.93+-0.16 l_eff/L=0.35 | 1hand 1.000  [36s]
+  2D L=16 xi (101) W= 13 u=0.3  n=400 dt=0.05 h=1  P=0.825+-0.019 | Phi(D_tot)=0.998 Phi(D_A)=0.806 | l_eff=  11.1+-  1.8 l_A=  9.5 ratio= 1.17+-0.19 l_eff/L=0.11 | 1hand 1.000  [362s]
+  2D L=4  xi ( 25) W= 13 u=3    n=400 dt=0.05 h=1  P=0.905+-0.015 | Phi(D_tot)=0.919 Phi(D_A)=0.897 | l_eff=  21.9+-  2.9 l_A= 20.4 ratio= 1.07+-0.14 l_eff/L=0.88 | 1hand 0.990  [23s]
+  2D L=16 xi (101) W= 13 u=3    n=400 dt=0.05 h=1  P=0.975+-0.008 | Phi(D_tot)=0.998 Phi(D_A)=0.897 | l_eff=  49.0+-  6.7 l_A= 20.4 ratio= 2.40+-0.33 l_eff/L=0.48 | 1hand 0.912  [122s]
+
+check: uniform limit (2x2 cells, v=inf) P=0.8367+-0.0058, sim.py Phi(Delta)=0.8413, diff -0.79 SE
+total 547s
+exit 0
+
+################ python front2d.py conv
+gamma=0.01 eps=0.0001/cell D=4.0 dt=0.05: xi=6.32 cells, V0=0.632 cells/time, L=8xi=51 cells; sections ['conv']
+
+convergence at W = 2 xi, L = 8 xi, u = 0.3 (compare with the W2 row u = 0.3)
+  2D L=8  xi ( 51) W= 13 u=0.3  n=400 dt=0.025 h=1  P=0.807+-0.020 | Phi(D_tot)=0.977 Phi(D_A)=0.806 | l_eff=   9.6+-  1.6 l_A=  9.5 ratio= 1.01+-0.17 l_eff/L=0.19 | 1hand 1.000  [191s]
+  2D L=8  xi ( 51) W= 13 u=0.3  n=400 dt=0.0125 h=0.5  P=0.825+-0.019 | Phi(D_tot)=0.977 Phi(D_A)=0.806 | l_eff=  11.1+-  1.8 l_A=  9.5 ratio= 1.17+-0.19 l_eff/L=0.22 | 1hand 1.000  [1293s]
+
+check: uniform limit (2x2 cells, v=inf) P=0.8367+-0.0058, sim.py Phi(Delta)=0.8413, diff -0.79 SE
+total 1485s
+exit 0
+
+################ python front2d.py 3Da
+gamma=0.01 eps=0.0001/cell D=4.0 dt=0.05: xi=6.32 cells, V0=0.632 cells/time, L=8xi=51 cells; sections ['3Da']
+
+3D, W = 2 xi x 2 xi = 13 x 13 cells (a)
+  3D L=8  xi ( 51) W= 13 u=0.3  n=250 dt=0.04 h=1  P=0.788+-0.026 | Phi(D_tot)=0.977 Phi(D_A)=0.806 | l_eff=   8.1+-  1.8 l_A=  9.5 ratio= 0.86+-0.19 l_eff/L=0.16 | 1hand 1.000  [1111s]
+  3D L=8  xi ( 51) W= 13 u=inf  n=250 dt=0.04 h=1  P=0.980+-0.009 | Phi(D_tot)=0.977 Phi(D_A)=0.977 | l_eff=  53.8+-  9.6 l_A= 51.0 ratio= 1.05+-0.19 l_eff/L=1.05 | 1hand 0.912  [285s]
+
+check: uniform limit (2x2 cells, v=inf) P=0.8367+-0.0058, sim.py Phi(Delta)=0.8413, diff -0.79 SE
+total 1398s
+exit 0
+
+################ python front2d.py 3Db
+gamma=0.01 eps=0.0001/cell D=4.0 dt=0.05: xi=6.32 cells, V0=0.632 cells/time, L=8xi=51 cells; sections ['3Db']
+
+3D, W = 2 xi x 2 xi = 13 x 13 cells (b)
+  3D L=8  xi ( 51) W= 13 u=1    n=250 dt=0.04 h=1  P=0.872+-0.021 | Phi(D_tot)=0.977 Phi(D_A)=0.854 | l_eff=  16.5+-  2.9 l_A= 14.2 ratio= 1.16+-0.21 l_eff/L=0.32 | 1hand 1.000  [747s]
+  3D L=8  xi ( 51) W= 13 u=3    n=250 dt=0.04 h=1  P=0.892+-0.020 | Phi(D_tot)=0.977 Phi(D_A)=0.897 | l_eff=  19.5+-  3.3 l_A= 20.4 ratio= 0.96+-0.16 l_eff/L=0.38 | 1hand 0.940  [458s]
+
+check: uniform limit (2x2 cells, v=inf) P=0.8367+-0.0058, sim.py Phi(Delta)=0.8413, diff -0.79 SE
+total 1207s
+exit 0
+
+################ python front2d.py worlds
+gamma=0.01 eps=0.0001/cell D=4.0 dt=0.05: xi=6.32 cells, V0=0.632 cells/time, L=8xi=51 cells; sections ['worlds']
+
+=== Part B: per-world front rule (multiwall Section 4 with N -> l_A layer where u < u*), N = 200000 ===
+regression, front rule off vs multiwall.run4(0) main: EXACT; vs multiwall.log Section 4 (printed 0.1, 15 worlds): EXACT
+
+Drive uniformity (F1-F2, u = A^2 xi / L): % of draws with u < 3 (all | reaching one hand, no lid) | u quartiles (all draws) | % with u < 1 | t_mix > tau %
+Early Earth ocean    2.8 |   2.8 |     14.4       38      101 |   0.1 |   0.0
+Umbriel              4.9 |   5.3 |     23.8      108      496 |   1.1 |   0.0
+Oberon               6.2 |   6.9 |     18.6     84.2      379 |   1.6 |   0.0
+Titania              6.5 |   7.1 |     17.9     81.4      369 |   1.7 |   0.0
+Ariel                4.7 |   5.1 |       24      110      503 |   1.1 |   0.0
+Ganymede            17.2 |  19.2 |     5.43     24.7      111 |   7.2 |   0.0
+Callisto            16.2 |  18.1 |     5.89     26.7      121 |   6.6 |   0.0
+Pluto                9.5 |  10.4 |     11.9     54.6      247 |   3.0 |   0.0
+Triton              10.6 |  11.4 |     10.5     47.4      217 |   3.6 |   0.0
+Titan               16.9 |  18.6 |     5.51     25.1      113 |   6.9 |   0.0
+Europa              11.2 |  12.0 |     9.68     43.9      201 |   3.9 |   0.0
+Dione                4.5 |   5.0 |     25.2      114      518 |   1.0 |   0.0
+Miranda              2.0 |   2.5 |     46.8      210      951 |   0.2 |   0.0
+Mimas                4.9 |   6.5 |     23.5      106      481 |   1.1 |   0.0
+Enceladus            4.2 |   5.0 |     28.1      131      612 |   1.0 |   0.0
+
+Shares, %: P_pved / P_chance / P_none, no lid | final
+world                   front rule off (= multiwall main) ||                front rule on, u* = 3
+Early Earth ocean   99.9 /  0.0 /   0.1 |  99.9 /  0.0 /   0.1  ||   99.9 /  0.0 /   0.1 |  99.9 /  0.0 /   0.1
+Umbriel             53.7 / 14.9 /  31.4 |  53.7 / 14.9 /  31.4  ||   53.7 / 14.9 /  31.4 |  53.7 / 14.9 /  31.4
+Oberon              51.4 / 11.7 /  36.9 |  51.4 / 11.7 /  36.9  ||   51.4 / 11.7 /  36.9 |  51.4 / 11.7 /  36.9
+Titania             51.3 / 11.6 /  37.1 |  51.3 / 11.6 /  37.1  ||   51.3 / 11.6 /  37.1 |  51.3 / 11.6 /  37.1
+Ariel               49.6 / 13.5 /  36.9 |  49.6 / 13.5 /  36.9  ||   49.6 / 13.5 /  36.9 |  49.6 / 13.5 /  36.9
+Ganymede            44.1 /  3.4 /  52.5 |  44.1 /  3.4 /  52.5  ||   44.1 /  3.4 /  52.5 |  44.1 /  3.4 /  52.5
+Callisto            43.5 /  3.8 /  52.7 |  43.5 /  3.8 /  52.7  ||   43.5 /  3.8 /  52.7 |  43.5 /  3.8 /  52.7
+Pluto               41.1 /  6.1 /  52.8 |  41.1 /  6.1 /  52.8  ||   41.1 /  6.1 /  52.8 |  41.1 /  6.1 /  52.8
+Triton              37.0 /  4.7 /  58.3 |  37.0 /  4.7 /  58.3  ||   37.0 /  4.7 /  58.3 |  37.0 /  4.7 /  58.3
+Titan               35.8 /  2.5 /  61.7 |  35.8 /  2.5 /  61.7  ||   35.8 /  2.6 /  61.7 |  35.8 /  2.6 /  61.7
+Europa              39.6 /  4.9 /  55.5 |  30.1 /  3.7 /  66.2  ||   39.6 /  4.9 /  55.5 |  30.1 /  3.7 /  66.2
+Dione               42.0 / 10.5 /  47.5 |  26.2 /  6.6 /  67.2  ||   42.0 / 10.5 /  47.5 |  26.2 /  6.6 /  67.2
+Miranda             27.1 /  8.4 /  64.5 |   9.0 /  2.7 /  88.3  ||   27.1 /  8.4 /  64.5 |   9.0 /  2.7 /  88.3
+Mimas               17.3 /  6.1 /  76.6 |   5.6 /  2.0 /  92.5  ||   17.3 /  6.1 /  76.6 |   5.6 /  2.0 /  92.5
+Enceladus           28.3 /  8.8 /  63.0 |   0.0 /  0.0 / 100.0  ||   28.3 /  8.8 /  63.0 |   0.0 /  0.0 / 100.0
+
+P_pved change vs multiwall main, points, no lid / final: main (u*=3) | u*=1 | v x A | v / A
+Early Earth ocean  +0.00 / +0.00 | +0.00 / +0.00 | +0.00 / +0.00 | +0.00 / +0.00
+Umbriel            -0.00 / -0.00 | +0.00 / +0.00 | +0.00 / +0.00 | -0.03 / -0.03
+Oberon             -0.00 / -0.00 | +0.00 / +0.00 | +0.00 / +0.00 | -0.03 / -0.03
+Titania            -0.00 / -0.00 | -0.00 / -0.00 | +0.00 / +0.00 | -0.03 / -0.03
+Ariel              +0.00 / +0.00 | +0.00 / +0.00 | +0.00 / +0.00 | -0.03 / -0.03
+Ganymede           -0.01 / -0.01 | +0.00 / +0.00 | +0.00 / +0.00 | -0.08 / -0.08
+Callisto           -0.01 / -0.01 | -0.00 / -0.00 | +0.00 / +0.00 | -0.06 / -0.06
+Pluto              -0.00 / -0.00 | +0.00 / +0.00 | +0.00 / +0.00 | -0.03 / -0.03
+Triton             -0.00 / -0.00 | +0.00 / +0.00 | +0.00 / +0.00 | -0.03 / -0.03
+Titan              -0.00 / -0.00 | +0.00 / +0.00 | +0.00 / +0.00 | -0.04 / -0.04
+Europa             -0.00 / -0.00 | +0.00 / +0.00 | +0.00 / +0.00 | -0.03 / -0.02
+Dione              +0.00 / +0.00 | +0.00 / +0.00 | +0.00 / +0.00 | -0.01 / -0.01
+Miranda            +0.00 / +0.00 | +0.00 / +0.00 | +0.00 / +0.00 | -0.00 / +0.00
+Mimas              -0.00 / -0.00 | +0.00 / +0.00 | +0.00 / +0.00 | -0.04 / -0.01
+Enceladus          -0.00 / +0.00 | +0.00 / +0.00 | +0.00 / +0.00 | -0.04 / +0.00
+
+seed 1, front rule on: max |seed 1 - seed 0| over worlds, splits, lid = 0.36 points  [42s]
+
+check: uniform limit (2x2 cells, v=inf) P=0.8367+-0.0058, sim.py Phi(Delta)=0.8413, diff -0.79 SE
+total 50s
+exit 0
