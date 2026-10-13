@@ -102,6 +102,31 @@ PREDICTIONS (written 2026-10-12 from hand estimates before any result-producing 
 
 Run: OMP_NUM_THREADS=2 NUMBA_NUM_THREADS=2 nice -n 10 /opt/anaconda3/bin/python tidal_mix.py > tidal_mix.log
      (TIDAL_N=2000 for a crash-only smoke run; the regression is checked only at N = 200000.)
+
+RESULTS (tidal_mix.log, 2026-10-12): N = 200000, 10 s wall. 10 held, 1 failed. One smoke run (TIDAL_N=2000, output
+to /private/tmp, not kept) was made after the predictions commit, only to catch crashes; its tail was seen, its numbers
+are not used. No code was changed between the smoke and the full run.
+  P1  HELD.   regression EXACT: 15 worlds, seed 0 three-way no lid | final, and seedfix seeds 1-3 P_pved lines.
+  P2  HELD.   K_mid above 1e-3: Europa 1.8e-2, Ganymede 2.2e-3, Titan 1.1e-2, Callisto 4.2e-3, Triton 0.72, Mimas 0.083.
+              Inside: Enceladus 1.7e-8, Dione 1.3e-6, Miranda 4.7e-4, Ariel 1.2e-7, Umbriel 2.8e-7, Titania 4.4e-6,
+              Oberon 1.3e-4.
+  P3  HELD.   Europa K_low 1.42e-3.
+  P4  HELD.   3.36e-10 .. 3.36e-3 (factor 1.12 from ZJ21 at both ends).
+  P5  HELD.   Enceladus lid tau 835 .. 1.4e4 yr (mid 5.5e3 yr; H_lid 30 m at low/mid, 40 km at high).
+  P6  HELD.   tau_mid / T_dec: Europa 6.5e-4, Ganymede 3.4e-3, Titan 2.9e-3, Callisto 1.8e-3, Triton 2.4e-5, Mimas
+              1.9e-5, Miranda 0.016, Oberon 0.0053, Titania 0.16 (< 1); Enceladus 70, Dione 2.5, Ariel 5.5 (> 1).
+  P7  HELD.   tau_mid / youngest age < 0.2 for every sourced world except Enceladus (242).
+  P8  HELD.   % of effective prior inside band: max 18.0 (Titania, Oberon) for the 12; Enceladus 86.2.
+  P9  HELD.   band minus full P_pved (no lid): Europa +39.9, Ganymede +36.6, Titan +45.0, Callisto +36.3, Triton +41.9,
+              Mimas +46.1.
+  P10 FAILED: Ariel -5.3 (held), but Umbriel +10.1 and Dione +9.6 rise. Bands ~1e-7..1e-6 already clear the part of
+              the prior (below ~1e-7) where walls cannot merge in time; only Ariel's (6e-8..2e-7) does not.
+  P11 HELD.   max |seed k - seed 0| 0.37 (Umbriel).
+  Note added with the results (not a prediction): the line "these K_int are lower bounds" printed in section 2 holds
+  only for db (Nimmo's caveat). The uniform-dissipation assumption cuts the other way: if the tidal power is spent in
+  boundary layers at the ice or seafloor (J23 Sec. 4), interior K is smaller. K_int is an order-of-magnitude estimate,
+  not a bound. Bands above 1e-3 (Europa, Ganymede, Titan, Callisto, Triton, Mimas; 31 % of Enceladus's, 42 % of
+  Miranda's) extrapolate the share model beyond the D_z range it has been run over.
 """
 import os
 import re
