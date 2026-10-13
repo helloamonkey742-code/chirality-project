@@ -53,6 +53,30 @@ no lid unless stated.
   P16 Seeds 1-3: every regenerated Enceladus no-lid value in the per-seed table is within 0.5 points of seed 0.
 
 Run: OMP_NUM_THREADS=2 NUMBA_NUM_THREADS=2 nice -n 10 /opt/anaconda3/bin/python seedfix.py > seedfix.log
+
+RESULTS (seedfix.log, 2026-10-12): N = 200000, 137 s. 14 held, 2 failed. (A smoke run at SEEDFIX_N=2000 was made
+after the predictions commit, only to catch crashes; its numbers are not used.)
+  P1  HELD.   max |corr| 0.0038 over seeds 0-3 and the three pairs (collided: 1.000000 every seed).
+  P2  FAILED as registered: 1 VIOLATION, rerun_base.log:305. It is the check line "P14 FAILED: Earth L 46.6 ..."; the
+      only change in its Earth-named segment is the verdict word (FAILED -> HELD), flipped by the Enceladus f* values
+      later on the line; every number naming another world on that line is identical. Everywhere else 0 violations:
+      sweep2.log 85/85, sweep3.log 75/75, multiwall.log Section 4 61/61 and rho2side.log 81/81 lines match except
+      Enceladus rows and Enceladus-including aggregates; rerun_base.log 328/328 lines, line counts equal.
+  P3  HELD.   all 63 regenerated Enceladus final values are 0.0.
+  P4  HELD.   one-sided main 28.3 -> 26.4 (26.36).
+  P5  HELD.   step f 3.9 -> 6.7 (6.68).
+  P6  HELD.   Enceladus x10 gap 1.45 -> 0.00; all-world max 1.45 -> 0.07.
+  P7  HELD.   step e 24.75, two-sided main 25.59, one-sided x10 19.44, two-sided x10 22.10 (post-hoc 24.7/25.6/19.4/22.1).
+  P8  HELD.   sweep3 main 6.6 -> 9.0.
+  P9  HELD.   bound 23.9 -> 23.6.
+  P10 HELD.   sum rule 20.1 -> 19.9.
+  P11 HELD.   multiwall P_chance 8.8 -> 9.8; step-f P_chance 2.0 -> 1.5.
+  P12 HELD.   ladder 21.8 24.1 23.8 27.8 27.1 24.7 6.7 (b +0.5, c +0.6, d +0.7, e +0.2).
+  P13 FAILED: bias g +5.9 vs eta +6.3 differ by only 0.4 (k2 +6.4 vs r +3.0 and concentration +29.7 vs rho +6.0 do
+      separate; D_z stays top at +44.0). Independent g and eta now have about equal effects.
+  P14 HELD.   max deviation 0.07; finals 7.9->7.4, 5.5->5.2, 22.9->21.3, 19.0->17.7, 2.2->2.0, 9.5->8.8, 9.9->9.3.
+  P15 HELD.   M=1e3 1.5e-14 -> 9.0e-15, field 4.0e-15 -> 2.6e-15 (factor 0.6-0.65).
+  P16 HELD.   max |seed k - seed 0| 0.28 over the ten Enceladus no-lid columns.
 """
 import contextlib
 import io

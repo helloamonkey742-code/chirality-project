@@ -1,0 +1,476 @@
+seedfix.py, N = 200000: Enceladus (world index 0) extra draws moved from default_rng([s, 0]) (== default_rng(s)) to default_rng([s, 0, 1]); worlds 1-14 unchanged
+default_rng([0, 0]) == default_rng(0) in numpy: True; wrapped [0, 0] == [0, 0, 1]: True
+
+=== A. Enceladus, seeds 0-3, collided (as logged) -> fixed. P_pved / P_chance / P_none %, no lid; final P_pved after '|' ===
+seed 0: corr (log g, log eta) / (log k2, log r) / (log c, log rho): collided 1.000000 / 1.000000 / 1.000000  fixed +0.0013 / -0.0001 / -0.0008
+  step e         24.5 /  6.8 /  68.6 | 0.0   ->    24.7 /  6.6 /  68.6 | 0.0   (P_pved +0.20)
+  step f          3.9 /  2.0 /  94.1 | 0.0   ->     6.7 /  1.5 /  91.8 | 0.0   (P_pved +2.79)
+  sweep3 main     6.6 /  2.6 /  90.8 | 0.0   ->     9.0 /  2.1 /  88.8 | 0.0   (P_pved +2.37)
+  sweep3 bound   23.9 /  6.9 /  69.2 | 0.0   ->    23.6 /  7.3 /  69.1 | 0.0   (P_pved -0.34)
+  mw main        28.3 /  8.8 /  63.0 | 0.0   ->    26.4 /  9.8 /  63.9 | 0.0   (P_pved -1.90)
+  mw x10         19.9 /  5.7 /  74.3 | 0.0   ->    19.4 /  6.4 /  74.1 | 0.0   (P_pved -0.48)
+  mw x5          22.4 /  6.6 /  71.0 | 0.0   ->    21.5 /  7.3 /  71.2 | 0.0   (P_pved -0.93)
+  mw sum         20.1 /  5.8 /  74.0 | 0.0   ->    19.9 /  6.3 /  73.8 | 0.0   (P_pved -0.21)
+  2-sided main   26.5 /  7.1 /  66.4 | 0.0   ->    25.6 /  8.2 /  66.2 | 0.0   (P_pved -0.90)
+  2-sided x10    20.8 /  6.6 /  72.6 | 0.0   ->    22.1 /  6.5 /  71.4 | 0.0   (P_pved +1.32)
+  x10 |two-sided - mixture (step e + one-sided x10)/2|: 1.45 -> 0.00
+seed 1: corr (log g, log eta) / (log k2, log r) / (log c, log rho): collided 1.000000 / 1.000000 / 1.000000  fixed +0.0007 / +0.0008 / +0.0009
+  step e         24.3 /  7.0 /  68.8 | 0.0   ->    24.5 /  6.7 /  68.8 | 0.0   (P_pved +0.27)
+  step f          3.8 /  2.1 /  94.1 | 0.0   ->     6.6 /  1.5 /  91.9 | 0.0   (P_pved +2.80)
+  sweep3 main     6.6 /  2.7 /  90.8 | 0.0   ->     9.0 /  2.2 /  88.8 | 0.0   (P_pved +2.40)
+  sweep3 bound   23.7 /  7.1 /  69.2 | 0.0   ->    23.4 /  7.5 /  69.1 | 0.0   (P_pved -0.29)
+  mw main        28.1 /  9.0 /  62.9 | 0.0   ->    26.2 / 10.0 /  63.8 | 0.0   (P_pved -1.84)
+  mw x10         19.7 /  6.0 /  74.4 | 0.0   ->    19.3 /  6.6 /  74.1 | 0.0   (P_pved -0.37)
+  mw x5          22.1 /  6.8 /  71.1 | 0.0   ->    21.3 /  7.5 /  71.2 | 0.0   (P_pved -0.83)
+  mw sum         19.9 /  6.0 /  74.0 | 0.0   ->    19.7 /  6.4 /  73.8 | 0.0   (P_pved -0.17)
+  2-sided main   26.3 /  7.2 /  66.5 | 0.0   ->    25.4 /  8.4 /  66.3 | 0.0   (P_pved -0.94)
+  2-sided x10    20.6 /  6.7 /  72.7 | 0.0   ->    21.9 /  6.6 /  71.5 | 0.0   (P_pved +1.33)
+  x10 |two-sided - mixture (step e + one-sided x10)/2|: 1.40 -> 0.01
+seed 2: corr (log g, log eta) / (log k2, log r) / (log c, log rho): collided 1.000000 / 1.000000 / 1.000000  fixed -0.0038 / +0.0014 / +0.0001
+  step e         24.3 /  6.8 /  68.9 | 0.0   ->    24.5 /  6.7 /  68.9 | 0.0   (P_pved +0.16)
+  step f          3.9 /  2.0 /  94.1 | 0.0   ->     6.7 /  1.5 /  91.7 | 0.0   (P_pved +2.84)
+  sweep3 main     6.6 /  2.6 /  90.8 | 0.0   ->     9.0 /  2.2 /  88.8 | 0.0   (P_pved +2.43)
+  sweep3 bound   23.7 /  6.9 /  69.4 | 0.0   ->    23.4 /  7.4 /  69.2 | 0.0   (P_pved -0.33)
+  mw main        28.1 /  8.9 /  63.0 | 0.0   ->    26.2 / 10.0 /  63.8 | 0.0   (P_pved -1.94)
+  mw x10         19.8 /  5.8 /  74.4 | 0.0   ->    19.3 /  6.5 /  74.2 | 0.0   (P_pved -0.47)
+  mw x5          22.2 /  6.6 /  71.2 | 0.0   ->    21.3 /  7.5 /  71.3 | 0.0   (P_pved -0.93)
+  mw sum         19.9 /  5.9 /  74.2 | 0.0   ->    19.7 /  6.5 /  73.9 | 0.0   (P_pved -0.22)
+  2-sided main   26.4 /  7.1 /  66.5 | 0.0   ->    25.3 /  8.3 /  66.3 | 0.0   (P_pved -1.07)
+  2-sided x10    20.6 /  6.6 /  72.8 | 0.0   ->    21.8 /  6.6 /  71.5 | 0.0   (P_pved +1.27)
+  x10 |two-sided - mixture (step e + one-sided x10)/2|: 1.46 -> 0.03
+seed 3: corr (log g, log eta) / (log k2, log r) / (log c, log rho): collided 1.000000 / 1.000000 / 1.000000  fixed -0.0009 / +0.0022 / +0.0031
+  step e         24.4 /  6.8 /  68.8 | 0.0   ->    24.5 /  6.7 /  68.8 | 0.0   (P_pved +0.11)
+  step f          3.9 /  2.0 /  94.2 | 0.0   ->     6.6 /  1.5 /  91.9 | 0.0   (P_pved +2.74)
+  sweep3 main     6.6 /  2.5 /  90.8 | 0.0   ->     9.0 /  2.2 /  88.9 | 0.0   (P_pved +2.32)
+  sweep3 bound   23.8 /  6.9 /  69.3 | 0.0   ->    23.4 /  7.5 /  69.1 | 0.0   (P_pved -0.38)
+  mw main        28.2 /  8.8 /  63.1 | 0.0   ->    26.2 /  9.9 /  63.9 | 0.0   (P_pved -1.98)
+  mw x10         19.9 /  5.8 /  74.3 | 0.0   ->    19.3 /  6.5 /  74.1 | 0.0   (P_pved -0.50)
+  mw x5          22.3 /  6.6 /  71.1 | 0.0   ->    21.4 /  7.5 /  71.2 | 0.0   (P_pved -0.91)
+  mw sum         20.1 /  5.9 /  74.0 | 0.0   ->    19.7 /  6.5 /  73.8 | 0.0   (P_pved -0.36)
+  2-sided main   26.4 /  7.0 /  66.6 | 0.0   ->    25.3 /  8.3 /  66.4 | 0.0   (P_pved -1.06)
+  2-sided x10    20.7 /  6.6 /  72.7 | 0.0   ->    21.9 /  6.6 /  71.5 | 0.0   (P_pved +1.18)
+  x10 |two-sided - mixture (step e + one-sided x10)/2|: 1.42 -> 0.04
+
+Spread of the fixed Enceladus no-lid P_pved over seeds 0-3 (min-max):
+  step e         24.5- 24.7  (seed 0 24.7, max |seed k - seed 0| 0.28)
+  step f          6.6-  6.7  (seed 0 6.7, max |seed k - seed 0| 0.07)
+  sweep3 main     9.0-  9.0  (seed 0 9.0, max |seed k - seed 0| 0.05)
+  sweep3 bound   23.4- 23.6  (seed 0 23.6, max |seed k - seed 0| 0.21)
+  mw main        26.2- 26.4  (seed 0 26.4, max |seed k - seed 0| 0.16)
+  mw x10         19.3- 19.4  (seed 0 19.4, max |seed k - seed 0| 0.15)
+  mw x5          21.3- 21.5  (seed 0 21.5, max |seed k - seed 0| 0.21)
+  mw sum         19.7- 19.9  (seed 0 19.9, max |seed k - seed 0| 0.23)
+  2-sided main   25.3- 25.6  (seed 0 25.6, max |seed k - seed 0| 0.26)
+  2-sided x10    21.8- 22.1  (seed 0 22.1, max |seed k - seed 0| 0.25)
+[A: 11 s elapsed]
+
+=== B. sweep2 (steps 0-f, step-f split g, sensitivities, seeds 1-3) vs sweep2.log ===
+
+--- sweep2.log: lines 1-85 compared (85 regenerated); 6 Enceladus lines changed, 0 aggregate lines changed, 0 VIOLATIONS ---
+  [Enceladus] sweep2.log:19
+    old: Enceladus            21.8   24.1   23.3   27.2   26.4   24.5    3.9
+    new: Enceladus            21.8   24.1   23.8   27.8   27.1   24.7    6.7
+  [Enceladus] sweep2.log:54
+    old: Enceladus          no lid   3.9 /   2.0 /  94.1 [  5.9]   final   0.0 /   0.0 / 100.0 [  0.0]   step-0 unlimited (no lid)  28.6
+    new: Enceladus          no lid   6.7 /   1.5 /  91.8 [  8.2]   final   0.0 /   0.0 / 100.0 [  0.0]   step-0 unlimited (no lid)  28.6
+  [Enceladus] sweep2.log:71
+    old: Enceladus           16.9 /   0.0 |   3.8 /   0.0
+    new: Enceladus           19.9 /   0.0 |   6.5 /   0.0
+  [Enceladus] sweep2.log:83
+    old:   seed 1: max diff 0.29   Enceladus 3.8/0.0, Europa 9.3/7.1, Ganymede 14.1/14.1, Titan 9.5/9.5, Callisto 13.5/13.5, Triton 8.5/8.5, Pluto 9.5/9.5, Titania 13.7/13.7, Oberon 13.5/13.5, Umbriel 14.3/14.3, Ariel 11.7/11.7, Dione 8.8/5.4, Miranda 12.4/4.1, Mimas 5.3/1.7, Early Earth ocean 40.2/40.2
+    new:   seed 1: max diff 0.29   Enceladus 6.6/0.0, Europa 9.3/7.1, Ganymede 14.1/14.1, Titan 9.5/9.5, Callisto 13.5/13.5, Triton 8.5/8.5, Pluto 9.5/9.5, Titania 13.7/13.7, Oberon 13.5/13.5, Umbriel 14.3/14.3, Ariel 11.7/11.7, Dione 8.8/5.4, Miranda 12.4/4.1, Mimas 5.3/1.7, Early Earth ocean 40.2/40.2
+  [Enceladus] sweep2.log:84
+    old:   seed 2: max diff 0.18   Enceladus 3.9/0.0, Europa 9.3/7.0, Ganymede 14.0/14.0, Titan 9.4/9.4, Callisto 13.3/13.3, Triton 8.4/8.4, Pluto 9.5/9.5, Titania 13.5/13.5, Oberon 13.4/13.4, Umbriel 14.3/14.3, Ariel 11.7/11.7, Dione 8.8/5.5, Miranda 12.3/4.0, Mimas 5.4/1.8, Early Earth ocean 39.8/39.8
+    new:   seed 2: max diff 0.18   Enceladus 6.7/0.0, Europa 9.3/7.0, Ganymede 14.0/14.0, Titan 9.4/9.4, Callisto 13.3/13.3, Triton 8.4/8.4, Pluto 9.5/9.5, Titania 13.5/13.5, Oberon 13.4/13.4, Umbriel 14.3/14.3, Ariel 11.7/11.7, Dione 8.8/5.5, Miranda 12.3/4.0, Mimas 5.4/1.8, Early Earth ocean 39.8/39.8
+  [Enceladus] sweep2.log:85
+    old:   seed 3: max diff 0.16   Enceladus 3.9/0.0, Europa 9.4/7.2, Ganymede 14.2/14.2, Titan 9.4/9.4, Callisto 13.3/13.3, Triton 8.4/8.4, Pluto 9.4/9.4, Titania 13.7/13.7, Oberon 13.5/13.5, Umbriel 14.3/14.3, Ariel 11.7/11.7, Dione 8.8/5.4, Miranda 12.3/4.1, Mimas 5.3/1.7, Early Earth ocean 40.0/40.0
+    new:   seed 3: max diff 0.16   Enceladus 6.6/0.0, Europa 9.4/7.2, Ganymede 14.2/14.2, Titan 9.4/9.4, Callisto 13.3/13.3, Triton 8.4/8.4, Pluto 9.4/9.4, Titania 13.7/13.7, Oberon 13.5/13.5, Umbriel 14.3/14.3, Ariel 11.7/11.7, Dione 8.8/5.4, Miranda 12.3/4.1, Mimas 5.3/1.7, Early Earth ocean 40.0/40.0
+[B: 22 s elapsed]
+
+=== C. sweep3 (main, three-way split, bound iii, seeds 1-3) vs sweep3.log ===
+sweep3's own regression targets for Enceladus set to the regenerated sweep2 steps e (np.float64(24.7), np.float64(0.0)) and f (np.float64(6.7), np.float64(0.0)) (were 24.5/0.0 and 3.9/0.0); the 14 other worlds keep sweep3.py's targets
+
+--- sweep3.log: lines 1-75 compared (75 regenerated); 7 Enceladus lines changed, 0 aggregate lines changed, 0 VIOLATIONS ---
+  [Enceladus] sweep3.log:19
+    old: Enceladus           24.5 /   0.0   3.9 /   0.0   6.6 /   0.0  +2.8/ +0.0
+    new: Enceladus           24.7 /   0.0   6.7 /   0.0   9.0 /   0.0  +2.3/ +0.0
+  [Enceladus] sweep3.log:36
+    old: Enceladus            6.6 /  2.6 /  90.8 |   0.0 /  0.0 / 100.0   [step f   3.9 /  2.0 /  94.1 |   0.0 /  0.0 / 100.0]
+    new: Enceladus            9.0 /  2.1 /  88.8 |   0.0 /  0.0 / 100.0   [step f   6.7 /  1.5 /  91.8 |   0.0 /  0.0 / 100.0]
+  [Enceladus] sweep3.log:53
+    old: Enceladus            72.1 |   68.5 |   95.1 |   0.2 |   0.5
+    new: Enceladus            66.6 |   63.3 |   95.1 |   0.3 |   0.7
+  [Enceladus] sweep3.log:70
+    old: Enceladus            6.6 /   0.0 |   6.1 /   0.0 |   6.6 /   0.0 |  23.9 /   0.0 |  24.5 /   0.0
+    new: Enceladus            9.0 /   0.0 |   8.5 /   0.0 |   9.0 /   0.0 |  23.6 /   0.0 |  24.7 /   0.0
+  [Enceladus] sweep3.log:73
+    old:   seed 1: max diff 0.23   Enceladus 6.6/0.0, Europa 14.0/10.7, Ganymede 20.2/20.2, Titan 14.1/14.1, Callisto 19.4/19.4, Triton 12.6/12.6, Pluto 14.0/14.0, Titania 19.6/19.6, Oberon 19.3/19.3, Umbriel 20.1/20.1, Ariel 16.9/16.9, Dione 12.5/7.8, Miranda 13.7/4.5, Mimas 7.0/2.3, Early Earth ocean 67.2/67.2
+    new:   seed 1: max diff 0.23   Enceladus 9.0/0.0, Europa 14.0/10.7, Ganymede 20.2/20.2, Titan 14.1/14.1, Callisto 19.4/19.4, Triton 12.6/12.6, Pluto 14.0/14.0, Titania 19.6/19.6, Oberon 19.3/19.3, Umbriel 20.1/20.1, Ariel 16.9/16.9, Dione 12.5/7.8, Miranda 13.7/4.5, Mimas 7.0/2.3, Early Earth ocean 67.2/67.2
+  [Enceladus] sweep3.log:74
+    old:   seed 2: max diff 0.18   Enceladus 6.6/0.0, Europa 14.0/10.6, Ganymede 20.2/20.2, Titan 14.0/14.0, Callisto 19.3/19.3, Triton 12.5/12.5, Pluto 14.1/14.1, Titania 19.3/19.3, Oberon 19.3/19.3, Umbriel 20.2/20.2, Ariel 16.9/16.9, Dione 12.7/7.9, Miranda 13.6/4.4, Mimas 7.1/2.3, Early Earth ocean 67.0/67.0
+    new:   seed 2: max diff 0.18   Enceladus 9.0/0.0, Europa 14.0/10.6, Ganymede 20.2/20.2, Titan 14.0/14.0, Callisto 19.3/19.3, Triton 12.5/12.5, Pluto 14.1/14.1, Titania 19.3/19.3, Oberon 19.3/19.3, Umbriel 20.2/20.2, Ariel 16.9/16.9, Dione 12.7/7.9, Miranda 13.6/4.4, Mimas 7.1/2.3, Early Earth ocean 67.0/67.0
+  [Enceladus] sweep3.log:75
+    old:   seed 3: max diff 0.18   Enceladus 6.6/0.0, Europa 13.9/10.7, Ganymede 20.3/20.3, Titan 14.1/14.1, Callisto 19.3/19.3, Triton 12.5/12.5, Pluto 14.0/14.0, Titania 19.5/19.5, Oberon 19.3/19.3, Umbriel 20.1/20.1, Ariel 17.0/17.0, Dione 12.6/7.8, Miranda 13.7/4.6, Mimas 7.0/2.3, Early Earth ocean 67.0/67.0
+    new:   seed 3: max diff 0.18   Enceladus 9.0/0.0, Europa 13.9/10.7, Ganymede 20.3/20.3, Titan 14.1/14.1, Callisto 19.3/19.3, Triton 12.5/12.5, Pluto 14.0/14.0, Titania 19.5/19.5, Oberon 19.3/19.3, Umbriel 20.1/20.1, Ariel 17.0/17.0, Dione 12.6/7.8, Miranda 13.7/4.6, Mimas 7.0/2.3, Early Earth ocean 67.0/67.0
+[C: 30 s elapsed]
+
+=== D. multiwall Section 4 (main, cascade x10, sum rule, three-way split, bound, seeds 1-3) vs multiwall.log ===
+
+--- multiwall.log: lines 518-578 compared (61 regenerated); 6 Enceladus lines changed, 0 aggregate lines changed, 0 VIOLATIONS ---
+  [Enceladus] multiwall.log:539
+    old: Enceladus            6.6 /  2.6 /  90.8 |   0.0 /  0.0 / 100.0  ||   28.3 /  8.8 /  63.0 |   0.0 /  0.0 / 100.0
+    new: Enceladus            9.0 /  2.1 /  88.8 |   0.0 /  0.0 / 100.0  ||   26.4 /  9.8 /  63.9 |   0.0 /  0.0 / 100.0
+  [Enceladus] multiwall.log:556
+    old: Enceladus            6.6 /   0.0 |  23.9 /   0.0 |  28.3 /   0.0 |  19.9 /   0.0 |  20.1 /   0.0
+    new: Enceladus            9.0 /   0.0 |  23.6 /   0.0 |  26.4 /   0.0 |  19.4 /   0.0 |  19.9 /   0.0
+  [Enceladus] multiwall.log:573
+    old: Enceladus            68.5 |   40.6 |   97.9 |       74
+    new: Enceladus            63.3 |   39.5 |   96.6 |       73
+  [Enceladus] multiwall.log:576
+    old:   seed 1: max diff 0.36   Enceladus 28.1/0.0, Europa 39.7/30.3, Ganymede 44.1/44.1, Titan 35.7/35.7, Callisto 43.8/43.8, Triton 37.1/37.1, Pluto 41.1/41.1, Titania 51.4/51.4, Oberon 51.2/51.2, Umbriel 53.4/53.4, Ariel 49.6/49.6, Dione 42.0/26.2, Miranda 27.2/9.0, Mimas 17.3/5.6, Early Earth ocean 99.9/99.9
+    new:   seed 1: max diff 0.36   Enceladus 26.2/0.0, Europa 39.7/30.3, Ganymede 44.1/44.1, Titan 35.7/35.7, Callisto 43.8/43.8, Triton 37.1/37.1, Pluto 41.1/41.1, Titania 51.4/51.4, Oberon 51.2/51.2, Umbriel 53.4/53.4, Ariel 49.6/49.6, Dione 42.0/26.2, Miranda 27.2/9.0, Mimas 17.3/5.6, Early Earth ocean 99.9/99.9
+  [Enceladus] multiwall.log:577
+    old:   seed 2: max diff 0.38   Enceladus 28.1/0.0, Europa 39.8/30.3, Ganymede 44.2/44.2, Titan 35.7/35.7, Callisto 43.5/43.5, Triton 37.1/37.1, Pluto 41.3/41.3, Titania 51.3/51.3, Oberon 51.4/51.4, Umbriel 53.3/53.3, Ariel 49.5/49.5, Dione 42.0/26.4, Miranda 27.2/8.9, Mimas 17.4/5.6, Early Earth ocean 99.9/99.9
+    new:   seed 2: max diff 0.38   Enceladus 26.2/0.0, Europa 39.8/30.3, Ganymede 44.2/44.2, Titan 35.7/35.7, Callisto 43.5/43.5, Triton 37.1/37.1, Pluto 41.3/41.3, Titania 51.3/51.3, Oberon 51.4/51.4, Umbriel 53.3/53.3, Ariel 49.5/49.5, Dione 42.0/26.4, Miranda 27.2/8.9, Mimas 17.4/5.6, Early Earth ocean 99.9/99.9
+  [Enceladus] multiwall.log:578
+    old:   seed 3: max diff 0.35   Enceladus 28.2/0.0, Europa 39.7/30.3, Ganymede 44.2/44.2, Titan 35.6/35.6, Callisto 43.7/43.7, Triton 37.1/37.1, Pluto 41.2/41.2, Titania 51.4/51.4, Oberon 51.4/51.4, Umbriel 53.3/53.3, Ariel 49.9/49.9, Dione 42.0/26.1, Miranda 27.2/9.0, Mimas 17.4/5.5, Early Earth ocean 99.9/99.9
+    new:   seed 3: max diff 0.35   Enceladus 26.2/0.0, Europa 39.7/30.3, Ganymede 44.2/44.2, Titan 35.6/35.6, Callisto 43.7/43.7, Triton 37.1/37.1, Pluto 41.2/41.2, Titania 51.4/51.4, Oberon 51.4/51.4, Umbriel 53.3/53.3, Ariel 49.9/49.9, Dione 42.0/26.1, Miranda 27.2/9.0, Mimas 17.4/5.5, Early Earth ocean 99.9/99.9
+[D: 40 s elapsed]
+
+=== E. rho2side main (one- and two-sided, x10, mixture, real-profile sink, seeds 0-3) vs rho2side.log ===
+
+--- rho2side.log: lines 1-81 compared (81 regenerated); 5 Enceladus lines changed, 2 aggregate lines changed, 0 VIOLATIONS ---
+  [Enceladus] rho2side.log:4
+    old: N = 200000, seed 0. rho < 1 fraction of draws: Early Earth ocean 50.0, Umbriel 50.1, Oberon 49.8, Titania 50.2, Ariel 49.9, Ganymede 50.1, Callisto 50.0, Pluto 50.1, Triton 50.2, Titan 50.1, Europa 50.0, Dione 50.1, Miranda 50.1, Mimas 49.9, Enceladus 49.9
+    new: N = 200000, seed 0. rho < 1 fraction of draws: Early Earth ocean 50.0, Umbriel 50.1, Oberon 49.8, Titania 50.2, Ariel 49.9, Ganymede 50.1, Callisto 50.0, Pluto 50.1, Triton 50.2, Titan 50.1, Europa 50.0, Dione 50.1, Miranda 50.1, Mimas 49.9, Enceladus 50.0
+  [Enceladus] rho2side.log:22
+    old: Enceladus           28.3 /  8.8 /  63.0 |   0.0 /  0.0 / 100.0  ||   26.5 /  7.1 /  66.4 |   0.0 /  0.0 / 100.0
+    new: Enceladus           26.4 /  9.8 /  63.9 |   0.0 /  0.0 / 100.0  ||   25.6 /  8.2 /  66.2 |   0.0 /  0.0 / 100.0
+  [Enceladus] rho2side.log:40
+    old: Enceladus           19.9 /  5.7 /  74.3 |   0.0 /  0.0 / 100.0  ||   20.8 /  6.6 /  72.6 |   0.0 /  0.0 / 100.0
+    new: Enceladus           19.4 /  6.4 /  74.1 |   0.0 /  0.0 / 100.0  ||   22.1 /  6.5 /  71.4 |   0.0 /  0.0 / 100.0
+  [Enceladus] rho2side.log:57
+    old: Enceladus           24.5 /   0.0 |  28.3 /   0.0 |  26.5 /   0.0 |  26.4 /   0.0 |  19.9 /   0.0 |  20.8 /   0.0 |  22.2 /   0.0 | 26.3-26.5 / 0.0-0.0 ; 20.6-20.8 / 0.0-0.0
+    new: Enceladus           24.7 /   0.0 |  26.4 /   0.0 |  25.6 /   0.0 |  25.6 /   0.0 |  19.4 /   0.0 |  22.1 /   0.0 |  22.1 /   0.0 | 25.3-25.6 / 0.0-0.0 ; 21.8-22.1 / 0.0-0.0
+  [Enceladus] rho2side.log:76
+    old: Enceladus           26.5 /   0.0 |  27.2 /   0.0 | +0.75 / +0.00 | 100.00
+    new: Enceladus           25.6 /   0.0 |  27.3 /   0.0 | +1.71 / +0.00 | 100.00
+  [aggregate (no world named; includes Enceladus)] rho2side.log:58
+    old: max |two-sided - mixture| over worlds, no lid and final, main and x10: 1.45 points
+    new: max |two-sided - mixture| over worlds, no lid and final, main and x10: 0.07 points
+  [aggregate (no world named; includes Enceladus)] rho2side.log:81
+    old:   seed 3: max diff 0.23
+    new:   seed 3: max diff 0.26
+[E: 61 s elapsed]
+
+=== F. rerun_base sections 0-11 (H19/H20/H27 tables) vs rerun_base.log; log and md NOT rewritten ===
+
+--- rerun_base.log: lines 1-328 compared (328 regenerated); 90 Enceladus lines changed, 4 aggregate lines changed, 1 VIOLATIONS ---
+  [Enceladus] rerun_base.log:4
+    old: Enceladus           28.3 /   0.0 (28.3/0.0, multiwall.log:556) |  19.9 /   0.0 (19.9/0.0) | 28.3 / 8.8 / 63.0
+    new: Enceladus           26.4 /   0.0 (28.3/0.0, multiwall.log:556) |  19.4 /   0.0 (19.9/0.0) | 26.4 / 9.8 / 63.9
+  [Enceladus] rerun_base.log:19
+    old:   P1 HELD: exact for all 15 worlds
+    new:   P1 FAILED: mismatches [('Enceladus', (['26.4', '9.8', '63.9'], ['0.0', '0.0', '100.0']), ['26.4', '0.0'], ['19.4', '0.0'])]
+  [Enceladus] rerun_base.log:21
+    old: Seed check: default_rng([0, 0]) == default_rng(0): True; so Enceladus (world 0) extras repeat its own chain draws: corr(log g, log eta) 1.000000, (log k2, log r) 1.000000, (log c, log rho) 1.000000
+    new: Seed check: default_rng([0, 0]) == default_rng(0): False; so Enceladus (world 0) extras repeat its own chain draws: corr(log g, log eta) 0.001315, (log k2, log r) -0.000143, (log c, log rho) -0.000756
+  [Enceladus] rerun_base.log:24
+    old: Enceladus (main): PVED-set hand in 28.3% of draws, no lid
+    new: Enceladus (main): PVED-set hand in 26.4% of draws, no lid
+  [Enceladus] rerun_base.log:25
+    old:   vertical D_z    low half   5.8%  high half  50.7%   (effect +44.9)
+    new:   vertical D_z    low half   4.4%  high half  48.4%   (effect +44.0)
+  [Enceladus] rerun_base.log:26
+    old:   concentration   low half  12.3%  high half  44.3%   (effect +32.0)
+    new:   concentration   low half  11.5%  high half  41.2%   (effect +29.7)
+  [Enceladus] rerun_base.log:27
+    old:   D_z ratio rho   low half  12.3%  high half  44.3%   (effect +32.0)
+    new:   time            low half  18.1%  high half  34.6%   (effect +16.6)
+  [Enceladus] rerun_base.log:28
+    old:   time            low half  20.0%  high half  36.6%   (effect +16.6)
+    new:   rate k2         low half  23.2%  high half  29.6%   (effect  +6.4)
+  [Enceladus] rerun_base.log:29
+    old:   bias g          low half  22.2%  high half  34.3%   (effect +12.1)
+    new:   eta (g factor)  low half  23.2%  high half  29.5%   (effect  +6.3)
+  [Enceladus] rerun_base.log:30
+    old:   eta (g factor)  low half  22.2%  high half  34.3%   (effect +12.1)
+    new:   D_z ratio rho   low half  23.4%  high half  29.3%   (effect  +6.0)
+  [Enceladus] rerun_base.log:31
+    old:   rate k2         low half  23.5%  high half  33.0%   (effect  +9.5)
+    new:   bias g          low half  23.4%  high half  29.3%   (effect  +5.9)
+  [Enceladus] rerun_base.log:32
+    old:   feed share r    low half  23.5%  high half  33.0%   (effect  +9.5)
+    new:   horizontal D_h  low half  28.1%  high half  24.6%   (effect  -3.6)
+  [Enceladus] rerun_base.log:33
+    old:   horizontal D_h  low half  29.9%  high half  26.6%   (effect  -3.4)
+    new:   feed share r    low half  24.9%  high half  27.8%   (effect  +3.0)
+  [Enceladus] rerun_base.log:34
+    old:   volume          low half  29.8%  high half  26.8%   (effect  -3.0)
+    new:   volume          low half  27.7%  high half  25.0%   (effect  -2.7)
+  [Enceladus] rerun_base.log:35
+    old:   chem. factor F  low half  27.9%  high half  28.7%   (effect  +0.8)
+    new:   chem. factor F  low half  26.0%  high half  26.8%   (effect  +0.8)
+  [Enceladus] rerun_base.log:36
+    old: Enceladus (x10): PVED-set hand in 19.9% of draws, no lid
+    new: Enceladus (x10): PVED-set hand in 19.4% of draws, no lid
+  [Enceladus] rerun_base.log:37
+    old:   vertical D_z    low half   0.7%  high half  39.2%   (effect +38.5)
+    new:   vertical D_z    low half   0.7%  high half  38.2%   (effect +37.4)
+  [Enceladus] rerun_base.log:38
+    old:   concentration   low half   9.0%  high half  30.9%   (effect +21.9)
+    new:   concentration   low half   9.0%  high half  29.8%   (effect +20.8)
+  [Enceladus] rerun_base.log:39
+    old:   D_z ratio rho   low half   9.0%  high half  30.9%   (effect +21.9)
+    new:   time            low half  12.1%  high half  26.8%   (effect +14.7)
+  [Enceladus] rerun_base.log:40
+    old:   time            low half  12.6%  high half  27.2%   (effect +14.6)
+    new:   rate k2         low half  17.1%  high half  21.8%   (effect  +4.8)
+  [Enceladus] rerun_base.log:41
+    old:   bias g          low half  15.9%  high half  23.9%   (effect  +8.0)
+    new:   eta (g factor)  low half  17.2%  high half  21.7%   (effect  +4.6)
+  [Enceladus] rerun_base.log:42
+    old:   eta (g factor)  low half  15.9%  high half  23.9%   (effect  +8.0)
+    new:   bias g          low half  17.3%  high half  21.6%   (effect  +4.2)
+  [Enceladus] rerun_base.log:43
+    old:   rate k2         low half  16.7%  high half  23.1%   (effect  +6.4)
+    new:   horizontal D_h  low half  21.5%  high half  17.4%   (effect  -4.0)
+  [Enceladus] rerun_base.log:44
+    old:   feed share r    low half  16.7%  high half  23.1%   (effect  +6.4)
+    new:   D_z ratio rho   low half  18.1%  high half  20.8%   (effect  +2.7)
+  [Enceladus] rerun_base.log:45
+    old:   horizontal D_h  low half  21.8%  high half  18.0%   (effect  -3.8)
+    new:   volume          low half  20.6%  high half  18.3%   (effect  -2.4)
+  [Enceladus] rerun_base.log:46
+    old:   volume          low half  21.4%  high half  18.4%   (effect  -3.0)
+    new:   feed share r    low half  18.4%  high half  20.5%   (effect  +2.1)
+  [Enceladus] rerun_base.log:47
+    old:   chem. factor F  low half  19.7%  high half  20.2%   (effect  +0.5)
+    new:   chem. factor F  low half  19.1%  high half  19.8%   (effect  +0.7)
+  [Enceladus] rerun_base.log:96
+    old:   P2 FAILED: D_z top: Enceladus main vertical D_z, Enceladus x10 vertical D_z, Europa main vertical D_z, Europa x10 vertical D_z; main D_z halves Enceladus 5.8/50.7, Europa 6.7/72.5
+    new:   P2 FAILED: D_z top: Enceladus main vertical D_z, Enceladus x10 vertical D_z, Europa main vertical D_z, Europa x10 vertical D_z; main D_z halves Enceladus 4.4/48.4, Europa 6.7/72.5
+  [Enceladus] rerun_base.log:102
+    old: Enceladus (main): P_pved 28.3%
+    new: Enceladus (main): P_pved 26.4%
+  [Enceladus] rerun_base.log:103
+    old:   bias g           17  19  22  25  28  31  33  34  36  37   never >=50% (bins 17-37%)
+    new:   bias g           21  22  23  25  26  27  28  29  30  32   never >=50% (bins 21-32%)
+  [Enceladus] rerun_base.log:104
+    old:   rate k2          19  21  23  26  28  30  31  33  35  36   never >=50% (bins 19-36%)
+    new:   rate k2          19  22  23  25  27  27  28  30  31  31   never >=50% (bins 19-31%)
+  [Enceladus] rerun_base.log:105
+    old:   concentration     3   5  10  18  26  33  41  45  50  52   >=50% when concentration >= 9.5e-06
+    new:   concentration     1   3   9  17  27  35  41  43  44  44   never >=50% (bins 1-44%)
+  [Enceladus] rerun_base.log:106
+    old:   horizontal D_h   31  30  30  29  29  28  27  27  26  25   never >=50% (bins 25-31%)
+    new:   horizontal D_h   30  29  28  28  27  26  25  25  24  23   never >=50% (bins 23-30%)
+  [Enceladus] rerun_base.log:107
+    old:   vertical D_z      0   0   1   8  20  31  44  55  60  63   >=50% when vertical D_z >= 1.6e-05
+    new:   vertical D_z      0   0   1   5  16  27  40  52  60  63   >=50% when vertical D_z >= 2.6e-05
+  [Enceladus] rerun_base.log:108
+    old:   time             13  16  20  23  26  30  33  37  40  44   never >=50% (bins 13-44%)
+    new:   time             12  15  18  21  25  28  31  34  38  41   never >=50% (bins 12-41%)
+  [Enceladus] rerun_base.log:109
+    old:   volume           31  31  29  29  29  28  27  27  26  26   never >=50% (bins 26-31%)
+    new:   volume           29  29  27  27  27  25  26  25  24  24   never >=50% (bins 24-29%)
+  [Enceladus] rerun_base.log:110
+    old:   chem. factor F   27  28  28  28  29  28  28  29  29  29   never >=50% (bins 27-29%)
+    new:   chem. factor F   25  26  26  26  26  26  26  27  27  27   never >=50% (bins 25-27%)
+  [Enceladus] rerun_base.log:111
+    old:   g x eta          17  19  22  25  28  31  33  34  36  37   never >=50% (bins 17-37%)
+    new:   g x eta          18  21  22  25  26  27  29  31  32  34   never >=50% (bins 18-34%)
+  [Enceladus] rerun_base.log:112
+    old:   eta              17  19  22  25  28  31  33  34  36  37   never >=50% (bins 17-37%)
+    new:   eta              20  22  23  24  26  27  29  30  31  32   never >=50% (bins 20-32%)
+  [Enceladus] rerun_base.log:113
+    old:   feed share r     19  21  23  26  28  30  31  33  35  36   never >=50% (bins 19-36%)
+    new:   feed share r     24  25  24  26  26  27  27  28  28  29   never >=50% (bins 24-29%)
+  [Enceladus] rerun_base.log:114
+    old:   D_z ratio rho     3   5  10  18  26  33  41  45  50  52   >=50% when D_z ratio rho >= 55
+    new:   D_z ratio rho    24  20  21  25  26  27  29  29  30  31   never >=50% (bins 20-31%)
+  [Enceladus] rerun_base.log:115
+    old:   vertical D_z, 20 bins (median: P_pved) 1.4e-09:  0.0%  2.8e-09:  0.0%  5.6e-09:  0.0%  1.1e-08:  0.0%  2.2e-08:  0.2%  4.4e-08:  2.1%  8.8e-08:  6.1%  1.8e-07: 10.4%  3.6e-07: 17.1%  7.0e-07: 21.9%  1.4e-06: 28.4%  2.8e-06: 34.2%  5.5e-06: 41.3%  1.1e-05: 46.5%  2.2e-05: 52.9%  4.5e-05: 57.5%  9.0e-05: 59.1%  1.8e-04: 61.5%  3.6e-04: 62.0%  7.1e-04: 63.8%
+    new:   vertical D_z, 20 bins (median: P_pved) 1.4e-09:  0.0%  2.8e-09:  0.0%  5.6e-09:  0.0%  1.1e-08:  0.0%  2.2e-08:  0.2%  4.4e-08:  1.1%  8.8e-08:  3.6%  1.8e-07:  7.2%  3.6e-07: 13.3%  7.0e-07: 18.2%  1.4e-06: 24.5%  2.8e-06: 30.1%  5.5e-06: 37.0%  1.1e-05: 42.8%  2.2e-05: 48.7%  4.5e-05: 54.9%  9.0e-05: 57.9%  1.8e-04: 61.6%  3.6e-04: 61.6%  7.1e-04: 64.6%
+  [Enceladus] rerun_base.log:116
+    old: Enceladus (x10): P_pved 19.9%
+    new: Enceladus (x10): P_pved 19.4%
+  [Enceladus] rerun_base.log:117
+    old:   bias g           12  14  16  18  20  22  23  24  25  26   never >=50% (bins 12-26%)
+    new:   bias g           16  16  17  18  19  20  21  21  22  23   never >=50% (bins 16-23%)
+  [Enceladus] rerun_base.log:118
+    old:   rate k2          13  15  17  18  20  21  22  23  24  25   never >=50% (bins 13-25%)
+    new:   rate k2          14  16  17  18  20  20  21  22  23  23   never >=50% (bins 14-23%)
+  [Enceladus] rerun_base.log:119
+    old:   concentration     3   5   7  12  18  24  29  32  34  36   never >=50% (bins 3-36%)
+    new:   concentration     1   3   7  14  20  26  30  31  31  31   never >=50% (bins 1-31%)
+  [Enceladus] rerun_base.log:120
+    old:   horizontal D_h   24  23  21  20  20  19  18  18  18  17   never >=50% (bins 17-24%)
+    new:   horizontal D_h   24  23  21  20  19  19  17  18  17  17   never >=50% (bins 17-24%)
+  [Enceladus] rerun_base.log:121
+    old:   vertical D_z      0   0   0   0   3  13  26  41  54  62   >=50% when vertical D_z >= 7.8e-05
+    new:   vertical D_z      0   0   0   0   3  12  25  39  53  61   >=50% when vertical D_z >= 8.9e-05
+  [Enceladus] rerun_base.log:122
+    old:   time              7  10  13  15  18  21  24  27  31  34   never >=50% (bins 7-34%)
+    new:   time              7   9  12  15  17  20  23  26  30  34   never >=50% (bins 7-34%)
+  [Enceladus] rerun_base.log:123
+    old:   volume           23  22  21  21  20  19  19  19  18  17   never >=50% (bins 17-23%)
+    new:   volume           22  21  20  20  20  19  19  19  18  18   never >=50% (bins 18-22%)
+  [Enceladus] rerun_base.log:124
+    old:   chem. factor F   19  20  19  20  20  20  20  20  20  20   never >=50% (bins 19-20%)
+    new:   chem. factor F   18  19  19  19  19  19  20  20  20  20   never >=50% (bins 18-20%)
+  [Enceladus] rerun_base.log:125
+    old:   g x eta          12  14  16  18  20  22  23  24  25  26   never >=50% (bins 12-26%)
+    new:   g x eta          13  15  17  18  19  20  21  23  23  25   never >=50% (bins 13-25%)
+  [Enceladus] rerun_base.log:126
+    old:   eta              12  14  16  18  20  22  23  24  25  26   never >=50% (bins 12-26%)
+    new:   eta              15  16  17  18  19  20  21  22  22  23   never >=50% (bins 15-23%)
+  [Enceladus] rerun_base.log:127
+    old:   feed share r     13  15  17  18  20  21  22  23  24  25   never >=50% (bins 13-25%)
+    new:   feed share r     17  18  18  19  19  20  20  20  21  21   never >=50% (bins 17-21%)
+  [Enceladus] rerun_base.log:128
+    old:   D_z ratio rho     3   5   7  12  18  24  29  32  34  36   never >=50% (bins 3-36%)
+    new:   D_z ratio rho    24  18  14  16  18  19  20  21  22  22   never >=50% (bins 14-24%)
+  [Enceladus] rerun_base.log:129
+    old:   vertical D_z, 20 bins (median: P_pved) 1.4e-09:  0.0%  2.8e-09:  0.0%  5.6e-09:  0.0%  1.1e-08:  0.0%  2.2e-08:  0.0%  4.4e-08:  0.0%  8.8e-08:  0.0%  1.8e-07:  0.2%  3.6e-07:  1.5%  7.0e-07:  5.1%  1.4e-06:  9.7%  2.8e-06: 15.8%  5.5e-06: 22.9%  1.1e-05: 29.0%  2.2e-05: 37.5%  4.5e-05: 45.1%  9.0e-05: 51.3%  1.8e-04: 57.0%  3.6e-04: 60.3%  7.1e-04: 63.2%
+    new:   vertical D_z, 20 bins (median: P_pved) 1.4e-09:  0.0%  2.8e-09:  0.0%  5.6e-09:  0.0%  1.1e-08:  0.0%  2.2e-08:  0.0%  4.4e-08:  0.0%  8.8e-08:  0.0%  1.8e-07:  0.4%  3.6e-07:  2.1%  7.0e-07:  4.8%  1.4e-06:  9.4%  2.8e-06: 15.2%  5.5e-06: 22.0%  1.1e-05: 27.6%  2.2e-05: 35.2%  4.5e-05: 43.4%  9.0e-05: 50.1%  1.8e-04: 56.4%  3.6e-04: 58.8%  7.1e-04: 63.4%
+  [Enceladus] rerun_base.log:186
+    old:   P5 FAILED: crossings Enceladus 1.6e-05, Europa 1.7e-06; max non-D_z bin 52% / 50%; Earth lowest bin 99.5%
+    new:   P5 HELD: crossings Enceladus 2.6e-05, Europa 1.7e-06; max non-D_z bin 44% / 50%; Earth lowest bin 99.5%
+  [Enceladus] rerun_base.log:189
+    old:   as published    Enceladus  28.3 /  19.9 | Europa  39.6 /  29.0 | Early  99.9 /  99.7
+    new:   as published    Enceladus  26.4 /  19.4 | Europa  39.6 /  29.0 | Early  99.9 /  99.7
+  [Enceladus] rerun_base.log:190
+    old:   share x0.1      Enceladus  25.3 /  18.1 | Europa  37.0 /  27.3 | Early  99.8 /  99.6
+    new:   share x0.1      Enceladus  23.4 /  17.5 | Europa  37.0 /  27.3 | Early  99.8 /  99.6
+  [Enceladus] rerun_base.log:191
+    old:   share x0.28     Enceladus  26.7 /  18.9 | Europa  38.3 /  28.1 | Early  99.9 /  99.6
+    new:   share x0.28     Enceladus  24.8 /  18.4 | Europa  38.3 /  28.1 | Early  99.9 /  99.6
+  [Enceladus] rerun_base.log:192
+    old:   share x2.1      Enceladus  29.1 /  20.4 | Europa  40.3 /  29.4 | Early  99.9 /  99.7
+    new:   share x2.1      Enceladus  27.3 /  20.0 | Europa  40.3 /  29.4 | Early  99.9 /  99.7
+  [Enceladus] rerun_base.log:193
+    old:   whole ocean     Enceladus  31.8 /  21.9 | Europa  42.4 /  30.5 | Early  99.9 /  99.7
+    new:   whole ocean     Enceladus  30.4 /  21.8 | Europa  42.4 /  30.5 | Early  99.9 /  99.7
+  [Enceladus] rerun_base.log:194
+    old:   Delta >= 1      Enceladus  30.0 /  21.0 | Europa  41.0 /  29.9 | Early  99.9 /  99.7
+    new:   Delta >= 1      Enceladus  28.1 /  20.7 | Europa  41.0 /  29.9 | Early  99.9 /  99.7
+  [Enceladus] rerun_base.log:195
+    old:   Delta >= 3      Enceladus  27.2 /  19.2 | Europa  38.7 /  28.4 | Early  99.9 /  99.7
+    new:   Delta >= 3      Enceladus  25.3 /  18.7 | Europa  38.7 /  28.4 | Early  99.9 /  99.7
+  [Enceladus] rerun_base.log:196
+    old:   bias x10        Enceladus  33.1 /  23.1 | Europa  43.2 /  31.2 | Early  99.9 /  99.7
+    new:   bias x10        Enceladus  31.6 /  23.1 | Europa  43.2 /  31.2 | Early  99.9 /  99.7
+  [Enceladus] rerun_base.log:197
+    old:   bias x100       Enceladus  35.9 /  24.9 | Europa  44.3 /  31.8 | Early  99.9 /  99.7
+    new:   bias x100       Enceladus  34.8 /  25.1 | Europa  44.3 /  31.8 | Early  99.9 /  99.7
+  [Enceladus] rerun_base.log:198
+    old:   bias unlimited  Enceladus  37.0 /  25.7 | Europa  44.5 /  31.9 | Early  99.9 /  99.7
+    new:   bias unlimited  Enceladus  36.1 /  25.9 | Europa  44.5 /  31.9 | Early  99.9 /  99.7
+  [Enceladus] rerun_base.log:200
+    old:   P7 HELD: Enceladus unlimited 37.0 (ref 37.1), x10 recovers 55%, x100 87% of P_chance; Europa unlimited 44.5 (ref 44.5), x10 recovers 73%, x100 96% of P_chance
+    new:   P7 FAILED: Enceladus unlimited 36.1 (ref 37.1), x10 recovers 54%, x100 87% of P_chance; Europa unlimited 44.5 (ref 44.5), x10 recovers 73%, x100 96% of P_chance
+  [Enceladus] rerun_base.log:203
+    old:   no wobble                        Enceladus  28.3 /  19.9 | Europa  39.6 /  29.0 | Early  99.9 /  99.7
+    new:   no wobble                        Enceladus  26.4 /  19.4 | Europa  39.6 /  29.0 | Early  99.9 /  99.7
+  [Enceladus] rerun_base.log:204
+    old:   mild: 0.1-1%, 1e5-1e8 yr         Enceladus  27.6 /  19.5 | Europa  38.3 /  28.1 | Early  99.9 /  99.7
+    new:   mild: 0.1-1%, 1e5-1e8 yr         Enceladus  25.7 /  19.0 | Europa  38.3 /  28.1 | Early  99.9 /  99.7
+  [Enceladus] rerun_base.log:205
+    old:   plausible: 0.1-30%, 1e3-1e8 yr   Enceladus  25.6 /  18.1 | Europa  35.8 /  26.4 | Early  99.8 /  99.6
+    new:   plausible: 0.1-30%, 1e3-1e8 yr   Enceladus  23.6 /  17.5 | Europa  35.8 /  26.4 | Early  99.8 /  99.6
+  [Enceladus] rerun_base.log:206
+    old:   harsh: 10-30%, 1e3-1e5 yr        Enceladus  21.7 /  15.4 | Europa  31.7 /  23.6 | Early  99.4 /  99.1
+    new:   harsh: 10-30%, 1e3-1e5 yr        Enceladus  19.9 /  14.8 | Europa  31.7 /  23.6 | Early  99.4 /  99.1
+  [Enceladus] rerun_base.log:207
+    old:   P8 FAILED: harsh drop Enceladus main 6.6, Enceladus x10 4.5, Europa main 7.9, Europa x10 5.4, Early main 0.5, Early x10 0.5
+    new:   P8 FAILED: harsh drop Enceladus main 6.5, Enceladus x10 4.6, Europa main 7.9, Europa x10 5.4, Early main 0.5, Early x10 0.5
+  [Enceladus] rerun_base.log:211
+    old: Enceladus           28.3/  0.0 |  27.9/  0.0 |  28.2/  0.0 ||  19.9/  0.0 |  19.7/  0.0 |  19.9/  0.0
+    new: Enceladus           26.4/  0.0 |  26.0/  0.0 |  26.3/  0.0 ||  19.4/  0.0 |  19.2/  0.0 |  19.4/  0.0
+  [Enceladus] rerun_base.log:231
+    old:   Kang Enceladus S 5-20 g/kg, S* 20.0          pinned 100.0% | main no lid  28.3 final   0.0 (product   0.0) | x10 final   0.0 (product   0.0)
+    new:   Kang Enceladus S 5-20 g/kg, S* 20.0          pinned 100.0% | main no lid  26.4 final   0.0 (product   0.0) | x10 final   0.0 (product   0.0)
+  [Enceladus] rerun_base.log:232
+    old:   Kang Enceladus S 5-20 g/kg, S* 22.5          pinned 100.0% | main no lid  28.3 final   0.0 (product   0.0) | x10 final   0.0 (product   0.0)
+    new:   Kang Enceladus S 5-20 g/kg, S* 22.5          pinned 100.0% | main no lid  26.4 final   0.0 (product   0.0) | x10 final   0.0 (product   0.0)
+  [Enceladus] rerun_base.log:233
+    old:   Kang Enceladus S 7-30 g/kg, S* 20.0          pinned  72.2% | main no lid  28.3 final   7.9 (product   7.9) | x10 final   5.6 (product   5.5)
+    new:   Kang Enceladus S 7-30 g/kg, S* 20.0          pinned  72.2% | main no lid  26.4 final   7.4 (product   7.3) | x10 final   5.4 (product   5.4)
+  [Enceladus] rerun_base.log:234
+    old:   Kang Enceladus S 7-30 g/kg, S* 22.5          pinned  80.3% | main no lid  28.3 final   5.5 (product   5.6) | x10 final   3.9 (product   3.9)
+    new:   Kang Enceladus S 7-30 g/kg, S* 22.5          pinned  80.3% | main no lid  26.4 final   5.2 (product   5.2) | x10 final   3.8 (product   3.8)
+  [Enceladus] rerun_base.log:235
+    old:   Kang Enceladus S 17-40 g/kg, S* 20.0         pinned  18.9% | main no lid  28.3 final  22.9 (product  22.9) | x10 final  16.1 (product  16.2)
+    new:   Kang Enceladus S 17-40 g/kg, S* 20.0         pinned  18.9% | main no lid  26.4 final  21.3 (product  21.4) | x10 final  15.7 (product  15.8)
+  [Enceladus] rerun_base.log:236
+    old:   Kang Enceladus S 17-40 g/kg, S* 22.5         pinned  32.5% | main no lid  28.3 final  19.0 (product  19.1) | x10 final  13.4 (product  13.4)
+    new:   Kang Enceladus S 17-40 g/kg, S* 22.5         pinned  32.5% | main no lid  26.4 final  17.7 (product  17.8) | x10 final  13.1 (product  13.1)
+  [Enceladus] rerun_base.log:237
+    old:   strat alt Enceladus S 5-20, S* 18.0          pinned  92.4% | main no lid  28.3 final   2.2 (product   2.2) | x10 final   1.5 (product   1.5)
+    new:   strat alt Enceladus S 5-20, S* 18.0          pinned  92.4% | main no lid  26.4 final   2.0 (product   2.0) | x10 final   1.5 (product   1.5)
+  [Enceladus] rerun_base.log:238
+    old:   strat alt Enceladus S 5-40, S* 20.0          pinned  66.5% | main no lid  28.3 final   9.5 (product   9.5) | x10 final   6.7 (product   6.7)
+    new:   strat alt Enceladus S 5-40, S* 20.0          pinned  66.5% | main no lid  26.4 final   8.8 (product   8.8) | x10 final   6.5 (product   6.5)
+  [Enceladus] rerun_base.log:239
+    old:   strat alt Enceladus S 1-100, S* 20.0         pinned  65.1% | main no lid  28.3 final   9.9 (product   9.9) | x10 final   6.9 (product   7.0)
+    new:   strat alt Enceladus S 1-100, S* 20.0         pinned  65.1% | main no lid  26.4 final   9.3 (product   9.2) | x10 final   6.8 (product   6.8)
+  [Enceladus] rerun_base.log:271
+    old:   main k2 1e-6 ..1 Enceladus          wins  28.3 | Bennu racemic (R2)  0.0% P(win|rac)   0.0 | R6 step s=1  28.5 s=0.01  31.4 | frozen s=1  28.5 s=0.01  31.5
+    new:   main k2 1e-6 ..1 Enceladus          wins  26.4 | Bennu racemic (R2)  0.0% P(win|rac)   0.0 | R6 step s=1  26.5 s=0.01  28.6 | frozen s=1  26.6 s=0.01  28.6
+  [Enceladus] rerun_base.log:274
+    old:   main k2 1e-12..1 Enceladus          wins  18.6 | Bennu racemic (R2) 23.0% P(win|rac)   1.9 | R6 step s=1  20.8 s=0.01  23.3 | frozen s=1  21.2 s=0.01  24.3
+    new:   main k2 1e-12..1 Enceladus          wins  16.7 | Bennu racemic (R2) 23.0% P(win|rac)   1.7 | R6 step s=1  18.5 s=0.01  20.5 | frozen s=1  18.8 s=0.01  21.4
+  [Enceladus] rerun_base.log:277
+    old:   x10  k2 1e-6 ..1 Enceladus          wins  19.9 | Bennu racemic (R2)  0.0% P(win|rac)   0.0 | R6 step s=1  20.1 s=0.01  22.1 | frozen s=1  20.1 s=0.01  22.1
+    new:   x10  k2 1e-6 ..1 Enceladus          wins  19.4 | Bennu racemic (R2)  0.0% P(win|rac)   0.0 | R6 step s=1  19.6 s=0.01  21.1 | frozen s=1  19.6 s=0.01  21.1
+  [Enceladus] rerun_base.log:280
+    old:   x10  k2 1e-12..1 Enceladus          wins  13.1 | Bennu racemic (R2) 23.0% P(win|rac)   1.4 | R6 step s=1  14.6 s=0.01  16.3 | frozen s=1  14.8 s=0.01  17.0
+    new:   x10  k2 1e-12..1 Enceladus          wins  12.3 | Bennu racemic (R2) 23.0% P(win|rac)   1.3 | R6 step s=1  13.7 s=0.01  15.1 | frozen s=1  13.9 s=0.01  15.8
+  [Enceladus] rerun_base.log:284
+    old:   P13 FAILED: R2 ext Enceladus 1.9, Europa 4.6, Early 13.9; R6 orig 28.5/31.4, 39.9/42.7, 99.9/99.9; R6 ext 20.8/23.3, 28.6/31.1, 74.3/72.9; |frozen - step| max 2.7
+    new:   P13 FAILED: R2 ext Enceladus 1.7, Europa 4.6, Early 13.9; R6 orig 26.5/28.6, 39.9/42.7, 99.9/99.9; R6 ext 18.5/20.5, 28.6/31.1, 74.3/72.9; |frozen - step| max 2.7
+  [Enceladus] rerun_base.log:296
+    old:     Enceladus          base L  28.3 | one src 2.7e-16 | f*_G 4.8e-16 | M=1e3 1.5e-14 | field 4.0e-15
+    new:     Enceladus          base L  26.4 | one src 1.6e-16 | f*_G 2.9e-16 | M=1e3 9.0e-15 | field 2.6e-15
+  [Enceladus] rerun_base.log:301
+    old:     Enceladus          base L  19.9 | one src 2.5e-16 | f*_G 4.4e-16 | M=1e3 1.4e-14 | field 3.7e-15
+    new:     Enceladus          base L  19.4 | one src 1.6e-16 | f*_G 2.8e-16 | M=1e3 9.0e-15 | field 2.6e-15
+  [aggregate (no world named; includes Enceladus)] rerun_base.log:98
+    old:   P4 HELD: D_h effects -3.4, -3.8, -1.3, -2.9
+    new:   P4 HELD: D_h effects -3.6, -4.0, -1.3, -2.9
+  [aggregate (no world named; includes Enceladus)] rerun_base.log:199
+    old:   P6 HELD: largest moon move 2.9 (rules), 3.6 (whole ocean); order Earth > Europa > Enceladus and Earth >= 99 in every row: True
+    new:   P6 HELD: largest moon move 2.9 (rules), 4.0 (whole ocean); order Earth > Europa > Enceladus and Earth >= 99 in every row: True
+  [aggregate (no world named; includes Enceladus)] rerun_base.log:244
+    old:   P10 HELD: largest |final - product| 0.08; values > 1 point from expected: []
+    new:   P10 FAILED: largest |final - product| 0.09; values > 1 point from expected: [(np.float64(21.331500000000002), (22.9, None)), (np.float64(17.692), (19.0, None))]
+  [aggregate (no world named; includes Enceladus)] rerun_base.log:328
+    old: Predictions: P1 held, P2 FAILED, P3 held, P4 held, P5 FAILED, P6 held, P7 held, P8 FAILED, P9 held, P10 held, P11 held, P12 FAILED, P13 FAILED, P14 FAILED, P15 held
+    new: Predictions: P1 FAILED, P2 FAILED, P3 held, P4 held, P5 held, P6 held, P7 FAILED, P8 FAILED, P9 held, P10 FAILED, P11 held, P12 FAILED, P13 FAILED, P14 held, P15 held
+  [VIOLATION] rerun_base.log:305
+    old:   P14 FAILED: Earth L 46.6 D 46.4 pinned 6.9; L<50% crossing 5.05e-06; Enceladus M=1e3 1.5e-14 field 4.0e-15; Europa M=1e3 7.5e-15 field 3.2e-15; Early M=1e3 6.0e-15 field 1.6e-15; Ganymede M=1e3 7.1e-15 field 3.1e-15
+    new:   P14 HELD: Earth L 46.6 D 46.4 pinned 6.9; L<50% crossing 5.05e-06; Enceladus M=1e3 9.0e-15 field 2.6e-15; Europa M=1e3 7.5e-15 field 3.2e-15; Early M=1e3 6.0e-15 field 1.6e-15; Ganymede M=1e3 7.1e-15 field 3.1e-15
+[F: 137 s elapsed]
+
+=== PREDICTIONS ===
+  P1 HELD: max |corr| seeds 0-3 0.0038
+  P2 FAILED: violations per log {'sweep2.log': 0, 'sweep3.log': 0, 'multiwall.log': 0, 'rho2side.log': 0, 'rerun_base.log': 1}
+  P3 HELD: max Enceladus final P_pved over 63 regenerated final values 0
+  P4 HELD: one-sided main 28.3 -> 26.36
+  P5 HELD: step f 3.9 -> 6.68
+  P6 HELD: Enceladus x10 gap 1.45 -> 0.00; all-world max 1.45 -> 0.07
+  P7 HELD: step e 24.5 -> 24.75 (post-hoc 24.7), 2-sided main 26.5 -> 25.59 (post-hoc 25.6), mw x10 19.9 -> 19.44 (post-hoc 19.4), 2-sided x10 20.8 -> 22.10 (post-hoc 22.1)
+  P8 HELD: sweep3 main 6.6 -> 9.01
+  P9 HELD: sweep3 bound 23.9 -> 23.58
+  P10 HELD: sum rule 20.1 -> 19.91
+  P11 HELD: multiwall P_chance 8.8 -> 9.77; step-f P_chance 2.0 -> 1.49
+  P12 HELD: step 0 21.8 -> 21.8, step a 24.1 -> 24.1, step b 23.3 -> 23.8, step c 27.2 -> 27.8, step d 26.4 -> 27.1, step e 24.5 -> 24.7, step f 3.9 -> 6.7
+  P13 FAILED: bias g +5.9 vs eta (g factor) +6.3; rate k2 +6.4 vs feed share r +3.0; concentration +29.7 vs D_z ratio rho +6.0; top vertical D_z
+  P14 HELD: 9 rows, max |new final - old final x ratio| 0.07; finals 0.0->0.0, 0.0->0.0, 7.9->7.4, 5.5->5.2, 22.9->21.3, 19.0->17.7, 2.2->2.0, 9.5->8.8, 9.9->9.3
+  P15 HELD: main M=1e3 1.5e-14 -> 9.0e-15, field 4.0e-15 -> 2.6e-15
+  P16 HELD: max |seed k - seed 0| over the 10 Enceladus no-lid columns 0.28
+
+Summary: P1 held, P2 FAILED, P3 held, P4 held, P5 held, P6 held, P7 held, P8 held, P9 held, P10 held, P11 held, P12 held, P13 FAILED, P14 held, P15 held, P16 held
+Remapped call sites ([s, 0] -> [s, 0, 1]), calls: multiwall.py:435 x5, rerun_base.py:170 x1, rerun_base.py:242 x1, rho2side.py:96 x5, seedfix.py:135 x8, seedfix.py:155 x1, sweep2.py:165 x4, sweep3.py:156 x4
+total 137 s
