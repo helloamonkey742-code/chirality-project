@@ -1,0 +1,57 @@
+seedfix2.py, N = 200000: Enceladus extra draws moved from default_rng([s, 0]) to default_rng([s, 0, 1]) in front2d Part B, deephand_scale Section 3 and pin_onset Section 4; rerun_base skipped (seedfix.py Section F)
+patched multiwall.log in a temp dir: lines [539, 556, 573, 576, 577, 578] replaced by seedfix.log's regenerated Enceladus lines (old text checked against the real log)
+
+=== A. front2d.worlds() (Part B) vs front2d.log:106-162 ===
+
+--- front2d.log: lines 106-162 compared (57 regenerated); 3 Enceladus lines changed, 0 aggregate lines changed, 0 VIOLATIONS ---
+  [Enceladus] front2d.log:125
+    old: Enceladus            4.2 |   5.0 |     28.1      131      612 |   1.0 |   0.0
+    new: Enceladus            4.2 |   4.4 |     28.1      131      612 |   1.0 |   0.0
+  [Enceladus] front2d.log:143
+    old: Enceladus           28.3 /  8.8 /  63.0 |   0.0 /  0.0 / 100.0  ||   28.3 /  8.8 /  63.0 |   0.0 /  0.0 / 100.0
+    new: Enceladus           26.4 /  9.8 /  63.9 |   0.0 /  0.0 / 100.0  ||   26.4 /  9.8 /  63.9 |   0.0 /  0.0 / 100.0
+  [Enceladus] front2d.log:160
+    old: Enceladus          -0.00 / +0.00 | +0.00 / +0.00 | +0.00 / +0.00 | -0.04 / +0.00
+    new: Enceladus          -0.00 / +0.00 | +0.00 / +0.00 | +0.00 / +0.00 | -0.03 / +0.00
+[A: 12 s]
+
+=== B. deephand_scale.section3() vs deephand_scale.log:702-900 ===
+
+--- deephand_scale.log: lines 702-900 compared (199 regenerated); 2 Enceladus lines changed, 0 aggregate lines changed, 0 VIOLATIONS ---
+  [Enceladus] deephand_scale.log:883
+    old: Enceladus           28.3 /  8.8 /  63.0 |   0.0 /  0.0 / 100.0 ||  19.9 /  5.7 /  74.3 |   0.0 /  0.0 / 100.0 ||  27.1 / 10.9 /  62.0 |   0.0 /  0.0 / 100.0 ||  16.9 /  3.1 /  80.0 |   0.0 /  0.0 / 100.0
+    new: Enceladus           26.4 /  9.8 /  63.9 |   0.0 /  0.0 / 100.0 ||  19.4 /  6.4 /  74.1 |   0.0 /  0.0 / 100.0 ||  26.0 / 11.8 /  62.2 |   0.0 /  0.0 / 100.0 ||  17.4 /  2.6 /  80.0 |   0.0 /  0.0 / 100.0
+  [Enceladus] deephand_scale.log:900
+    old: Enceladus           68.6 /   nan |  45.5 /   nan |    0.79
+    new: Enceladus           69.2 /   nan |  46.6 /   nan |    0.69
+[B: 21 s]
+
+=== C. pin_onset sections 2, 3 and 4 (section 4 with the seedfix Enceladus regression target) vs pin_onset.log:20-90 ===
+
+--- pin_onset.log: lines 20-90 compared (71 regenerated); 2 Enceladus lines changed, 0 aggregate lines changed, 0 VIOLATIONS ---
+  [Enceladus] pin_onset.log:73
+    old:   Enceladus             3.9 /   0.0     3.9 /   0.0     3.9 /   0.0     3.9 /   0.0     3.9 /   0.0     3.9 /   0.0    16.9 /   0.0     95.0     84.7       3.29
+    new:   Enceladus             6.7 /   0.0     6.7 /   0.0     6.7 /   0.0     6.7 /   0.0     6.7 /   0.0     6.7 /   0.0    19.9 /   0.0     95.0     84.9       3.29
+  [Enceladus] pin_onset.log:90
+    old:   Enceladus            3.9 /   2.0 /  94.1 |   0.0 /   0.0 / 100.0
+    new:   Enceladus            6.7 /   1.5 /  91.8 |   0.0 /   0.0 / 100.0
+[C: 70 s]
+
+=== PREDICTIONS ===
+  P1 HELD: remapped deephand_scale.py:299 x1, front2d.py:201 x6, multiwall.py:435 x2, pin_onset.py:254 x1
+  P2 HELD: violations {'front2d.log': 0, 'deephand_scale.log': 0, 'pin_onset.log': 0}; aggregate lines {'front2d.log': [], 'deephand_scale.log': [], 'pin_onset.log': []}; pin_onset sections 2-3 identical True; regression, front rule off vs multiwall.run4(0) main: EXACT; vs multiwall.log Section 4 (printed 0.1, 15 worlds): EXACT | regression h = 1 vs multiwall run4(0) main (arrays) and multiwall.log main (printed 0.1, 15 worlds parsed): EXACT | regression: eq20 = 1 and 5 reproduce sweep2.log step f (5 worlds, within rounding)
+  P3 HELD: max Enceladus final P_pved over 13 regenerated finals 0
+  P4 HELD: drive row 4.2 |   4.4 |     28.1      131      612 |   1.0 |   0.0 (old 4.2 | 5.0 | 28.1 131 612 | 1.0 | 0.0)
+  P5 HELD: off [26.4, 9.8, 63.9, 0.0, 0.0, 100.0], on [26.4, 9.8, 63.9, 0.0, 0.0, 100.0]
+  P6 HELD: changes main / u*=1 / vxA / v/A [-0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -0.03, 0.0]; seed-1 max 0.36
+  P7 HELD: main 26.4/9.8/63.9, x10 19.4
+  P8 FAILED: fitted h 26.0 - main 26.4 = -0.40
+  P9 HELD: ocean-scale 17.4 - main = -9.00
+  P10 HELD: thin 69.2 (old 68.6), < 1 width 46.6 (old 45.5), median h 0.69 (old 0.79)
+  P11 HELD: step f [(6.7, 0.0), (6.7, 0.0), (6.7, 0.0), (6.7, 0.0), (6.7, 0.0), (6.7, 0.0)], x5 (19.9, 0.0), split (6.7, 1.5, 91.8) | (0.0, 0.0, 100.0)
+  P12 HELD: layered 95.0, pinned@k 84.85 (old 84.7), median x 3.29 (old 3.29)
+  P13 HELD: front 0.01 / 0.08 / 2-17% , fitted 1.4, thin 52-74%, ocean-scale range: [True, True, True, np.True_, True, True]
+
+Summary: P1 held, P2 held, P3 held, P4 held, P5 held, P6 held, P7 held, P8 FAILED, P9 held, P10 held, P11 held, P12 held, P13 held
+Remapped call sites ([s, 0] -> [s, 0, 1]), calls: deephand_scale.py:299 x1, front2d.py:201 x6, multiwall.py:435 x2, pin_onset.py:254 x1
+total 70 s

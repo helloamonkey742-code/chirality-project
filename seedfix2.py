@@ -67,6 +67,27 @@ PREDICTIONS (written and committed before any result-producing run; never edited
 
 Run: OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 OPENBLAS_NUM_THREADS=2 NUMBA_NUM_THREADS=2 nice -n 10 \
      /opt/anaconda3/bin/python seedfix2.py > seedfix2.log
+
+RESULTS (seedfix2.log, 2026-10-13): N = 200000, 70 s. 12 held, 1 failed. (A smoke run at SEEDFIX2_N=2000 was made
+before the predictions commit, only to catch crashes; its numbers are not used.)
+  P1  HELD.   remapped front2d.py:201 x6, multiwall.py:435 x2, deephand_scale.py:299 x1, pin_onset.py:254 x1; nothing else.
+  P2  HELD.   0 violations and 0 aggregate lines changed in all three logs (front2d 57/57, deephand_scale 199/199,
+              pin_onset 71/71 lines; sections 2-3 identical); front2d EXACT x2, deephand_scale EXACT, pin_onset
+              section 4 regression passed against seedfix's step f 6.7 and x5 19.9.
+  P3  HELD.   all 13 regenerated Enceladus final values are 0.0.
+  P4  HELD.   drive row 4.2 | 5.0 -> 4.4 | 28.1 131 612 | 1.0 | 0.0 (only the reaching-one-hand column moved).
+  P5  HELD.   front rule off = on = 26.4 / 9.8 / 63.9 | 0.0 / 0.0 / 100.0 (was 28.3 / 8.8 / 63.0).
+  P6  HELD.   Enceladus changes -0.00 / +0.00 (main, u*=1, v x A), v / A -0.04 -> -0.03; seed-1 max 0.36 unchanged.
+  P7  HELD.   deephand main 26.4 / 9.8 / 63.9, x10 19.4 / 6.4 / 74.1.
+  P8  FAILED: fitted h 27.1 -> 26.0, shift -1.2 -> -0.4 (registered [-1.4, -0.5]); smaller than predicted, so the
+              manuscript's "no share by more than 1.4 points" still stands (Ganymede and Titan set it).
+  P9  HELD.   ocean-scale 16.9 / 3.1 / 80.0 -> 17.4 / 2.6 / 80.0; loss vs main -11.4 -> -9.0.
+  P10 HELD.   thin 68.6 -> 69.2, < 1 width 45.5 -> 46.6, median h 0.79 -> 0.69.
+  P11 HELD.   pin_onset step f 3.9 -> 6.7 / 0.0 in all six kappa/x1 columns, x5 16.9 -> 19.9 / 0.0, split
+              3.9 / 2.0 / 94.1 -> 6.7 / 1.5 / 91.8 | 0.0 / 0.0 / 100.0.
+  P12 HELD.   layered 95.0 unchanged, pinned@kappa 84.7 -> 84.9 (84.85), median x 3.29 unchanged.
+  P13 HELD.   front2d 0.01 / 0.08 / 2-17%, deephand 1.4 points, 52-74% thin, ocean-scale range all reproduce:
+              no number in journals/ija_draft.md changes.
 """
 import contextlib
 import inspect
