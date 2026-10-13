@@ -150,7 +150,15 @@ def r4_longrun():
         kramers = np.sqrt(2) / (2 * np.pi) * np.exp(-1 / (2 * e))
         print(f"    eps={e:<5} measured {flips / (2000 * T):.1e} per unit time, Kramers {kramers:.1e}")
         assert 0.3 < flips / (2000 * T) / kramers < 3
-    print("  rate ~ exp(-N/2): 1 um^3 at 1 uM holds ~600 molecules (flips possible); any pond or ocean never flips.")
+    # expected flips in a reaction time tau: (sqrt2/2pi) exp(-N/2) k tau >= 1  <=>  N <= 2 ln(0.225 k tau)
+    pre = np.sqrt(2) / (2 * np.pi)
+    print("  rate ~ exp(-N/2): >= 1 flip in time tau only if N <= 2 ln(0.225 k tau):")
+    for kt in (10, 1e5, 1.3e13):
+        print(f"    k tau = {kt:7.1e}: N <= {2 * np.log(pre * kt):.1f}")
+    n_flips = pre * np.exp(-600 / 2) * 1.3e13
+    assert n_flips < 1e-100
+    print(f"  1 um^3 at 1 uM holds ~600 molecules: {n_flips:.0e} expected flips at k tau = 1.3e13 (never flips);")
+    print("  only pools of tens of molecules can flip; a droplet, pond or ocean never does.")
 
 
 def r5_design():
