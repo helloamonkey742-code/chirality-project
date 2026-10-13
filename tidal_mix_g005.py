@@ -46,6 +46,33 @@ the two columns of tidal_mix.log section 4. Hand K values: Gamma 0.05 K_low/K_mi
 
 Run: OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 OPENBLAS_NUM_THREADS=2 nice /opt/anaconda3/bin/python tidal_mix_g005.py \
      > tidal_mix_g005.log 2>&1   (TIDAL_N=2000 for a crash-only smoke run; checks are made only at N = 200000.)
+
+RESULTS (tidal_mix_g005.log, 2026-10-13): N = 200000, 23 s wall. 6 held, 4 failed. One crash-only smoke run (TIDAL_N=2000,
+output to /private/tmp, not kept; only its tail was seen, numbers unused) was made after the predictions commit (5b64e98), with
+a cosmetic cleanup of bands_at() before that commit. No code was changed between the commit and the full run.
+  P1  FAILED BY THE LETTER, right in substance. Full-prior regression EXACT (line 22). Line 23 prints FAILED for the
+      recomputed Gamma 0.1-0.3 band vs tidal_mix.log, but only for the Early Earth row: the parser logged_rows() reads 14
+      of 15 rows because that row's flag text contains "1.5e-9" (an extra float). The other 14 rows match digit for digit;
+      Early Earth is 99.9 | 99.9 in both columns (lines 27 and tidal_mix.log). A check defect, not a model difference.
+  P2  HELD.   K_mid >= 1e-3 for Europa 4.44e-3, Titan 2.64e-3, Callisto 1.05e-3, Triton 0.179, Mimas 2.09e-2; < 1e-3 for the other
+              eight incl. Ganymede 5.61e-4, Miranda 1.18e-4, Oberon 3.24e-5 (lines 5-17).
+  P3  HELD.   K_low: Europa 7.12e-4, Ganymede 2.61e-4 (< 1e-3); Callisto 1.05e-3, Titan 2.44e-3, Triton 0.0796, Mimas 0.0209 (>=
+              1e-3). Ganymede K_high 1.05e-3, Miranda 4.71e-4, Ariel 3.10e-8 / 3.44e-8 (lines 6-17).
+  P4  HELD.   % of band above 1e-3: Europa 92.6, Enceladus 21.8, Ganymede 3.2, Miranda 0.0 (lines 5-7, 16).
+  P5  HELD.   no lid / final change: Europa +0.4/+0.3, Ganymede +0.7, Titan +0.8, Callisto +0.7, Triton +0.0, Mimas
+              -0.7/-0.2 (lines 32-41).
+  P6  FAILED. Umbriel -8.1 (to 55.6) held, but Titania only -2.3 (70.7; predicted -5..-20) and Oberon only -0.5 (75.0;
+              predicted -1..-10) (lines 28-30).
+  P7  FAILED. Miranda -1.6 held (67.2), but Ariel -20.2 (44.3 -> 24.1) and Dione -20.2 no lid / -12.6 final (51.6 -> 31.4)
+              are far outside -8..+2 (lines 31, 34, 39). Below ~1e-7 the model loses P_pved to P_none (Ariel 65.3 % none).
+  P8  HELD.   Enceladus no lid 36.7 (41.3 logged), final 0.0 (line 40).
+  P9  FAILED. Largest gain +0.8 (Titan), within 1.5 (held); but the largest falls are Ariel and Dione (-20.2 each), not
+              Titania or Umbriel (-2.3, -8.1) (lines 28-39).
+  P10 HELD.   max |seed k - seed 0| 0.37 (Dione) (lines 44-58).
+  Summary (descriptive, seed 0, no lid): Gamma 0.05 leaves the six worlds with bands >= ~3e-4 unchanged (Europa, Ganymede,
+  Titan, Callisto, Triton, Mimas) and the bands of Oberon, Titania, Miranda, Enceladus move by <= 4.6; Umbriel falls 8.1,
+  Ariel and Dione fall 20.2. The exploratory control (Gamma 0.2 x same P range, lines 27-41) sits within 3 points of the
+  logged band for every world, so the Ariel/Dione/Umbriel falls come from the 4x lower K, not from the narrower range.
 """
 import os
 import re
