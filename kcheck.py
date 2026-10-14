@@ -74,6 +74,41 @@ hand from the equations, and persist.log's r_c, r90, r99 (0.08698, 0.02307, 0.00
  P15 Cost: the whole script finishes in under 20 minutes at 2 threads under nice (expected about 1-2 minutes).
 
 Run: nice -n 10 env OMP_NUM_THREADS=2 OPENBLAS_NUM_THREADS=2 /opt/anaconda3/bin/python kcheck.py > kcheck.log 2>&1
+
+RESULTS (kcheck.log, 2026-10-13): N = 200000 per world, 3 s. 9 of 15 held, 6 failed. The predictions were committed in 2617e29. A
+N = 2000 smoke run was made after that commit to catch crashes and its numbers were seen (it showed the same six failures); they were
+not used and no prediction was changed. Before the commit two code-only bugs were fixed by reading (P7 compared one value where the
+log row has two; one redundant clause in P2).
+  P1  HELD.   Antisymmetric eigenvalue = a_rac - 1 - 2r to 4.7e-11; (a_rac - 1)/2 = 0.086976 = numeric r_c (kcheck.log:3-9).
+  P2  HELD.   Closed form 0.08935, +2.7% vs 0.086976; the hard bound 0.3 is 3.45 x r_c (kcheck.log:10).
+  P3  HELD.   M_ex 5.749, M_90 21.674, M_99 394.6; x1.6: 9.198, 34.678, 631.4 (kcheck.log:11-12).
+  P4  FAILED. Parts held (a0 = 5: M_ex 1.18 > 1; a0 = 7: 0.88 < 1; every grid cell above 2.5), but the grid maximum is 26.1 (ki = 0.3,
+              k0 = 0.01), registered 16; the range is 3.1-26.1 (kcheck.log:14-26).
+  P5  FAILED. 0.5 r_c reaches eta* = 0.7811 exactly; 1.05 r_c, r = 0.25 and r = 0.5 end at 0 as registered; but at 0.8 r_c the final |eta| is
+              4.6e-16, registered eta* = 0.5296 (kcheck.log:29-34). Post hoc (scratch, not part of this script): the 1e-8 start excess
+              decays to the floating-point floor (1e-17) during the first 1690 time units, before the racemic state turns unstable
+              (t = 1691 of 2000 at 0.8 r_c; at 0.5 r_c, t = 1256, rounding noise of 1e-17 survived and was amplified), so the deterministic
+              ramp has nothing to amplify; re-seeding 1e-8 at the crossing gives eta* = 0.529589 to 6 figures. A test design flaw
+              (it needs the noise the real system has), not evidence against the threshold.
+  P6  HELD.   Icy worlds 80.9-81.3 / 73.6-74.0 / 71.4-71.7 / 67.2-67.5 / 64.8-65.1 % of draws pass; Earth 100.00, 100.00, 100.00, 99.88,
+              99.16, 98.49 (kcheck.log:43-59).
+  P7  HELD.   The unmasked rerun equals the committed multiwall / sweep3 values for all 15 worlds, none, main and x10, no lid and
+              final (kcheck.log:40).
+  P8  HELD.   90 cells, no violation (kcheck.log:141).
+  P9  FAILED. The draft's own test applied to every draw moves multiwall main no-lid P_pved by up to 2.38 points (Ganymede -2.38, Europa
+              -2.03, Enceladus -0.22, Earth 0.00), registered <= 0.5; the committed pipeline never tests the reversed-wall (recursion)
+              draws (kcheck.log:142).
+  P10 FAILED. Winning draws failing the stricter test: icy worlds 1.5% (Mimas) to 13.5% (Titan) at M_ex, registered 3-9; 6.5-22.7% at
+              1.6 M_90, registered 8-17; Earth 0.00 / 1.51, as registered (kcheck.log:119-135, 143).
+  P11 FAILED. Larger than registered: at M_ex Europa -4.69, Ganymede -5.60, Enceladus -0.99 (Enceladus inside; Europa and Ganymede
+              outside -1 to -4), Earth -0.00; at 1.6 M_90 Europa -8.23, Ganymede -9.67 (outside -3 to -8), Enceladus -2.42, Earth -1.51
+              (inside); Earth sweep3-none -0.99 (kcheck.log:144).
+  P12 HELD.   Order Earth > Ganymede > Europa > Enceladus at every level; Enceladus final 0.0; the largest P_chance falls from 14.9 to 3.7
+              (kcheck.log:113, 145).
+  P13 FAILED. At M_ex the largest shift of any abstract number is 5.60 (Ganymede), registered <= 3; at 1.6 M_90 it is 9.67, registered
+              >= 3, as registered (kcheck.log:147-157).
+  P14 HELD.   Early Earth at the aspartic acid rate and M_90: 97.2 (kcheck.log:158).
+  P15 HELD.   3 s (kcheck.log:159).
 """
 import os
 import sys

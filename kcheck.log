@@ -1,0 +1,161 @@
+kcheck.py, N = 200000, seed 0; Enceladus on stream [s, 0, 1] (seedfix wrapper); G_NEW = (4.4e-18, 2.64e-16)
+=== A. Analytic: where does the pure/mixed transition sit, in kd units (k = kd = ki = f = 1, k0 = 1e-3, a0 = 1.6)? ===
+a_rac (racemic feed, any r) = 1.173953;  (a_rac - 1)/2 = 0.086976;  numeric r_c = 0.086976, r(eta*>=0.9) = 0.023070, r(eta*>=0.99) = 0.001267
+  r = 0.0    antisymmetric eigenvalue +0.173953   a_rac - 1 - 2r = +0.173953
+  r = 0.02   antisymmetric eigenvalue +0.133953   a_rac - 1 - 2r = +0.133953
+  r = 0.05   antisymmetric eigenvalue +0.073953   a_rac - 1 - 2r = +0.073953
+  r = 0.087  antisymmetric eigenvalue -0.000047   a_rac - 1 - 2r = -0.000047
+  r = 0.2    antisymmetric eigenvalue -0.226047   a_rac - 1 - 2r = -0.226047
+  P1 HELD: max |eigenvalue - (a_rac - 1 - 2r)| = 4.67e-11; (a_rac - 1)/2 = 0.086976 vs r_c 0.086976
+  P2 HELD: closed form r_c = 0.08935 (+2.7% vs numeric); necessary bound 0.3 is 3.45 x r_c
+M = 1/(2 r) with k2c := kd:  M_ex = 5.749  M_90 = 21.674  M_99 = 394.6;  x1.6 (ramp end): 9.198  34.678  631.4
+  P3 HELD: M_ex 5.75, M_90 21.67, M_99 395; x1.6: 9.20, 34.7, 631
+
+M_ex = 1/(2 r_c) over the constants the draft does not sample (a0 = 1.6): rows ki, columns k0
+  ki = 0.3   k0 0.0001:  13.67  k0 0.001:  14.34  k0 0.01:  26.12   (closed form, k0 = 0: 13.60)
+  ki = 1.0   k0 0.0001:   5.61  k0 0.001:   5.75  k0 0.01:   7.36   (closed form, k0 = 0: 5.60)
+  ki = 3.0   k0 0.0001:   3.14  k0 0.001:   3.20  k0 0.01:   3.78   (closed form, k0 = 0: 3.13)
+M_ex against how far the ramp goes past the crossing (repo ki = 1, k0 = 1e-3):
+  a0 = 1.2   M_ex =  18.763   (closed form  15.639)
+  a0 = 1.6   M_ex =   5.749   (closed form   5.596)
+  a0 = 2.0   M_ex =   3.606   (closed form   3.562)
+  a0 = 3.0   M_ex =   2.010   (closed form   2.000)
+  a0 = 5.0   M_ex =   1.178   (closed form   1.175)
+  a0 = 7.0   M_ex =   0.880   (closed form   0.879)
+  a0 = 10.0  M_ex =   0.667   (closed form   0.667)
+  P4 FAILED: grid 3.14-26.12; a0 = 5: 1.18, a0 = 7: 0.88
+
+Direct deterministic ramp a0: 0.8 -> 1.6 over tau = 2000, hold 3000, 1e-8 relative start excess, g = 0, no noise
+  r = 0.04349 (0.5 r_c): final |eta| = 0.781141   eta*(r) = 0.781141
+  r = 0.06958 (0.8 r_c): final |eta| = 4.61418e-16   eta*(r) = 0.529584
+  r = 0.09133 (1.05 r_c): final |eta| = 0   (no amplification expected)
+  r = 0.25000 (M = 2 (r = 0.25)): final |eta| = 0   (no amplification expected)
+  r = 0.50000 (M = 1 (r = 0.5)): final |eta| = 0   (no amplification expected)
+  P5 FAILED: 0.5 r_c: 0.781; 0.8 r_c: 4.61e-16; 1.05 r_c: 0; M = 2 (r = 0.25): 0; M = 1 (r = 0.5): 0
+
+=== B. Draws: committed pipeline (multiwall.multi) with an extra mask k2*c > M * 2 K_RAC on every draw ===
+[draws done: 3 s elapsed]
+
+--- B0. Regression of the unmasked rerun against the committed logs ---
+  P7 HELD: 15 worlds x (none, main, x10) x (no lid, final) equal the committed values
+
+--- B1. Draw shares with k2 c above M * 2 K_RAC (unconditional, all 200,000 draws), % ---
+world                    draft 1     nec 1.667        exists   exists x1.6       pure0.9  pure0.9 x1.6    Asp exists   Asp pure0.9
+Enceladus                  81.27         79.21         73.92         71.70         67.48         65.08         68.63         61.69
+Europa                     81.14         79.13         73.69         71.54         67.36         64.94         68.57         61.59
+Ganymede                   81.01         79.00         73.72         71.56         67.39         64.94         68.57         61.60
+Titan                      81.09         79.10         73.80         71.62         67.47         65.03         68.64         61.68
+Callisto                   80.85         78.86         73.58         71.43         67.32         64.93         68.46         61.55
+Triton                     81.12         79.10         73.82         71.63         67.41         64.94         68.59         61.64
+Pluto                      81.05         79.02         73.62         71.40         67.17         64.77         68.33         61.47
+Titania                    81.12         79.07         73.82         71.66         67.43         65.03         68.59         61.64
+Oberon                     81.15         79.12         73.87         71.63         67.45         65.04         68.59         61.67
+Umbriel                    81.34         79.33         73.95         71.72         67.50         65.14         68.69         61.81
+Ariel                      81.15         79.09         73.75         71.56         67.42         65.10         68.57         61.79
+Dione                      81.15         79.13         73.73         71.57         67.40         64.97         68.56         61.60
+Miranda                    81.10         79.10         73.81         71.62         67.47         65.06         68.62         61.67
+Mimas                      80.96         78.94         73.64         71.49         67.32         64.87         68.46         61.47
+Early Earth ocean         100.00        100.00        100.00         99.88         99.16         98.49         99.43         97.22
+  P6 HELD: icy worlds M=1 80.9-81.3, exists 73.6-74.0, x1.6 71.4-71.7, pure0.9 67.2-67.5, x1.6 64.8-65.1; Earth 100.00, 100.00, 100.00, 99.88, 99.16, 98.49
+
+--- B2. P_pved %, multiwall main, NO LID (rows: world; columns: M levels; first column = committed pipeline, no extra mask) ---
+world               unmasked       draft 1     nec 1.667        exists   exists x1.6       pure0.9  pure0.9 x1.6    Asp exists   Asp pure0.9
+Early Earth ocean       99.9          99.9          99.9          99.9          99.8          99.1          98.4          99.4          97.2
+Umbriel                 53.7          52.3          51.7          49.7          48.7          46.8          45.7          47.4          44.0
+Oberon                  51.4          49.7          49.0          47.0          46.0          44.0          42.9          44.6          41.2
+Titania                 51.3          49.7          49.0          46.9          45.9          44.0          42.8          44.6          41.1
+Ariel                   49.6          48.2          47.5          45.7          44.8          43.1          42.0          43.5          40.5
+Ganymede                44.1          41.8          40.9          38.5          37.6          35.6          34.5          36.2          32.9
+Callisto                43.5          41.2          40.3          38.0          37.1          35.2          34.1          35.7          32.4
+Dione                   42.0          40.5          40.0          38.4          37.7          36.2          35.2          36.6          33.8
+Pluto                   41.1          39.2          38.5          36.5          35.7          34.0          33.0          34.5          31.6
+Europa                  39.6          37.6          36.9          34.9          34.1          32.4          31.4          32.9          30.0
+Triton                  37.0          35.1          34.4          32.7          31.9          30.3          29.3          30.8          28.1
+Titan                   35.8          33.6          32.9          31.0          30.1          28.6          27.7          29.0          26.3
+Miranda                 27.1          26.8          26.5          25.7          25.3          24.4          23.9          24.7          23.1
+Enceladus               26.4          26.1          26.0          25.4          25.1          24.4          23.9          24.6          23.2
+Mimas                   17.3          17.3          17.3          17.0          16.9          16.5          16.2          16.6          15.7
+
+--- B3. P_pved %, multiwall main, FINAL (with salt lid); x10 final ---
+world               unmasked       draft 1     nec 1.667        exists   exists x1.6       pure0.9  pure0.9 x1.6    Asp exists   Asp pure0.9
+Early Earth ocean       99.9          99.9          99.9          99.9          99.8          99.1          98.4          99.4          97.2   (main)
+  x10                   99.7          99.7          99.7          99.7          99.6          98.8          98.2          99.1          96.9
+Umbriel                 53.7          52.3          51.7          49.7          48.7          46.8          45.7          47.4          44.0   (main)
+  x10                   43.6          42.5          41.9          40.2          39.4          37.8          36.8          38.3          35.4
+Oberon                  51.4          49.7          49.0          47.0          46.0          44.0          42.9          44.6          41.2   (main)
+  x10                   40.8          39.5          38.9          37.2          36.4          34.8          33.8          35.2          32.4
+Titania                 51.3          49.7          49.0          46.9          45.9          44.0          42.8          44.6          41.1   (main)
+  x10                   40.9          39.6          39.0          37.2          36.5          34.9          33.9          35.3          32.5
+Ariel                   49.6          48.2          47.5          45.7          44.8          43.1          42.0          43.5          40.5   (main)
+  x10                   39.7          38.5          38.0          36.4          35.7          34.2          33.4          34.6          32.1
+Ganymede                44.1          41.8          40.9          38.5          37.6          35.6          34.5          36.2          32.9   (main)
+  x10                   33.5          31.9          31.2          29.4          28.6          27.1          26.2          27.5          24.9
+Callisto                43.5          41.2          40.3          38.0          37.1          35.2          34.1          35.7          32.4   (main)
+  x10                   33.0          31.4          30.8          29.0          28.2          26.7          25.9          27.2          24.6
+Dione                   26.2          25.3          25.0          24.0          23.6          22.6          22.0          22.9          21.2   (main)
+  x10                   20.1          19.5          19.2          18.4          18.1          17.3          16.8          17.5          16.1
+Pluto                   41.1          39.2          38.5          36.5          35.7          34.0          33.0          34.5          31.6   (main)
+  x10                   30.6          29.2          28.7          27.2          26.5          25.2          24.4          25.6          23.4
+Europa                  30.1          28.5          28.0          26.5          25.9          24.6          23.8          24.9          22.8   (main)
+  x10                   22.0          20.9          20.5          19.3          18.9          17.9          17.3          18.2          16.5
+Triton                  37.0          35.1          34.4          32.7          31.9          30.3          29.3          30.8          28.1   (main)
+  x10                   26.5          25.2          24.7          23.4          22.8          21.7          20.9          22.0          20.0
+Titan                   35.8          33.6          32.9          31.0          30.1          28.6          27.7          29.0          26.3   (main)
+  x10                   25.5          24.1          23.6          22.2          21.6          20.4          19.7          20.8          18.8
+Miranda                  9.0           8.9           8.8           8.5           8.4           8.1           7.9           8.2           7.7   (main)
+  x10                    7.0           7.0           6.9           6.7           6.6           6.3           6.2           6.4           6.0
+Enceladus                0.0           0.0           0.0           0.0           0.0           0.0           0.0           0.0           0.0   (main)
+  x10                    0.0           0.0           0.0           0.0           0.0           0.0           0.0           0.0           0.0
+Mimas                    5.6           5.6           5.5           5.5           5.4           5.3           5.2           5.3           5.0   (main)
+  x10                    3.7           3.7           3.7           3.7           3.6           3.5           3.5           3.6           3.4
+
+--- B4. Three-way split, multiwall main, no lid: P_chance / P_none (unmasked, then each level) ---
+largest P_chance over the 15 worlds: unmasked 14.9; draft 1 10.1; nec 1.667 9.2; exists 7.1; exists x1.6 6.3; pure0.9 5.0; pure0.9 x1.6 4.4; Asp exists 5.3; Asp pure0.9 3.7
+Enceladus          chance / none  unmasked  9.8 /  63.9 |  8.4 /  65.5 |  7.9 /  66.1 |  6.6 /  68.0 |  6.1 /  68.9 |  5.0 /  70.6 |  4.4 /  71.6 |  5.3 /  70.2 |  3.7 /  73.1
+Europa             chance / none  unmasked  4.9 /  55.5 |  2.9 /  59.6 |  2.5 /  60.6 |  1.8 /  63.3 |  1.6 /  64.3 |  1.2 /  66.5 |  0.9 /  67.7 |  1.3 /  65.9 |  0.7 /  69.3
+Ganymede           chance / none  unmasked  3.4 /  52.5 |  1.8 /  56.4 |  1.6 /  57.5 |  1.1 /  60.3 |  1.0 /  61.5 |  0.7 /  63.7 |  0.5 /  65.0 |  0.8 /  63.0 |  0.4 /  66.8
+Early Earth ocean  chance / none  unmasked  0.0 /   0.1 |  0.0 /   0.1 |  0.0 /   0.1 |  0.0 /   0.1 |  0.0 /   0.2 |  0.0 /   0.9 |  0.0 /   1.6 |  0.0 /   0.6 |  0.0 /   2.8
+
+--- B5. Share of currently winning draws (multiwall main, no lid) that fail the stricter test, % ---
+world                    draft 1     nec 1.667        exists   exists x1.6       pure0.9  pure0.9 x1.6    Asp exists   Asp pure0.9
+Enceladus                   0.83          1.46          3.76          4.93          7.59          9.20          6.83         11.82
+Europa                      5.12          6.80         11.85         13.95         18.26         20.77         17.04         24.33
+Ganymede                    5.39          7.34         12.69         14.89         19.24         21.90         18.01         25.58
+Titan                       6.09          8.01         13.49         15.79         20.16         22.73         18.89         26.46
+Callisto                    5.30          7.18         12.48         14.70         19.09         21.65         17.87         25.39
+Triton                      5.24          6.96         11.74         13.85         18.08         20.70         16.87         24.20
+Pluto                       4.66          6.32         11.05         13.10         17.18         19.67         16.00         23.12
+Titania                     3.08          4.52          8.64         10.40         14.20         16.45         13.12         19.85
+Oberon                      3.28          4.65          8.61         10.54         14.29         16.59         13.22         19.81
+Umbriel                     2.57          3.77          7.44          9.22         12.74         14.89         11.69         18.07
+Ariel                       2.88          4.15          7.91          9.62         13.18         15.26         12.19         18.37
+Dione                       3.38          4.64          8.51         10.21         13.78         16.01         12.78         19.33
+Miranda                     1.25          2.15          5.22          6.74          9.86         11.73          9.00         14.68
+Mimas                       0.01          0.18          1.49          2.44          4.76          6.46          4.10          9.02
+Early Earth ocean           0.00          0.00          0.00          0.12          0.84          1.51          0.56          2.77
+
+--- B6. Early Earth sweep3 rule 'none' (the abstract's 'at least 67%'), no lid, P_pved % ---
+  unmasked 67.0 | draft 1 67.0 | nec 1.667 67.0 | exists 67.0 | exists x1.6 66.9 | pure0.9 66.4 | pure0.9 x1.6 66.0 | Asp exists 66.6 | Asp pure0.9 65.1
+
+=== PREDICTIONS (draw level) ===
+  P8 HELD: 90 (world, column, lid) cells over M = 1 ... 34.7: no violation
+  P9 FAILED: M = 1 on every draw moves P_pved by at most 2.38 points (Ganymede); signed: Enceladus -0.22, Europa -2.03, Ganymede -2.38, Early -0.00
+  P10 FAILED: icy worlds exists 1.5-13.5%, x1.6 pure0.9 6.5-22.7%; Earth 0.00% / 1.51%
+  P11 FAILED: M_ex: Europa -4.69, Ganymede -5.60, Enceladus -0.99, Earth -0.00; x1.6 M_90: Europa -8.23, Ganymede -9.67, Enceladus -2.42, Earth -1.51, Earth sweep3-none -0.99
+  P12 HELD: final main order Earth > Ganymede > Europa > Enceladus at every level; Enceladus final 0.0; max P_chance 14.9
+
+--- B7. The abstract's numbers (x10-to-main final for Ganymede and Europa; Enceladus no-lid x10-to-main; Earth sweep3 'at least') ---
+  unmasked        Ganymede 33.5-44.1  Europa 22.0-30.1  Enceladus no lid 19.4-26.4  Earth 67.0
+  draft 1         Ganymede 31.9-41.8  Europa 20.9-28.5  Enceladus no lid 19.3-26.1  Earth 67.0   largest shift 2.38
+  nec 1.667       Ganymede 31.2-40.9  Europa 20.5-28.0  Enceladus no lid 19.1-26.0  Earth 67.0   largest shift 3.24
+  exists          Ganymede 29.4-38.5  Europa 19.3-26.5  Enceladus no lid 18.6-25.4  Earth 67.0   largest shift 5.60
+  exists x1.6     Ganymede 28.6-37.6  Europa 18.9-25.9  Enceladus no lid 18.4-25.1  Earth 66.9   largest shift 6.58
+  pure0.9         Ganymede 27.1-35.6  Europa 17.9-24.6  Enceladus no lid 17.8-24.4  Earth 66.4   largest shift 8.49
+  pure0.9 x1.6    Ganymede 26.2-34.5  Europa 17.3-23.8  Enceladus no lid 17.5-23.9  Earth 66.0   largest shift 9.67
+  Asp exists      Ganymede 27.5-36.2  Europa 18.2-24.9  Enceladus no lid 18.0-24.6  Earth 66.6   largest shift 7.95
+  Asp pure0.9     Ganymede 24.9-32.9  Europa 16.5-22.8  Enceladus no lid 17.0-23.2  Earth 65.1   largest shift 11.29
+  P13 FAILED: largest shift of any abstract number: draft 1 2.38, nec 1.667 3.24, exists 5.60, exists x1.6 6.58, pure0.9 8.49, pure0.9 x1.6 9.67, Asp exists 7.95, Asp pure0.9 11.29
+  P14 HELD: Early Earth multiwall main no lid at Asp M_90: 97.2
+  P15 HELD: 3 s
+
+9 of 15 held; failed: P4, P5, P9, P10, P11, P13
