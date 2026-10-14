@@ -148,9 +148,12 @@ def committed():
         assert m, ml[j]
         out[m.group(1).strip()], where[m.group(1).strip()] = tuple(m.groups()[1:]), f"multiwall.log:{j + 1}"
     sl = open(os.path.join(HERE, "seedfix.log")).read().splitlines()
-    j = next(j for j, ln in enumerate(sl) if ln.strip().startswith("new: Enceladus") and ln.count("|") == 4)
-    m = row.match(sl[j].split("new:", 1)[1].strip())
-    assert m, sl[j]
+    d0 = next(j for j, ln in enumerate(sl) if ln.startswith("=== D. multiwall Section 4"))
+    hits = [(j, row.match(ln.split("new:", 1)[1].strip())) for j, ln in enumerate(sl)
+            if j > d0 and ln.strip().startswith("new: Enceladus")]
+    hits = [(j, m) for j, m in hits if m]
+    assert len(hits) == 1, hits   # seedfix.log:125, the multiwall.log:556 row
+    j, m = hits[0]
     out["Enceladus"], where["Enceladus"] = tuple(m.groups()[1:]), f"seedfix.log:{j + 1}"
     assert len(out) == 15
     return out, where
