@@ -1,0 +1,182 @@
+g_wide.py, N = 200000, seed 0 (+ seeds 1-3 for the main column); Enceladus on stream [s, 0, 1] (seedfix wrapper)
+G_OLD = (4e-19, 4e-16); G_NEW restored to (4.4e-18, 2.64e-16) after every run
+=== 1. Zanasi et al. (1999) extended-basis RPA, PVED = 2 x tabulated shift; g = PVED / kT at 273 K ===
+1 aeV = 4.2507e-17 kT at 273 K; 6.2 aeV -> g = 2.635e-16 (the draft's top, 2.64e-16)
+  glycine    preferred (shift  -14.179e-20 Ha)   7.72 aeV, g = 3.280e-16;  largest entry (shift  -14.179)   7.72 aeV, g = 3.280e-16;  without the factor 2:  3.86 aeV, g = 1.640e-16
+  alanine    preferred (shift  -13.170e-20 Ha)   7.17 aeV, g = 3.047e-16;  largest entry (shift   14.873)   8.09 aeV, g = 3.441e-16;  without the factor 2:  3.58 aeV, g = 1.523e-16
+  valine     preferred (shift  -16.525e-20 Ha)   8.99 aeV, g = 3.823e-16;  largest entry (shift   20.859)  11.35 aeV, g = 4.825e-16;  without the factor 2:  4.50 aeV, g = 1.911e-16
+  serine     preferred (shift   -9.105e-20 Ha)   4.96 aeV, g = 2.106e-16;  largest entry (shift   13.484)   7.34 aeV, g = 3.119e-16;  without the factor 2:  2.48 aeV, g = 1.053e-16
+  aspartate  preferred (shift  -13.754e-20 Ha)   7.49 aeV, g = 3.182e-16;  largest entry (shift   16.759)   9.12 aeV, g = 3.877e-16;  without the factor 2:  3.74 aeV, g = 1.591e-16
+  P2 HELD: Gly/Ala/Val/Asp preferred 7.17-8.99 aeV = 3.05e-16-3.82e-16; Ser 4.96 aeV; largest 11.35 aeV = 4.825e-16
+[top OLD 2.64e-16: 12 s elapsed]
+[top MID 3.8e-16: 23 s elapsed]
+[top WIDE 4.8e-16: 35 s elapsed]
+
+=== 2. Reproduction at the old top (P1) ===
+  P1 HELD: 15 worlds x 5 columns x (no lid, final) = 150 values equal the committed log values (rows multiwall.log:542 to multiwall.log:553 and so on; Enceladus seedfix.log:125)
+
+--- OLD top 2.64e-16 ---
+P_pved %, no lid / final: sweep3 main | sweep3 bound (iii) | multiwall main | cascade x10 | sum rule
+Early Earth ocean   67.0 /  67.0 |  85.6 /  85.6 |  99.9 /  99.9 |  99.7 /  99.7 |  99.9 /  99.9
+Umbriel             20.3 /  20.3 |  43.4 /  43.4 |  53.7 /  53.7 |  43.6 /  43.6 |  43.2 /  43.2
+Oberon              19.3 /  19.3 |  41.0 /  41.0 |  51.4 /  51.4 |  40.8 /  40.8 |  41.0 /  41.0
+Titania             19.5 /  19.5 |  41.0 /  41.0 |  51.3 /  51.3 |  40.9 /  40.9 |  41.1 /  41.1
+Ariel               16.9 /  16.9 |  41.0 /  41.0 |  49.6 /  49.6 |  39.7 /  39.7 |  39.2 /  39.2
+Ganymede            20.2 /  20.2 |  33.1 /  33.1 |  44.1 /  44.1 |  33.5 /  33.5 |  36.0 /  36.0
+Callisto            19.3 /  19.3 |  32.9 /  32.9 |  43.5 /  43.5 |  33.0 /  33.0 |  35.3 /  35.3
+Pluto               14.2 /  14.2 |  33.5 /  33.5 |  41.1 /  41.1 |  30.6 /  30.6 |  31.8 /  31.8
+Triton              12.4 /  12.4 |  30.3 /  30.3 |  37.0 /  37.0 |  26.5 /  26.5 |  27.9 /  27.9
+Titan               14.1 /  14.1 |  27.5 /  27.5 |  35.8 /  35.8 |  25.5 /  25.5 |  27.9 /  27.9
+Europa              13.9 /  10.5 |  31.8 /  24.1 |  39.6 /  30.1 |  29.0 /  22.0 |  30.4 /  23.1
+Dione               12.7 /   7.9 |  36.6 /  22.8 |  42.0 /  26.2 |  32.2 /  20.1 |  31.8 /  19.9
+Miranda             13.7 /   4.5 |  27.7 /   9.2 |  27.1 /   9.0 |  21.3 /   7.0 |  22.3 /   7.3
+Mimas                7.2 /   2.3 |  15.3 /   4.9 |  17.3 /   5.6 |  11.6 /   3.7 |  12.9 /   4.1
+Enceladus            9.0 /   0.0 |  23.6 /   0.0 |  26.4 /   0.0 |  19.4 /   0.0 |  19.9 /   0.0
+Three-way split, multiwall main, %: P_pved / P_chance / P_none, no lid | final
+Early Earth ocean   99.9 /  0.0 /   0.1 |  99.9 /  0.0 /   0.1
+Umbriel             53.7 / 14.9 /  31.4 |  53.7 / 14.9 /  31.4
+Oberon              51.4 / 11.7 /  36.9 |  51.4 / 11.7 /  36.9
+Titania             51.3 / 11.6 /  37.1 |  51.3 / 11.6 /  37.1
+Ariel               49.6 / 13.5 /  36.9 |  49.6 / 13.5 /  36.9
+Ganymede            44.1 /  3.4 /  52.5 |  44.1 /  3.4 /  52.5
+Callisto            43.5 /  3.8 /  52.7 |  43.5 /  3.8 /  52.7
+Pluto               41.1 /  6.1 /  52.8 |  41.1 /  6.1 /  52.8
+Triton              37.0 /  4.7 /  58.3 |  37.0 /  4.7 /  58.3
+Titan               35.8 /  2.5 /  61.7 |  35.8 /  2.5 /  61.7
+Europa              39.6 /  4.9 /  55.5 |  30.1 /  3.7 /  66.2
+Dione               42.0 / 10.5 /  47.5 |  26.2 /  6.6 /  67.2
+Miranda             27.1 /  8.4 /  64.5 |   9.0 /  2.7 /  88.3
+Mimas               17.3 /  6.1 /  76.6 |   5.6 /  2.0 /  92.5
+Enceladus           26.4 /  9.8 /  63.9 |   0.0 /  0.0 / 100.0
+
+--- MID top 3.8e-16 ---
+P_pved %, no lid / final: sweep3 main | sweep3 bound (iii) | multiwall main | cascade x10 | sum rule
+Early Earth ocean   67.0 /  67.0 |  85.6 /  85.6 |  99.9 /  99.9 |  99.7 /  99.7 |  99.9 /  99.9
+Umbriel             20.5 /  20.5 |  43.9 /  43.9 |  54.4 /  54.4 |  44.2 /  44.2 |  43.7 /  43.7
+Oberon              19.4 /  19.4 |  41.4 /  41.4 |  52.0 /  52.0 |  41.3 /  41.3 |  41.4 /  41.4
+Titania             19.6 /  19.6 |  41.4 /  41.4 |  51.9 /  51.9 |  41.3 /  41.3 |  41.5 /  41.5
+Ariel               17.1 /  17.1 |  41.5 /  41.5 |  50.3 /  50.3 |  40.2 /  40.2 |  39.7 /  39.7
+Ganymede            20.3 /  20.3 |  33.3 /  33.3 |  44.4 /  44.4 |  33.7 /  33.7 |  36.2 /  36.2
+Callisto            19.4 /  19.4 |  33.0 /  33.0 |  43.7 /  43.7 |  33.1 /  33.1 |  35.5 /  35.5
+Pluto               14.2 /  14.2 |  33.7 /  33.7 |  41.5 /  41.5 |  30.8 /  30.8 |  32.0 /  32.0
+Triton              12.5 /  12.5 |  30.5 /  30.5 |  37.3 /  37.3 |  26.7 /  26.7 |  28.0 /  28.0
+Titan               14.2 /  14.2 |  27.6 /  27.6 |  36.0 /  36.0 |  25.6 /  25.6 |  28.0 /  28.0
+Europa              13.9 /  10.6 |  32.0 /  24.3 |  39.9 /  30.3 |  29.2 /  22.1 |  30.6 /  23.3
+Dione               12.8 /   8.0 |  37.0 /  23.1 |  42.5 /  26.5 |  32.6 /  20.4 |  32.2 /  20.1
+Miranda             13.9 /   4.6 |  28.1 /   9.3 |  27.5 /   9.1 |  21.6 /   7.1 |  22.6 /   7.4
+Mimas                7.3 /   2.3 |  15.5 /   5.0 |  17.6 /   5.6 |  11.8 /   3.8 |  13.1 /   4.2
+Enceladus            9.1 /   0.0 |  23.9 /   0.0 |  26.8 /   0.0 |  19.7 /   0.0 |  20.2 /   0.0
+Three-way split, multiwall main, %: P_pved / P_chance / P_none, no lid | final
+Early Earth ocean   99.9 /  0.0 /   0.1 |  99.9 /  0.0 /   0.1
+Umbriel             54.4 / 14.2 /  31.4 |  54.4 / 14.2 /  31.4
+Oberon              52.0 / 11.1 /  36.9 |  52.0 / 11.1 /  36.9
+Titania             51.9 / 11.0 /  37.1 |  51.9 / 11.0 /  37.1
+Ariel               50.3 / 12.8 /  36.9 |  50.3 / 12.8 /  36.9
+Ganymede            44.4 /  3.1 /  52.5 |  44.4 /  3.1 /  52.5
+Callisto            43.7 /  3.5 /  52.7 |  43.7 /  3.5 /  52.7
+Pluto               41.5 /  5.7 /  52.8 |  41.5 /  5.7 /  52.8
+Triton              37.3 /  4.4 /  58.3 |  37.3 /  4.4 /  58.3
+Titan               36.0 /  2.4 /  61.7 |  36.0 /  2.4 /  61.7
+Europa              39.9 /  4.6 /  55.5 |  30.3 /  3.5 /  66.2
+Dione               42.5 / 10.0 /  47.5 |  26.5 /  6.2 /  67.2
+Miranda             27.5 /  8.0 /  64.5 |   9.1 /  2.6 /  88.3
+Mimas               17.6 /  5.8 /  76.6 |   5.6 /  1.9 /  92.5
+Enceladus           26.8 /  9.3 /  63.9 |   0.0 /  0.0 / 100.0
+
+--- WIDE top 4.8e-16 ---
+P_pved %, no lid / final: sweep3 main | sweep3 bound (iii) | multiwall main | cascade x10 | sum rule
+Early Earth ocean   67.0 /  67.0 |  85.6 /  85.6 |  99.9 /  99.9 |  99.7 /  99.7 |  99.9 /  99.9
+Umbriel             20.6 /  20.6 |  44.2 /  44.2 |  54.8 /  54.8 |  44.5 /  44.5 |  44.0 /  44.0
+Oberon              19.5 /  19.5 |  41.7 /  41.7 |  52.4 /  52.4 |  41.5 /  41.5 |  41.7 /  41.7
+Titania             19.7 /  19.7 |  41.6 /  41.6 |  52.3 /  52.3 |  41.6 /  41.6 |  41.8 /  41.8
+Ariel               17.1 /  17.1 |  41.8 /  41.8 |  50.7 /  50.7 |  40.5 /  40.5 |  39.9 /  39.9
+Ganymede            20.3 /  20.3 |  33.3 /  33.3 |  44.5 /  44.5 |  33.7 /  33.7 |  36.3 /  36.3
+Callisto            19.4 /  19.4 |  33.1 /  33.1 |  43.9 /  43.9 |  33.2 /  33.2 |  35.6 /  35.6
+Pluto               14.3 /  14.3 |  33.9 /  33.9 |  41.7 /  41.7 |  31.0 /  31.0 |  32.2 /  32.2
+Triton              12.5 /  12.5 |  30.6 /  30.6 |  37.5 /  37.5 |  26.8 /  26.8 |  28.2 /  28.2
+Titan               14.2 /  14.2 |  27.7 /  27.7 |  36.1 /  36.1 |  25.6 /  25.6 |  28.0 /  28.0
+Europa              14.0 /  10.6 |  32.1 /  24.4 |  40.1 /  30.4 |  29.3 /  22.2 |  30.8 /  23.3
+Dione               12.8 /   8.0 |  37.2 /  23.3 |  42.8 /  26.7 |  32.8 /  20.5 |  32.4 /  20.2
+Miranda             14.0 /   4.6 |  28.3 /   9.4 |  27.7 /   9.2 |  21.8 /   7.2 |  22.8 /   7.5
+Mimas                7.3 /   2.3 |  15.7 /   5.0 |  17.8 /   5.7 |  11.9 /   3.8 |  13.2 /   4.2
+Enceladus            9.2 /   0.0 |  24.1 /   0.0 |  27.1 /   0.0 |  19.9 /   0.0 |  20.4 /   0.0
+Three-way split, multiwall main, %: P_pved / P_chance / P_none, no lid | final
+Early Earth ocean   99.9 /  0.0 /   0.1 |  99.9 /  0.0 /   0.1
+Umbriel             54.8 / 13.7 /  31.4 |  54.8 / 13.7 /  31.4
+Oberon              52.4 / 10.7 /  36.9 |  52.4 / 10.7 /  36.9
+Titania             52.3 / 10.6 /  37.1 |  52.3 / 10.6 /  37.1
+Ariel               50.7 / 12.4 /  36.9 |  50.7 / 12.4 /  36.9
+Ganymede            44.5 /  3.0 /  52.5 |  44.5 /  3.0 /  52.5
+Callisto            43.9 /  3.4 /  52.7 |  43.9 /  3.4 /  52.7
+Pluto               41.7 /  5.5 /  52.8 |  41.7 /  5.5 /  52.8
+Triton              37.5 /  4.2 /  58.3 |  37.5 /  4.2 /  58.3
+Titan               36.1 /  2.3 /  61.7 |  36.1 /  2.3 /  61.7
+Europa              40.1 /  4.4 /  55.5 |  30.4 /  3.3 /  66.2
+Dione               42.8 /  9.6 /  47.5 |  26.7 /  6.0 /  67.2
+Miranda             27.7 /  7.7 /  64.5 |   9.2 /  2.5 /  88.3
+Mimas               17.8 /  5.6 /  76.6 |   5.7 /  1.8 /  92.5
+Enceladus           27.1 /  9.1 /  63.9 |   0.0 /  0.0 / 100.0
+
+=== 3. Rise in P_pved (points), multiwall main, no lid / final, vs OLD ===
+world                        OLD |       MID rise |      WIDE rise | MID/WIDE (no lid) | x10 rise WIDE (no lid / final)
+Early Earth ocean   99.9 /  99.9 |  +0.0 /  +0.0 |  +0.0 /  +0.0 |  0.50             |  +0.0 /  +0.0
+Umbriel             53.7 /  53.7 |  +0.7 /  +0.7 |  +1.2 /  +1.2 |  0.63             |  +0.9 /  +0.9
+Oberon              51.4 /  51.4 |  +0.6 /  +0.6 |  +1.0 /  +1.0 |  0.62             |  +0.7 /  +0.7
+Titania             51.3 /  51.3 |  +0.6 /  +0.6 |  +1.0 /  +1.0 |  0.62             |  +0.7 /  +0.7
+Ariel               49.6 /  49.6 |  +0.7 /  +0.7 |  +1.1 /  +1.1 |  0.62             |  +0.8 /  +0.8
+Ganymede            44.1 /  44.1 |  +0.2 /  +0.2 |  +0.4 /  +0.4 |  0.62             |  +0.2 /  +0.2
+Callisto            43.5 /  43.5 |  +0.3 /  +0.3 |  +0.4 /  +0.4 |  0.64             |  +0.3 /  +0.3
+Pluto               41.1 /  41.1 |  +0.4 /  +0.4 |  +0.6 /  +0.6 |  0.62             |  +0.4 /  +0.4
+Triton              37.0 /  37.0 |  +0.3 /  +0.3 |  +0.5 /  +0.5 |  0.59             |  +0.3 /  +0.3
+Titan               35.8 /  35.8 |  +0.2 /  +0.2 |  +0.3 /  +0.3 |  0.62             |  +0.2 /  +0.2
+Europa              39.6 /  30.1 |  +0.3 /  +0.2 |  +0.5 /  +0.4 |  0.66             |  +0.3 /  +0.2
+Dione               42.0 /  26.2 |  +0.6 /  +0.3 |  +0.9 /  +0.5 |  0.63             |  +0.6 /  +0.4
+Miranda             27.1 /   9.0 |  +0.4 /  +0.1 |  +0.6 /  +0.2 |  0.62             |  +0.5 /  +0.2
+Mimas               17.3 /   5.6 |  +0.3 /  +0.1 |  +0.5 /  +0.1 |  0.61             |  +0.3 /  +0.1
+Enceladus           26.4 /   0.0 |  +0.4 /  +0.0 |  +0.7 /  +0.0 |  0.62             |  +0.5 /  +0.0
+
+=== 4. Table 3 format: final x10-to-main range, (no-lid range); OLD -> MID -> WIDE ===
+Early Earth ocean  99.7-99.9  ->  99.7-99.9  ->  99.7-99.9
+Umbriel            43.6-53.7  ->  44.2-54.4  ->  44.5-54.8
+Oberon             40.8-51.4  ->  41.3-52.0  ->  41.5-52.4
+Titania            40.9-51.3  ->  41.3-51.9  ->  41.6-52.3
+Ariel              39.7-49.6  ->  40.2-50.3  ->  40.5-50.7
+Ganymede           33.5-44.1  ->  33.7-44.4  ->  33.7-44.5
+Callisto           33.0-43.5  ->  33.1-43.7  ->  33.2-43.9
+Pluto              30.6-41.1  ->  30.8-41.5  ->  31.0-41.7
+Triton             26.5-37.0  ->  26.7-37.3  ->  26.8-37.5
+Titan              25.5-35.8  ->  25.6-36.0  ->  25.6-36.1
+Europa             22.0-30.1 (29.0-39.6)  ->  22.1-30.3 (29.2-39.9)  ->  22.2-30.4 (29.3-40.1)
+Dione              20.1-26.2 (32.2-42.0)  ->  20.4-26.5 (32.6-42.5)  ->  20.5-26.7 (32.8-42.8)
+Miranda            7.0-9.0 (21.3-27.1)  ->  7.1-9.1 (21.6-27.5)  ->  7.2-9.2 (21.8-27.7)
+Mimas              3.7-5.6 (11.6-17.3)  ->  3.8-5.6 (11.8-17.6)  ->  3.8-5.7 (11.9-17.8)
+Enceladus          0.0-0.0 (19.4-26.4)  ->  0.0-0.0 (19.7-26.8)  ->  0.0-0.0 (19.9-27.1)
+
+=== 5. Seed spread of the WIDE-minus-OLD rise (multiwall main, no lid) ===
+Enceladus          seed 0 +0.71  seeds 1-3 +0.74 +0.75 +0.71   max |dev| 0.04
+Europa             seed 0 +0.49  seeds 1-3 +0.50 +0.50 +0.49   max |dev| 0.01
+Ganymede           seed 0 +0.37  seeds 1-3 +0.37 +0.39 +0.38   max |dev| 0.01
+Titan              seed 0 +0.29  seeds 1-3 +0.28 +0.27 +0.28   max |dev| 0.02
+Callisto           seed 0 +0.41  seeds 1-3 +0.42 +0.41 +0.40   max |dev| 0.02
+Triton             seed 0 +0.48  seeds 1-3 +0.47 +0.49 +0.45   max |dev| 0.03
+Pluto              seed 0 +0.62  seeds 1-3 +0.60 +0.60 +0.61   max |dev| 0.02
+Titania            seed 0 +1.01  seeds 1-3 +1.01 +1.01 +1.03   max |dev| 0.02
+Oberon             seed 0 +1.01  seeds 1-3 +1.04 +1.02 +1.02   max |dev| 0.03
+Umbriel            seed 0 +1.17  seeds 1-3 +1.19 +1.25 +1.23   max |dev| 0.08
+Ariel              seed 0 +1.08  seeds 1-3 +1.10 +1.15 +1.09   max |dev| 0.07
+Dione              seed 0 +0.88  seeds 1-3 +0.92 +0.90 +0.88   max |dev| 0.04
+Miranda            seed 0 +0.64  seeds 1-3 +0.66 +0.66 +0.71   max |dev| 0.06
+Mimas              seed 0 +0.47  seeds 1-3 +0.47 +0.48 +0.47   max |dev| 0.01
+Early Earth ocean  seed 0 +0.00  seeds 1-3 +0.00 +0.00 +0.00   max |dev| 0.00
+
+=== PREDICTIONS ===
+  P3 HELD: max change of P_none 0.000 points; max |chance fall - pved rise| 0.000
+  P4 HELD: 150 (world, column, lid) cells; violations []
+  P5 FAILED: WIDE rises min 0.29 (Titan) max 1.17 (Umbriel), mean 0.69
+  P6 FAILED: Early Earth main rise +0.00 (value 99.9); Enceladus final (np.float64(0.0), np.float64(0.0), np.float64(0.0)); Early Earth sweep3 main 67.0 -> 67.0 (+0.00)
+  P7 HELD: 4 worlds with WIDE rise >= 1.0; MID/WIDE min 0.62 max 0.63
+  P8 HELD: final G/E/En 44.5/30.4/0.0; Ganymede 44.5, Callisto 43.9, Pluto 41.7; lowest lid-free Titan 36.1
+  P9 HELD: max seed deviation of the rise 0.08 (Umbriel)
+  P10 HELD: 35 s
+
+8 of 10 held; failed: P5, P6

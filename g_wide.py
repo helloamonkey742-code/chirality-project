@@ -53,6 +53,28 @@ multiwall main, cascade x10, sum rule. Old values: multiwall.log:543-557 (Encela
 
 Run: nice -n 10 env OMP_NUM_THREADS=2 OPENBLAS_NUM_THREADS=2 MKL_NUM_THREADS=2 /opt/anaconda3/bin/python g_wide.py > g_wide.log 2>&1
 (A smoke run with G_WIDE_N=2000 is allowed after the predictions commit, only to catch crashes; its numbers are not used.)
+
+RESULTS (g_wide.log, 2026-10-13): N = 200000 per world, 35 s. 8 of 10 held, 2 failed. The predictions were committed in 9aa7353;
+fcecf7b fixed one lookup (the seedfix.log row for P1, code only). The N = 2000 smoke runs were made after the predictions commit and
+their numbers were seen (they showed the same two failures); they were not used and no prediction was changed.
+  P1  HELD.   150 of 150 values reproduce at 2.64e-16 (g_wide.log:16; run 20-34 against multiwall.log:543-557, Enceladus seedfix.log:125).
+  P2  HELD.   Gly/Ala/Val/Asp preferred conformations 7.17-8.99 aeV = 3.05-3.82e-16 kT; Ser 4.96 aeV (2.11e-16); largest entry (valine,
+              90 deg) 11.35 aeV = 4.825e-16; without the factor 2 half of each (g_wide.log:5-10).
+  P3  HELD.   P_none changes by 0.000 points and P_chance falls by exactly the P_pved rise (g_wide.log:173).
+  P4  HELD.   150 (world, column, lid) cells, no violation (g_wide.log:174).
+  P5  FAILED. Multiwall main, no lid, 4.8e-16: rises 0.29 (Titan) to 1.17 (Umbriel), mean 0.69 over the 14 worlds; registered 0.3-3.5 and
+              mean 0.8-2.5, so the effect is smaller than predicted (Titan misses the lower bound by 0.01; the mean misses by 0.11)
+              (g_wide.log:122-136, :175).
+  P6  FAILED. Early Earth multiwall main stays 99.9 (+0.00) and Enceladus final stays 0.0, as registered, but sweep3 main for early Earth
+              (the abstract's "at least 67%") does not move at all, 67.0 -> 67.0, against a registered rise of 0.3-4.5 (g_wide.log:20, :88, :176).
+  P7  HELD.   MID/WIDE rise ratio 0.62-0.63 for the four worlds with a WIDE rise of at least 1.0 (g_wide.log:177).
+  P8  HELD.   Final Ganymede 44.5 > Europa 30.4 > Enceladus 0.0; Ganymede 44.5 and Callisto 43.9 above Pluto 41.7; lowest lid-free world
+              Titan 36.1 (g_wide.log:178).
+  P9  HELD.   Seeds 1-3: largest deviation of the rise from seed 0 is 0.08 (Umbriel) (g_wide.log:155-170, :179).
+  P10 HELD.   35 s (g_wide.log:180).
+Headline numbers, x10-to-main final range, old top -> 4.8e-16 (g_wide.log:139-153): Ganymede 33.5-44.1 -> 33.7-44.5, Europa 22.0-30.1 ->
+22.2-30.4 (no lid 29.0-39.6 -> 29.3-40.1), Enceladus final 0.0 (no lid 19.4-26.4 -> 19.9-27.1), Callisto 33.0-43.5 -> 33.2-43.9, Titan
+25.5-35.8 -> 25.6-36.1, Uranian moons 39.7-53.7 -> 40.5-54.8, Early Earth 99.7-99.9 unchanged. No world moves by more than 1.2 points.
 """
 import os
 import re
