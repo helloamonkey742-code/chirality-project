@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# Re-run every model and check. Default: fast set (~4-7 min). --full adds the 3D runs (~30 min).
+# Re-run every model and check. Default: fast set (~2 min). --full adds the 3D runs (~50 min).
+# --paper adds the scripts behind the paper's headline tables and figures (~52 min); --full --paper runs both.
 # Any failed self-check stops the script with a non-zero exit.
 set -euo pipefail
 cd "$(dirname "$0")"
@@ -17,12 +18,28 @@ fast=(sim.py ocean.py domains.py patches.py scenarios.py inherit.py dual.py dna_
 # sphere_layers.py alone takes ~22 min (layer-wall, patchwork and band tests on a spherical shell).
 slow=(domains3d.py coarsen3d.py k3.py frank.py objections.py moon_nudges.py frank2.py shell3d.py aniso3d.py sphere_layers.py review.py coarsen_fig.py)
 # shell_res.py (grid-resolution check, 512x512x16) takes over an hour; run it by hand.
+# Paper tier (fresh-clone times, 2 threads): each output line matches the committed <script>.log apart from timings.
+# kz_large.py alone takes ~14 min. rerun_base.py rewrites rerun_base.log and journals/new_analyses_rerun.md (identical).
+paper=(sweep2.py sweep3.py "multiwall.py 1" "multiwall.py 2" "multiwall.py 3" "multiwall.py 4" seedfix.py seedfix2.py
+  rerun_base.py tidal_mix.py tidal_mix_g005.py handoff.py "deephand_scale.py 3" rho2side.py "rho2side.py posthoc"
+  "front2d.py worlds" pin_onset.py two_zone.py polar_gap.py currents.py realistic.py earth.py field_walls.py
+  field_flips.py wobble.py wobble_sweep.py verify_seeds.py kz_large.py journals/make_fig_schematic2.py
+  journals/make_fig_sensitivity3.py make_fig_shares3.py make_fig_threshold2.py)
+# Not in any tier (hours each, or extra packages); run by hand with the section arguments in each docstring:
+# front2d.py W1..3Db, gradient_ramp.py, kz_patches.py, deephand_scale.py 1 <w> (section 3 reads its ROW lines),
+# realistic.py 5, sphere_layers.py 2b, verify_sstar.py (needs gsw), frank_sbml.py (needs antimony + libroadrunner).
 
 scripts=("${fast[@]}")
-[[ "${1:-}" == "--full" ]] && scripts+=("${slow[@]}")
+for a in "$@"; do
+  case "$a" in
+    --full) scripts+=("${slow[@]}") ;;
+    --paper) scripts+=("${paper[@]}") ;;
+    *) echo "unknown option $a (use --full and/or --paper)"; exit 2 ;;
+  esac
+done
 
 for s in "${scripts[@]}"; do
   echo "== $s"
-  "$PY" "$s" 2>&1 | grep -v Warning
+  "$PY" $s 2>&1 | { grep -v Warning || true; }  # $s unquoted: some entries carry a section argument
 done
 echo "== all checks passed (${#scripts[@]} scripts)"

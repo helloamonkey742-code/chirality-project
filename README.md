@@ -260,7 +260,7 @@ layer took over within at most 1.5×10⁴ years (Enceladus) or 2.8×10⁵ years 
   size 1.5 grid steps), and sideways mixing smooths them out quickly, so this match was expected. It rules out
   random luck for this one setup (R = 16, D_h = 1, one grid) only. The open limits are still the grid and the depth
   (see 1c above).
-The full test takes about 22 minutes (`./run_all.sh --full`).
+The full test takes about 50 minutes (`./run_all.sh --full`, measured on a fresh clone 2026-10-13).
 
 **What picks the top layer's hand?** Its own majority, set by the weak-force bias summed over the molecules in that
 layer. In the tall-box runs the favoured hand ended on top in 3/4 runs from a 55% start vs 2/4 from 50%. That's
@@ -666,9 +666,11 @@ python quench.py      # Bennu freeze-in, inherited seed, robustness Q1–Q5 (ass
 python breakeven.py   # what each unknown input would have to be (asserts), ~5 s
 python assumed_rules.py # the two assumed rules and a bigger weak force (asserts), ~5 s
 python earth_breakeven.py # how small Earth's magnetic-field share must be (asserts), ~1–2 min
-./run_all.sh        # everything fast (~4–7 min); ./run_all.sh --full adds the 3D + real-chemistry runs
+./run_all.sh        # fast set (~2 min); --full adds the 3D + real-chemistry runs (~50 min);
+                    # --paper adds the scripts behind the paper's tables and figures (~52 min)
 ```
-Needs numpy, scipy, matplotlib.
+Needs numpy, scipy, matplotlib and numba (multiwall.py and the scripts that import it); verify_sstar.py also needs gsw.
+Tested versions are in `requirements.txt`. To use a different interpreter: `PYTHON=/path/to/python ./run_all.sh`.
 
 Code: MIT licence (see `LICENSE`).
 
