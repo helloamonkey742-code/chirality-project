@@ -54,8 +54,10 @@ Precision: 192 runs per arm gives SE(a) ~ 0.1, so P3 can only exclude difference
 
 SMOKE RUNS (disclosed). Before writing these predictions I ran nothing. After the first commit I ran only tiny
 debugging smokes (L = 16, 4 seeds, gamma = 0.5) that print step times, shapes and NaN/finite checks; no outcome
-statistic (P, a, wall length, domain count, D_eff) was inspected from them. Design numbers were chosen from the
-algebra above and the cost estimates only.
+statistic (P, a, D_eff) was inspected from them; the smoke printed two wall-length and two domain-count values per
+arm from 4 runs at L = 16 and gamma = 0.5 (values of order 5-12 and 2-5), which say nothing about L = 64. Timing runs
+(120 steps at full size, gamma = 0.5, output discarded except elapsed seconds) set only the seed count and order of
+jobs. Design numbers were chosen from the algebra above and the cost estimates only.
 
 PREDICTIONS (written 2026-10-13, before any result-producing run):
  P1. Flow calibration: the Lagrangian eddy part is within 5% of 7.0 in S, M, B; the Eulerian total D_eff is within 15%
@@ -241,10 +243,12 @@ def job(spec):
     t0 = time.time()
     kind, name = spec[:2]
     if kind == "arm":
-        return name, run_arm(**spec[2]), time.time() - t0
-    if kind == "lag":
-        return name, tracer_lagrangian(FLOWS[name], 1), time.time() - t0
-    return name, tracer_eulerian(FLOWS[name], 2), time.time() - t0
+        r = run_arm(**spec[2])
+    elif kind == "lag":
+        r = tracer_lagrangian(FLOWS[name], 1)
+    else:
+        r = tracer_eulerian(FLOWS[name], 2)
+    return (kind, name), r, time.time() - t0
 
 
 def sem(x):
@@ -260,48 +264,101 @@ def fit(out, key):
     return K.fit_probit(DELTAS, ks, ns)
 
 
-def ratio(m1, s1, m2, s2):
-    r = m1 / m2
-    return r, r * np.hypot(s1 / m1, s2 / m2)
+def wmean(o, t):
+    return o["wall"][t].mean(), sem(o["wall"][t])
+
+
+def verdict(n, ok, txt):
+    print(f"P{n} {'HELD' if ok else 'FAILED'}  {txt}")
 
 
 def main(smoke=False):
+    global L
     t0 = time.time()
-    K.check()
-    kw = dict(S=SEEDS)
     if smoke:
+        L = 16.0
         kw = dict(S=4, Lbox=16.0, gamma=0.5, hold=8.0)
-    arms = [("arm", nm, dict(kw, seed=700 + j, flow=FLOWS[nm], D=D_MOL, h=0.5, dt=0.05)) for j, nm in enumerate("BMS")]
-    arms += [("arm", "noflow8", dict(kw, seed=710, D=D_EFF, h=1.0, dt=0.025)),
-             ("arm", "noflow1", dict(kw, seed=711, D=D_MOL, h=1.0, dt=0.05))]
-    if smoke:
-        for sp in arms:
-            sp[2].pop("Lbox", None)
-        globals()["L"] = 16.0
-        kwl = dict(kw)
-        arms = [("arm", nm, dict(kwl, seed=700 + j, flow=FLOWS[nm], D=D_MOL, h=0.5, dt=0.05)) for j, nm in enumerate("BMS")] \
-            + [("arm", "noflow8", dict(kwl, seed=710, D=D_EFF, h=1.0, dt=0.025))]
-    jobs = arms + ([] if smoke else [("lag", nm) for nm in "SMB"] + [("eul", nm) for nm in "SMB"])
-    print(f"L={L:g}, D_mol={D_MOL}, D_eff target={D_EFF}, xi={np.sqrt(D_EFF) * GAMMA ** -.25:.2f}, w={np.sqrt(D_EFF):.2f}; "
-          f"{SEEDS} seeds x Deltas {DELTAS} per arm; flows " +
-          "; ".join(f"{k}: n={v['n']} l={L / (2 * np.pi * v['n']):.2f} Tk={v['Tk']} A={v['A']:.2f} kappa={v['A'] * 2 * np.pi * v['n'] / L:.2f}"
-                    for k, v in FLOWS.items()), flush=True)
+    else:
+        K.check()
+        kw = dict(S=SEEDS)
+    arms = [("arm", nm, dict(kw, seed=700 + j, flow=FLOWS[nm], D=D_MOL, h=0.5, dt=0.05)) for j, nm in enumerate("SMB")]
+    arms += [("arm", "noflow8", dict(kw, seed=710, D=D_EFF, h=1.0, dt=0.025))]
+    if not smoke:
+        arms += [("arm", "noflow1", dict(kw, seed=711, D=D_MOL, h=1.0, dt=0.05))]
+    jobs = arms + ([] if smoke else [(k, nm) for k in ("lag", "eul") for nm in "SMB"])
+    print(f"\nL={L:g}, D_mol={D_MOL}, D_eff target={D_EFF}, xi={np.sqrt(D_EFF) * GAMMA ** -.25:.2f}, w={np.sqrt(D_EFF):.2f}; "
+          f"{kw['S']} seeds x Deltas {DELTAS} per arm", flush=True)
+    for k, v in FLOWS.items():
+        ell = L / (2 * np.pi * v["n"])
+        print(f"  flow {k}: n={v['n']} l={ell:.2f} (l/w={ell / np.sqrt(D_EFF):.2f}) Tk={v['Tk']} A={v['A']:.2f} "
+              f"kappa={v['A'] * 2 * np.pi * v['n'] / L:.2f} U={v['A'] / v['Tk']:.1f} Da={ell / (v['A'] / v['Tk']):.2f}", flush=True)
+    res = {}
     with ThreadPoolExecutor(2) as ex:
-        res = {}
-        for name, r, dt_ in ex.map(job, jobs):
-            tag = name if not isinstance(r, float) else name
-            print(f"  job done: {name} [{dt_:.0f}s]", flush=True)
-            res[(name, type(r).__name__ == "dict")] = r
-    arm = {k[0]: v for k, v in res.items() if k[1]}
-    tr = {k[0]: v for k, v in res.items() if not k[1]}
+        for key, r, dt_ in ex.map(job, jobs):
+            res[key] = r
+            print(f"  job done: {key} [{dt_:.0f}s]", flush=True)
+    arm = {k[1]: v for k, v in res.items() if k[0] == "arm"}
     if smoke:
         for nm, o in arm.items():
-            print(nm, {k: (np.isfinite(v).all() if hasattr(v, "shape") else "ok") for k, v in o.items()})
+            print(nm, {k: bool(np.isfinite(v).all()) for k, v in o.items() if hasattr(v, "shape")}, o["wall"][0][:2], o["ndom"][0][:2])
         print(f"smoke total {time.time() - t0:.0f}s")
         return
-    # tracer results come back in job order: first the three Lagrangian, then the three Eulerian (same names) -> split
-    lag = {j[1]: None for j in jobs if j[0] == "lag"}
-    return arm, jobs, ex
+
+    print("\nD_eff (flow arms: design 8.0; eddy part design 7.0)")
+    for nm in "SMB":
+        print(f"  {nm}: Lagrangian eddy part {res[('lag', nm)]:.3f} (+D_mol = {res[('lag', nm)] + D_MOL:.3f}); "
+              f"Eulerian total {res[('eul', nm)]:.3f}")
+
+    print("\nOUTCOME  P(favoured hand) at Delta = " + ", ".join(map(str, DELTAS)) + "; fit P = Phi(a Delta)")
+    a = {}
+    for nm, o in arm.items():
+        for key in ("early", "end", "final"):
+            c, se = fit(o, key)
+            a[(nm, key)] = (c, se)
+            cells = "  ".join(f"D={d:g} P={K.pse(o[key][o['deltas'] == d])[0]:.3f}+-{K.pse(o[key][o['deltas'] == d])[1]:.3f}"
+                              for d in DELTAS)
+            print(f"  {nm:8s} {key:5s} {cells}  ->  a = {c:.3f} +- {se:.3f}", flush=True)
+
+    print("\nWALLS  wall length / L (mean +- SE), number of domains (area >= 8), pooled over Deltas")
+    for nm, o in arm.items():
+        print(f"  {nm:8s} wall " + "  ".join(f"t{t}:{wmean(o, t)[0]:.2f}+-{wmean(o, t)[1]:.2f}" for t in PROBES))
+        print(f"  {'':8s} ndom " + "  ".join(f"t{t}:{o['ndom'][t].mean():.2f}" for t in PROBES))
+        ts = o["t_single"]
+        print(f"  {'':8s} single-domain fraction by t_after = " +
+              "  ".join(f"{t}:{(ts <= t).mean():.3f}" for t in (0, 10, 20, 40, 80)) +
+              f"  median time {np.median(ts):.1f}" + ("" if np.isfinite(np.median(ts)) else " (>80, censored)"))
+
+    print("\nPREDICTIONS")
+    ok = all(abs(res[("lag", n)] / 7.0 - 1) < 0.05 for n in "SMB") and all(
+        abs(res[("eul", n)] / 8.0 - 1) < tol for n, tol in (("S", .15), ("M", .15), ("B", .25)))
+    verdict(1, ok, " ".join(f"{n}: lag {res[('lag', n)]:.2f} eul {res[('eul', n)]:.2f}" for n in "SMB"))
+    c8, s8 = a[("noflow8", "end")]
+    verdict(2, 0.85 <= c8 <= 1.15, f"check passed (asserted); a(noflow D=8) = {c8:.3f} +- {s8:.3f}")
+    z = {n: (a[(n, "end")][0] - c8) / np.hypot(a[(n, "end")][1], s8) for n in "SMB"}
+    verdict(3, all(abs(v) < 2 for v in z.values()), "a(flow) - a(noflow8) in combined SE: " + " ".join(f"{n}:{v:+.2f}" for n, v in z.items()))
+    bad, zs = [], []
+    for n in "SMB":
+        c = a[(n, "end")][0]
+        ps = [K.pse(arm[n]["end"][arm[n]["deltas"] == d]) for d in DELTAS]
+        zs += [(n, d, (p - norm.cdf(c * d)) / s) for d, (p, s) in zip(DELTAS, ps)]
+        if not (ps[0][0] < ps[1][0] < ps[2][0]):
+            bad.append(f"{n} not monotone")
+    verdict(4, not bad and all(abs(v) < 2.5 for _, _, v in zs), "P - Phi(a D) in SE: " + " ".join(f"{n}@{d:g}:{v:+.2f}" for n, d, v in zs) + " " + "; ".join(bad))
+    verdict(5, all(0.8 <= a[(n, "end")][0] <= 1.2 for n in "SMB"), "a(end) " + " ".join(f"{n}:{a[(n, 'end')][0]:.3f}" for n in "SMB"))
+    w0 = {n: wmean(arm[n], 0) for n in arm}
+    w20 = {n: wmean(arm[n], 20) for n in arm}
+    r0 = {n: w0[n][0] / w0["noflow8"][0] for n in "SMB"}
+    r20 = {n: w20[n][0] / w20["noflow8"][0] for n in "SMB"}
+    verdict(6, 0.75 <= r0["S"] <= 1.25 and r0["B"] >= 1.2, "wall(t0)/noflow8: " + " ".join(f"{n}:{r0[n]:.2f}" for n in "SMB") + f" (noflow8 {w0['noflow8'][0]:.2f})")
+    verdict(7, 0.5 <= r20["S"] <= 2 and r20["M"] >= 0.5 and r20["B"] >= 1.3, "wall(t20)/noflow8: " + " ".join(f"{n}:{r20[n]:.2f}" for n in "SMB") + f" (noflow8 {w20['noflow8'][0]:.3f})")
+    f80 = {n: (arm[n]["t_single"] <= 80).mean() for n in arm}
+    verdict(8, abs(f80["S"] - f80["noflow8"]) < 0.15 and f80["noflow8"] - f80["B"] >= 0.15, "single by t80: " + " ".join(f"{n}:{v:.3f}" for n, v in f80.items()))
+    verdict(9, w20["M"][0] >= w20["S"][0] - np.hypot(w20["M"][1], w20["S"][1]) and w20["B"][0] >= w20["M"][0] - np.hypot(w20["B"][1], w20["M"][1]),
+            "wall(t20) S, M, B: " + " ".join(f"{n}:{w20[n][0]:.3f}+-{w20[n][1]:.3f}" for n in "SMB"))
+    rb = w0["B"][0] / w0["noflow1"][0]
+    verdict(10, 0.7 <= rb <= 1.4, f"wall(t0) B / noflow1 = {rb:.2f} (noflow1 {w0['noflow1'][0]:.2f})")
+    el = time.time() - t0
+    verdict(11, el < 1200, f"total {el:.0f}s")
 
 
 if __name__ == "__main__":
