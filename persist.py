@@ -70,6 +70,17 @@ Q3 (consumer with selectivity S, switched on at the pure state, r = 0.01):
 Sanity P14: a pure-D start in a D-preferring world gives the exact mirror (eta -> -eta, a unchanged), asserted to
  1e-9 for g = 0 and for g = 1e-17 with the bias flipped; the analytic pure branch equals fsolve of the full ODE
  fixed point to 1e-8 (asserted).
+
+RESULTS (persist.log, 2026-10-13): predictions above are unchanged.  13 of 14 held; P11 held only in part.
+ P1 held (log 2, 5).  P2 held (3-4, 7).  P3 held (9-14: 1.25-62.6, 12.5-501, 30.1%, 14.2%, min ratio 13.2).
+ P4 held (16-20; largest 4.3e-6).  P5 held (24-38; r_c 0.08698; pitchfork identity to 1e-6).
+ P6 held (24-37; 0.994391, 0.957444, r 0.02307, 0.00127; ODE equals formula to 6 digits).
+ P7 held (42-49).  P8 held (51-62; k_min 0.7904 and 0.6822, ki_min 0.0833/0.4384 and 0.01119/0.05887, 9.20x and 34.68x,
+ shares 81.02/71.48/64.87 and 100/99.89/98.48).  P9 held (53, 57).  P10 held (69-72; 1.0000 at S = 1, 0.9947, 0.0665).
+ P11 FAILED for N = 10: at c = 3 the excess falls to 0.30-0.63 (below the 0.5 line at S >= 3, log 93) and at c >= 10 it
+ flips (94-95).  It held for N = 40 (97-104; 0.671-0.957) and N = 130 (106-113; 0.89-0.957).
+ P12 held (81-86; S_c = 5.86 at c = 0.1, 1.149 at c = 0.3, lost at S = 1 for c >= 1, flips to -0.97).
+ P13 held (115-116).  P14 held (64-65, 73, 114).
 """
 import sys
 import numpy as np
