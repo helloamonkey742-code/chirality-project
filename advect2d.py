@@ -82,6 +82,8 @@ PREDICTIONS (written 2026-10-13, before any result-producing run):
 
 Usage: OMP_NUM_THREADS=2 nice -n 10 /opt/anaconda3/bin/python advect2d.py > advect2d.log     (smoke: python advect2d.py smoke)
 """
+import os
+import pickle
 import sys
 import time
 from concurrent.futures import ThreadPoolExecutor
@@ -191,9 +193,10 @@ def run_arm(S, seed, Lbox=L, gamma=GAMMA, hold=HOLD, flow=None, D=D_EFF, h=1.0, 
             one = c.all((1, 2)) | (~c).all((1, 2))
             t_after = (i - (nsweep - 1)) * dt
             out["t_single"][one & np.isinf(out["t_single"])] = t_after
-            if i in probe:
-                out["wall"][probe[i]] = wall_len(c)
-                out["ndom"][probe[i]] = np.array([n_domains(x) for x in c])
+        if i in probe:
+            c = coarse(a, f) > 0
+            out["wall"][probe[i]] = wall_len(c)
+            out["ndom"][probe[i]] = np.array([n_domains(x) for x in c])
     out["final"] = K.majority(coarse(a, f))[0]
     assert np.isfinite(a).all(), "NaN/inf in field"
     return out
@@ -297,6 +300,8 @@ def main(smoke=False):
         for key, r, dt_ in ex.map(job, jobs):
             res[key] = r
             print(f"  job done: {key} [{dt_:.0f}s]", flush=True)
+    if os.environ.get("ADVECT_PKL"):
+        pickle.dump(res, open(os.environ["ADVECT_PKL"], "wb"))
     arm = {k[1]: v for k, v in res.items() if k[0] == "arm"}
     if smoke:
         for nm, o in arm.items():
