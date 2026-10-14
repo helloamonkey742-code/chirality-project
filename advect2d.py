@@ -81,6 +81,43 @@ PREDICTIONS (written 2026-10-13, before any result-producing run):
  P11. Wall time under 20 minutes (nice -n 10, 2 threads).
 
 Usage: OMP_NUM_THREADS=2 nice -n 10 /opt/anaconda3/bin/python advect2d.py > advect2d.log     (smoke: python advect2d.py smoke)
+
+RESULTS (advect2d.log, 2026-10-13):
+Run: OMP_NUM_THREADS=2 nice -n 10, 775 s. Disclosure: the first full run crashed in the wall report (KeyError: 5; probes 5
+and 10 are not multiples of the 2 t.u. cadence because probe recording sat inside the cadence block). Its outcome table
+(the a values) had already printed and I saw it; the results were not saved. I moved the probe block out of the cadence
+block (commit "advect2d: fix probe-time bug", predictions unchanged) and reran with the same seeds, which reproduced
+identical outcome numbers; advect2d.log is the rerun. P1-P11 above are untouched.
+ P1 HELD. Lagrangian eddy part 6.95 / 7.10 / 7.04 (S/M/B, target 7.0); Eulerian total 8.05 / 8.35 / 8.34 (target 8.0;
+    +4.4% in M and B).
+ P2 HELD. Uniform-limit check passed (+1.13 SE); a(no flow, D = 8) = 0.929 +- 0.112.
+ P3 HELD. a(end): S 1.019 +- 0.121, M 0.855 +- 0.107, B 1.103 +- 0.134; differences from the no-flow arm are
+    +0.55, -0.47, +1.00 combined SE. (With SE(a) ~ 0.11 this only excludes differences of ~0.2 or more.)
+ P4 FAILED, on one point. 8 of 9 points lie within 1.8 SE of Phi(a Delta); M at Delta = 2 gives P = 1.000 (64 of 64) and
+    is +5.58 SE only because the SE floor for P = 1 with n = 64 is 0.008. That is an artifact of the floor, not a
+    misfit of the probit, but the pre-registered rule says FAILED. P increases with Delta in every arm.
+ P5 HELD. a(end): S 1.02, M 0.855, B 1.10, all inside [0.8, 1.2].
+ P6 FAILED. Wall(t0) / no-flow D = 8: S 1.39, M 4.66, B 28.9 (no-flow 0.03). The B half (>= 1.2) held by a wide margin;
+    the S half (in [0.75, 1.25]) failed on counts of 2 vs 3 non-single runs out of 192 (0.04 +- 0.03 vs 0.03 +- 0.02),
+    which is noise at that level.
+ P7 HELD. Wall(t20) / no-flow D = 8: S 1.37, M 3.74, B 21.2.
+ P8 FAILED. Single domain by t_after = 80: S 0.990, M 0.984, B 0.943, no flow D = 8 0.984, no flow D = 1 0.448. B is
+    lower than the D = 8 arm by 0.04, not 0.15, because 71% of B runs were already single at freeze-out.
+ P9 HELD. Wall(t20): S 0.043 <= M 0.117 <= B 0.663.
+ P10 FAILED. Wall(t0) B / no-flow D = 1 = 0.56 (0.92 vs 1.63), outside [0.7, 1.4]. The big eddies do smooth the
+    pattern, about half as much as the molecular-D pattern, but far less than D_eff = 8 does (which leaves 0.03).
+ P11 HELD. 775 s.
+Post-hoc diagnostics (scratch script on the saved raw results, NOT in this file; labelled exploratory): among runs that
+are not single-domain at freeze-out (S 2/192, M 4/192, B 56/192, no flow D = 8 3/192, no flow D = 1 151/192), the
+fraction single by t_after = 10 / 20 / 40 / 80 is B 0.14 / 0.25 / 0.50 / 0.80, no flow D = 1 0.08 / 0.11 / 0.17 / 0.30,
+M 0 / 0 / 0 / 0.25, S and no flow D = 8 0 throughout (too few runs). The majority hand at the end of the sweep equals
+the one 80 t.u. later in 99.5% of B and M runs. For comparison the draft's Eq. 17 with D_eff = 8 puts the single-domain
+time at ~17 t.u.
+Reading: the OUTCOME (which hand wins) follows the eddy-diffusion prediction in all three regimes. The WALLS do not in
+the big-eddy regime (eddies about 3.6 wall widths): walls survive at freeze-out in 29% of runs (1.6% at D_eff) and are
+removed at least 4x slower than D_eff diffusion predicts, though much faster than molecular D alone.
+Limits: SE(a) ~ 0.11, so differences below ~0.2 in a are invisible; box is 7.2 xi; kicks are operator-split; flow arms
+h = 0.5 vs no-flow h = 1; no convergence test in h, dt or Tk; Da = 2.7 is the only slow-eddy case.
 """
 import os
 import pickle
