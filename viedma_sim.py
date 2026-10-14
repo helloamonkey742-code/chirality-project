@@ -93,6 +93,40 @@ PREDICTIONS (written 2026-10-13 BEFORE the real grid; base variant, S=2, LAMBDA=
  P10 Caveat stated in advance: every one of these numbers comes from the assumptions above
      (marked ASSUMPTION), not from NaClO3 measurements; the model can only say what the
      mechanism, as written, implies for the bench. It says nothing about oceans.
+
+RESULTS (viedma_sim.log, 2026-10-13): 2440 pre-registered runs (base: N = 250/1000/4000 x 100
+reps, 16000 x 80, 64000 x 30, Delta in {0, 0.5, 1, 2}; sensitivity S=0 and LAMBDA=1 at N=1000 x
+100 reps), wall time 945 s on 2 workers. Predictions above are unchanged.
+ P1  HELD as written. Delta=0: majority-label wins 57/100, 54/100, 60/100, 43/80, 17/30 at
+     N = 250..64000, every 95% CI contains 0.5; hand 0 wins 198/410 (CI 0.434-0.532).
+     Note (post-hoc, disclosed): the pooled majority-LABEL rate at Delta=0 was 231/410 = 0.563
+     (CI excludes 0.5 narrowly). 1800 fresh Delta=0 runs (N = 250, 1000, 4000; unused seeds)
+     gave 915/1800 = 0.508, so I read the 0.563 as chance; not a registered check.
+ P2  HELD. 0 undecided of 1640 base runs (all decided by t ~ 8-14).
+ P3  PARTLY FAILED. Pooled P(win) = 0.661, 0.712, 0.863 at Delta = 0.5, 1, 2. Delta=0.5 inside
+     0.60-0.75 (held); Delta=1 is 0.712, just below 0.72 (missed); Delta=2 is 0.863, below the
+     >= 0.90 floor (failed; only N=64000 reached 0.90, 27/30). Per-N curves are not strictly
+     increasing (N=1000: 0.73, 0.73; N=16000: 0.69, 0.68 at Delta = 0.5, 1).
+ P4  HELD. Per-N a (95% CI): 0.57 (0.45-0.70), 0.61 (0.48-0.74), 0.54 (0.42-0.67), 0.51
+     (0.38-0.65), 0.61 (0.38-0.86) for N = 250..64000. Collapse LRT chi2 = 1.27, df = 4,
+     p = 0.87. No trend of a with N.
+ P5  FAILED on the number. a_hat = 0.565, 95% CI 0.505-0.629: inside the stated range 0.5-1.5
+     but far from the 0.9 point guess, and H_Phi (a = 1) is rejected (chi2_1 = 157, p << 1e-10).
+ P6  HELD. log10 L(H_a)/L(H_drift) = 67.3 (and log10 L(Phi)/L(drift) = 33.2).
+ P7  HELD. Median t_decide 7.75 (N=250), 9.5, 10.75, 12.5, 14.0 (N=64000): ratio 1.8, and
+     growing slowly with N (about +1.5 per factor 4).
+ P8  HELD. S=0: 100/100 undecided in every cell at t = 60 (mass fraction of a hand never beyond
+     0.10-0.88); majority-lean rate at Delta = 2 is 0.57.
+ P9  FAILED. LAMBDA=1: a = 0.32 (0.21-0.43) vs 0.61 (0.48-0.74) at N=1000 base, ratio 0.52
+     (predicted 0.7-1.3); t_decide 17.25 vs 9.5, ratio 1.8 (predicted >= 2).
+ POST-HOC extras (--extra mode added after the main run; NOT pre-registered, appended to the
+ log): S = 0.5 gives a = 0.41 (0.30-0.53), S = 2 gives 0.61 (0.48-0.74) at the same N=1000,
+ S = 8 gives a = 0.545 (0.43-0.67). No feedback variant gives a >= 0.7 and Phi(Delta) (a = 1)
+ is rejected in every one.
+ SUMMARY: collapse on Delta = eps*sqrt(N) held (the sqrt(N) scaling is robust inside the
+ model); neutral drift is rejected; the paper's coefficient Phi(Delta) is rejected in favour of
+ Phi(a*Delta), a ~ 0.3-0.6, depending on grinding rate and feedback strength. Bench value:
+ 90% win needs Delta ~ 2.3.
 """
 import os
 for _v in ("OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "MKL_NUM_THREADS", "VECLIB_MAXIMUM_THREADS"):
@@ -108,7 +142,8 @@ from scipy.stats import beta as beta_dist, chi2, norm
 MASTER = 20261013
 SIGMA_LN, R_MIN, DT, TMAX, DONE = 0.25, 0.6, 0.01, 60.0, 0.99
 BASE = dict(lam=4.0, s=2.0)
-VARIANTS = {0: ("base", BASE), 1: ("noretain_S0", dict(lam=4.0, s=0.0)), 2: ("slowgrind_L1", dict(lam=1.0, s=2.0))}
+VARIANTS = {0: ("base", BASE), 1: ("noretain_S0", dict(lam=4.0, s=0.0)), 2: ("slowgrind_L1", dict(lam=1.0, s=2.0)),
+            3: ("retain_S0.5", dict(lam=4.0, s=0.5)), 4: ("retain_S8", dict(lam=4.0, s=8.0))}  # 3,4: post-hoc (--extra)
 DELTAS = [0.0, 0.5, 1.0, 2.0]
 GRID_BASE = {250: 100, 1000: 100, 4000: 100, 16000: 80, 64000: 30}   # N -> reps
 GRID_SENS = {1000: 100}
@@ -261,6 +296,7 @@ def analyze(rows, var, out):
 
 def main():
     smoke = "--smoke" in sys.argv
+    extra = "--extra" in sys.argv   # POST-HOC, added after the main run; appends to the log
     lines = []
 
     def out(s=""):
@@ -269,7 +305,8 @@ def main():
 
     grid_b = {200: 3} if smoke else GRID_BASE
     grid_s = {} if smoke else GRID_SENS
-    jobs = [(N, d, rep, v) for v, g in ((0, grid_b), (1, grid_s), (2, grid_s)) for N, reps in g.items()
+    sets = ((3, GRID_SENS), (4, GRID_SENS)) if extra else ((0, grid_b), (1, grid_s), (2, grid_s))
+    jobs = [(N, d, rep, v) for v, g in sets for N, reps in g.items()
             for d in DELTAS for rep in range(reps)]
     jobs.sort(key=lambda j: -j[0])
     t0 = time.time()
@@ -277,14 +314,14 @@ def main():
     with Pool(2) as pool:
         rows = list(pool.imap_unordered(_job, jobs, chunksize=2))
     out(f"wall time {time.time()-t0:.0f} s")
-    for v in VARIANTS:
+    for v in ((3, 4) if extra else (0, 1, 2)):
         analyze(rows, v, out)
     out("\nPER-RUN TABLE: var N delta rep eps maj win(-1=undecided) lean fm t ncr")
     for r in sorted(rows, key=lambda r: (r["var"], r["N"], r["delta"], r["rep"])):
         out(f"{r['var']} {r['N']} {r['delta']} {r['rep']} {r['eps']:.5f} {r['maj']} {r['win']} {r['lean']} {r['fm']:.4f} {r['t']:.2f} {r['ncr']}")
     if not smoke:
-        with open(__file__.replace(".py", ".log"), "w") as f:
-            f.write("\n".join(lines) + "\n")
+        with open(__file__.replace(".py", ".log"), "a" if extra else "w") as f:
+            f.write(("\nPOST-HOC EXTRA (--extra): S sensitivity, not pre-registered\n" if extra else "") + "\n".join(lines) + "\n")
 
 
 if __name__ == "__main__":
