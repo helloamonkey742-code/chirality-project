@@ -28,6 +28,17 @@ PREDICTIONS (written 2026-10-14, before any run):
       ln(3f)/ln(100)); Enceladus ~13% at f = 0.5, ~5-6% at f = 0.75, 0% at f >= 1. Ganymede stays first at every f.
  (P7) The salt-lid fraction of the fresh salinity draws at f = 1 matches the logged one within 0.5 points
       (Europa 24%, Enceladus 100%).
+
+RESULTS (lid_melt.log, 2026-10-14): 7 of 7 held. 13 s.
+ (P1) max 0.05 points from multiwall.log / seedfix.log.  (P2) max 0.13 points: a melt lid multiplies every share by 1 - p.
+ (P3) order unchanged at every common p.  (P4) break-even 0.32 (main) / 0.34 (x10) against Europa under 20 km of ice;
+ 0.18 / 0.21 against Europa with the Juno shell (36.0 / 26.4%).  (P5) p = 0.5: Ganymede 22.1 / 16.8, Europa 15.1 / 11.0,
+ Enceladus 0.  (P6) Europa (20 km) 36.1 / 24.2 / 18.3% at f = 0.5 / 2 / 4 (Juno shell 37.4-32.8% over f = 0.5-4);
+ Enceladus 13.2 / 5.5 / 0% at f = 0.5 / 0.75 / >= 1; Ganymede first at every f.  (P7) Europa fresh lid fraction 23.87
+ vs logged 23.87%: chance agreement (the two salinity draws correlate at 0.002; checked after the run).
+ Reading: a melt lid lowers every world in proportion and changes the ranking only if it is much likelier on Ganymede
+ than on Europa (by about a third of draws, or a fifth against the Juno shell). Composition moves Europa and Enceladus
+ by up to 18 and 13 points but leaves the order Ganymede > Europa > Enceladus.
 """
 import os
 import sys

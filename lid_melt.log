@@ -1,0 +1,52 @@
+lid_melt.py, N = 200000, seed 0. P_pved %, rule main | cascade x10.
+
+(1) Melt lid probability p (independent of the salt lid). Columns: no lid, final at p = 0.0, 0.1, 0.25, 0.5
+Enceladus          main  26.4 |   0.0   0.0   0.0   0.0    x10  19.4 |   0.0   0.0   0.0   0.0
+Europa             main  39.6 |  30.1  27.0  22.6  15.1    x10  29.0 |  22.0  19.8  16.5  11.0
+Ganymede           main  44.1 |  44.1  39.8  33.2  22.1    x10  33.5 |  33.5  30.2  25.2  16.8
+Titan              main  35.8 |  35.8  32.2  26.7  17.8    x10  25.5 |  25.5  22.9  19.0  12.7
+Callisto           main  43.5 |  43.5  39.1  32.7  21.8    x10  33.0 |  33.0  29.7  24.7  16.5
+Triton             main  37.0 |  37.0  33.4  27.9  18.6    x10  26.5 |  26.5  23.9  19.9  13.3
+Pluto              main  41.1 |  41.1  37.0  30.8  20.5    x10  30.6 |  30.6  27.5  22.9  15.2
+Titania            main  51.3 |  51.3  46.1  38.6  25.7    x10  40.9 |  40.9  36.8  30.7  20.5
+Oberon             main  51.4 |  51.4  46.2  38.5  25.7    x10  40.8 |  40.8  36.6  30.5  20.4
+Umbriel            main  53.7 |  53.7  48.3  40.2  26.7    x10  43.6 |  43.6  39.2  32.7  21.8
+Ariel              main  49.6 |  49.6  44.7  37.3  24.9    x10  39.7 |  39.7  35.8  29.8  19.9
+Dione              main  42.0 |  26.2  23.6  19.6  13.1    x10  32.2 |  20.1  18.2  15.1  10.1
+Miranda            main  27.1 |   9.0   8.1   6.8   4.5    x10  21.3 |   7.0   6.4   5.3   3.6
+Mimas              main  17.3 |   5.6   5.0   4.2   2.8    x10  11.6 |   3.7   3.3   2.8   1.9
+Early Earth ocean  main  99.9 |  99.9  90.0  75.1  50.1    x10  99.7 |  99.7  89.7  74.9  49.9
+
+Break-even p_melt on Ganymede (no melt lid on Europa) before Ganymede < Europa:
+  main: Europa 20 km 30.1 vs Ganymede 44.1 -> p > 0.32
+  x10: Europa 20 km 22.0 vs Ganymede 33.5 -> p > 0.34
+  main: Europa Juno shell 36.0 -> p > 0.18
+  x10: Europa Juno shell 26.4 -> p > 0.21
+
+(2) Composition: S* scaled by f (28.5 MPa cutoff kept). lid % | final main | final x10
+Europa (logged lid fraction 23.9%):
+  f  0.5:   8.8% |  36.1 |  26.4    Juno shell:   5.5% |  37.4 |  27.4
+  f 0.75:  17.6% |  32.7 |  23.9    Juno shell:   7.5% |  36.6 |  26.8
+  f  1.0:  23.9% |  30.2 |  22.1    Juno shell:   9.1% |  36.0 |  26.4
+  f  1.5:  32.6% |  26.7 |  19.6    Juno shell:  11.4% |  35.1 |  25.7
+  f  2.0:  38.9% |  24.2 |  17.8    Juno shell:  13.0% |  34.5 |  25.2
+  f  4.0:  53.8% |  18.3 |  13.4    Juno shell:  17.1% |  32.8 |  24.0
+Enceladus (logged lid fraction 100.0%):
+  f  0.5:  50.1% |  13.2 |   9.7
+  f 0.75:  79.3% |   5.5 |   4.1
+  f  1.0: 100.0% |   0.0 |   0.0
+  f  1.5: 100.0% |   0.0 |   0.0
+  f  2.0: 100.0% |   0.0 |   0.0
+  f  4.0: 100.0% |   0.0 |   0.0
+Ganymede: no salt lid at any f (ice > 23 km): 44.1 | 33.5
+
+Predictions:
+  [P1] HELD: max |p=0 - logged| = 0.05 points over 15 worlds, main and x10
+  [P2] HELD: max |final(p) - final(0)(1-p)| = 0.13 points
+  [P3] HELD: Ganymede > Europa > Enceladus at every common p (Enceladus 0 counts as last)
+  [P4] HELD: break-even 20 km 0.32 / 0.34; Juno 0.18 / 0.21
+  [P5] HELD: p = 0.5: Ganymede 22.1/16.8, Europa 15.1/11.0, Enceladus 0.0
+  [P6] HELD: Europa f 0.5/2/4: 36.1/24.2/18.3; Enceladus by f: 13.2/5.5/0.0/0.0/0.0/0.0
+  [P7] HELD: fresh vs logged lid fraction, max diff 0.00 points
+
+7 of 7 held.
