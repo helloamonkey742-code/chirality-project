@@ -14,6 +14,16 @@ PREDICTIONS (written 2026-10-14, before any run):
  (P3) Larger worlds lose more (L is larger): Ganymede loses more points than Europa at f = 4 and 10.
  (P4) Ganymede > Europa > Enceladus (final) at f = 4 and 10, main and x10.
  (P5) Early Earth ocean stays >= 95% at f = 10 (main).
+
+RESULTS (coarsen_slow.log, 2026-10-14): the script prints 5 of 5; counted 4 of 5 (P3 below). Before the predictions
+were committed, an N = 2,000 smoke run and a diagnostic (largest (L/A)^2/D_h / age over all draws) were seen; the
+predictions were not changed.
+ (P1) held, 0.05.  (P2) held: largest loss 0.0 points at f = 4 and 0.1 at f = 10.  (P3) the check passes on
+ Ganymede 0.1 vs Europa 0.0 at f = 10, a difference below the printed rounding: counted as NOT held.
+ (P4) held, 44.1 / 30.1 / 0.0 (f = 4).  (P5) held, 99.9.
+ Why nothing moves: sideways coarsening takes at most 7% of the ocean's age in any draw of any world (Ganymede;
+ median 0.01%), so it must be about 14x slower before it decides a single draw. The advect2d slowdown (>= 4x) is far
+ inside that margin. The bound is for this model's ages (10^8-10^9 yr, Mimas 2-25 Myr), not for short-lived pools.
 """
 import numpy as np
 
