@@ -57,6 +57,31 @@ M_ex = 5.75: 72.5-75%) and the closed forms of the dilution formulas.  Quantitie
       plume from the lid layer, so five independent plumes all showing the PVED hand has probability 0.05-0.17.
  (P11) If the plume carries interior water, that share is higher than the lid layer's and lies in 0.65-0.85.
  (P12) Without a lid, the share of draws that reach one ocean-wide hand is 30-60% (main rule); plume and bulk agree in all of them.
+
+RESULTS (plume_signal.log, 2026-10-16): 7 of 12 held. 1 s.  The predictions were committed in 00ae888 and are unchanged.  A
+N = 3000 smoke run (output discarded) was made after the commit to catch crashes; its numbers were seen and no prediction was
+changed.  One cosmetic edit to the code after the commit (a leftover "FLO_GRID if False else" in the f_lid loop, never evaluated).
+ (P1) HELD   No lid 26.36 / 19.44 % PVED-set (main / x10), lid 0.00 / 0.00.
+ (P2) HELD   Gates pass in 78.7% of draws.
+ (P3) FAILED The mean P(PVED hand | A) is higher than predicted: bulk 0.956 (predicted 0.65-0.85), lid layer 0.928 (0.55-0.70);
+             the layer is lower than the bulk by 0.028 (predicted >= 0.05) and rises with f_lid (0.892, 0.910, 0.928, 0.943).
+             Cause: most gate-passing draws have a large Delta (Delta >= 2 in 78% of layer and 85% of bulk draws at f_lid = 0.1),
+             so the hand is rarely a coin flip; I had put Delta near 1.
+ (P4) FAILED Opposite hands in layer and bulk: 0.076 of A draws (predicted 0.25-0.50); 0.109 at f_lid = 0.01, 0.065 at 0.3.
+ (P5) HELD   eta* > 0 in 93.3% of A draws, median 0.994.
+ (P6) FAILED s(1e6 yr) = 0.634 Ala, 0.367 Asp held; the 1e7 yr part failed: s = 0.148 at 1e7 yr (not 0.017, an arithmetic
+             slip of mine: 2 k_rac tau = 5.76), so 5% ee is reachable (largest detection probability 0.217 for T >= 2%).
+ (P7) HELD   Median f_req 0.0532 (T 5%), 0.0106 (T 1%), tau 1e5 yr; never below T.
+ (P8) HELD   Detection chance over A draws 0.457 / 0.294 / 0.223 for T = 1 / 5 / 10%.
+ (P9) HELD   n <= 3 rows have no life reading; n >= 4 life-read share of all lid draws 0.231 (T 5%).
+ (P10) FAILED Lid-layer PVED share among detectable plumes 0.943 (predicted 0.55-0.70); five all PVED 0.744 (0.05-0.17).
+ (P11) FAILED Interior plume 0.966 > layer 0.943 as predicted, but above the 0.65-0.85 range.
+ (P12) HELD  One-hand share without a lid 36.1% (plume and bulk agree in all of them, by construction).
+ Reading: with a lid the plume layer and the bulk usually carry the same hand when both amplify (opposite in 7.6% of gate-
+ passing draws), so a lid-layer plume speaks for the ocean in most draws under these assumptions.  The lid's 0% PVED-set
+ share in the main model is about walls that must be swept out of a layered ocean; it is not about the layer's own hand.
+ Dilution is the limit: a 5% ee needs a network share of at least 5.3% (tau 1e5 yr), and a log-uniform share gives that in 29%
+ of gate-passing draws.  Davila's rule makes the excess read as abiotic whenever n <= 3, whatever its size.
 """
 import os
 import sys
@@ -142,7 +167,7 @@ def main(seed=0):
     print("  f_lid | mean P(PVED hand | A): lid layer, bulk | opposite hands in layer and bulk, share of A | "
           "layer Delta>=2 share of A, bulk")
     top, bulk, opp = {}, {}, {}
-    for fl in FLO_GRID if False else FLID:
+    for fl in FLID:
         pt, pb = phi(fl), phi(1 - fl)
         top[fl], bulk[fl] = pt[A].mean(), pb[A].mean()
         opp[fl] = (pt * (1 - pb) + (1 - pt) * pb)[A].mean()

@@ -1,0 +1,53 @@
+plume_signal.py, N = 200000, seed 0, Enceladus (sweep2.chains index 0); lid in 100.0% of draws.
+
+(0) Whole-ocean outcome, multiwall rule (P_pved % | one-hand %)
+  no lid main : 26.36 | 36.13      x10: 19.44 | 25.86
+  with lid    :  0.00 |  0.00      x10:  0.00
+  No lid: one hand fills the ocean, so plume and bulk carry the same hand in every one-hand draw.
+
+(1) Layers under the lid. Gates pass (A) in 78.7% of draws (the same for both layers).
+  f_lid | mean P(PVED hand | A): lid layer, bulk | opposite hands in layer and bulk, share of A | layer Delta>=2 share of A, bulk
+   0.01 |  0.892  0.957 |  0.109 |  0.689  0.854
+   0.03 |  0.910  0.957 |  0.092 |  0.732  0.854
+    0.1 |  0.928  0.956 |  0.076 |  0.778  0.851
+    0.3 |  0.943  0.953 |  0.065 |  0.816  0.843
+  Over ALL draws at f_lid = 0.1: layer PVED hand 73.1%, layer other hand 5.6%, layer racemic 21.3%; bulk PVED 75.3%, other 3.5%; opposite hands 6.0%, same hand 72.8%, both racemic 21.3%.
+
+(2) Dilution. eta*(k_rac/k2c): >0 in 93.3% of A draws; median 0.9940, 10th percentile 0.762, share >= 0.9: 85.7%.
+  Survival s = 1/(1 + 2 k_rac tau_res): tau 1000 yr: Ala 0.9994 Asp 0.9983; tau 100000 yr: Ala 0.9455 Asp 0.8530; tau 1e+06 yr: Ala 0.6344 Asp 0.3672; tau 1e+07 yr: Ala 0.1479 Asp 0.0548
+  Needed network share f_req = T/(eta* s), Ala, over A draws with eta* > 0 (median [10th-90th pct]; share of A draws with f_req > 1, i.e. unreachable):
+   tau 1000 yr: T 1%: 0.0101 [0.0101-0.0108] unreach 6.7% | T 2%: 0.0201 [0.0201-0.0216] unreach 6.7% | T 5%: 0.0503 [0.0503-0.0541] unreach 6.7% | T 10%: 0.1006 [0.1006-0.1082] unreach 6.7%
+   tau 100000 yr: T 1%: 0.0106 [0.0106-0.0114] unreach 6.7% | T 2%: 0.0213 [0.0213-0.0229] unreach 6.7% | T 5%: 0.0532 [0.0532-0.0572] unreach 6.7% | T 10%: 0.1064 [0.1064-0.1144] unreach 6.7%
+   tau 1e+06 yr: T 1%: 0.0159 [0.0159-0.0170] unreach 6.7% | T 2%: 0.0317 [0.0317-0.0341] unreach 6.7% | T 5%: 0.0793 [0.0793-0.0852] unreach 6.7% | T 10%: 0.1586 [0.1585-0.1704] unreach 6.8%
+   tau 1e+07 yr: T 1%: 0.0680 [0.0680-0.0731] unreach 6.7% | T 2%: 0.1361 [0.1360-0.1462] unreach 6.7% | T 5%: 0.3401 [0.3401-0.3656] unreach 7.0% | T 10%: 0.6803 [0.6801-0.7312] unreach 8.9%
+  P(plume ee >= T), f log-uniform on [1e-4, 1], plume = lid layer. Over A draws | over all draws:
+   tau 1000 yr: T 1%: 0.462 | 0.364 | T 2%: 0.392 | 0.309 | T 5%: 0.299 | 0.236 | T 10%: 0.229 | 0.180
+   tau 100000 yr: T 1%: 0.457 | 0.360 | T 2%: 0.387 | 0.304 | T 5%: 0.294 | 0.231 | T 10%: 0.223 | 0.176
+   tau 1e+06 yr: T 1%: 0.416 | 0.328 | T 2%: 0.346 | 0.272 | T 5%: 0.253 | 0.199 | T 10%: 0.183 | 0.144
+   tau 1e+07 yr: T 1%: 0.269 | 0.212 | T 2%: 0.199 | 0.156 | T 5%: 0.106 | 0.083 | T 10%: 0.036 | 0.029
+  (The same numbers hold if the plume carries interior water: eta*, s and the gates do not depend on the layer; only the sign probability does.)
+
+(3) Davila's rule at tau_res = 1e5 yr (n = amino acids the network makes, all sharing f, hand and eta*). Share of ALL lid draws read as: abiotic with a detectable excess / life / racemic or below the limit
+  T 1%: n=1: 36.0 / 0.0 / 64.0; n=2: 36.0 / 0.0 / 64.0; n=3: 36.0 / 0.0 / 64.0; n=4: 0.0 / 36.0 / 64.0; n=5: 0.0 / 36.0 / 64.0; n=6: 0.0 / 36.0 / 64.0
+  T 2%: n=1: 30.4 / 0.0 / 69.6; n=2: 30.4 / 0.0 / 69.6; n=3: 30.4 / 0.0 / 69.6; n=4: 0.0 / 30.4 / 69.6; n=5: 0.0 / 30.4 / 69.6; n=6: 0.0 / 30.4 / 69.6
+  T 5%: n=1: 23.1 / 0.0 / 76.9; n=2: 23.1 / 0.0 / 76.9; n=3: 23.1 / 0.0 / 76.9; n=4: 0.0 / 23.1 / 76.9; n=5: 0.0 / 23.1 / 76.9; n=6: 0.0 / 23.1 / 76.9
+  T 10%: n=1: 17.6 / 0.0 / 82.4; n=2: 17.6 / 0.0 / 82.4; n=3: 17.6 / 0.0 / 82.4; n=4: 0.0 / 17.6 / 82.4; n=5: 0.0 / 17.6 / 82.4; n=6: 0.0 / 17.6 / 82.4
+
+(4) Sign (T 5%, tau 1e5 yr, f_lid 0.1): among detectable plumes the PVED-hand share is 0.943 for a lid-layer plume and 0.966 for an interior plume; five independent plumes all PVED: 0.744 (lid layer) / 0.841 (interior); all five of one hand if hands were 50/50: 0.062.
+  A sign cannot separate the weak force from a chance amplifier with one ocean: a chance amplifier gives each hand with probability 0.5 and the PVED about q.
+
+Predictions:
+  [P1] HELD: no lid 26.36 / 19.44; lid 0.00 / 0.00
+  [P2] HELD: gates pass in 78.7%
+  [P3] FAILED: f_lid 0.1: bulk 0.956, layer 0.928; layer by f_lid 0.892/0.910/0.928/0.943
+  [P4] FAILED: opposite hands 0.076 of A draws
+  [P5] HELD: eta*>0 in 93.3% of A; median 0.9940
+  [P6] FAILED: s(1e6) Ala 0.634 Asp 0.367; largest detect prob at 1e7 yr, T >= 2%: 0.217
+  [P7] HELD: median f_req 0.0532 (T 5%), 0.0106 (T 1%); min f_req/T 1.006
+  [P8] HELD: T 1/5/10%: 0.457 / 0.294 / 0.223
+  [P9] HELD: n >= 4 life-read share of all lid draws 0.231 (same share abiotic-read for n <= 3)
+  [P10] FAILED: lid-layer PVED share 0.943; five all PVED 0.744
+  [P11] FAILED: interior-plume PVED share 0.966 vs layer 0.943
+  [P12] HELD: one-hand share, no lid, main: 36.1%
+
+7 of 12 held. 1 s.
