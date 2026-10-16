@@ -1,0 +1,19 @@
+life_few.py: amplifier breadth sweep, sigma 2%, M = 60000 per class and split, equal priors
+breadth    acc8  accV_AB8  confLife8    acc7  accV_AB7  confLife7 Dav prec Dav rec
+    2-3   0.622     0.753      0.258   0.577     0.711      0.247    0.992   0.217
+    4-5   0.623     0.704      0.152   0.585     0.661      0.146    0.669   0.217
+      6   0.618     0.665      0.089   0.579     0.614      0.090    0.559   0.216
+      7   0.597     0.606      0.000   0.546     0.526      0.000    0.523   0.215
+  R1 HELD: precision 0.523, confident life 0.000
+  R2 HELD: precision 0.992, recall 0.217, confident life 0.258, acc_V_AB 0.753
+  R3 HELD: precision 0.992 > 0.669 > 0.559 > 0.523; confident life 0.258 >= 0.152 >= 0.089 >= 0.000
+  R4 HELD: breadth 4-5 precision 0.669
+
+Ablation on the full panel's visible set (breadth 7, n = 8 with Iva, sigma 2%), acc_V_AB:
+  full                     0.606
+  no Iva (n = 7 protein)   0.524
+  Iva only                 0.524
+  R5 HELD: full - no Iva 0.082; no Iva 0.524 vs Iva only 0.524
+  R6 HELD: 20 s
+
+6 of 6 checked items HELD: R1 HELD, R2 HELD, R3 HELD, R4 HELD, R5 HELD, R6 HELD

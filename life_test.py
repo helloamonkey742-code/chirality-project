@@ -118,6 +118,11 @@ disagreement (Asp/Ala 13.4 vs 3.0) does not change the conclusion.
  (4) No cell reaches 90%: the largest unconditional accuracy is 0.634, 0.734 in the best case; undetected A and B (about 40% each)
  look like plain abiotic.  (5) Davila's >= 4 amino-acid rule calls amplifiers life about as often as life itself (precision 0.52).
  All of this is conditional on assumptions (a)-(h) and on the amplifier hand being L, q_np = 0.5, f priors shared by life and amplifier.
+ CORRECTION (2026-10-16, after review; the lines above are left as written): the P9 line misreads the log.  "Largest drop: Iva
+ only (0.136)" is the drop from keeping ONLY Iva, and the Iva-only "visible" set differs from the full panel's; on a fixed visible
+ set no-Iva and Iva-only both give 0.524 (life_few.py).  Readings (1) and (5) follow from letting the amplifier act on all seven
+ amino acids with life's hand and share prior; with an amplifier limited to 2-3 amino acids, life is confidently called in 25.8%
+ and the >= 4 rule has precision 0.992 (life_few.py).  They are superseded by life_few.py.
 """
 import os
 import sys
