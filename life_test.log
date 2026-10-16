@@ -1,0 +1,77 @@
+life_test.py, N = 200000, seed 0, Enceladus (sweep2.chains index 0); M = 60000 per class and split; sigma 1/2/5%; equal priors.
+
+(1) Rates (Cohen & Chyba 2000 Table II, 273 K) and survival
+  Phe 1.687e-13; Asp 5.147e-14; Ala 3.829e-15; Leu 3.147e-15; Val 1.556e-15; Ile 8.406e-16; Glu 7.270e-16 /s
+  Asp/Ala: Cohen & Chyba 13.44; model 2.99
+  s at tau 1e5 yr: Ala 0.976; Asp 0.755; Phe 0.484; Glu 0.995; Leu 0.981; Val 0.990; Ile 0.995
+
+(2) Population: gate-passing share with the model's Ala rate 0.7872 (eta*_Ala > 0 in 0.9335 of it); with Cohen & Chyba Ala 0.8036
+  Share of A draws (rate set C) with eta* = 0 (network too slow for that amino acid): Ala 0.049; Asp 0.186; Phe 0.266; Glu 0.002; Leu 0.042; Val 0.020; Ile 0.005
+
+(3) Visibility: share of samples with some panel |ee| >= 5% (n = 8 with Iva): A 0.598; B 0.607; C 0.415
+
+(4) Unconditional 3-class accuracy (rows: panel; columns: sigma 1% / 2% / 5%), equal priors; and acc_V_AB (A vs B among visible)
+  protein only n = 2: acc 0.464 / 0.457 / 0.432 | acc_V_AB 0.536 / 0.522 / 0.449
+  protein only n = 4: acc 0.519 / 0.504 / 0.474 | acc_V_AB 0.551 / 0.527 / 0.461
+  protein only n = 6: acc 0.556 / 0.534 / 0.504 | acc_V_AB 0.546 / 0.523 / 0.470
+  protein only n = 7: acc 0.569 / 0.546 / 0.516 | acc_V_AB 0.548 / 0.526 / 0.477
+  with Iva     n = 2: acc 0.530 / 0.509 / 0.468 | acc_V_AB 0.609 / 0.598 / 0.545
+  with Iva     n = 4: acc 0.572 / 0.538 / 0.489 | acc_V_AB 0.640 / 0.620 / 0.550
+  with Iva     n = 6: acc 0.615 / 0.577 / 0.525 | acc_V_AB 0.636 / 0.610 / 0.540
+  with Iva     n = 8: acc 0.634 / 0.597 / 0.547 | acc_V_AB 0.631 / 0.606 / 0.538
+  Best cell accuracy 0.634; cells >= 0.90: none.  Standard error about 0.0012.
+  Cells with acc_V_AB >= 0.90: none.
+
+(5) Confusion matrices, n = 8 with Iva, sigma 2% (rows true A/B/C, columns called A/B/C)
+  all samples:
+    true A: 0.340  0.358  0.302
+    true B: 0.206  0.520  0.274
+    true C: 0.034  0.034  0.932
+  visible samples:
+    true A: 0.493  0.485  0.022
+    true B: 0.273  0.716  0.010
+    true C: 0.008  0.002  0.990
+
+(6) Confident calls (posterior >= 0.9): coverage 0.158, precision 0.987; share of true A/B/C confidently called correctly: 0.086 / 0.000 / 0.382
+
+(7) Feature ablation, n = 8 with Iva, sigma 2%, main config (acc_V_AB / acc)
+  full                         0.606 / 0.597
+  no Iva (n = 7 protein)       0.526 / 0.546
+  |ee| (no sign)               0.593 / 0.580
+  protein = count+mean only    0.580 / 0.586
+  Iva only                     0.470 / 0.491
+  Largest drop in acc_V_AB: Iva only (0.136).
+
+(8) Davila's rule: life if >= 4 of 7 protein amino acids have observed ee >= 5% (sigma 2%, n = 7 protein, equal priors)
+  precision of the life call 0.523; share of life calls that are amplifiers 0.476; recall of life 0.215; share of true amplifiers called life 0.196
+
+(9) Sensitivities (n = 8 with Iva, sigma 2%): acc_V_AB / acc
+  rate set M (model Ala, Asp)  0.606 / 0.598
+  q_np = 0                     0.546 / 0.573
+  q_np = 1                     0.673 / 0.627
+  A hand 50/50                 0.786 / 0.679
+  A over all draws             0.631 / 0.583
+  best: hand 50/50, q_np = 1   0.821 / 0.694
+  Hand 50/50: signed 0.786, |ee| 0.592
+  Best case at sigma 1%: acc 0.734, acc_V_AB 0.841
+
+(10) Reading the numbers
+  Unconditional accuracy is capped by invisibility: an amplifier or life with every ee below the noise looks racemic, which is also what plain abiotic looks like; see (3), (4), (5).
+
+Predictions:
+  [P1] HELD: order ok True; Asp/Ala 13.44; s Ala/Asp/Phe 0.976/0.755/0.484
+  [P2] HELD: A(model) 0.7872; eta>0 0.9335; A(Cohen) 0.8036
+  [P3] HELD: eta*=0 shares Ala 0.049, Asp 0.186, Phe 0.266, Glu 0.002
+  [P4] HELD: visible A 0.598, B 0.607, C 0.415
+  [P5] HELD: n = 8 with Iva, sigma 2%: 0.597
+  [P6] HELD: max cell 0.634; cells >= 0.90: 0
+  [P7] HELD: acc(n8)-acc(n2) 0.088; acc(1%)-acc(5%) 0.086
+  [P8] FAILED: acc_V_AB protein n=7 0.526; with Iva n=8 0.606
+  [P9] FAILED: drops no Iva (n = 7 protein): 0.080, |ee| (no sign): 0.013, protein = count+mean only: 0.026, Iva only: 0.136
+  [P10] HELD: hand 50/50 signed-|ee| 0.194; hand L 0.013
+  [P11] FAILED: q0 0.546; q1 0.673; hand 0.786; M 0.606 vs main 0.606
+  [P12] HELD: precision of Davila life call 0.523
+  [P13] HELD: B confident 0.000; A confident 0.086; precision 0.987
+  [P14] HELD: best case accuracy 0.734
+
+11 of 14 held. 60 s.

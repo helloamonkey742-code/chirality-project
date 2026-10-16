@@ -91,6 +91,33 @@ the logged detection chances; density of draws near the gate ~4-6% per e-fold of
  (P13) Confident calls (posterior >= 0.9, n = 8 with Iva, sigma 2%): at most 0.10 of true B samples get a confident life call; 0.08-0.30 of
        true A samples get a confident amplifier call; precision of all confident calls >= 0.90.
  (P14) Best case (hand 50/50, q_np = 1, sigma 1%, n = 8 with Iva): unconditional accuracy still below 0.80.
+
+RESULTS (life_test.log, 2026-10-16): 11 of 14 held.  60 s.  The predictions were committed in d1eafb5 and are unchanged; the only check
+before the run was py_compile; no smoke run or probe.  Rate-set M and the main config give the same numbers, so the compilation
+disagreement (Asp/Ala 13.4 vs 3.0) does not change the conclusion.
+ (P1) HELD   rates, order, Asp/Ala 13.44, s(1e5 yr) Ala 0.976, Asp 0.755, Phe 0.484.
+ (P2) HELD   A (model Ala) 0.7872, eta*>0 0.9335; A (Cohen Ala) 0.8036.
+ (P3) HELD   eta*=0 shares: Ala 0.049, Asp 0.186, Phe 0.266, Glu 0.002 (Leu 0.042, Val 0.020, Ile 0.005).
+ (P4) HELD   visible: A 0.598, B 0.607, C 0.415.
+ (P5) HELD   n = 8 with Iva, sigma 2%: 0.597.
+ (P6) HELD   best of 24 cells 0.634 (with Iva, n = 8, sigma 1%); no cell near 0.90; acc_V_AB also never reaches 0.90 (max 0.640).
+ (P7) HELD   acc(n8) - acc(n2) = 0.088; acc(sigma 1%) - acc(sigma 5%) = 0.086.
+ (P8) FAILED protein only n = 7: acc_V_AB 0.526 (inside 0.50-0.62); with Iva n = 8: 0.606 (below the predicted 0.62-0.82, by 0.014).
+ (P9) FAILED removing Iva lowers acc_V_AB by 0.0797 (predicted >= 0.08, missed by 0.0003); |ee| 0.013 and count+mean 0.026 held.  The
+             direction held: Iva is the largest drop; an Iva-only classifier (0.470) is worse than the full one by 0.136.
+ (P10) HELD  hand 50/50: signed minus |ee| 0.194; hand L 0.013.
+ (P11) FAILED q_np = 0: 0.546 and hand 50/50: 0.786 and rate set M: 0.606 vs 0.606 held; q_np = 1: 0.673 (predicted 0.72-0.90).
+ (P12) HELD  Davila's life call precision 0.523 (47.6% of its life calls are amplifiers; it finds 21.5% of life).
+ (P13) HELD  confident life calls for 0.000 of true B; confident amplifier calls for 0.086 of true A; precision of confident calls 0.987.
+ (P14) HELD  best case accuracy 0.734 (acc_V_AB 0.841).
+ Reading.  (1) In this model a plume cannot be called life with confidence: life is never confirmed (0.000 of B samples reach a 0.9
+ posterior), because an amplifier with a racemic non-protein amino acid looks the same.  (2) The amplifier CAN be confirmed, but only
+ when a non-protein chiral amino acid (Iva) carries an ee (8.6% of A samples; 0.987 precision), or, if the amplifier's hand is
+ random, when the hand is D (A-vs-B accuracy among visible rises from 0.606 to 0.786).  (3) More protein amino acids help only by
+ making life or an amplifier visible against racemic, not by separating the two (protein only: acc_V_AB 0.52-0.55 at every n).
+ (4) No cell reaches 90%: the largest unconditional accuracy is 0.634, 0.734 in the best case; undetected A and B (about 40% each)
+ look like plain abiotic.  (5) Davila's >= 4 amino-acid rule calls amplifiers life about as often as life itself (precision 0.52).
+ All of this is conditional on assumptions (a)-(h) and on the amplifier hand being L, q_np = 0.5, f priors shared by life and amplifier.
 """
 import os
 import sys
