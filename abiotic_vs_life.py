@@ -77,7 +77,28 @@ logged numbers and persist.py's logged shares.  "A" = draws that pass the Ala ga
        So AIB cannot carry an ee at all and cannot serve as the "racemic non-protein amino acid" control; isovaline and
        norvaline can.
 
-RESULTS (abiotic_vs_life.log, 2026-10-16): to be appended after the run.
+RESULTS (abiotic_vs_life.log, 2026-10-16): 10 of 10 held.  1 s.  The predictions were committed in c842151 and are unchanged; no
+smoke run or probe was made before the run.  P1, P5, P7 are near-regressions of numbers already in plume_signal.log or closed forms,
+so they test the reuse, not new physics; P2-P4, P6, P8 are the new model results.
+ (P1) HELD  A 0.7872; eta*_Ala > 0 in 0.9335 of A; median 0.9940.
+ (P2) HELD  eta*_Ala >= 0.99 in 0.659 of A (>= 0.9: 0.857).  The amplifier's source purity is life-like.
+ (P3) HELD  Asp does not amplify in 0.066 of the A draws where Ala does (k2 c between 11.5 and about 34 k_rac(Ala)).
+ (P4) HELD  eta*_Asp/eta*_Ala < 0.95 in 0.179 of those draws (10th percentile of the ratio 0.765); median 0.9997 where both amplify.
+ (P5) HELD  R = s_Asp/s_Ala 0.9022 (1e5 yr), 0.5788 (1e6), 0.3709 (1e7); limits 1 and 0.3344; inversion exact to 1e-13.
+ (P6) HELD  tau 1e5 yr: P(ee >= 50%) 0.061, P(>= 90%) 0.0035; of the draws with ee >= 5% (0.294), 20.7% reach 50%.
+ (P7) HELD  P(ee >= 10%) 0.223 (above Steel et al.'s <10% expectation for biology, in their model).
+ (P8) HELD  All of n amino acids >= 5%: shared share 0.294 for any n; independent shares 0.0293 (n = 3), 0.00925 (n = 4), 0.00093 (n = 6),
+            so a network share that differs by amino acid makes Davila's ">3 amino acids" 32 times rarer at n = 4.
+ (P9) HELD  1/n! = 0.167, 0.0417, 0.0083 (n = 3, 4, 5); n = 4 is the smallest n below 0.05.
+ (P10) HELD AIB and glycine: 0 stereocentres; alanine, isovaline, norvaline: 1.  AIB cannot show ee.
+ Reading.  In this model magnitude does not separate an amplifier from life (source purity is >= 0.99 in two thirds of gate-passing
+ draws), and the racemization ordering is shared by both once the amino acids are dissolved.  What the model adds is (i) a
+ rate-gated purity, a step: in about 7% of the draws where Ala is pure, Asp is racemic at the source, and in 18% Asp is at least
+ 5% less pure; (ii) a count: an excess in more than 3 amino acids is rare unless the network's share is common to them
+ (0.29 shared vs 0.009 independent, n = 4); (iii) a size: only 6.1% of gate-passing draws give a plume ee of 50% or more, because f must be near 1.
+ The Lego/abundance pattern and the racemic-non-protein expectation for life are NOT model results; they rest on McKay 2004,
+ Dorn et al. 2011 and Creamer et al. 2017 (abstracts/page only), and meteorites show abiotic ee in a non-protein amino acid
+ (isovaline, Glavin and Dworkin 2009), so a large ee in non-protein amino acids points to an abiotic amplifier, not to life.
 """
 import os
 import sys

@@ -1,0 +1,61 @@
+abiotic_vs_life.py, N = 200000, seed 0, Enceladus; imports plume_signal.py.
+
+(1) Source purity of the amplifier (the part a 'near 100%' excess would come from)
+  A = 0.7872; eta*_Ala > 0 in 0.9335 of A; median eta*_Ala over A 0.9940; eta* >= 0.9: 0.857, >= 0.99: 0.659, >= 0.5: 0.924
+
+(2) Rate-gated purity: the same network applied to Ala (slow racemizer) and Asp (3x faster)
+  Among A draws where Ala amplifies: Asp does not 0.0661; eta*_Asp/eta*_Ala < 0.95 in 0.1792; median ratio where both amplify 0.9997; 10th percentile of ratio over Ala-amplifying draws 0.765
+
+(3) Survival ratio R = s_Asp/s_Ala (same for life and amplifier once dissolved) and its inversion to tau_res
+  tau 1000 yr: s_Ala 0.9994 s_Asp 0.9983 R 0.9989; inversion error 6.8e-14
+  tau 100000 yr: s_Ala 0.9455 s_Asp 0.8530 R 0.9022; inversion error -1.1e-16
+  tau 1e+06 yr: s_Ala 0.6344 s_Asp 0.3672 R 0.5788; inversion error -3.3e-16
+  tau 1e+07 yr: s_Ala 0.1479 s_Asp 0.0548 R 0.3709; inversion error 2.4e-15
+  Limits: R -> 1 as tau -> 0, R -> kA/kD = 0.3344 as tau -> infinity.
+
+(4) Magnitude of the plume excess (tau_res 1e5 yr, f log-uniform 1e-4..1, over A)
+  P(ee_Ala >= 5%) = 0.2937
+  P(ee_Ala >= 10%) = 0.2234
+  P(ee_Ala >= 50%) = 0.0608
+  P(ee_Ala >= 90%) = 0.0035
+  Of draws with ee >= 5%, the share that reach 50%: 0.207
+  Steel et al. 2017 (abstract): biology in their model gives a plume ee below 10%; an amplifier gives >= 10% in 22.3% of A draws here.
+
+(5) How many amino acids carry a detectable excess (T = 5%, tau 1e5 yr)
+  n = 1: all n >= 5%: shared share 0.2937, independent shares 0.29366
+  n = 2: all n >= 5%: shared share 0.2937, independent shares 0.09262
+  n = 3: all n >= 5%: shared share 0.2937, independent shares 0.02925
+  n = 4: all n >= 5%: shared share 0.2937, independent shares 0.00925
+  n = 5: all n >= 5%: shared share 0.2937, independent shares 0.00293
+  n = 6: all n >= 5%: shared share 0.2937, independent shares 0.00093
+  Davila's 'more than 2-3 amino acids' therefore costs a factor 32 at n = 4 if the network's share differs by amino acid, none if it is common.
+
+(6) Ordering by racemization rate: chance the ee of n amino acids follow the k_rac order at random
+  n = 2: 0.5000; n = 3: 0.1667; n = 4: 0.0417; n = 5: 0.0083
+  Only Ala and Asp have k_rac in the model; with two, the ordering is a coin flip (0.5).
+
+(7) Chirality of candidate control amino acids (RDKit stereocentres)
+  Gly: 0; AIB: 0; Ala: 1; isovaline: 1; norvaline: 1
+
+(8) Ledger: what separates an amplifier from life, and what supports it
+  magnitude of source ee near 100%       | NOT a discriminator: model eta* >= 0.99 in the majority of A draws (P2)       | model
+  plume ee above 10%                     | outside Steel's life expectation (<10%); amplifier gives it in ~22% of A      | model + Steel abstract
+  ee ordered by k_rac, common share f    | consistency check only: life's dissolved amino acids racemize identically     | model (assumption e)
+  Asp racemic while Ala is pure         | amplifier-only (threshold k2c > 11.5 k_rac); life keeps proteins ~pure        | model (P3, P4)
+  ee in non-protein chiral amino acids   | abiotic ee exists (isovaline 18.5%, Murchison); life: expected racemic        | literature (Glavin 2009); life side = logic
+  AIB as control                         | achiral, cannot show ee; use isovaline or norvaline                           | chemistry (P10)
+  abundance pattern (Lego, smooth vs peaked) | life peaked on a selected set, abiotic smooth and Gly/Ala heavy          | literature only (McKay 2004, Dorn 2011, Creamer 2017); model silent
+
+Predictions:
+  [P1] HELD: A 0.7872; eta>0 0.9335; median 0.9940
+  [P2] HELD: eta*_Ala >= 0.99 in 0.659 of A
+  [P3] HELD: Asp does not amplify in 0.0661 of Ala-amplifying A draws
+  [P4] HELD: ratio<0.95 in 0.1792; median ratio (both) 0.9997
+  [P5] HELD: R 0.9022/0.5788/0.3709; inversion error 6.8e-14
+  [P6] HELD: ee>=50%: 0.0608; >=90%: 0.0035; share of 5% draws that reach 50%: 0.207
+  [P7] HELD: P(ee >= 10%) over A = 0.2234
+  [P8] HELD: shared n=4 0.2937; independent n=3 0.0293, n=4 0.00925, n=6 0.000926
+  [P9] HELD: 1/n!: 0.1667/0.0417/0.0083; smallest n below 0.05: 4
+  [P10] HELD: stereocentres {'Gly': 0, 'AIB': 0, 'Ala': 1, 'isovaline': 1, 'norvaline': 1}
+
+10 of 10 held. 1 s.
