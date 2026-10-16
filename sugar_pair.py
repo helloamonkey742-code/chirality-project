@@ -73,7 +73,24 @@ DISCLOSURE. Before this commit I read dna_network.py, dual.py, sweep2.py, multiw
 Zanasi chapter, the IJA draft and PAPER_DRAFT.md passages named in the brief; I did not run this script or any part of it
 (no smoke run, no probe). The closed forms in P3-P6 were computed by hand.
 
-RESULTS: (to be appended after the run, below this line; the predictions above are never edited)
+RESULTS (sugar_pair.log, 2026-10-16): 12 of 12 held (P1 counts as one: its two parts P1a and P1b both held).
+ Zanasi ratio r_Z: all 12 glyceraldehyde conformers favour D (same side as L-amino acids); r_Z 0.023 to 0.472, mean 0.257.
+ Natural-pair fraction (c > 0, g_a > 0): primary 0.864; rho 0.1-10: 0.881; rho 0.001-1000: 0.837; |r| 0.1-1: 0.875;
+ |r| 0.01-10: 0.833; p(r>0) = 0 / 0.25 / 0.75 / 1: 0.727 / 0.795 / 0.932 / 1.000.
+ Opposing sugar PVED (r < 0): median rho needed 0.089; 23.9% of those draws need rho > 1; 72.8% are rescued.
+ P(|c| < 0.1) = 0.055, P(|c| < 0.01) = 0.005. Six dna_network spot checks: matched 1.000 in all, natural within 0.012
+ of Phi(Delta(g_eff)); c = 0 case 0.492.
+ Oceans (multiwall main P_pved, no lid / final) at |c| = 1, 0.3, 0.1, 0.01: early Earth 99.9, 99.8, 99.4, 94.7;
+ Ganymede 44.1, 41.5, 38.5, 30.7; Europa 39.6 / 30.1, 36.6 / 27.8, 33.5 / 25.4, 25.8 / 19.5; Enceladus 26.4 / 0.0,
+ 23.0 / 0.0, 19.6 / 0.0, 12.6 / 0.0. Primary-prior natural-minus-mirror share (points): early Earth 72.7, Ganymede 31.5,
+ Europa (lid) 21.4, Enceladus (no lid) 18.5, Enceladus (lid) 0.0. Whole script 57 s.
+ Reading: with the sugar PVED random in sign and the coupling free in direction, the natural pair (L-aa + D-sugar) is
+ favoured in 86% of draws (73-93% across the sensitivity ranges that keep a 50/50 sign or move it by 0.25); it is
+ favoured in 100% if the sugar PVED agrees (which is what the one calculation in hand, Zanasi 1999, shows) and in 73%
+ even if every sugar PVED opposes, because a strong enough amino-acid-to-sugar coupling (rho > r^2) rescues it. In the
+ oceans the effective bias only shrinks the PVED-set share; it does not change the ranking, and early Earth stays at
+ 94.7% even at |c| = 0.01. The model therefore explains the PAIRING (one hand of sugar follows the hand of amino acid),
+ not which pair: the L-aa / D-sugar identity still rests on the amino-acid PVED sign (g_a > 0).
 """
 import os
 import sys

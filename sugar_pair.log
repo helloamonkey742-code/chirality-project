@@ -1,0 +1,133 @@
+sugar_pair.py, N = 200000 per world, 1000000 prior draws, 4000 runs per spot check
+=== 1. Sugar / amino-acid PVED ratio in the only calculation in hand (Zanasi et al. 1999) ===
+  preferred L-aa conformers (aeV): glycine 7.72, alanine 7.17, valine 8.99, aspartate 7.49; mean 7.84
+  D-glyceraldehyde, 12 conformers: 0.18 to 3.70 aeV, mean 2.02; all negative (D lower): True
+  r_Z = glyceraldehyde / amino acid: min 0.023, mean 0.257, max 0.472  (same sign as the amino acids)
+  P2 HELD: same sign True; min 0.023, max 0.472, mean 0.257
+
+=== 2. Fraction of draws in which the coupled system favours the natural pair (c > 0), g_a > 0 ===
+1000000 draws per row; sign of r, |r| log-uniform, rho = k_as/k_sa log-uniform
+variant                                           MC  closed
+PRIMARY p(r>0)=0.5, |r| 0.03-3, rho 0.01-100  0.8639  0.8636
+rho 0.1-10                                    0.8812  0.8807
+rho 0.001-1000                                0.8374  0.8371
+|r| 0.1-1                                     0.8752  0.8750
+|r| 0.01-10                                   0.8329  0.8333
+p(r>0)=0 (every sugar PVED opposes)           0.7272  0.7273
+p(r>0)=0.25                                   0.7953  0.7954
+p(r>0)=0.75                                   0.9320  0.9318
+p(r>0)=1 (sugar agrees, as in Zanasi)         1.0000  1.0000
+  P3 HELD: MC 0.8639, closed 0.8636
+  P4 HELD: closed forms 0.8636, 0.8807, 0.8371, 0.8750, 0.8333, 0.7273, 0.7954, 0.9318, 1.0000
+
+  Rescue condition for an opposing sugar PVED (r < 0): the natural pair needs rho = k_as/k_sa > r^2
+        r  rho needed   c at rho = 1
+    -0.03      0.0009     0.686
+    -0.10      0.0100     0.636
+    -0.30      0.0900     0.495
+    -1.00      1.0000     0.000
+    -3.00      9.0000    -1.414
+  among r < 0 draws: median rho needed 0.0892; share needing rho > 1: 0.239; share rescued: 0.728
+  P5 HELD: median 0.0892, share |r|>1 0.239
+  |c| percentiles 10/25/50/75/90: 0.181 0.433 0.840 1.021 1.472;  P(|c|<0.1) = 0.0549, P(|c|<0.01) = 0.0051
+  P6 HELD: P(|c|<0.1) 0.0549, P(|c|<0.01) 0.0051
+[sections 1-2: 1 s elapsed]
+
+=== 3. dna_network.simulate_asymmetric vs Phi(Delta(g_eff)), 4000 runs/case, g_a = 1e-3, kappa_bar = 0.3 ===
+     r     rho       c   k_as   k_sa predicted simulated  matched
+  0.30   1.000   0.919  0.300  0.300     0.708     0.712    1.000
+ -0.30   1.000   0.495  0.300  0.300     0.616     0.628    1.000
+ -1.00   1.000   0.000  0.300  0.300     0.500     0.492    1.000
+ -1.00   0.250  -0.447  0.150  0.600     0.395     0.397    1.000
+ -0.30  16.000   0.897  1.200  0.075     0.703     0.705    1.000
+ -0.50   0.062  -0.243  0.075  1.200     0.443     0.431    1.000
+  P1a HELD: c equals dna_network's g_eff / g_a (and Phi(Delta(c g_a)) equals theoretical_p) to 1e-9 in all six cases
+  P7 HELD: matched >= 0.99: True; natural within 0.04 of prediction: True; c = 0 case 0.492
+[section 3: 13 s elapsed]
+
+=== 4. Oceans with the PVED scaled by |c| (multiwall.run4, seed 0, N = 200000; Enceladus on stream [s, 0, 1]) ===
+[|c| = 3.0: 19 s elapsed]
+[|c| = 1.0: 24 s elapsed]
+[|c| = 0.3: 29 s elapsed]
+[|c| = 0.1: 34 s elapsed]
+[|c| = 0.03: 40 s elapsed]
+[|c| = 0.01: 45 s elapsed]
+[|c| = 0.003: 51 s elapsed]
+[|c| = 0.001: 56 s elapsed]
+
+P_pved %, multiwall main, no lid / final
+world                      |c|=3         |c|=1       |c|=0.3       |c|=0.1      |c|=0.03      |c|=0.01     |c|=0.003     |c|=0.001
+Early Earth ocean   99.9 / 99.9  99.9 / 99.9  99.8 / 99.8  99.4 / 99.4  97.9 / 97.9  94.7 / 94.7  88.1 / 88.1  78.7 / 78.7
+Umbriel             58.2 / 58.2  53.7 / 53.7  47.9 / 47.9  42.3 / 42.3  35.7 / 35.7  29.7 / 29.7  23.2 / 23.2  17.5 / 17.5
+Oberon              55.3 / 55.3  51.4 / 51.4  46.3 / 46.3  41.2 / 41.2  35.4 / 35.4  29.8 / 29.8  23.8 / 23.8  18.4 / 18.4
+Titania             55.1 / 55.1  51.3 / 51.3  46.3 / 46.3  41.2 / 41.2  35.3 / 35.3  29.8 / 29.8  23.7 / 23.7  18.4 / 18.4
+Ariel               53.8 / 53.8  49.6 / 49.6  44.3 / 44.3  39.1 / 39.1  33.1 / 33.1  27.7 / 27.7  21.8 / 21.8  16.6 / 16.6
+Ganymede            45.7 / 45.7  44.1 / 44.1  41.5 / 41.5  38.5 / 38.5  34.6 / 34.6  30.7 / 30.7  26.2 / 26.2  21.9 / 21.9
+Callisto            45.2 / 45.2  43.5 / 43.5  40.8 / 40.8  37.7 / 37.7  33.9 / 33.9  30.0 / 30.0  25.5 / 25.5  21.4 / 21.4
+Pluto               43.6 / 43.6  41.1 / 41.1  37.7 / 37.7  34.2 / 34.2  30.0 / 30.0  25.9 / 25.9  21.4 / 21.4  17.3 / 17.3
+Triton              39.0 / 39.0  37.0 / 37.0  34.2 / 34.2  31.2 / 31.2  27.6 / 27.6  24.1 / 24.1  20.1 / 20.1  16.4 / 16.4
+Titan               37.1 / 37.1  35.8 / 35.8  33.7 / 33.7  31.4 / 31.4  28.3 / 28.3  25.2 / 25.2  21.6 / 21.6  18.3 / 18.3
+Europa              41.7 / 31.7  39.6 / 30.1  36.6 / 27.8  33.5 / 25.4  29.5 / 22.4  25.8 / 19.5  21.5 / 16.3  17.6 / 13.4
+Dione               45.4 / 28.4  42.0 / 26.2  37.6 / 23.5  33.3 / 20.8  28.4 / 17.8  23.9 / 15.0  18.9 / 11.8  14.5 /  9.1
+Miranda             29.7 /  9.8  27.1 /  9.0  23.9 /  7.9  20.7 /  6.9  17.2 /  5.7  14.0 /  4.6  10.5 /  3.5   7.5 /  2.5
+Mimas               19.1 /  6.1  17.3 /  5.6  15.0 /  4.8  12.7 /  4.1  10.1 /  3.3   7.8 /  2.5   5.4 /  1.7   3.6 /  1.2
+Enceladus           29.1 /  0.0  26.4 /  0.0  23.0 /  0.0  19.6 /  0.0  15.9 /  0.0  12.6 /  0.0   9.1 /  0.0   6.2 /  0.0
+
+The four worlds, three-way split P_pved / P_chance / P_none, % (no lid), and cascade x10 P_pved (no lid / final)
+Early Earth ocean
+   |c| = 3       99.9 /   0.0 /   0.1    x10  99.7 /  99.7
+   |c| = 1       99.9 /   0.0 /   0.1    x10  99.7 /  99.7
+   |c| = 0.3     99.8 /   0.1 /   0.1    x10  99.6 /  99.6
+   |c| = 0.1     99.4 /   0.6 /   0.1    x10  99.1 /  99.1
+   |c| = 0.03    97.9 /   2.1 /   0.1    x10  97.6 /  97.6
+   |c| = 0.01    94.7 /   5.3 /   0.1    x10  94.4 /  94.4
+   |c| = 0.003   88.1 /  11.8 /   0.1    x10  87.9 /  87.9
+   |c| = 0.001   78.7 /  21.3 /   0.1    x10  78.5 /  78.5
+Ganymede
+   |c| = 3       45.7 /   1.8 /  52.5    x10  34.5 /  34.5
+   |c| = 1       44.1 /   3.4 /  52.5    x10  33.5 /  33.5
+   |c| = 0.3     41.5 /   6.0 /  52.5    x10  31.8 /  31.8
+   |c| = 0.1     38.5 /   9.0 /  52.5    x10  29.7 /  29.7
+   |c| = 0.03    34.6 /  12.9 /  52.5    x10  26.9 /  26.9
+   |c| = 0.01    30.7 /  16.8 /  52.5    x10  24.0 /  24.0
+   |c| = 0.003   26.2 /  21.3 /  52.5    x10  20.6 /  20.6
+   |c| = 0.001   21.9 /  25.6 /  52.5    x10  17.4 /  17.4
+Europa
+   |c| = 3       41.7 /   2.8 /  55.5    x10  30.3 /  23.0
+   |c| = 1       39.6 /   4.9 /  55.5    x10  29.0 /  22.0
+   |c| = 0.3     36.6 /   7.9 /  55.5    x10  27.0 /  20.4
+   |c| = 0.1     33.5 /  11.0 /  55.5    x10  24.8 /  18.8
+   |c| = 0.03    29.5 /  15.0 /  55.5    x10  22.0 /  16.7
+   |c| = 0.01    25.8 /  18.8 /  55.5    x10  19.4 /  14.7
+   |c| = 0.003   21.5 /  23.0 /  55.5    x10  16.3 /  12.3
+   |c| = 0.001   17.6 /  26.9 /  55.5    x10  13.5 /  10.2
+Enceladus
+   |c| = 3       29.1 /   7.0 /  63.9    x10  21.4 /   0.0
+   |c| = 1       26.4 /   9.8 /  63.9    x10  19.4 /   0.0
+   |c| = 0.3     23.0 /  13.2 /  63.9    x10  17.1 /   0.0
+   |c| = 0.1     19.6 /  16.5 /  63.9    x10  14.7 /   0.0
+   |c| = 0.03    15.9 /  20.2 /  63.9    x10  12.1 /   0.0
+   |c| = 0.01    12.6 /  23.6 /  63.9    x10   9.6 /   0.0
+   |c| = 0.003    9.1 /  27.1 /  63.9    x10   7.1 /   0.0
+   |c| = 0.001    6.2 /  29.9 /  63.9    x10   4.9 /   0.0
+  P1b HELD: |c| = 1 reproduces lid_melt.py LOGGED for the four worlds
+  P8 HELD: 15 worlds x 2 lid states x 8 values: monotone, P_none and P_pved+P_chance constant
+
+Loss in P_pved (points, no lid) from |c| = 1: |c|=0.3: Early 0.1, Ganymede 2.6, Europa 3.0, Enceladus 3.4; |c|=0.1: Early 0.5, Ganymede 5.7, Europa 6.1, Enceladus 6.7; |c|=0.01: Early 5.3, Ganymede 13.5, Europa 13.9, Enceladus 13.8
+  P9 HELD: see the loss line above; Enceladus with lid max over the grid 0.0
+  P10 HELD: order at every |c|: True; Ganymede final at 0.01 = 30.7
+
+=== 5. Primary prior (Section 2 draws of c) applied to the oceans: natural-pair vs mirror-pair share, % (main) ===
+world                     P_pved(|c|=1)  natural   mirror  neither    diff
+Early Earth ocean (no lid)           99.9     86.3     13.6      0.1    72.7
+Early Earth ocean (lid)            99.9     86.3     13.6      0.1    72.7
+Ganymede (no lid)                  44.1     39.5      8.0     52.5    31.5
+Ganymede (lid)                     44.1     39.5      8.0     52.5    31.5
+Europa (no lid)                    39.6     36.4      8.2     55.5    28.2
+Europa (lid)                       30.1     27.6      6.2     66.2    21.4
+Enceladus (no lid)                 26.4     27.3      8.8     63.9    18.5
+Enceladus (lid)                     0.0      0.0      0.0    100.0     0.0
+  P11 HELD: diff: Earth 72.7, Ganymede 31.5, Europa(lid) 21.4, Enceladus(no lid) 18.5, Enceladus(lid) 0.00
+  P12 HELD: 57 s
+
+13 of 13 checked items HELD (P1 is two items: P1a, P1b): P2 HELD, P3 HELD, P4 HELD, P5 HELD, P6 HELD, P7 HELD, P8 HELD, P9 HELD, P10 HELD, P11 HELD, P12 HELD, P1a HELD, P1b HELD
