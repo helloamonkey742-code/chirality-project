@@ -31,6 +31,14 @@ combinations with mixed signs. The ranges below are that run plus Monte Carlo no
  (Q5) Mixed sign: same-sign (matched) fraction 0.40-0.60 and each of the four hand combinations 0.18-0.32, i.e. no pairing forms;
       with both couplings positive (control, same loop) matched >= 0.99.
  (Q6) Whole script under 5 minutes at 2 threads under nice.
+RESULTS (sugar_bands.log, 2026-10-16): 6 of 6 held (Q1-Q6), 6 s.
+ Tally corrected: sugar -> aa 3 natural / 1 against (W17 D-ribose / D-deoxyribose, the RNA sugars). Natural-pair share by band
+ choice: old primary 0.839, RNA-only 0.797, Ala/Ser in 0.785, both 0.743, no lyxose 0.847 (MC and grid agree within 0.0006).
+ Rescue of an opposing sugar PVED: 0.49 (both) to 0.69 (no lyxose). Mixed signs: the four hand combinations 0.239-0.257,
+ matched 0.491; control with both positive matched 1.000.
+ Reading: the 83.8% of sugar_measured.py is one choice in a 74-85% span (78-90% over sugar_measured's other variants). The
+ sentence "the experiments fix both signs as natural on the RNA path" was wrong for sugar -> aa: RNA templating is natural, but
+ D-ribose in Wagner et al.'s direct synthesis is not, and if that route were the whole sugar -> aa coupling no pairing would form.
 """
 import time
 

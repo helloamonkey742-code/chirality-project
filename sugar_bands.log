@@ -1,0 +1,23 @@
+=== 1. Sign tally, sign stated in an abstract or open text (+ natural, - against) ===
+  aa->sugar: B&C non-Pro +, B&C Pro -, P&W10 ribose +, P&W10 lyxose -, P&W10 arabinose -, P&W06 erythrose +
+  sugar->aa: T&S04 +, Y10 +, W17 D-lyxose / D-sugar mix +, W17 D-ribose / D-deoxyribose -
+  Q1 HELD: aa->sugar 3/3, sugar->aa 3/1
+
+=== 2. Natural-pair share (g_a > 0) under each band choice ===
+row                  G_as         G_sa median rho      MC    grid  rescued
+OLD PRIMARY  0.044-0.44 0.11-0.83      0.460  0.8387  0.8386   0.6772
+RNA-ONLY     0.044-0.44 0.57-0.75      0.213  0.7969  0.7967   0.5934
+ALA/SER IN   0.006-0.44 0.11-0.83      0.170  0.7852  0.7845   0.5691
+BOTH         0.006-0.44 0.57-0.75      0.079  0.7425  0.7426   0.4853
+NO LYXOSE    0.044-0.44 0.11-0.60      0.542  0.8477  0.8474   0.6949
+  Q2 HELD: MC 0.8387, grid 0.8386
+  Q3 HELD: outside range: none; max |MC - grid| 0.0006; span 0.743-0.847
+  Q4 HELD: OLD PRIMARY 0.677, RNA-ONLY 0.593, ALA/SER IN 0.569, BOTH 0.485, NO LYXOSE 0.695
+
+=== 3. Mixed coupling signs (k_sa = -0.3: sugar -> aa unnatural, as W17's D-ribose; k_as = +0.3) ===
+  both +0.3 (control)    L-aa,D-sugar 0.712  L-aa,L-sugar 0.000  D-aa,L-sugar 0.288  D-aa,D-sugar 0.000  matched 1.000
+  k_sa -0.3, k_as +0.3   L-aa,D-sugar 0.252  L-aa,L-sugar 0.252  D-aa,L-sugar 0.239  D-aa,D-sugar 0.257  matched 0.491
+  Q5 HELD: control matched 1.000; mixed matched 0.491, combos 0.252/0.252/0.239/0.257
+  Q6 HELD: 6 s
+
+6 of 6 checked items HELD: Q1 HELD, Q2 HELD, Q3 HELD, Q4 HELD, Q5 HELD, Q6 HELD
