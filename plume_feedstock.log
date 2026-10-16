@@ -1,0 +1,65 @@
+plume_feedstock.py, N = 200000, seed 0, Enceladus (index 0); c enters the gates, Delta, eta* and p = r c.
+HCN mass-balance ceiling: 0.0011 x 55.5 M = 0.061 M = 610x the old c ceiling.
+
+Per scenario (tau_res 1e5 yr; plume = lid layer, f_lid 0.1; P(ee >= T) as all draws | over A draws)
+
+S0 old: c 1e-12..1.000e-04 M, B 1e-08..1.356e-07 M
+  gates pass 78.7%; eta*>0 in 93.3% of A; P(PVED hand | A): lid layer 0.928, bulk 0.956; whole-ocean PVED-set, no lid 26.36%, lid 0.00%
+  P(ee >= 1/2/5/10%): all 0.522 / 0.492 / 0.449 / 0.413 | over A 0.663 / 0.625 / 0.571 / 0.525
+  f at B = 3.68e-08, over A: median 0.161; < 0.01: 0.314; > 0.5: 0.387
+
+S1 primary: c 1e-08..1.356e-07 M, B 1e-08..1.356e-07 M
+  gates pass 97.0%; eta*>0 in 94.6% of A; P(PVED hand | A): lid layer 0.979, bulk 0.994; whole-ocean PVED-set, no lid 36.44%, lid 0.00%
+  P(ee >= 1/2/5/10%): all 0.823 / 0.733 / 0.571 / 0.425 | over A 0.848 / 0.756 / 0.588 / 0.438
+  f at B = 3.68e-08, over A: median 0.092; < 0.01: 0.070; > 0.5: 0.072
+
+S2 ceiling only: c 1e-12..1.356e-07 M, B 1e-08..1.356e-07 M
+  gates pass 66.8%; eta*>0 in 87.6% of A; P(PVED hand | A): lid layer 0.870, bulk 0.919; whole-ocean PVED-set, no lid 16.92%, lid 0.00%
+  P(ee >= 1/2/5/10%): all 0.254 / 0.208 / 0.146 / 0.102 | over A 0.380 / 0.311 / 0.219 / 0.153
+  f at B = 3.68e-08, over A: median 0.005; < 0.01: 0.577; > 0.5: 0.024
+
+S3 Steel full: c 1e-08..9.000e-05 M, B 1e-08..1.356e-07 M
+  gates pass 99.1%; eta*>0 in 98.5% of A; P(PVED hand | A): lid layer 0.993, bulk 0.998; whole-ocean PVED-set, no lid 41.02%, lid 0.00%
+  P(ee >= 1/2/5/10%): all 0.949 / 0.923 / 0.869 / 0.812 | over A 0.957 / 0.931 / 0.877 / 0.819
+  f at B = 3.68e-08, over A: median 0.730; < 0.01: 0.020; > 0.5: 0.610
+
+S4 residence 1e7: c 1e-08..1.356e-05 M, B 1e-08..1.356e-05 M
+  gates pass 98.9%; eta*>0 in 98.1% of A; P(PVED hand | A): lid layer 0.992, bulk 0.998; whole-ocean PVED-set, no lid 40.36%, lid 0.00%
+  P(ee >= 1/2/5/10%): all 0.730 / 0.661 / 0.559 / 0.474 | over A 0.738 / 0.669 / 0.565 / 0.479
+  f at B = 3.68e-07, over A: median 0.094; < 0.01: 0.191; > 0.5: 0.198
+
+S1 sensitivity, all draws, T = 1 / 2 / 5 / 10 %
+  tau 1000 yr: 0.829 / 0.741 / 0.582 / 0.437
+  tau 100000 yr: 0.823 / 0.733 / 0.571 / 0.425
+  tau 1e+06 yr: 0.775 / 0.668 / 0.488 / 0.336
+  tau 1e+07 yr: 0.521 / 0.370 / 0.167 / 0.030
+  B fixed 1e-09 M: 0.918 / 0.918 / 0.917 / 0.914
+  B fixed 1e-08 M: 0.916 / 0.893 / 0.803 / 0.682
+  B fixed 1e-07 M: 0.703 / 0.565 / 0.375 / 0.227
+  B fixed 1e-06 M: 0.247 / 0.131 / 0.030 / 0.001
+  B fixed 1e-05 M: 0.002 / 0.000 / 0.000 / 0.000
+  B log-uniform 1e-9..1e-6 M: 0.745 / 0.671 / 0.554 / 0.455
+
+Summary vs old (S0), P(plume ee >= 5%), all draws, tau 1e5 yr, plume = lid layer:
+  S0 old             0.449  (1%: 0.522)
+  S1 primary         0.571  (1%: 0.823)
+  S2 ceiling only    0.146  (1%: 0.254)
+  S3 Steel full      0.869  (1%: 0.949)
+  S4 residence 1e7   0.559  (1%: 0.730)
+
+Predictions:
+  [P1] HELD: gates 78.7%; ee 1/5% 0.522/0.449; PVED|A 0.928; no-lid 26.36%
+  [P2] HELD: S1 gates 97.0%
+  [P3] HELD: S1 T 1/2/5/10%: 0.823 / 0.733 / 0.571 / 0.425
+  [P4] HELD: S1 PVED|A layer 0.979, bulk 0.994
+  [P5] FAILED: S1 no-lid PVED-set 36.44%, lid 0.00%
+  [P6] HELD: S2 gates 66.8%; ee 1/5% 0.254/0.146; PVED|A 0.870
+  [P7] HELD: S3 gates 99.1%; ee 1/5% 0.949/0.869
+  [P8] HELD: S4 ee 5% 0.559; gates 98.9%
+  [P9] HELD: ee 5% by S0..S4: 0.449 / 0.571 / 0.146 / 0.869 / 0.559; no-lid PVED S2 16.92 < S1 36.44
+  [P10] HELD: S1 5% at tau 1e6 / 1e7: 0.488 / 0.167
+  [P11] HELD: S1 5% by fixed B 1e-9..1e-5: 0.917 / 0.803 / 0.375 / 0.030 / 0.000
+  [P12] HELD: S1 f median 0.092; < 0.01: 0.070; > 0.5: 0.072
+  [P13] HELD: 0.0611 M
+
+12 of 13 held. 1 s.

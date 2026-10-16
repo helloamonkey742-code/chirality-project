@@ -21,7 +21,7 @@ SOURCES (every DOI resolved on Crossref 2026-10-16 with a plain GET, no email; a
    paper gives NO ocean concentration, and says the HCN may come in part from solid material in the ice shell.
  - Postberg et al. 2018, Nature 558:564, doi:10.1038/s41586-018-0246-4 (abstract): complex organics > 200 u in ice grains; an
    organic-rich film on the water table samples the organic inventory "in enhanced concentrations".  No abundance given.
- - Postberg et al. 2023, Nature 618:489, doi:10.1038/s41586-023-05987-9 (abstract): sodium phosphates; P in plume-forming water
+ - Postberg et al. 2023, Nature, doi:10.1038/s41586-023-05987-9 (abstract): sodium phosphates; P in plume-forming water
    at least 100-fold Earth's ocean.  Not an amino-acid or organic-carbon constraint.
  - Hao et al. 2022, PNAS, doi:10.1073/pnas.2201388119 (abstract): modelled dissolved inorganic P 1e-7..1e-2 mol/kg; lists organic
    carbon only as a building block, no value.
@@ -79,6 +79,30 @@ P(f >= T/(eta* s))), not from the repo's draws.  That Monte Carlo reproduced S0 
  (P11) S1, T = 5 %, fixed B: 1e-9 M: 0.88-0.94; 1e-7 M: 0.34-0.42; 1e-5 M: below 0.02; strictly decreasing in B.
  (P12) S1, f at B = 3.68e-8 M over A draws: median 0.07-0.12; share f < 0.01: 0.05-0.09; share f > 0.5: 0.05-0.10.
  (P13) HCN mass-balance ceiling 0.0011 x 55.5 = 0.061 M (+-0.001), more than 100x the old c ceiling 1e-4 M.
+
+RESULTS (plume_feedstock.log, 2026-10-16): 12 of 13 held. 1 s.  Predictions committed in 5de119d and unchanged.  Two edits to the code
+ after the commit, neither touching a prediction: the Postberg 2023 citation line (I had written a volume and page I had not
+ verified; removed) and this RESULTS block.  The script was run once.
+ (P1) HELD   S0 reproduces the old numbers: gates 78.7 %, ee >= 1 / 5 % 0.522 / 0.449, PVED|A 0.928, no-lid PVED-set 26.36 %.
+ (P2) HELD   S1 gates pass in 97.0 % (S0 78.7 %).
+ (P3) HELD   S1 P(ee >= 1 / 2 / 5 / 10 %) = 0.823 / 0.733 / 0.571 / 0.425 (S0 0.522 / 0.492 / 0.449 / 0.413).
+ (P4) HELD   S1 P(PVED hand | A): lid layer 0.979, bulk 0.994 (S0 0.928 / 0.956).
+ (P5) FAILED S1 whole-ocean no-lid PVED-set share is 36.44 % (predicted 10-28 %; S0 26.36 %); lid 0.00 % held.  I had no model
+             for the layering and guessed that a narrower c range would lower it; the floor removes failing low-c draws and raises it.
+ (P6) HELD   S2 (ceiling only): gates 66.8 %, ee >= 1 / 5 % 0.254 / 0.146, PVED|A 0.870, no-lid PVED-set 16.92 %.
+ (P7) HELD   S3: gates 99.1 %, ee >= 1 / 5 % 0.949 / 0.869.
+ (P8) HELD   S4: ee >= 5 % 0.559, gates 98.9 %.
+ (P9) HELD   P(ee >= 5 %) S2 0.146 < S0 0.449 < S1 0.571, S4 0.559 < S3 0.869; no-lid PVED-set S2 16.92 < S1 36.44.
+ (P10) HELD  S1, T 5 %: tau 1e6 yr 0.488, 1e7 yr 0.167.
+ (P11) HELD  S1, T 5 %, fixed B 1e-9 / 1e-8 / 1e-7 / 1e-6 / 1e-5 M: 0.917 / 0.803 / 0.375 / 0.030 / 0.000.
+ (P12) HELD  S1 f at B = 3.68e-8 M over A: median 0.092, < 0.01 in 7.0 %, > 0.5 in 7.2 %.
+ (P13) HELD  HCN mass-balance ceiling 0.061 M, 610x the old 1e-4 M.
+ Reading: the data do not constrain c from below for a precursor and do not constrain the product at all.  Under the paper's own
+ reading (c is the amino-acid-class feedstock, in Steel's abiotic window 1e-8..1.4e-7 M) the gates pass MORE often (97 % vs 79 %)
+ and P(plume ee >= 5 %) is 0.57 (old 0.45; 0.82 at 1 %).  If the feedstock has no floor (S2) the gates pass in 67 % and the 5 %
+ chance falls to 0.15 (0.25 at 1 %).  The 5 % answer therefore spans 0.15 (no floor) to 0.87 (Steel's biotic cap as ceiling),
+ and is decided by the assumed floor of c and by the residence time of the pool, not by any measured organic abundance.  A
+ tau_res of 1e7 yr lowers the S1 5 % chance to 0.17.
 """
 import time
 
