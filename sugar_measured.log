@@ -1,0 +1,59 @@
+sugar_measured.py, 2000000 prior draws per row
+=== 1. Experimental facts (ee in %, ee out %, + = natural: D-sugar or L-amino acid); * = assumed enantiopure ===
+direction  catalyst / template              product                     ee_in  ee_out flag  DOI
+aa->sugar  L-Glu (best)                     glyceraldehyde               100*    21.4    A  10.1073/pnas.1001639107
+aa->sugar  L-Leu                            glyceraldehyde               100*     8.8    T  10.1073/pnas.1001639107
+aa->sugar  L-Phe / L-Val                    glyceraldehyde               100*     4.4    T  10.1073/pnas.1001639107
+aa->sugar  L-Ala                            glyceraldehyde               100*     1.6    T  10.1073/pnas.1001639107
+aa->sugar  L-Ser                            glyceraldehyde               100*     0.6    T  10.1073/pnas.1001639107
+aa->sugar  L-Pro (exception)                glyceraldehyde               100*   -42.2    A  10.1073/pnas.1001639107
+aa->sugar  L-isovaline / L-Ala              D-threose                       ?    12.0    T  10.1126/science.1093057
+aa->sugar  L-Val-L-Val                      D-erythrose                  100*    80.0    A  10.1073/pnas.0602320103
+aa->sugar  LL-dipeptides                    D-ribose                     100*    44.0    A  10.1007/s11084-009-9178-1
+aa->sugar  LL-dipeptides                    lyxose (L-rich)              100*   -66.0    A  10.1007/s11084-009-9178-1
+aa->sugar  LL-dipeptides                    arabinose (L-rich)           100*    -8.0    A  10.1007/s11084-009-9178-1
+aa->sugar  1% ee L-Pro (+ amplification)    ribo-aminooxazoline             1    99.0    T  10.1038/nchem.1108
+sugar->aa  D-RNA minihelix                  Ala/Leu/Phe-RNA               100    60.0    A  10.1126/science.1099141
+sugar->aa  D-RNA minihelix, Ac-Ala          Ac-L-Ala (3.7:1)              100    57.4    T  10.1073/pnas.0606070103
+sugar->aa  D-ribose RNA sites               L-His complexes (86% L)       100    72.0    A  10.1261/rna.2385310
+sugar->aa  D-pentoses (text range 11-83)    L-aminoamides                100*    83.0    A  10.1021/acscentsci.7b00085
+  B&C also: D/L 60.7/39.3 at the best, amplified to 92/8 (84% ee) by solubility; flag A = sign stated in an abstract.
+  P2 HELD: 6/6 non-Pro D-sided: True; Glu 21.4, Pro -42.2; 4:1 -> 60.0, 3.7:1 -> 57.4; 86% L -> 72; 7/8 -> 75
+  Sign tally (abstract-verified): aa->sugar 3 natural / 3 against; sugar->aa 3 natural / 0 against
+  P8 HELD: aa->sugar 3/3, sugar->aa 3/0
+
+=== 2. The measured rho = k_as / k_sa band and the natural-pair share (g_a > 0, c > 0) ===
+  rho percentiles 5/25/50/75/95: 0.105 0.244 0.460 0.870 2.019;  P(rho < 1) = 0.794  (sugar_pair assumed log-uniform 0.01-100, median 1)
+  P3 HELD: median 0.460, 5% 0.105, 95% 2.019, P(rho<1) 0.794
+  P1 HELD: sugar_pair primary closed form 0.8636
+
+variant                                       MC    grid  rescued(MC)
+PRIMARY                                   0.8384  0.8386       0.6769
+(b) RNA templating only                   0.7770  0.7777       0.5539
+(c) Hein amplification (G_as to 1.0)      0.8603  0.8609       0.7207
+(d) rho / 3                               0.7788  0.7790       0.5575
+(e) rho x 3                               0.8982  0.8982       0.7965
+p(r>0) = 0                                0.6775  0.6772       0.6775
+p(r>0) = 0.25                             0.7570  0.7579       0.6761
+p(r>0) = 0.75                             0.9194  0.9193       0.6775
+p(r>0) = 1                                1.0000  1.0000          nan
+|r| 0.1-1                                 0.9052  0.9054       0.8105
+|r| 0.01-10                               0.8049  0.8053       0.6100
+  P4 HELD: MC 0.8384, grid 0.8386, sugar_pair 0.8636, change -0.0252
+  P5 HELD: outside range: none; p(r>0)=0.5 variants span 0.778-0.905
+  P6 HELD: rescued share (r < 0 only) 0.6772 (MC 0.6769 at primary)
+
+=== 3. Sign of the coupling: dna_network.simulate_asymmetric, 4000 runs/case, g_a = 1e-3, kappa_bar = 0.3 ===
+      r    rho       c    k_as    k_sa predicted simulated  matched
+  0.257   0.46   0.774   0.203   0.442     0.678     0.686    1.000
+ -0.300   0.46   0.313   0.203   0.442     0.574     0.575    1.000
+ -0.678   0.46   0.000   0.203   0.442     0.500     0.501    1.000
+ -1.000   0.46  -0.266   0.203   0.442     0.437     0.428    1.000
+ -0.300   0.15   0.081   0.116   0.775     0.519     0.522    1.000
+  P1 HELD: cfac equals g_eff / g_a (and Phi(Delta(c g_a)) equals theoretical_p) to 1e-9 in all five cases
+  both couplings NEGATIVE (k_sa = k_as = -0.3, r = 0.3): matched (alpha and beta same sign) = 0.000
+  -> the stable pair is anti-matched (L-aa with L-sugar, or D with D); the natural pair is never reached.
+  P7 HELD: positive: matched >= 0.99 True, natural within 0.04 True, c~0 case 0.501; negative couplings matched 0.000
+  P9 HELD: 16 s
+
+9 of 9 checked items HELD: P1 HELD, P2 HELD, P3 HELD, P4 HELD, P5 HELD, P6 HELD, P7 HELD, P8 HELD, P9 HELD

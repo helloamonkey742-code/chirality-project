@@ -93,6 +93,20 @@ P1, P2, P7 and P8 are arithmetic or committed-log facts, and the simulation outp
 
 DISCLOSURE. Before this commit I read sugar_pair.py, sugar_pair.log and dna_network.py in full, and the abstracts / open texts named
 above. Apart from the scratch Monte Carlo mentioned at P3-P6, I did not run this script or any part of it.
+RESULTS (sugar_measured.log, 2026-10-16): 9 of 9 held (P1-P9), whole script 16 s.
+ Measured rho = k_as / k_sa band: median 0.46, 5-95% 0.105-2.02, P(rho < 1) = 0.79 (sugar -> amino acid is typically the stronger
+ direction). Natural-pair share (g_a > 0): primary 0.838 (grid 0.839) against sugar_pair's 0.864, a change of -0.025. Variants:
+ RNA-templating only 0.778; Hein amplification allowed 0.861; rho / 3 0.779; rho x 3 0.898; p(r>0) = 0 / 0.25 / 0.75 / 1:
+ 0.677 / 0.757 / 0.919 / 1.000; |r| 0.1-1 0.905; |r| 0.01-10 0.805. Rescue of an opposing sugar PVED: 0.677 of r < 0 draws.
+ Sign: positive couplings at the measured rho reproduce Phi(Delta(g_eff)) (natural rate within 0.012; c = 0 case 0.501); with both
+ couplings negative matched = 0.000, so the natural pair cannot form. Sign tally (abstract-verified): aa -> sugar 3 natural /
+ 3 against (proline, lyxose, arabinose), sugar -> aa 3 natural / 0 against.
+ Reading: the experiments fix the SIGN of both couplings as natural for the sugars on the RNA path (glyceraldehyde, ribose), which
+ sugar_pair.py had assumed without saying so, and put rho mostly below 1, not above it. That lowers the share of draws favouring
+ the natural pair only slightly (86.4% -> 83.8%; 78-90% over every variant with a random sugar-PVED sign), and it does not touch the
+ limit that the pairing is explained, not which pair: g_a > 0 is still taken from the amino-acid PVED. The gain-ratio mapping
+ (rho = G_as / G_sa, equal damping) is crude, the sign is not uniformly natural (proline, lyxose, arabinose), and the numbers marked
+ "text" in the facts table are from open full texts read through a web-fetch summary and not checked against the PDFs.
 """
 import time
 
