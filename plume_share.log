@@ -1,0 +1,42 @@
+plume_share.py, N = 200000, seed 0, Enceladus; lid in 100.0% of draws; gates pass in 78.7%.
+
+(0) Regression: old log-uniform f, tau 1e5 yr, share of ALL draws (plume_signal.log: 0.360 / 0.304 / 0.231 / 0.176)
+  T 1%: 0.360 | T 2%: 0.304 | T 5%: 0.231 | T 10%: 0.176
+
+(1) Abiotic background B (M)
+  floor (Steel 0.01 uM): 1.00e-08; ceiling from 87 g/s, 75 g/mol, tau 1e5 yr, V 2.7e19 L: 1.356e-07; same with 1.6 g/s: 2.49e-09
+
+(2) Network product p = r c (M), and f = p/(p+B), over gate-passing draws, B log-uniform [floor, ceiling]
+  p percentiles 10/50/90 (M): 3.85e-12 7.08e-09 2.61e-06; share above 90 uM (Steel biotic max): 5.72e-05; share below the floor: 0.523
+  f at B = 3.68e-08 (geometric mid): median 0.161; share < 0.01: 0.314; share < 1e-3: 0.193; share > 0.5: 0.387; share > 0.9: 0.235
+
+(3) NEW P(plume ee >= T), plume = lid layer. Over A draws | over all draws (B log-uniform [floor, ceiling])
+   tau 1000 yr: T 1%: 0.666 | 0.524 | T 2%: 0.628 | 0.495 | T 5%: 0.574 | 0.452 | T 10%: 0.529 | 0.416
+   tau 100000 yr: T 1%: 0.663 | 0.522 | T 2%: 0.625 | 0.492 | T 5%: 0.571 | 0.449 | T 10%: 0.525 | 0.413
+   tau 1e+06 yr: T 1%: 0.642 | 0.505 | T 2%: 0.602 | 0.474 | T 5%: 0.545 | 0.429 | T 10%: 0.496 | 0.390
+   tau 1e+07 yr: T 1%: 0.555 | 0.437 | T 2%: 0.507 | 0.399 | T 5%: 0.430 | 0.338 | T 10%: 0.333 | 0.262
+  OLD (log-uniform f) for comparison, all draws: tau 1000: 0.364/0.309/0.236/0.180, tau 100000: 0.360/0.304/0.231/0.176, tau 1e+06: 0.328/0.272/0.199/0.144, tau 1e+07: 0.212/0.156/0.083/0.029
+
+(4) Sensitivity, tau 1e5 yr, all draws, T = 1 / 2 / 5 / 10 %
+  B log-uniform 1e-9..1e-6 M: 0.522 / 0.493 / 0.451 / 0.416
+  B fixed 1e-09 M: 0.646 / 0.626 / 0.596 / 0.569
+  B fixed 1e-08 M: 0.573 / 0.547 / 0.508 / 0.476
+  B fixed 1e-07 M: 0.481 / 0.447 / 0.402 / 0.364
+  B fixed 1e-06 M: 0.369 / 0.332 / 0.280 / 0.240
+  B fixed 1e-05 M: 0.246 / 0.208 / 0.156 / 0.116
+
+(5) Davila's rule, tau 1e5 yr, T = 5%: n <= 3 read abiotic with a detectable excess; n >= 4 read life (share of ALL lid draws)
+  n=1..3: 44.9 / 0.0 / 55.1;  n=4..6: 0.0 / 44.9 / 55.1
+
+Predictions:
+  [P1] HELD: gates 78.7%; old 0.360 / 0.231
+  [P2] HELD: B_hi 1.356e-07, 1.6 g/s 2.49e-09
+  [P3] HELD: median f 0.161; f<0.01 0.314; f>0.5 0.387; p>90uM 5.7e-05
+  [P4] HELD: T 1/2/5/10%: 0.522 / 0.492 / 0.449 / 0.413; old 0.360 / 0.304 / 0.231 / 0.176
+  [P5] HELD: over A, T 5%: 0.571
+  [P6] HELD: wide B 0.451 vs primary 0.449
+  [P7] HELD: T 5% by B: 0.596 / 0.508 / 0.402 / 0.280 / 0.156
+  [P8] FAILED: tau 1e7: 0.338; tau 1e6: 0.429
+  [P9] HELD: n >= 4 life-read share 0.449 = n <= 3 abiotic-read share (same quantity by construction)
+
+8 of 9 held. 1 s.

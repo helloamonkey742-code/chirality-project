@@ -63,6 +63,24 @@ draws.  Old values are plume_signal.log (tau_res 1e5 yr, plume = lid layer, shar
       0.33-0.43.
  (P9) Davila's rule at T = 5%, tau 1e5 yr: the life-read share (n >= 4) equals the abiotic-with-detectable-excess share (n <= 3)
       and both equal the P4 value for T = 5% (0.36-0.46).
+
+RESULTS (plume_share.log, 2026-10-16): 8 of 9 held. 1 s.  Predictions committed in b7639a2 and unchanged; the script was not
+run before the commit (only a Monte Carlo over the prior ranges, which fed the ranges above).
+ (P1) HELD   Gates 78.7%; old rule 0.360 / 0.231.
+ (P2) HELD   B_hi 1.356e-7 M; 1.6 g/s version 2.49e-9 M.
+ (P3) HELD   Median f 0.161; f < 0.01 in 31.4%; f > 0.5 in 38.7%; p above 90 uM in 5.7e-5 of gate-passing draws.
+ (P4) HELD   P(ee >= 1/2/5/10%), all lid draws, tau 1e5 yr: 0.522 / 0.492 / 0.449 / 0.413 (old 0.360 / 0.304 / 0.231 / 0.176).
+ (P5) HELD   Over gate-passing draws, T 5%: 0.571.
+ (P6) HELD   Wide B 1e-9..1e-6: 0.451 vs 0.449.
+ (P7) HELD   Fixed B at T 5%: 0.596 / 0.508 / 0.402 / 0.280 / 0.156 for B = 1e-9 ... 1e-5 M.
+ (P8) FAILED tau 1e6 yr 0.429 held (0.33-0.43), but tau 1e7 yr is 0.338, above the predicted 0.12-0.30 (old 0.083).  My prior
+             Monte Carlo used eta* s = 0.94 for every tau and so did not include s = 0.148 at 1e7 yr.
+ (P9) HELD   Life-read share (n >= 4) 0.449 = abiotic-read share (n <= 3), same quantity.
+ Reading: the literature does not constrain f.  Its only hard numbers are a FLOOR on the abiotic amino-acid concentration
+ (0.01 uM) and a cap on a biological one (90 uM).  With the model's own p = r c, f is below 1% in 31% of gate-passing draws
+ and above 50% in 39%.  P(ee >= 5%) goes UP from 0.231 to 0.449, not down, because the gates (k2 c t >= 10) select the large
+ feedstock concentrations in the assumed 1e-12..1e-4 M range, and those put p above B.  The result rests on that assumed
+ c range and on assumption (a); with fixed B of 1e-5 M it falls to 0.156.
 """
 import os
 import time
