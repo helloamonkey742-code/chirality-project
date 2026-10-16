@@ -85,7 +85,8 @@ RESULTS (sugar_pair.log, 2026-10-16): 12 of 12 held (P1 counts as one: its two p
  23.0 / 0.0, 19.6 / 0.0, 12.6 / 0.0. Primary-prior natural-minus-mirror share (points): early Earth 72.7, Ganymede 31.5,
  Europa (lid) 21.4, Enceladus (no lid) 18.5, Enceladus (lid) 0.0. Whole script 57 s.
  Reading: with the sugar PVED random in sign and the coupling free in direction, the natural pair (L-aa + D-sugar) is
- favoured in 86% of draws (73-93% across the sensitivity ranges that keep a 50/50 sign or move it by 0.25); it is
+ favoured in 86% of draws (83-88% over the |r| and rho range variants; 79.5% / 93.2% if the sign is 25% / 75% agreeing
+ [corrected 2026-10-16 from a garbled "73-93%"; the log was always right]); it is
  favoured in 100% if the sugar PVED agrees (which is what the one calculation in hand, Zanasi 1999, shows) and in 73%
  even if every sugar PVED opposes, because a strong enough amino-acid-to-sugar coupling (rho > r^2) rescues it. In the
  oceans the effective bias only shrinks the PVED-set share; it does not change the ranking, and early Earth stays at
