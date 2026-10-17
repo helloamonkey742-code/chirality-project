@@ -65,6 +65,33 @@ hand is dropped; if fewer than 5 HB19 levels or 3 Choi levels remain, that paper
  more units than the starting crystals (e.g. the ground fragments).  C1 fails low (N_eff << 100): a few clusters decide,
  or viedma_sim's a does not transfer to this setup.  Every outcome is reported as found.
 
+RESULTS (blind_lab.log, 2026-10-16): 4 of 8 held (H3, H5, C2, C3); 4 FAILED (H1, H2, H4, C1).  Counts were read by a
+separate reader after the predictions commit (9f0b6a8) and entered unchanged.
+ HB19, 95 initiator runs: the initiator's hand won every run with a hand at 96, 85, 52, 5 and 1.1% ee, lost 1 of 11 at
+ 39% S, and split 5/5, 6/3 and 6/4 (follow/against) at 0.16% R, 0.10% R and 0.10% S; 6 runs had no hand.  H1 and H2
+ FAILED: no single probit linear in ee fits (p = 0.014), and a curve with free width fits better by 6.4 log units
+ (fit K = 5.2, e_1 = 19% ee).  Both failures come from the one loss at 39% S: a curve steep enough to give 16 of 16 wins at
+ 5% and 1.1% makes a loss at 39% all but impossible.  Post hoc (printed, not scored): without that run the linear curve
+ fits (p = 0.50, width gap -0.15) with e_1 = 0.48% ee.  The run stays in the score.  Scoring H14, H16 and H23 by the sign
+ of their product ee instead of the Direction column (post hoc, not in the script) makes H1 worse (p = 0.002).  H3 held:
+ no level went against the initiator.
+ HB19 controls, 49 runs: only 21 ended with a hand, 5 R and 16 S.  H4 FAILED (p = 0.027 against 50/50): runs without a
+ chiral initiator leaned S, and a steering bias of Delta >= 1 is not ruled out (P = 0.23).  H5 held (P = 0.099): the lean
+ is not concentrated in one batch.
+ HB19 main text vs SI (reader's note): the main-text Table 1 shows 10 runs at 85% S (SI 11), a 16% R row with no SI
+ counterpart, and no 39% S row.  The SI was used, as pre-registered.
+ Choi, 57 runs: flips 7/17, 3/10, 2/10, 1/10, 0/10 at CEE_i 0.1-0.5, 13 in all (expected 6.7 at N = 100, 2.3 at N = 400).
+ C2 held: one curve Phi(a eps sqrt(N_eff)) fits all five levels (p = 0.90).  C1 FAILED low: N_eff = 34 (95% CI 12-76,
+ 9-95 widened for a), below the 100-400 starting crystals.  C3 held.  The paper reports flips only, so any runs without a
+ final hand are not visible here.
+ Code-only addition after the first run: the POST HOC line.  No prediction, threshold or count was changed.
+ Reading: the Viedma ladder has the predicted shape, a probit in eps * sqrt(N), but chance matters about 3-12 times more
+ than the simulation says: either fewer units decide than there are starting crystals, or a is 0.17-0.33 rather than
+ 0.565.  The Soai ladder fails the shape test as scored because of one run, and its no-initiator controls leaned S, a stray
+ lab bias of the kind the model allows but cannot predict.  Not touched: in both labs, steering needs biases of order
+ 1e-3 to 1e-1 (Soai: 0.10-0.16% ee is near chance, 1.1% ee wins every run; Viedma: a 10% excess wins 59% of runs), far
+ above any PVED.
+
 Run: /opt/anaconda3/bin/python blind_lab.py > blind_lab.log
 """
 from math import comb, erf, sqrt
@@ -82,10 +109,15 @@ HB_LEVELS = {"96R": (0.96, 11), "85S": (-0.85, 11), "52R": (0.52, 11), "39S": (-
              "1.1R": (0.011, 5), "0.16R": (0.0016, 10), "0.10R": (0.0010, 12), "0.10S": (-0.0010, 12)}
 CH_LEVELS = {0.1: 17, 0.2: 10, 0.3: 10, 0.4: 10, 0.5: 10}
 
-# Outcomes: entered by a separate reader after the predictions commit.  None = not yet read.
-HB = None        # {level: (n_R, n_S, n_none)}, SI Table 1
-HB_CTRL = None   # {"A achiral": (n_R, n_S, n_none), ...}, SI Table 2
-CH = None        # {|CEE_i|: (n_follow, n_against, n_none)}, Fig. 4A
+# Outcomes: entered after the predictions commit (9f0b6a8), as read by a separate reader on 2026-10-16, unchanged.
+# HB19 counts use the SI's Direction column as given (H14, H16, H23 disagree with the sign of their product ee).
+HB = {"96R": (11, 0, 0), "85S": (0, 11, 0), "52R": (11, 0, 0), "39S": (1, 10, 0), "5R": (12, 0, 0),   # (n_R, n_S, n_none)
+      "1.1R": (4, 0, 1), "0.16R": (5, 5, 0), "0.10R": (6, 3, 3), "0.10S": (4, 6, 2)}                 # SI Table 1
+HB_CTRL = {"A achiral": (0, 0, 8), "B achiral": (0, 2, 5), "D achiral": (1, 0, 5), "F racemic": (0, 3, 0),  # SI Table 2
+           "F achiral": (0, 3, 0), "G racemic": (1, 2, 0), "G achiral": (0, 3, 0), "H racemic": (1, 1, 6),
+           "H achiral": (2, 2, 4)}
+CH = {0.1: (10, 7, 0), 0.2: (7, 3, 0), 0.3: (8, 2, 0), 0.4: (9, 1, 0), 0.5: (10, 0, 0)}   # Fig. 4A (n_follow, n_flip,
+# n_none); the paper reports flips only, so n_none = 0 means "none reported", not "none confirmed"
 
 
 def check(p, ok, detail):
@@ -233,6 +265,13 @@ def main():
         check("H2", l_log - l_lin <= 2.0, f"logL linear {l_lin:.2f}, log-threshold {l_log:.2f}, gap {l_log - l_lin:.2f}")
         worst = min(below_half(int(a), int(b)) for a, b in zip(kf, n))
         check("H3", worst >= 0.05 / 9, f"smallest one-sided p(follow < 1/2) = {worst:.3g}")
+        # POST HOC, added after the results were seen; not a prediction and not scored.
+        k2 = kR.copy()
+        k2[e == -0.39] = 0
+        y, d2, p2 = hb_shape(e, k2, n)
+        l1, l2 = hb_width(abs(e), np.where(e > 0, k2, n - k2), n)
+        print(f"  POST HOC, without the one R run at 39% S: K = {10 ** y[1]:.3g} (e_1 = {100 / 10 ** y[1]:.3g}% ee), "
+              f"beta0 = {y[0]:+.2f}, GOF p = {p2:.3f}, width gap {l2 - l1:.2f}")
     rows = [(r, s) for r, s, z in HB_CTRL.values()]
     a, b = sum(r for r, _ in rows), sum(s for _, s in rows)
     for lab, (r, s, z) in HB_CTRL.items():
