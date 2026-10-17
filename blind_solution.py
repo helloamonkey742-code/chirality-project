@@ -6,8 +6,14 @@ Three studies of other amplifiers were picked by title on 2026-10-17 from an Ope
  PG12: stirring against a chiral dopant in chiral domain formation.  The scout found this is NOT a solution: it is a
        Langmuir monolayer of an achiral azobenzene amphiphile (Azo1) spread on water in a stirred trough, with domains
        scored one by one by Brewster-angle microscopy.  It tests how two biases add, not the solution gap.
- Papers 1-2 (aldol 2009, Soai with achiral amines 2010) are added in a second predictions commit once their setup
- reports are in.  No outcome of PG12 is entered until then, so it cannot steer those predictions.
+ MW10: the uncatalysed aldol of acetone and p-nitrobenzaldehyde (3.3% DMSO, 300 rpm, 10 days), claimed to break symmetry
+       by product autocatalysis; 16 runs at three volumes (0.15, 0.3, 2.5 mL, one concentration) and 7 runs with extra
+       solid aldehyde, none with a chiral additive.  The volume series is the first handle in Section 3.7 on whether a
+       solution reaction's chance excess scales with its molecules.
+ SH10: the Soai reaction started with an achiral amine (three amines; 75, 20 and 20 runs; no chiral additive), each run
+       scored S or R by chiral HPLC.  A chance-zone test like blind_check.py, on runs Section 3.7 has not used.
+ PG12's predictions were committed alone (ab32be9).  MW10 and SH10 were added in a second predictions commit, before any
+ outcome of the three papers was read; PG12's predictions were not changed.
 
 PROTOCOL.  As blind_units.py.  The predictor (Claude, an AI model) has not read these papers; it saw only setup reports
 from separate scout agents told to withhold every outcome.  These predictions are committed before anyone reads an
@@ -21,7 +27,12 @@ stirring "competes" with chemical induction; (v) the scout reported that the pap
 rate (a signed rate where the hand changes, so a zero crossing is likely in the doped series) and an amplitude lambda < 1
 "accounting for domain losses" (a hint that |ee| may stay below 1), and that a statement on behaviour at high rates was
 withheld; (vi) the authors' earlier work on stirred undoped monolayers (their ref. 26, Phys. Rev. Lett. 2009) may have
-been seen in training; its results are not recalled.
+been seen in training; its results are not recalled.  MW10 and SH10 (setup reports read 2026-10-17, after ab32be9):
+(vii) the MW10 title states the claim; its scout withheld which runs had reactant precipitation (so some may have),
+"significance-threshold tallies" and a yield range; (viii) the SH10 scout withheld per-amine and pooled S/R counts stated
+in the text and whether any run was scored without a hand; (ix) the repo's soai_check.py, written in an earlier session,
+lists SH10 under "Not used" and says it reports "stochastic" outcomes; a blind scout confirmed on 2026-10-17 that none of
+its runs are among Section 3.7's 91 Soai runs.
 
 WHAT THE MODEL CAN AND CANNOT SAY.
  PG12: each circular domain is one unit whose hand is set when it forms, by a bias b against chance; the run's eeCW =
@@ -33,11 +44,31 @@ WHAT THE MODEL CAN AND CANNOT SAY.
  M1 and M2 still hold and M3 may not.  The model cannot give K or Omega0 (no per-unit bias is known), and so cannot say
  whether |ee| reaches 1 inside the tested range; that is reported, not predicted.  Each Fig. 2 marker is taken as one
  (dopant, Omega) value; replicates per marker are not stated.
+ MW10: N is at most the product molecules, about 1e20 (0.15 mL) to 2e21 (2.5 mL), so the chance excess 1/sqrt(N) is about
+ 1e-10, and a 2% ee from chance alone needs a gain of about 1e8 or more, which the model can neither supply nor rule out.
+ If runs end with a hand, the sign is a coin flip unless a stray bias steers (A1), and |ee| does not depend on the sign
+ (A3).  Volume: if each molecule were an independent vote (Eq. 13's best case, eps = 1/N) and the gain did not saturate,
+ |ee| would scale as N^-1/2, so RMS |ee| would fall by sqrt(2.5/0.15) = 4.1 from the smallest to the largest volume
+ (slope -0.5 on log-log axes).  Section 3.7's crystallizations suggest instead that a few early copies decide, a number
+ not set by volume (slope 0); A2 predicts that.  Slope 0 is also what a saturating gain, or ee values set by the analysis
+ (the authors' 2% threshold), give, so A2 holding does not separate these; A2 failing would be the first sign in Section
+ 3.7 that a solution reaction reaches eps = 1/N.
+ SH10: the stage-1 product, at most 0.2 mmol (1.2e20 molecules), gives a chance excess of about 1e-10; the hand is a coin
+ flip only if every stray bias is below that or far fewer units decide.  As blind_check.py, the model predicts the chance
+ zone: a 50/50 split (S1), no difference between achiral amines, which cannot carry a hand (S2), no run depending on the
+ one before (S3), and |ee| not depending on the sign (S4).  ASSUMPTION for S3: table order is run order; if not, S3 tests
+ only the listed order.
 
 SOURCES.
  PG12: Petit-Garrido, N., Claret, J., Ignes-Mullol, J., Sagues, F. 2012, Nature Communications 3, 1001,
        doi:10.1038/ncomms1987 (DOI as printed in the PDF); outcomes from Fig. 2 (eeCW against signed Omega; red circles
        6% w/w S dopant, blue squares 6% R, black triangles racemic 3% R + 3% S; lines are the paper's fits, not data).
+ MW10: Mauksch, M., Wei, S., Freund, M., Zamfir, A., Tsogoeva, S.B. 2010, Origins of Life and Evolution of Biospheres 40,
+       79-91 (online 2009), doi:10.1007/s11084-009-9177-2; outcomes from Table 1 (16 runs: volume, ee %, configuration),
+       Table 2 (7 runs) and Fig. 2 (two seeded reactions, reported only: the seed's hand is unknown to the predictor).
+ SH10: Suzuki, K., Hatase, K., Nishiyama, D., Kawasaki, T., Soai, K. 2010, Journal of Systems Chemistry 1, 5,
+       doi:10.1186/1759-2208-1-5; outcomes from Tables 1-3 (amines 3, 4, 5: Run, ee, Config.), in table order, not from
+       Fig. 2 or the text's counts.  DOIs as printed in the PDFs.
  Values in figures are read by the separate reader from page images, one entry per marker, (Omega rpm, eeCW).
 
 PREDICTIONS (written 2026-10-17, before any outcome was read).  Each series is fitted alone by least squares to
@@ -51,24 +82,50 @@ with eeCW > 0 and with eeCW < 0.  D = |Omega0(R) - Omega0(S)| / 2, the shift one
       markers, >= 2 of them with |eeCW| <= 0.8.
  (M4) PG12 one stirring hand: K has the same sign in all three series.  NOT SCORABLE unless every series has >= 4
       markers.
- Reported, not predicted: K and Omega0 per series; the largest |eeCW| per series.
+ MW10 and SH10.  A run "has a hand" if its configuration is given; runs without one are counted, not scored.
+ (A1) MW10 coin flip: among Table 1-2 runs with |ee| >= 2% (the authors' reliability threshold) and a hand, the split fits
+      50/50 (two-sided binomial p > 0.05).  NOT SCORABLE if fewer than 6 such runs.
+ (A2) MW10 volume does not set the excess: the least-squares slope of log RMS ee (Table 1, all runs with a value) on log
+      volume over 0.15, 0.3 and 2.5 mL is > -0.25.  NOT SCORABLE unless every volume has >= 3 runs with a value and >= 3
+      Table 1 runs have |ee| >= 2%.
+ (A3) MW10 mirror: |ee| of S and R runs (Tables 1-2) come from one distribution (Mann-Whitney two-sided p > 0.05).  NOT
+      SCORABLE unless each hand has >= 4 runs.
+ (S1) SH10 chance zone, pooled: the split fits 50/50 (two-sided p > 0.05) and rules out a lab-wide steering bias of
+      Delta >= 1 (chance of the split under it < 1e-3), as blind_lab.py H4.
+ (S2) SH10 achiral amines carry no hand: the dispersion D (as blind_check.py B3) over the three amines has
+      P(D >= observed | independent coin flips) > 0.05 (200,000 sets, seed 17).
+ (S3) SH10 no carry-over: the number of hand changes between consecutive runs with a hand, summed over Tables 1-3, is what
+      shuffling each table gives (two-sided P > 0.05, 200,000 shuffles, seed 17).
+ (S4) SH10 mirror: |ee| of S and R runs (pooled) come from one distribution (Mann-Whitney two-sided p > 0.05).  NOT
+      SCORABLE unless each hand has >= 5 runs.
+ Reported, not predicted: K and Omega0 per series; the largest |eeCW| per series.  MW10: RMS |ee| per volume, runs with
+ |ee| >= 2%, Table 2 and Fig. 2 values.  SH10: the split per amine, runs with |ee| >= 90%.
  Readings fixed in advance.  M1 fails: the lab or the trough favours one hand on its own.  M2 fails: the R and S dopants
  do not cancel in the racemic mix (they interact), so biases do not add.  M3 fails: the dopant changes how sharply the
  hand switches, not only where, so dopant and stirring do not act as one summed bias against chance.  M4 fails: the same
- stirring sense favours different hands with different dopants, which no summed bias can do.  Every outcome is reported
- as found.
+ stirring sense favours different hands with different dopants, which no summed bias can do.  A1 or S1 fails: a stray bias
+ steered the hand across runs (reagents, vessels or analysis); the counting rule allows it (any bias above about 1e-10
+ wins here), but the runs are then not spontaneous.  A2 fails (slope <= -0.25): the excess scales with the molecules in
+ the vessel, the best case Eq. 13 assumes.  A3 or S4 fails: one hand ends with larger |ee|, a bias acting during
+ amplification or in the analysis, not chance at the start.  S2 fails: runs with different amines lean differently; an
+ achiral amine cannot, so an amine lot or that set of runs carried a stray bias.  S3 fails low: a bias persisted over
+ consecutive runs (a stock, a lot, or product carried over); fails high: runs alternate, which no stray bias gives.
+ Every outcome is reported as found.
 
 Run: UV_CACHE_DIR=~/Library/Caches/uv uv run --no-project --with numpy --with scipy python blind_solution.py > blind_solution.log
 """
 import numpy as np
 from scipy.special import ndtr
+from scipy.stats import mannwhitneyu
 
-from blind_lab import best
+from blind_lab import best, dispersion, steer, two_sided
 
 RES = {}
 
 # Outcomes: entered after the predictions commit, as read by a separate reader, unchanged.
 PG12 = None   # {"R": [(Omega rpm, eeCW), ...], "S": [...], "rac": [...]}
+MW10 = None   # {"T1": [(volume mL, ee % or None, "R"/"S"/None), ...], "T2": [(ee %, config), ...], "F2": "as printed"}
+SH10 = None   # {"3": [(ee %, "R"/"S"/None), ...] in table order, "4": [...], "5": [...]}
 
 
 def check(p, ok, detail):
@@ -119,16 +176,87 @@ def pg12():
         check("M4", "NOT SCORABLE", "fewer than 4 markers")
 
 
+def mirror(rows, need):
+    """Mann-Whitney two-sided p for |ee| of S runs vs R runs; None if either hand has fewer than `need` runs."""
+    a = [abs(e) for e, c in rows if c == "S" and e is not None]
+    b = [abs(e) for e, c in rows if c == "R" and e is not None]
+    return mannwhitneyu(a, b, alternative="two-sided").pvalue if min(len(a), len(b)) >= need else None
+
+
+def order_test(seqs, draws=200_000, seed=17):
+    """Summed hand changes between consecutive runs, and its two-sided P under shuffles within each sequence."""
+    rng = np.random.default_rng(seed)
+    obs, sim = 0, np.zeros(draws)
+    for q in seqs:
+        a = np.array([c == "S" for c in q])
+        obs += int((a[1:] != a[:-1]).sum())
+        m = rng.permuted(np.tile(a, (draws, 1)), axis=1)
+        sim += (m[:, 1:] != m[:, :-1]).sum(1)
+    return obs, min(1.0, 2 * min((sim <= obs).mean(), (sim >= obs).mean()))
+
+
+def mw10():
+    print("\n=== MW10, Tables 1-2 ===")
+    rows = [(e, c) for _, e, c in MW10["T1"]] + list(MW10["T2"])
+    hand = [c for e, c in rows if c in ("R", "S") and e is not None and abs(e) >= 2]
+    k, n = hand.count("S"), len(hand)
+    print(f"  {len(rows)} runs; {n} with |ee| >= 2% and a hand: {k} S, {n - k} R")
+    if n >= 6:
+        check("A1", two_sided(k, n) > 0.05, f"p = {two_sided(k, n):.3f} against 50/50")
+    else:
+        check("A1", "NOT SCORABLE", f"{n} runs with |ee| >= 2% and a hand")
+    vols = sorted({v for v, _, _ in MW10["T1"]})
+    g = {v: [e for w, e, _ in MW10["T1"] if w == v and e is not None] for v in vols}
+    rms = {v: float(np.sqrt(np.mean(np.square(g[v])))) if g[v] else 0.0 for v in vols}
+    for v in vols:
+        print(f"  {v} mL: {len(g[v])} runs with a value, RMS |ee| {rms[v]:.2f}%")
+    big = sum(abs(e) >= 2 for v in vols for e in g[v])
+    if len(vols) == 3 and all(len(g[v]) >= 3 for v in vols) and big >= 3 and min(rms.values()) > 0:
+        slope = np.polyfit(np.log(vols), np.log([rms[v] for v in vols]), 1)[0]
+        check("A2", slope > -0.25, f"slope of log RMS ee on log volume {slope:+.2f} (-0.5 if each molecule votes)")
+    else:
+        check("A2", "NOT SCORABLE", f"{big} Table 1 runs with |ee| >= 2%, runs per volume {[len(g[v]) for v in vols]}")
+    pm = mirror(rows, 4)
+    check("A3", pm > 0.05 if pm is not None else "NOT SCORABLE",
+          f"Mann-Whitney p = {pm:.3f}" if pm is not None else "fewer than 4 runs of a hand")
+    print(f"  Table 2 (reported): {MW10['T2']}\n  Fig. 2 (reported): {MW10['F2']}")
+
+
+def sh10():
+    print("\n=== SH10, Tables 1-3 ===")
+    seqs = {a: [c for _, c in rs if c in ("R", "S")] for a, rs in SH10.items()}
+    split = {a: (q.count("S"), q.count("R")) for a, q in seqs.items()}
+    for a, rs in SH10.items():
+        print(f"  amine {a}: {len(rs)} runs, {split[a][0]} S, {split[a][1]} R, {len(rs) - len(seqs[a])} without a hand")
+    k, n = sum(x for x, _ in split.values()), sum(map(len, seqs.values()))
+    check("S1", two_sided(k, n) > 0.05 and steer(k, n) < 1e-3,
+          f"{k} S of {n}, p = {two_sided(k, n):.3f} against 50/50, P(split | Delta = 1) = {steer(k, n):.2g}")
+    d, pd = dispersion([split[a] for a in split if sum(split[a]) >= 2])
+    check("S2", pd > 0.05, f"D = {d:.2f} over the amines, P = {pd:.3f}")
+    obs, po = order_test(list(seqs.values()))
+    check("S3", po > 0.05, f"{obs} hand changes between consecutive runs, two-sided P = {po:.3f}")
+    rows = [r for rs in SH10.values() for r in rs]
+    pm = mirror(rows, 5)
+    check("S4", pm > 0.05 if pm is not None else "NOT SCORABLE",
+          f"Mann-Whitney p = {pm:.3f}" if pm is not None else "fewer than 5 runs of a hand")
+    print(f"  |ee| >= 90%: {sum(e is not None and abs(e) >= 90 for e, _ in rows)} of {len(rows)} runs (reported)")
+
+
 def main():
     # Self-check: the fit recovers a known curve and its mirror.
     W = np.linspace(-1500, 1500, 13)
     for K, W0 in ((1.5, 300.0), (-0.8, -450.0)):
         k, w = fit(list(zip(W, 2 * ndtr(K * (W - W0) / 1000) - 1)))
         assert abs(k - K) < 1e-3 and abs(w - W0) < 1, (k, w)
-    if PG12 is None:
+    # Self-check: the order test flags blocks (too few changes) and alternation (too many), not a fair shuffle of them.
+    assert order_test([list("S" * 10 + "R" * 10)], 20_000)[1] < 0.01
+    assert order_test([list("SR" * 10)], 20_000)[1] < 0.01
+    if all(x is None for x in (PG12, MW10, SH10)):
         print("Predictions committed; outcomes not yet entered (see the docstring).")
         return
-    pg12()
+    for data, score in ((PG12, pg12), (MW10, mw10), (SH10, sh10)):
+        if data is not None:
+            score()
     held = sum(v is True for v in RES.values())
     print(f"\n{held} of {len(RES)} predictions HELD: " + ", ".join(
         f"{k} {v if isinstance(v, str) else 'HELD' if v else 'FAILED'}" for k, v in sorted(RES.items())))
