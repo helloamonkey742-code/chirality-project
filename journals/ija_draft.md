@@ -202,6 +202,7 @@ This block is for the author only. Delete everything from this heading to the li
 101. **Scale rule stated as a minimum (2026-10-17; no new run; `blind_units.log`, `crystal_check.py`).** New paragraph at the end of Section 2.2.4: Eq. 13 takes ε = 1/N, the least noise N molecules can have, so its N is a minimum; in the crystallizations of Section 3.7 where deciding units are counted, about 1–300 decided in vessels holding 10⁶–10¹² units (Asakura et al., 2002: n_eff ≈ 270 unstirred at 150 °C to 2.0 at 500 rpm; sodium chlorate 1.0–1.1 stirred, about 17 unstirred). Abstract and Section 6: '5×10³⁰ to 2×10³⁴ molecules must react' → 'at least …'. Section 3.7 closing paragraph: 'at lab scales of 10⁶–10¹² units' → 'in vessels holding 10⁶–10¹² crystals or molecules, where about 1–300 units decide, a number set by copying and transport rather than by that count'. No number changed.
 102. **Blind test outside crystals against three unread studies (2026-10-17; `blind_solution.py`, `blind_solution.log`, 8 of 11, predictions first in ab32be9 (Petit-Garrido) and ed58b58 (Mauksch, Suzuki), results in b0ccc4c).** New bullet in Section 3.7, its opening sentence now names four pre-registered checks, and `blind_solution.py` added to the Section 3.7 row of Code availability; no old number changed. Scouts reported the setups only; separate readers then took Petit-Garrido Fig. 2 from the PDF's vector drawing commands (13 markers per series, three hidden under identical markers recovered), Mauksch Tables 1–2 and Fig. 2, and Suzuki Tables 1–3, entered unchanged. Held: M1–M4 (probit crossings +222, −211, −26 rpm; |K| ratio 1.35), A1 (8 S / 5 R above 2% ee, p = 0.58), A3 (p = 0.37), S1 (59 S of 116, p = 0.93), S2 (P = 0.93). Failed: A2 (slope −0.33 against > −0.25; hand and precipitation confounded with volume, noted post hoc, Fisher p = 0.0009), S3 (74 hand changes against about 58, P = 0.003, high: runs alternate), S4 (R runs at larger |ee|, p = 0.016, from amine 3). Suzuki Table 1 prints 76 rows for 75 runs (run 26 twice, the text gives 39 S : 36 R); both rows kept as printed, and dropping either changes no verdict. Petit-Garrido is a Langmuir monolayer, not a solution, as its scout found before the predictions. References added: Mauksch, Wei, Freund, Zamfir and Tsogoeva 2010 (Orig Life Evol Biosph 40(1) 79–91), Petit-Garrido, Claret, Ignés-Mullol and Sagués 2012 (Nat Commun 3 1001) and Suzuki, Hatase, Nishiyama, Kawasaki and Soai 2010 (J Syst Chem 1 5); Crossref title, authors, volume and pages match. List now 140 entries, 139 with DOIs. `run_all.sh`: `blind_solution.py` added to the fast tier (2 s).
 103. **Fluctuation-controlled selection at fixed conditions, Silva-Dias and Weber 2026 (2026-10-17; arXiv:2610.13523 v1 read in full; `journals/silva_dias_weber_2026_note.md`).** One sentence after Eq. 12 in Section 2.2.4 and a reference entry. They take the Kondepudi–Nelson network from master equation to Fokker–Planck, adiabatically eliminate the total density and solve for the splitting probability; at large N it is 1/2 + (cN/π)^½ ψ₀ (their Eq. 32), the first term of Φ((2c)^½ ψ₀ √N) with c a ratio of network constants and ψ₀ the initial excess. Their parameters are fixed past the bifurcation, with no sweep and no persistent rate bias, so nothing in it corresponds to the π^¼ or the (kτ)^¼ of Eq. 11; Eq. 8 with a sudden quench (λ constant, g = 0) gives Δ = α₀(2λ/ε)^½, which is their limit. Their γ is a decay ratio, not the sweep rate. Their ψ diffusion counts production, decay and autocatalysis as Eq. 5 does, and antagonism drops out; the analog of frank.py's F at their Fig. 7 parameters is 0.65, tending to 1/√2 when production is negligible and decay equals copying, so nothing in it contradicts F ≈ 0.7 (README Part 7; the 0.65 is computed in the note, not taken from the paper). The DOI resolves; title, authors and v1 date match the arXiv abstract page. List now 141 entries, 140 with DOIs. No number changed.
+104. **Planned experiment: arms F and G and which arms the PVED can steer (2026-10-17; `EXPERIMENT.md`, `scorecard.py` R8 and R9, README Part 6).** Section 5: 'Five chemistries' → 'Seven'; arm F (RNA precursor with amino-acid or dipeptide catalysis, then crystallization; in `EXPERIMENT.md` since 2026-10-10 but missing here) and arm G (nonenzymatic RNA copying with 2-aminoimidazole-activated nucleotides) added; new paragraph: arm D and the crystallization step of arm F can amplify but cannot be steered by the PVED, because only about 1–300 units decide in the crystallizations of Section 3.7 (E101); the solution arms are C, E and G (A and B if their peptides stay dissolved); arms E and G are also run at several feed rates for the slow tip-over of Eq. 11. Essex et al. 2026 is a ChemRxiv preprint, cited from its abstract only. References added: Essex, Jia, Zhang and Szostak 2026; Hein, Tse and Blackmond 2011 (Nat Chem 3(9) 704–706); Joyce et al. 1984 (Nature 310 602–604); Kim, Todisco, Radakovic and Szostak 2025 (JACS 147(23) 19539–19546); Ozturk and Sasselov 2025 (PNAS 122(34) e2505126122); Crossref title, authors, volume and pages match. List now 146 entries, 145 with DOIs. No number changed.
 
 ## F. References: checks, drops and exclusions
 
@@ -800,13 +801,17 @@ The smallest detectable rate is k₂,min = ln(1 + 3√2 σ/e₀)/(cT). Here σ i
 1. **Realistic arm:** 1 mM, a 20% seed, 3 years, and 9 independent vials per condition at 2.6% ee error per vial (Glavin and Dworkin, 2009). This reaches 1.8×10⁻⁶ M⁻¹ s⁻¹, below the pond value. With only 3 vials it would reach 2.9×10⁻⁶.
 2. **Accelerated arm:** 0.01 M and 0.1 M, stated plainly as not natural. It looks for any amplifier and measures how the rate of ee growth scales with concentration.
 
-Five chemistries are tested:
+Seven chemistries are tested:
 
 - (A) amino acids with carbonyl sulfide (Leman et al., 2004);
 - (B) amino acids with hydroxy acids under wet–dry cycling (Forsythe et al., 2015);
 - (C) cysteine peptides that catalyse their own ligation (Foden et al., 2020);
 - (D) an RNA precursor on magnetite (Ozturk et al., 2023b);
-- (E) peptide-catalysed transamination coupled to ligation, run fed rather than closed (Yu et al., 2024; Deng et al., 2024; Higgs and Blackmond, 2025).
+- (E) peptide-catalysed transamination coupled to ligation, run fed rather than closed (Yu et al., 2024; Deng et al., 2024; Higgs and Blackmond, 2025);
+- (F) an RNA precursor made from sugar precursors with chiral amino-acid or dipeptide catalysis, then crystallized, run fed (Breslow and Cheng, 2010; Hein et al., 2011; Ozturk and Sasselov, 2025);
+- (G) nonenzymatic copying of short RNA primers with 2-aminoimidazole-activated nucleotides, fed fresh monomer and temperature-cycled to separate strands (Joyce et al., 1984; Essex et al., 2026; Kim et al., 2025).
+
+Only some arms can carry a PVED-selected hand. A bias the size of the PVED can steer only a decision made by a huge well-mixed pool, and in the crystallizations of Section 3.7 only about 1–300 units decided (Section 2.2.4). Arm D and the crystallization step of arm F can therefore amplify, but the PVED cannot steer them; a positive result there shows amplification only. In arms C, E and G the decision is made molecule by molecule in solution, and in A and B too if their peptides stay dissolved. Arm G has the clearest evidence of mutual suppression in solution: L-nucleotides inhibit the template-directed synthesis of D-oligonucleotides (Joyce et al., 1984), and an L-nucleotide at the 3′ end of a D-RNA primer ends copying (Essex et al., 2026, a preprint). Self-copying has not been shown there, so arm G asks whether repeated copying cycles make a seeded excess grow. It forms no peptides, so it tests the hypothesis only in its broader form. Arms E and G are also run at three or more feed rates, to see whether the racemic state is stable at low feed and lost above a threshold, the slow tip-over that Eq. 11 assumes; no system is yet known to do this.
 
 Arms E and C are the priority. A Viedma grinding positive control (Viedma, 2005) checks that the pipeline can detect real amplification. Each arm gets +L, +D (mirror control) and racemic seeds, plus negative controls (no activator, sterile-filtered, seed alone). Analysts are blinded. An arm counts as an amplifier only if all of the following hold:
 
@@ -952,6 +957,8 @@ Dorn, E.D., Nealson, K.H., Adami, C. 2011, Monomer Abundance Distribution Patter
 
 Dziarmaga, J., Laguna, P., Zurek, W.H. 1999, Symmetry Breaking with a Slant: Topological Defects after an Inhomogeneous Quench, Physical Review Letters, 82, 4749–4752. https://doi.org/10.1103/PhysRevLett.82.4749
 
+Essex, J., Jia, X., Zhang, J., Szostak, J.W. 2026, Effects of Chemically Activated L-Nucleotides on Nonenzymatic RNA Copying, ChemRxiv preprint. https://doi.org/10.26434/chemrxiv.15005970/v1
+
 Foden, C.S., Islam, S., Fernández-García, C., Maugeri, L., Sheppard, T.D., Powner, M.W. 2020, Prebiotic synthesis of cysteine peptides that catalyze peptide ligation in neutral water, Science, 370, 865–869. https://doi.org/10.1126/science.abd5680
 
 Forsythe, J.G., Yu, S.S., Mamajanov, I., Grover, M.A., Krishnamurthy, R., Fernández, F.M., Hud, N.V. 2015, Ester-Mediated Amide Bond Formation Driven by Wet–Dry Cycles: A Possible Path to Polypeptides on the Prebiotic Earth, Angewandte Chemie International Edition, 54, 9871–9875. https://doi.org/10.1002/anie.201503792
@@ -982,6 +989,8 @@ Hegstrom, R.A. 1982, β Decay and the origins of biological chirality: theoretic
 
 Hegstrom, R.A., Rein, D.W., Sandars, P.G.H. 1980, Calculation of the parity nonconserving energy difference between mirror-image molecules, The Journal of Chemical Physics, 73, 2329–2341. https://doi.org/10.1063/1.440383
 
+Hein, J.E., Tse, E., Blackmond, D.G. 2011, A route to enantiopure RNA precursors from nearly racemic starting materials, Nature Chemistry, 3, 704–706. https://doi.org/10.1038/nchem.1108
+
 Higgs, P.G., Blackmond, D.G. 2025, Autocatalytic symmetry breaking and chiral amplification in a feedback network combining amino acid synthesis and ligation, Proceedings of the National Academy of Sciences, 122, e2423683122. https://doi.org/10.1073/pnas.2423683122
 
 Hochberg, D., Buhse, T., Micheau, J.C., Ribó, J.M. 2022, Resilience of parity-violation-induced chiral selectivity to nonequilibrium temperature fluctuations in open systems, Physical Review Research, 4, 033183. https://doi.org/10.1103/PhysRevResearch.4.033183
@@ -996,6 +1005,8 @@ Jansen, M.F., Kang, W., Kite, E.S., Zeng, Y. 2023, Energetic Constraints on Ocea
 
 Johnson, B.C., Bowling, T.J., Trowbridge, A.J., Freed, A.M. 2016, Formation of the Sputnik Planum basin and the thickness of Pluto's subsurface ocean, Geophysical Research Letters, 43. https://doi.org/10.1002/2016GL070694
 
+Joyce, G.F., Visser, G.M., van Boeckel, C.A.A., van Boom, J.H., Orgel, L.E., van Westrenen, J. 1984, Chiral selection in poly(C)-directed synthesis of oligo(G), Nature, 310, 602–604. https://doi.org/10.1038/310602a0
+
 Kang, W., Mittal, T., Bire, S., Campin, J.M., Marshall, J. 2022, How does salinity shape ocean circulation and ice geometry on Enceladus and other icy satellites?, Science Advances, 8, eabm4665. https://doi.org/10.1126/sciadv.abm4665
 
 Kempf, S., Tucker, S., Altobelli, N., Briois, C., Cable, M.L., Grün, E., Gudipati, M.S., Henderson, B.L., Hsu, H.W., Hand, K., et al. 2025, SUDA: A SUrface Dust Analyser for Compositional Mapping of the Galilean Moon Europa, Space Science Reviews, 221, 10. https://doi.org/10.1007/s11214-025-01134-0
@@ -1003,6 +1014,8 @@ Kempf, S., Tucker, S., Altobelli, N., Briois, C., Cable, M.L., Grün, E., Gudipa
 Keszthelyi, L. 1999, Search for the Origin of Homochirality of Biomolecules, in Advances in BioChirality, Elsevier, pp. 99–103. https://doi.org/10.1016/B978-008043404-9/50007-3
 
 Kibble, T.W.B., Volovik, G.E. 1997, On phase ordering behind the propagating front of a second-order transition, Journal of Experimental and Theoretical Physics Letters, 65, 102–107. https://doi.org/10.1134/1.567332
+
+Kim, S., Todisco, M., Radakovic, A., Szostak, J.W. 2025, Stereoselectivity of Aminoacyl-RNA Loop-Closing Ligation, Journal of the American Chemical Society, 147, 19539–19546. https://doi.org/10.1021/jacs.4c16905
 
 Knauth, L.P., Lowe, D.R. 2003, High Archean climatic temperature inferred from oxygen isotope geochemistry of cherts in the 3.5 Ga Swaziland Supergroup, South Africa, Geological Society of America Bulletin, 115, 566–580. https://doi.org/10.1130/0016-7606(2003)115<0566:HACTIF>2.0.CO;2
 
@@ -1079,6 +1092,8 @@ Ozturk, S.F., Sasselov, D.D. 2022, On the origins of life's homochirality: Induc
 Ozturk, S.F., Bhowmick, D.K., Kapon, Y., Sang, Y., Kumar, A., Paltiel, Y., Naaman, R., Sasselov, D.D. 2023a, Chirality-induced avalanche magnetization of magnetite by an RNA precursor, Nature Communications, 14, 6351. https://doi.org/10.1038/s41467-023-42130-8
 
 Ozturk, S.F., Liu, Z., Sutherland, J.D., Sasselov, D.D. 2023b, Origin of biological homochirality by crystallization of an RNA precursor on a magnetic surface, Science Advances, 9, eadg8274. https://doi.org/10.1126/sciadv.adg8274
+
+Ozturk, S.F., Sasselov, D.D. 2025, Life's homochirality: Across a prebiotic network, Proceedings of the National Academy of Sciences, 122, e2505126122. https://doi.org/10.1073/pnas.2505126122
 
 Petit-Garrido, N., Claret, J., Ignés-Mullol, J., Sagués, F. 2012, Stirring competes with chemical induction in chiral selection of soft matter aggregates, Nature Communications, 3, 1001. https://doi.org/10.1038/ncomms1987
 
