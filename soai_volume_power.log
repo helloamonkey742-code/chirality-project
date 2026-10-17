@@ -1,0 +1,21 @@
+anchor: N_d = 3.6e+09 at 1 mL, m* = 60000 molecules (soai_check.py S4)
+predicted m* (molecules) and seed ladder, fixed before data:
+    0.1 mL  flat 6.00e+04  sqrt V 1.90e+04  ladder 1.33e+04 3.09e+04 7.21e+04 1.68e+05  (22.06-279.0 zmol)
+    1.0 mL  flat 6.00e+04  sqrt V 6.00e+04  ladder 4.20e+04 6.67e+04 1.06e+05 1.68e+05  (69.74-279.0 zmol)
+   10.0 mL  flat 6.00e+04  sqrt V 1.90e+05  ladder 4.20e+04 9.79e+04 2.28e+05 5.31e+05  (69.74-882.2 zmol)
+
+asymptotic (Fisher) runs per seed level: 4  (SE(beta) <= 0.5/2.80 = 0.178)
+
+Monte Carlo, LR tests at alpha = 0.05, 4000 sims each (runs per seed level, split half S / half R):
+   n  runs/vol  P(reject flat | sqrtV)  P(reject sqrtV | flat)  P(reject flat | flat)
+   2         8                   0.514                   0.527                  0.067
+   4        16                   0.799                   0.814                  0.061
+   6        24                   0.932                   0.937                  0.059
+
+chosen: 6 runs per seed level (3 S-seeded + 3 R-seeded), 24 seeded runs per volume, 72 in all
+  if true m* at 1 mL is 0.5x the calibrated value: power 0.916 (sqrt V), 0.906 (flat)
+  if true m* at 1 mL is 2x the calibrated value: power 0.927 (sqrt V), 0.940 (flat)
+
+one ladder of 24 runs: Stage 1b fixes m* at 1 mL within a factor 1.91 (95%); a side arm detects a change in m* of 3.7x at 1 mL, 5.6x at 10 mL (80%, alpha 0.05)
+
+unseeded: 24 pooled runs, 50/50 accepted for 7-17 of one hand; P(reject | stray Delta = 1 bias) = 0.926
