@@ -456,8 +456,8 @@ Scored from the literature (Y = meets, P = partly, N = fails, ? = no data):
 | candidate | R1 | R2 | R3 | R4 | R5 | R6 | R7 | R8 | R9 | score |
 |---|---|---|---|---|---|---|---|---|---|---|
 | Ghadiri peptide replicator (2001) | Y | Y | P | N | Y | Y | Y | Y | ? | **6.5** |
-| Transamination + ligation network, fed (Higgs & Blackmond 2025; arm E) | P | P | Y | Y | ? | ? | Y | Y | ? | 5.0 |
-| Nonenzymatic RNA copying with 2-aminoimidazole-activated nucleotides (Essex et al. 2026, preprint) | P | Y | P | Y | ? | ? | Y | Y | ? | 5.0 |
+| Transamination + ligation network, fed (Higgs & Blackmond 2025; arm E) | P | P | Y | Y | N | ? | Y | Y | N | 5.0 |
+| Nonenzymatic RNA copying with 2-aminoimidazole-activated nucleotides (Essex et al. 2026, preprint) | P | Y | P | Y | N | ? | Y | Y | N | 5.0 |
 | Joyce RNA cross-inhibition (1984) | N | Y | P | Y | ? | N | Y | Y | N | 4.5 |
 | APED peptides via NCAs (Plasson 2004; Danger 2010; Hitz & Luisi 2004) | P | P | P | P | ? | P | Y | Y | ? | 4.5 |
 | Soai reaction (1995; from 5×10⁻⁷ ee in 2003) | Y | P | P | N | Y | Y | N | P | N | 4.5 |
@@ -469,13 +469,26 @@ Scored from the literature (Y = meets, P = partly, N = fails, ? = no data):
 New rows (abstracts checked in OpenAlex or PubMed, 2026-10-17):
 - **Transamination + ligation network:** a model of peptide-catalysed transamination plus peptide
   ligation predicts symmetry breaking when fed (Higgs and Blackmond, 2025); the steps were run separately
-  (Yu et al., 2024; Deng, Yu and Blackmond, 2024). k₂ is not measured.
+  (Yu et al., 2024; Deng, Yu and Blackmond, 2024). k₂ is not measured. **Model at measured rates
+  (`arm_e_rates.py`):** with Yu's rates for L-Pro-Pro (the catalyst makes the opposite hand going
+  forward, s = k2b/k1b ≈ 6, range 4–9), the network fits Higgs's destructive mechanism, and at 1–5 mM it
+  never passes the bifurcation: the uncatalysed background wins, and the catalysed rate would have to
+  rise 735× (5 mM) to 3658× (1 mM). An excess decays (k₂ < 0), so R5 = N and R9 = N at measured rates.
+  At a rate high enough to cross, the network tips over slowly through a supercritical pitchfork and
+  follows the static branch, so R9 would hold. Ligation rates and K were assumed and scanned (Deng 2024
+  closed access).
 - **Nonenzymatic RNA copying:** 2-aminoimidazole-activated L-nucleotides form heterochiral bridged
   dinucleotides slightly faster than homochiral ones, and an L-nucleotide at the 3′ end of a D-RNA primer
   ends copying (Essex et al., 2026, ChemRxiv doi:10.26434/chemrxiv.15005970/v1). That is mutual
   suppression molecule by molecule, in water. Copying is not yet self-sustaining (R1 = P). RNA can pass its
   hand to amino acids: one sequence in loop-closing ligation takes up L-amino acids almost exclusively
-  (Kim, Todisco, Radakovic and Szostak, 2025, doi:10.1021/jacs.4c16905).
+  (Kim, Todisco, Radakovic and Szostak, 2025, doi:10.1021/jacs.4c16905). **Model at measured rates
+  (`rna_copying.py`, fed and temperature-cycled, rates from Walton and Szostak 2017):** the 50/50 state is
+  lost only if r, the wrong-hand to right-hand addition rate ratio, exceeds 1, inside a window set by
+  washout. Essex et al. point to r < 1, so the 50/50 state is stable at every feed: a seeded excess is
+  copied to a bounded plateau, but no excess grows from 50/50 (R5 = N, R9 = N). The copying itself is
+  fast (~7 additions per hour at 24 mM); r decides it, and r can be measured directly. If r > 1, the
+  system tips over slowly (supercritical pitchfork, the normal form holds, F = 0.58 vs 0.70 in `frank.py`).
 - **APED peptides:** a model in which activation, polymerization, epimerization and depolymerization
   break symmetry (Plasson et al., 2004). In the parts tested in water, heterochiral peptides are cleaved
   to diketopiperazines faster (helpful), but the epimerization equilibrium favours them (unhelpful), and
@@ -485,15 +498,19 @@ New rows (abstracts checked in OpenAlex or PubMed, 2026-10-17):
 
 **The pattern (the main finding of this part):** the candidates *with* self-amplification (R1)
 fail on prebiotic inputs (R4). The candidates that are prebiotic (R4) lack self-amplification.
-**No known system has R1 + R2 + R4 + R7 together.** Speed (R5) is *never* the problem.
-Natural chemistry has 10⁵–10⁸ years, so even extremely slow reactions qualify.
+**No known system has R1 + R2 + R4 + R7 together.** Raw speed is not the problem:
+natural chemistry has 10⁵–10⁸ years, so even extremely slow reactions qualify. The two R5 = N marks
+are not slowness: at measured rates the excess does not grow at all (k₂ ≤ 0).
 
 **With R8 the ranking changes.** The former top route (attrition deracemization) and every crystal or
 surface route fall below every solution route: they amplify, but a few units decide, so the PVED cannot
 steer them. The solution routes that are also prebiotic (R4 = Y, R8 = Y) are the transamination–ligation
 network and nonenzymatic RNA copying; each has only part of R1 + R2. **No system is known to meet R9:**
 none has been run as a slow sweep through its instability, and Soai, Viedma and attrition are unstable
-at 50/50 from the start as run. No prebiotic solution system has a measured number of deciding molecules
+at 50/50 from the start as run. Models of the two prebiotic solution routes at measured rates
+(`arm_e_rates.py`, `rna_copying.py`) find the 50/50 state stable at every feed, so neither breaks
+symmetry yet; each would tip over slowly, as R9 asks, if one number changed (a catalysed rate
+735–3658× higher for the network; r > 1 for RNA copying). No prebiotic solution system has a measured number of deciding molecules
 or a volume dependence (search of 2026-10-17).
 
 **Prediction:** the missing reaction is **self-amplifying chirality in water, from natural

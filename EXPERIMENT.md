@@ -92,6 +92,22 @@ the hypothesis above only in its broader form ("a prebiotic, water-based system"
   low feed and lost above a threshold, the arm meets R9, the slow tip-over that Eq. 11 assumes.
   Arm E can be run the same way.
 
+**Model predictions at measured rates (added 2026-10-17).** Both solution arms are expected to show
+seed-following only, with no excess growing from 50/50, unless one number differs from what is known:
+- **Arm E** (`arm_e_rates.py`, rates from Yu et al. 2024): at 1–5 mM alanine the network never passes the
+  bifurcation, because uncatalysed breakdown outruns the catalysed path. The catalysed rate would have to
+  be 735× (5 mM) to 3658× (1 mM) higher; catalyst saturation gives at most ~2×. k2 at measured rates is
+  negative (an excess decays), so the 1.8×10⁻⁶ /M/s floor is not reached. Expected result: null. Still
+  unmeasured: the ligation rates, K, and whether Ala-Ala catalyses like Pro-Pro.
+- **Arm G** (`rna_copying.py`, rates from Walton & Szostak 2017): the 50/50 state is lost only if
+  r = (wrong-hand addition rate)/(right-hand addition rate) exceeds 1, inside a window set by washout.
+  Essex et al. 2026 point to r < 1, so the expected result is a seeded excess rising to a bounded
+  plateau (about 0.35 for a +20% feed at r = 0.1) and the 0% set staying at 50/50 at every feed.
+  **Measure r first:** primer extension by D- vs L-activated monomer on a D-template, in the arm's own
+  buffer. r > 1 makes arm G a candidate for R9; r < 1 settles it as seed-following only.
+- If either arm does cross, both models predict a slow tip-over (supercritical pitchfork, no
+  hysteresis), so the stepped-feed runs above test R9 directly.
+
 ### Arm F wet-lab specifications: prebiotic nucleotide precursor synthesis with dipeptide catalysis
 
 Arm F directly tests the network hypothesis developed in `dna_network.py`: namely, whether a small chiral seed in peptides/amino acids can direct the stereoselective synthesis of nucleic acid precursors (specifically ribo-aminooxazoline, RAO) and overcome opposing sugar PVED or chiral cross-inhibition through asymmetric cross-coupling ($\kappa_{as} / \kappa_{sa} > (|g_s| / g_a)^2$; Breslow & Cheng 2010; Hein et al. 2011; Ozturk & Sasselov 2025).
@@ -280,6 +296,7 @@ That would look like "amplification" in the L-seeded vials. Safeguards:
 - Higgs & Blackmond 2025, *PNAS* 122:e2423683122, doi:10.1073/pnas.2423683122
 - Joyce, Visser, van Boeckel, van Boom, Orgel & van Westrenen 1984, "Chiral selection in poly(C)-directed synthesis of oligo(G)", *Nature* 310:602, doi:10.1038/310602a0
 - Essex, Jia, Zhang & Szostak 2026, "Effects of chemically activated L-nucleotides on nonenzymatic RNA copying", ChemRxiv preprint, doi:10.26434/chemrxiv.15005970/v1
+- Walton & Szostak 2017, "A kinetic model of nonenzymatic RNA polymerization by cytidine-5′-phosphoro-2-aminoimidazolide", *Biochemistry* 56:5739, doi:10.1021/acs.biochem.7b00792
 - Kim, Todisco, Radakovic & Szostak 2025, "Stereoselectivity of aminoacyl-RNA loop-closing ligation", *J. Am. Chem. Soc.* 147:19539, doi:10.1021/jacs.4c16905
 - Viedma 2005, *PRL* 94:065504, doi:10.1103/PhysRevLett.94.065504
 - Dworkin, Elsila, Glavin, Aponte, McLain, Simkus, Graham & Parker 2024, "Verification of chiral asymmetry in meteoritic organics", 55th LPSC, Abstract #2645

@@ -36,9 +36,11 @@ def spec():
 
 # Filled from the literature (see README Part 6); Y = meets, P = partly, N = fails, ? = unknown.
 # R5: every candidate runs in hours-days in the lab, far faster than the 3e-7 /M/s floor -> Y,
-# except where no rate was found (?). R6 here = shown to work from racemic or <= ~1% ee.
+# except where no rate was found (?), and N where a model at measured rates gives an excess that
+# decays (k2 = k/c <= 0; arm_e_rates.py, rna_copying.py). R6 here = shown to work from racemic or <= ~1% ee.
 # R9 is N where the racemic state is unstable from the start as run (batch, grinding), and N
-# where there is no amplification (no R1) and so no instability to cross.
+# where there is no amplification (no R1), or a model at measured rates finds the racemic state
+# stable at every feed, and so no instability to cross.
 KEYS = ["R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9"]
 
 
@@ -55,8 +57,8 @@ CANDIDATES = {
     "Blackmond eutectic (2006)":             _m("N N N P Y P Y N N"),  # amplifies existing ee; CHCl3
     "Magnetite crystallization (2023)":      _m("N N P Y Y Y Y N N"),  # racemic -> ~60% ee, then crystals
     # Added 2026-10-17 (abstracts checked in OpenAlex/PubMed):
-    "Transamination + ligation network, fed (2025)": _m("P P Y Y ? ? Y Y ?"),  # Higgs & Blackmond 2025 model; Yu 2024, Deng 2024 steps; k2 unmeasured
-    "Nonenzymatic RNA copying, 2-AI (2026)":  _m("P Y P Y ? ? Y Y ?"),  # Essex 2026 preprint: L-nt terminates D-RNA copying; no sustained replication yet
+    "Transamination + ligation network, fed (2025)": _m("P P Y Y N ? Y Y N"),  # Higgs & Blackmond 2025 model; Yu 2024, Deng 2024 steps; arm_e_rates.py: at Yu's rates the excess decays at 1-5 mM, catalysed rate 735-3658x short
+    "Nonenzymatic RNA copying, 2-AI (2026)":  _m("P Y P Y N ? Y Y N"),  # Essex 2026 preprint: L-nt terminates D-RNA copying; no sustained replication yet; rna_copying.py: racemic stable for r < 1 (seed-following only)
     "APED peptides via NCAs (2004-2010)":     _m("P P P P ? P Y Y ?"),  # Plasson 2004 model; Danger 2010: DKP removes heterochiral faster, equilibrium favours it; Hitz & Luisi 2004: from 20% ee
 }
 
