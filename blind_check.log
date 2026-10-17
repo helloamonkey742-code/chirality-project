@@ -1,0 +1,4 @@
+Deck vial: N <= 5.6e+20 molecules; PVED g = 4.8e-16, c = 20: P = 0.5001 (chance zone); steering needs b >= 2e-12 to 8e-11
+Deck pooled, all 72 with a hand: fits 50/50 if hand 1 = 28-44; rules out Delta >= 1 if hand 1 = 23-49
+Steendam, 68 runs: fits 50/50 if hand 1 = 26-42; rules out Delta >= 1 if hand 1 = 28-40
+Predictions committed; run counts not yet entered (see the docstring).
