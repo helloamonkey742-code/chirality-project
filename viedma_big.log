@@ -1,0 +1,20 @@
+viedma_big.py: 100 new runs read from viedma_big_rows.jsonl, 1640 base runs from viedma_sim.log
+
+N        Delta  runs  wins  P(win)  95% CI          Phi(a0*Delta)
+256000   1.0    30    20    0.667   [0.472, 0.827]  0.714
+256000   2.0    30    25    0.833   [0.653, 0.944]  0.871
+256000   3.0    30    29    0.967   [0.828, 0.999]  0.955
+1024000  3.0    10    9     0.900   [0.555, 0.997]  0.955
+
+base a0 = 0.565 [0.505, 0.629] (viedma_sim.log, N = 250-64,000)
+  V0 HELD: a0 0.565
+per-N a: 250: 0.57 [0.45, 0.70], 1000: 0.61 [0.48, 0.74], 4000: 0.54 [0.42, 0.67], 16000: 0.51 [0.38, 0.65], 64000: 0.61 [0.38, 0.86], 256000: 0.53 [0.37, 0.71]
+one a over N = 250-256,000: 0.565 [0.505, 0.619]; collapse LRT chi2 = 1.41, df = 5, p = 0.923
+  V1 HELD: a(256,000) = 0.530 [0.370, 0.709]; collapse p = 0.923
+  V2 HELD: Delta = 3: 38/40 wins vs Phi(3 a0) = 0.955, p = 0.702
+  V3 HELD: N = 1,024,000, Delta = 3: 9 of 10
+  V4 HELD: median t_decide 14.75 (256,000), 15.87 (1,024,000); 64,000 was 14.0
+  V5 HELD: 0 undecided of 100 (grid 100)
+  V6 HELD: chunk wall s {0: 672.0, 1: 704.1, 2: 823.7, 3: 772.9, 4: 824.1, 5: 871.5, 6: 519.3}
+
+7 of 7 checked items HELD: V0 HELD, V1 HELD, V2 HELD, V3 HELD, V4 HELD, V5 HELD, V6 HELD

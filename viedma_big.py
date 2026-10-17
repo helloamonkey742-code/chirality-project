@@ -36,6 +36,15 @@ from viedma_sim.log's per-run table (base variant, Delta > 0).
       at 256,000 in 14.0-18.0 and at 1,024,000 in 15.0-21.0.
  (V5) No run undecided by t = 60.
  (V6) Each chunk finishes in under 20 min of wall time (recorded per chunk in the rows file).
+RESULTS (viedma_big.log, 2026-10-16): 7 of 7 held (V0-V6).  100 runs, none undecided; chunks 519-872 s (about 87 min).
+ N = 256,000: majority wins 20/30, 25/30, 29/30 at Delta = 1, 2, 3 (Phi(a0 Delta) 0.714, 0.871, 0.955); a(256,000) = 0.530
+ [0.370, 0.709].  N = 1,024,000, Delta = 3 (about 3,000 extra crystals, 0.3%): 9 of 10.  Delta = 3 pooled 38/40 (p = 0.70).
+ Per-N a over N = 250-256,000: 0.51-0.61; one a fits all six sizes (collapse p = 0.923), a = 0.565 [0.505, 0.619].
+ Median t_decide 14.75 (256,000) and 15.87 (1,024,000).
+ Reading: inside the mechanism the sqrt(N) rule holds over a factor 4,096 in N with no drift in a: the excess needed to win
+ shrinks as 1/sqrt(N), so 0.3% of a million crystals steers 9 runs in 10.  This does not settle the real-lab gap found by
+ blind_lab.py (C1: Choi et al. 2024 behaves as if about 34 units decide, not 100-400); that gap is in how many units decide
+ in a real flask, not in the scaling, and this simulation cannot test it.
 """
 import json
 import os
