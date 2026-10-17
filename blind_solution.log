@@ -1,0 +1,32 @@
+
+=== PG12, Fig. 2 ===
+  R: 13 markers, K = +1.551 per 1000 rpm, Omega0 = +222 rpm, max |eeCW| 0.78, crosses True
+  S: 13 markers, K = +1.526 per 1000 rpm, Omega0 = -211 rpm, max |eeCW| 0.78, crosses True
+  rac: 13 markers, K = +1.150 per 1000 rpm, Omega0 = -26 rpm, max |eeCW| 0.76, crosses True
+  M1 HELD: |Omega0 R + S| = 11 rpm vs 108
+  M2 HELD: |Omega0 rac - mid| = 31 rpm vs 54
+  M3 HELD: |K| ratio 1.35
+  M4 HELD: signs R +1.55, S +1.53, rac +1.15
+
+=== MW10, Tables 1-2 ===
+  23 runs; 13 with |ee| >= 2% and a hand: 8 S, 5 R
+  A1 HELD: p = 0.581 against 50/50
+  0.15 mL: 6 runs with a value, RMS |ee| 4.80%
+  0.3 mL: 4 runs with a value, RMS |ee| 7.54%
+  2.5 mL: 6 runs with a value, RMS |ee| 2.32%
+  A2 FAILED: slope of log RMS ee on log volume -0.33 (-0.5 if each molecule votes)
+  A3 HELD: Mann-Whitney p = 0.371
+  Table 2 (reported): [(0.6, 'S'), (1.3, 'S'), (17.2, 'R'), (1.7, 'R'), (2.5, 'R'), (1.0, 'R'), (7.9, 'R')]
+  Fig. 2 (reported): Seed 4 (30 mol%, 95.4% ee), drawn (2S,1'R) anti (descriptor not printed; read from the wedges). (a) acetone + aldehyde -> 3: 9.0% ee, configuration not given, only traces. (b) cyclohexanone + aldehyde in THF -> 4: 4% yield, 96.0% ee, drawn with the seed's configuration.
+
+=== SH10, Tables 1-3 ===
+  amine 3: 76 runs, 39 S, 37 R, 0 without a hand
+  amine 4: 20 runs, 9 S, 11 R, 0 without a hand
+  amine 5: 20 runs, 11 S, 9 R, 0 without a hand
+  S1 HELD: 59 S of 116, p = 0.926 against 50/50, P(split | Delta = 1) = 7.4e-17
+  S2 HELD: D = 0.45 over the amines, P = 0.928
+  S3 FAILED: 74 hand changes between consecutive runs, two-sided P = 0.003
+  S4 FAILED: Mann-Whitney p = 0.016
+  |ee| >= 90%: 0 of 116 runs (reported)
+
+8 of 11 predictions HELD: A1 HELD, A2 FAILED, A3 HELD, M1 HELD, M2 HELD, M3 HELD, M4 HELD, S1 HELD, S2 HELD, S3 FAILED, S4 FAILED

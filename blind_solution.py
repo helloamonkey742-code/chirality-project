@@ -112,6 +112,31 @@ with eeCW > 0 and with eeCW < 0.  D = |Omega0(R) - Omega0(S)| / 2, the shift one
  consecutive runs (a stock, a lot, or product carried over); fails high: runs alternate, which no stray bias gives.
  Every outcome is reported as found.
 
+RESULTS (blind_solution.log, 2026-10-17): 8 of 11 held (M1-M4, A1, A3, S1, S2); 3 FAILED (A2, S3, S4).
+Values were read by separate readers after the predictions commits (ab32be9, ed58b58) and entered unchanged.
+ PG12: Fig. 2 is vector graphics, so the reader took all 39 markers (13 per series) from the drawing commands.  Every
+ series crosses.  Omega0 = +222 (R), -211 (S), -26 (rac) rpm; K = +1.55, +1.53, +1.15 per 1000 rpm.  M1 held (|R + S| =
+ 11 against 108 rpm), M2 held (31 against 54), M3 held (|K| ratio 1.35), M4 held.  The paper's own fit, lambda (Omega -
+ Omega_c)/(|Omega| + a), puts the crossings at +120, -110, -11 rpm: a different curve, the same mirror and order.  No
+ series passes |eeCW| 0.78.
+ MW10: A1 held (8 S / 5 R among 13 runs with |ee| >= 2%, p = 0.58); A3 held (p = 0.37).  A2 FAILED: RMS |ee| 4.80%
+ (0.15 mL), 7.54% (0.3 mL), 2.32% (2.5 mL), slope -0.33.  The fall is not monotonic; 0.3 mL is highest because of one
+ 14.3% run.  Post hoc (not scored): in Table 1 the hand follows the volume (all six 2.5 mL runs R, 9 of 10 smaller runs
+ S, Fisher p = 0.0009), and reactant precipitated only in the smaller runs (1-4, 11-16, as the paper says), so volume is
+ confounded with hand and with precipitation.  Table 2's largest |ee| is 17.2%; Fig. 2 is reported in the log.
+ SH10: Table 1 prints 76 rows for 75 runs (run 26 twice); both rows kept as printed.  S1 held (59 S of 116, p = 0.93;
+ a lab-wide steer of Delta >= 1 has chance 7e-17).  S2 held (P = 0.93).  S3 FAILED high: 74 hand changes against about
+ 58 expected (P = 0.003), mostly amine 3 (48 of 75, P = 0.027 alone).  S4 FAILED: R runs end with larger |ee| (median
+ 19% against 11%, p = 0.016), from amine 3 (19 against 7); amine 5 goes the other way (S 27, R 15).  Dropping either
+ run 26 changes no verdict (S3 P = 0.007 / 0.006, S4 p = 0.017 / 0.009).  No run reaches 90% (largest 57%).
+ Reading: PG12 is what Section 3.7 assumes of a summed bias: the dopant shifts where the hand switches and not how
+ sharply, the mirror dopants cancel, and the racemic mix acts as none (in a monolayer, not a solution).  A2 failed in
+ the direction fixed in advance for "the excess scales with the molecules", but the confound above (one hand per volume,
+ precipitation only in small volumes) means it cannot be read as that; the solution gap stays open.  SH10's split is the
+ chance zone, as for the 91 runs already in Section 3.7, but its runs are not independent coin flips in table order:
+ they alternate too often, and in amine 3 the R runs end with larger |ee|.  The paper does not say the run numbers are
+ chronological and lists several experimenters, so S3 may test the listing, not the time series (the stated assumption).
+
 Run: UV_CACHE_DIR=~/Library/Caches/uv uv run --no-project --with numpy --with scipy python blind_solution.py > blind_solution.log
 """
 import numpy as np
@@ -126,6 +151,43 @@ RES = {}
 PG12 = None   # {"R": [(Omega rpm, eeCW), ...], "S": [...], "rac": [...]}
 MW10 = None   # {"T1": [(volume mL, ee % or None, "R"/"S"/None), ...], "T2": [(ee %, config), ...], "F2": "as printed"}
 SH10 = None   # {"3": [(ee %, "R"/"S"/None), ...] in table order, "4": [...], "5": [...]}
+# PG12: 13 markers per series read from Fig. 2's vector drawing commands (p. 3; x +-0.5 rpm, eeCW +-0.0005); the inset and
+# fit lines excluded.  Three markers hidden under another with identical coordinates were recovered (S -750, rac -1600,
+# rac -500).
+PG12 = {"R": [(-1600.3, -0.7404), (-1000.2, -0.7700), (-750.0, -0.6802), (-499.8, -0.5803), (-249.6, -0.5703),
+              (-99.9, -0.6004), (-0.3, -0.5401), (100.2, -0.1501), (250.0, 0.2299), (500.2, 0.3900), (750.4, 0.6802),
+              (999.8, 0.7801), (1599.8, 0.7801)],
+        "S": [(-1600.3, -0.7801), (-1000.2, -0.7103), (-750.0, -0.6802), (-499.8, -0.4603), (-249.6, -0.2500),
+              (-99.9, 0.1300), (-0.3, 0.5401), (100.2, 0.5502), (250.0, 0.5903), (500.2, 0.6205), (750.4, 0.6601),
+              (999.8, 0.7404), (1599.8, 0.7404)],
+        "rac": [(-1600.3, -0.7404), (-1000.3, -0.6601), (-750.1, -0.6004), (-499.8, -0.4603), (-249.6, -0.4202),
+                (-99.8, -0.2801), (-0.3, 0.0402), (100.2, 0.3303), (250.0, 0.4202), (500.2, 0.5301), (750.4, 0.6300),
+                (999.8, 0.6802), (1599.8, 0.7605)]}
+# MW10: Table 1 (p. 82) and Table 2 (p. 83) as printed; every ee has a configuration.  Fig. 2: the seed's descriptor is not
+# printed; the reader derived it from the drawn wedges.
+MW10 = {"T1": [(0.3, 14.3, "S"), (0.3, 2.7, "S"), (0.3, 2.3, "S"), (0.3, 3.2, "S"),
+               (2.5, 3.2, "R"), (2.5, 4.1, "R"), (2.5, 0.9, "R"), (2.5, 1.7, "R"), (2.5, 0.3, "R"), (2.5, 1.2, "R"),
+               (0.15, 3.6, "S"), (0.15, 7.3, "S"), (0.15, 3.6, "S"), (0.15, 7.4, "S"), (0.15, 1.2, "S"), (0.15, 1.7, "R")],
+        "T2": [(0.6, "S"), (1.3, "S"), (17.2, "R"), (1.7, "R"), (2.5, "R"), (1.0, "R"), (7.9, "R")],
+        "F2": "Seed 4 (30 mol%, 95.4% ee), drawn (2S,1'R) anti (descriptor not printed; read from the wedges). "
+              "(a) acetone + aldehyde -> 3: 9.0% ee, configuration not given, only traces. "
+              "(b) cyclohexanone + aldehyde in THF -> 4: 4% yield, 96.0% ee, drawn with the seed's configuration."}
+# SH10: Tables 1-3 (pp. 3-4) as printed, column by column (= ascending run number); no run lacks a hand.  Table 1 prints
+# 76 rows for 75 runs: run 26 appears twice (end of column 1 "26 12 S", start of column 2 "26 3 R"); both are kept here.
+# The text and Fig. 2a give 39 S : 36 R for amine 3; the 76 rows give 39 S : 37 R.  The paper does not say whether run
+# numbers are chronological.
+SH10 = {"3": [(19, "R"), (18, "S"), (8, "R"), (10, "S"), (11, "R"), (8, "S"), (5, "S"), (9, "R"), (6, "S"), (4, "S"),
+              (4, "S"), (57, "R"), (2, "R"), (37, "S"), (23, "R"), (4, "S"), (6, "R"), (4, "S"), (7, "S"), (47, "R"),
+              (29, "R"), (25, "R"), (10, "S"), (12, "S"), (31, "R"), (12, "S"), (3, "R"), (7, "S"), (4, "S"), (14, "R"),
+              (6, "S"), (6, "R"), (4, "S"), (4, "R"), (3, "S"), (15, "S"), (20, "S"), (18, "R"), (9, "R"), (37, "S"),
+              (27, "S"), (28, "R"), (3, "R"), (9, "S"), (32, "S"), (29, "R"), (11, "S"), (16, "R"), (52, "R"), (9, "R"),
+              (4, "S"), (19, "R"), (36, "S"), (23, "S"), (32, "R"), (32, "S"), (4, "S"), (6, "R"), (12, "S"), (15, "S"),
+              (5, "S"), (42, "R"), (52, "R"), (2, "S"), (43, "R"), (35, "R"), (3, "S"), (2, "R"), (4, "S"), (4, "S"),
+              (42, "R"), (32, "R"), (18, "R"), (6, "S"), (9, "R"), (19, "R")],
+        "4": [(50, "S"), (57, "R"), (47, "R"), (55, "S"), (14, "R"), (27, "R"), (10, "R"), (53, "S"), (39, "R"), (40, "R"),
+              (37, "S"), (20, "S"), (47, "R"), (47, "R"), (36, "S"), (24, "S"), (22, "R"), (5, "S"), (35, "R"), (11, "S")],
+        "5": [(34, "S"), (37, "R"), (52, "S"), (33, "S"), (20, "R"), (16, "R"), (33, "S"), (15, "R"), (33, "S"), (7, "R"),
+              (10, "S"), (6, "S"), (7, "R"), (7, "S"), (6, "S"), (9, "R"), (29, "R"), (12, "S"), (12, "R"), (27, "S")]}
 
 
 def check(p, ok, detail):
