@@ -29,7 +29,8 @@ paper=(sweep2.py sweep3.py "multiwall.py 1" "multiwall.py 2" "multiwall.py 3" "m
   # Added 2026-10-16 (~17 min; advect2d.py alone ~13 min). life_test.py and life_few.py need scikit-learn,
   # abiotic_vs_life.py needs rdkit (requirements.txt).
   abiotic_vs_life.py advect2d.py coarsen_slow.py g_wide.py kcheck.py lid_melt.py life_few.py life_test.py persist.py
-  plume_feedstock.py plume_share.py plume_signal.py sugar_bands.py sugar_measured.py sugar_pair.py)
+  plume_feedstock.py plume_share.py plume_signal.py sugar_bands.py sugar_measured.py sugar_pair.py
+  blind_lab.py)   # ~1 min
 # Not in any tier (hours each, or extra packages); run by hand with the section arguments in each docstring:
 # front2d.py W1..3Db, gradient_ramp.py, kz_patches.py, deephand_scale.py 1 <w> (section 3 reads its ROW lines),
 # realistic.py 5, sphere_layers.py 2b, verify_sstar.py (needs gsw), frank_sbml.py (needs antimony + libroadrunner).
