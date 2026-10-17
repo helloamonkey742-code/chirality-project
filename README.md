@@ -444,23 +444,57 @@ early-Earth conditions. The models can't name the molecules, but they do set **r
 | R5 | fast enough: k2 ≥ 3×10⁻⁷ /M/s (pond, lake), 3×10⁻⁹ (ocean) | time rule, `ocean.py` |
 | R6 | works from a racemic or tiny excess (a pond follows 6×10⁻¹²) | `inherit.py` |
 | R7 | product is an amino acid, sugar or nucleotide (or passes its hand to one) | biology |
+| R8 | **many molecules decide**: homogeneous solution, molecule-sized voting units; no crystal, surface or aggregate carries the decision | only ~1–300 units decide in crystallizations (`crystal_check.py`, `blind_units.py`) |
+| R9 | tips over slowly: the 50/50 state is stable at low drive and is lost as the drive (feed) rises slowly | the sweep of Eq. 11; `frank.py` (Part 7) |
+
+*R8 and R9 added 2026-10-17.* R8 is a gate, not one mark among nine: a bias of g ~ 10⁻¹⁷ can steer
+only a decision made by a huge pool, and a decision made by a few crystals or grains is set by their
+own chance excess. So the table is ranked by R8 first (Y, then P, then N), then by score.
 
 Scored from the literature (Y = meets, P = partly, N = fails, ? = no data):
 
-| candidate | R1 | R2 | R3 | R4 | R5 | R6 | R7 | score |
-|---|---|---|---|---|---|---|---|---|
-| Attrition deracemization, amino-acid derivative (Noorduin 2008) | Y | Y | Y | P | Y | Y | P | **6.0** |
-| Ghadiri peptide replicator (2001) | Y | Y | P | N | Y | Y | Y | 5.5 |
-| Viedma ripening, NaClO₃ (2005) | Y | P | Y | P | Y | Y | N | 5.0 |
-| Magnetite crystallization (Ozturk 2023) | N | N | P | Y | Y | Y | Y | 4.5 |
-| Soai reaction (1995; from 5×10⁻⁷ ee in 2003) | Y | P | P | N | Y | Y | N | 4.0 |
-| Joyce RNA cross-inhibition (1984) | N | Y | P | Y | ? | N | Y | 3.5 |
-| Blackmond eutectic (2006) | N | N | N | P | Y | P | Y | 3.0 |
+| candidate | R1 | R2 | R3 | R4 | R5 | R6 | R7 | R8 | R9 | score |
+|---|---|---|---|---|---|---|---|---|---|---|
+| Ghadiri peptide replicator (2001) | Y | Y | P | N | Y | Y | Y | Y | ? | **6.5** |
+| Transamination + ligation network, fed (Higgs & Blackmond 2025; arm E) | P | P | Y | Y | ? | ? | Y | Y | ? | 5.0 |
+| Nonenzymatic RNA copying with 2-aminoimidazole-activated nucleotides (Essex et al. 2026, preprint) | P | Y | P | Y | ? | ? | Y | Y | ? | 5.0 |
+| Joyce RNA cross-inhibition (1984) | N | Y | P | Y | ? | N | Y | Y | N | 4.5 |
+| APED peptides via NCAs (Plasson 2004; Danger 2010; Hitz & Luisi 2004) | P | P | P | P | ? | P | Y | Y | ? | 4.5 |
+| Soai reaction (1995; from 5×10⁻⁷ ee in 2003) | Y | P | P | N | Y | Y | N | P | N | 4.5 |
+| Attrition deracemization, amino-acid derivative (Noorduin 2008) | Y | Y | Y | P | Y | Y | P | N | N | 6.0 |
+| Viedma ripening, NaClO₃ (2005) | Y | P | Y | P | Y | Y | N | N | N | 5.0 |
+| Magnetite crystallization (Ozturk 2023) | N | N | P | Y | Y | Y | Y | N | N | 4.5 |
+| Blackmond eutectic (2006) | N | N | N | P | Y | P | Y | N | N | 3.0 |
+
+New rows (abstracts checked in OpenAlex or PubMed, 2026-10-17):
+- **Transamination + ligation network:** a model of peptide-catalysed transamination plus peptide
+  ligation predicts symmetry breaking when fed (Higgs and Blackmond, 2025); the steps were run separately
+  (Yu et al., 2024; Deng, Yu and Blackmond, 2024). k₂ is not measured.
+- **Nonenzymatic RNA copying:** 2-aminoimidazole-activated L-nucleotides form heterochiral bridged
+  dinucleotides slightly faster than homochiral ones, and an L-nucleotide at the 3′ end of a D-RNA primer
+  ends copying (Essex et al., 2026, ChemRxiv doi:10.26434/chemrxiv.15005970/v1). That is mutual
+  suppression molecule by molecule, in water. Copying is not yet self-sustaining (R1 = P). RNA can pass its
+  hand to amino acids: one sequence in loop-closing ligation takes up L-amino acids almost exclusively
+  (Kim, Todisco, Radakovic and Szostak, 2025, doi:10.1021/jacs.4c16905).
+- **APED peptides:** a model in which activation, polymerization, epimerization and depolymerization
+  break symmetry (Plasson et al., 2004). In the parts tested in water, heterochiral peptides are cleaved
+  to diketopiperazines faster (helpful), but the epimerization equilibrium favours them (unhelpful), and
+  epimerization needs a catalyst (Danger, Plasson and Pascal, 2010, doi:10.1089/ast.2009.0450). NCA
+  oligomerization in water enriches homochiral oligomers from 20% ee L-Leu (Hitz and Luisi, 2004,
+  doi:10.1023/b:orig.0000009831.85557.25).
 
 **The pattern (the main finding of this part):** the candidates *with* self-amplification (R1)
 fail on prebiotic inputs (R4). The candidates that are prebiotic (R4) lack self-amplification.
 **No known system has R1 + R2 + R4 + R7 together.** Speed (R5) is *never* the problem.
 Natural chemistry has 10⁵–10⁸ years, so even extremely slow reactions qualify.
+
+**With R8 the ranking changes.** The former top route (attrition deracemization) and every crystal or
+surface route fall below every solution route: they amplify, but a few units decide, so the PVED cannot
+steer them. The solution routes that are also prebiotic (R4 = Y, R8 = Y) are the transamination–ligation
+network and nonenzymatic RNA copying; each has only part of R1 + R2. **No system is known to meet R9:**
+none has been run as a slow sweep through its instability, and Soai, Viedma and attrition are unstable
+at 50/50 from the start as run. No prebiotic solution system has a measured number of deciding molecules
+or a volume dependence (search of 2026-10-17).
 
 **Prediction:** the missing reaction is **self-amplifying chirality in water, from natural
 building blocks, even if very slow.** Lab searches usually discard reactions that don't amplify
@@ -482,8 +516,12 @@ own lab test, flipping the magnet flipped the hand. So the two hemispheres could
 and the paper doesn't say how that gets resolved. (DOCUMENTED from the full text, PMC10246896. The
 opposite-hemisphere point is my inference, not the paper's claim.)
 
+Both partial routes fail R8. They can make one hand, but which hand is set by the chance excess of a
+few crystals or grains, so neither can carry a PVED-selected hand (see R8 above).
+
 Scoring limits: several concentrations and times weren't in the abstracts. Marks are judgement
-calls from the papers' main claims, not a formal meta-analysis.
+calls from the papers' main claims, not a formal meta-analysis. R4 and R8 for the new rows are my
+reading of the molecules and conditions the abstracts name; Essex et al. 2026 is a preprint.
 
 **Next step, designed:** a seeded, mirror-controlled slow experiment (0.1 M, 12 months) that can
 detect amplification as slow as the pond floor. See [EXPERIMENT.md](EXPERIMENT.md) and `design.py`.

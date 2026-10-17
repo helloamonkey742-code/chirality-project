@@ -52,7 +52,7 @@ Nature's floors at realistic concentrations: **pond 3×10⁻⁶** (1 mM, 100 yr)
    at 10 mM by exactly 10×, k2 is a true second-order constant and the extrapolation is fair.
 
 ## Arms (chemistries to test)
-Chosen from the scorecard for prebiotic inputs (R4) and biological products (R7):
+Chosen from the scorecard for prebiotic inputs (R4) and biological products (R7); arm G (added 2026-10-17) also meets R8, many molecules decide (README Part 6):
 
 | arm | system | why | source |
 |---|---|---|---|
@@ -62,11 +62,35 @@ Chosen from the scorecard for prebiotic inputs (R4) and biological products (R7)
 | D | RNA precursor (RAO) on **magnetite**, then crystallization | non-autocatalytic route that already breaks symmetry | Ozturk et al. 2023 |
 | E | peptide-catalysed **transamination** (pyruvate + pyridoxamine → alanine) coupled to **peptide ligation**, run **fed (slow flow)** | a proposed prebiotic network predicted (in a model) to break symmetry on its own, built from two reactions studied in the lab; the model says it must be fed, not closed (`review.py` R6) | Yu et al. 2024; Deng, Yu & Blackmond 2024; Higgs & Blackmond 2025 |
 | F | prebiotic **DNA/RNA precursor synthesis** (glycolaldehyde + glyceraldehyde + 2-aminooxazole → ribo-aminooxazoline RAO) coupled with chiral dipeptide catalysis, run **fed** | directly tests whether the "hand of DNA" is selected and amplified by asymmetric cross-coupling with peptides (Ozturk & Sasselov 2025; `dna_network.py`), overcoming chiral cross-inhibition | Breslow & Cheng 2010; Hein, Tse & Blackmond 2011; Ozturk & Sasselov 2025 |
+| G | prebiotic **nonenzymatic RNA copying** with 2-aminoimidazole-activated nucleotides, seeded L or D monomer excess, run **fed with temperature cycling** | copying and mutual suppression molecule by molecule in water: an L-nucleotide at the 3′ end of a D-RNA primer ends copying, and heterochiral bridged dinucleotides form slightly faster than homochiral ones; RNA can pass its hand to amino acids | Joyce et al. 1984; Essex et al. 2026 (preprint); Kim et al. 2025 |
 | + | **Positive control:** Viedma grinding of a known conglomerate | proves the pipeline detects real amplification | Viedma 2005 |
 
 Arms E and C are the priority. E is a prebiotic network with a published model prediction that it may break symmetry on its own (Higgs & Blackmond 2025). Its transamination step has been run in the lab but its rate is not yet pinned down: Yu et al. 2024 Table 2 reports % conversions for the *reverse* reaction (alanine + pyridoxal → pyruvate + pyridoxamine), which imply rough second-order rates of 6×10⁻⁶–1×10⁻⁴ /M/s depending on the peptide catalyst (our estimate, not a measured rate constant). That is a conversion rate, not the amplification rate k2 in the table above, so it does not show that E's amplification would be detectable; measuring k2 is the point of the arm. *(Corrected 2026-10-01: earlier text called E "the only" such network and said its step "has a measured rate near 10⁻⁴ /M/s … well above the 1-year detection floor"; the 10⁻⁴ came from the reverse reaction and the floor applies to k2, not to conversion.)* Run E in a slowly fed vessel; a closed vial is predicted to return to 50/50. C is the only other catalytic loop in prebiotic water.
 
 Arm F (added 2026-10-10) is also a priority. It tests whether chiral amino acids / peptides stereoselectively drive D-ribose / D-RNA nucleotide precursor excess (RAO) and amplify it through non-equilibrium crystallization/oligomerization (Hein et al. 2011; Ozturk & Sasselov 2025), testing the asymmetric rescue prediction in `dna_network.py`.
+
+**Which arms can carry a PVED-selected hand (R8, added 2026-10-17).** A bias of g ~ 10⁻¹⁷ can steer
+only a decision made by a huge well-mixed pool. In crystallizations only about 1–300 units decide
+(`crystal_check.py`, `blind_units.py`), so their hand is set by those units' own chance excess.
+**Arm D and the crystallization step of arm F can amplify, but the PVED cannot steer them.** A positive
+result there shows amplification only. The arms whose decision is made molecule by molecule in solution
+are C, E and G (and A and B if their peptides stay dissolved). The Viedma positive control still
+checks detection; it is not a candidate.
+
+**Arm G (added 2026-10-17).** Template-directed copying of short RNA primers with 2-aminoimidazole-activated
+nucleotides in water. It is the only arm in which mutual suppression (R2) has been measured molecule by
+molecule (Essex et al. 2026, preprint), but self-sustaining copying (R1) has not been shown, so this arm
+asks whether repeated copying cycles make a seeded excess grow. It is not a peptide system, so it tests
+the hypothesis above only in its broader form ("a prebiotic, water-based system").
+- Feed: activated D- and L-mononucleotides with a +20% L, +20% D or 0% excess, as in the other arms;
+  short D- and L-primer–template pairs at equal amounts.
+- Drive: temperature cycling to separate strands (R3), with fresh activated monomer fed each cycle.
+- Readout: the excess of full-length D- over L-products per cycle (chiral LC-MS of the products, or
+  mirror-image primers with distinct labels). Seed-following growth means the excess rises with cycle
+  number in both the L- and D-seeded sets, by equal and opposite amounts.
+- Stepped feed (R9): repeat the racemic set at three or more feed rates. If the 50/50 state is stable at
+  low feed and lost above a threshold, the arm meets R9, the slow tip-over that Eq. 11 assumes.
+  Arm E can be run the same way.
 
 ### Arm F wet-lab specifications: prebiotic nucleotide precursor synthesis with dipeptide catalysis
 
@@ -254,6 +278,9 @@ That would look like "amplification" in the L-seeded vials. Safeguards:
 - Yu, Darù, Deng et al. 2024, *PNAS* 121:e2315447121, doi:10.1073/pnas.2315447121
 - Deng, Yu & Blackmond 2024, *Nature* 626:1019, doi:10.1038/s41586-024-07059-y
 - Higgs & Blackmond 2025, *PNAS* 122:e2423683122, doi:10.1073/pnas.2423683122
+- Joyce, Visser, van Boeckel, van Boom, Orgel & van Westrenen 1984, "Chiral selection in poly(C)-directed synthesis of oligo(G)", *Nature* 310:602, doi:10.1038/310602a0
+- Essex, Jia, Zhang & Szostak 2026, "Effects of chemically activated L-nucleotides on nonenzymatic RNA copying", ChemRxiv preprint, doi:10.26434/chemrxiv.15005970/v1
+- Kim, Todisco, Radakovic & Szostak 2025, "Stereoselectivity of aminoacyl-RNA loop-closing ligation", *J. Am. Chem. Soc.* 147:19539, doi:10.1021/jacs.4c16905
 - Viedma 2005, *PRL* 94:065504, doi:10.1103/PhysRevLett.94.065504
 - Dworkin, Elsila, Glavin, Aponte, McLain, Simkus, Graham & Parker 2024, "Verification of chiral asymmetry in meteoritic organics", 55th LPSC, Abstract #2645
 - Frank 1953, *Biochim. Biophys. Acta* 11:459

@@ -8,6 +8,13 @@ Spec (from the models in this folder):
   R5 fast enough                   k2 >= 10/(c*tau)                       (ocean.py time rule)
   R6 sensitive enough              follows an inherited excess >= e_need  (inherit.py)
   R7 biological product            amino acid, sugar or nucleotide (or passes its hand to one)
+  R8 many molecules decide         homogeneous solution, molecule-sized voting units; no crystal,
+                                   surface or aggregate carries the decision (only ~1-300 units
+                                   decide in crystallizations: crystal_check.py, blind_units.py)
+  R9 tips over slowly              racemic state stable at low drive, lost as the drive rises
+                                   slowly (the sweep of Eq. 11; frank.py)
+R8 is a gate: a bias of g ~ 1e-17 cannot steer a decision made by a few units, so candidates
+are ranked by R8 first (Y, then P, then N), then by score.
 """
 import numpy as np
 from inherit import e_need
@@ -30,18 +37,27 @@ def spec():
 # Filled from the literature (see README Part 6); Y = meets, P = partly, N = fails, ? = unknown.
 # R5: every candidate runs in hours-days in the lab, far faster than the 3e-7 /M/s floor -> Y,
 # except where no rate was found (?). R6 here = shown to work from racemic or <= ~1% ee.
+# R9 is N where the racemic state is unstable from the start as run (batch, grinding), and N
+# where there is no amplification (no R1) and so no instability to cross.
+KEYS = ["R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9"]
+
+
 def _m(s):
-    return dict(zip(["R1", "R2", "R3", "R4", "R5", "R6", "R7"], s.split()))
+    return dict(zip(KEYS, s.split()))
 
 
 CANDIDATES = {
-    "Soai reaction (1995; 2003)":            _m("Y P P N Y Y N"),  # from 5e-7 ee; organozinc, toluene
-    "Viedma ripening, NaClO3 (2005)":        _m("Y P Y P Y Y N"),  # racemic -> 100%, grinding, inorganic
-    "Attrition deracemization, aa deriv (2008)": _m("Y Y Y P Y Y P"),  # needs derivative + racemizer
-    "Ghadiri peptide replicator (2001)":     _m("Y Y P N Y Y Y"),  # designed 32-mer peptides
-    "Joyce RNA cross-inhibition (1984)":     _m("N Y P Y ? N Y"),  # inhibition only
-    "Blackmond eutectic (2006)":             _m("N N N P Y P Y"),  # amplifies existing ee; CHCl3
-    "Magnetite crystallization (2023)":      _m("N N P Y Y Y Y"),  # racemic -> ~60% ee, then crystals
+    "Soai reaction (1995; 2003)":            _m("Y P P N Y Y N P N"),  # from 5e-7 ee; organozinc, toluene; <= 3.6e9 decide (soai_check.py S4)
+    "Viedma ripening, NaClO3 (2005)":        _m("Y P Y P Y Y N N N"),  # racemic -> 100%, grinding, inorganic
+    "Attrition deracemization, aa deriv (2008)": _m("Y Y Y P Y Y P N N"),  # needs derivative + racemizer
+    "Ghadiri peptide replicator (2001)":     _m("Y Y P N Y Y Y Y ?"),  # designed 32-mer peptides
+    "Joyce RNA cross-inhibition (1984)":     _m("N Y P Y ? N Y Y N"),  # inhibition only
+    "Blackmond eutectic (2006)":             _m("N N N P Y P Y N N"),  # amplifies existing ee; CHCl3
+    "Magnetite crystallization (2023)":      _m("N N P Y Y Y Y N N"),  # racemic -> ~60% ee, then crystals
+    # Added 2026-10-17 (abstracts checked in OpenAlex/PubMed):
+    "Transamination + ligation network, fed (2025)": _m("P P Y Y ? ? Y Y ?"),  # Higgs & Blackmond 2025 model; Yu 2024, Deng 2024 steps; k2 unmeasured
+    "Nonenzymatic RNA copying, 2-AI (2026)":  _m("P Y P Y ? ? Y Y ?"),  # Essex 2026 preprint: L-nt terminates D-RNA copying; no sustained replication yet
+    "APED peptides via NCAs (2004-2010)":     _m("P P P P ? P Y Y ?"),  # Plasson 2004 model; Danger 2010: DKP removes heterochiral faster, equilibrium favours it; Hitz & Luisi 2004: from 20% ee
 }
 
 
@@ -49,13 +65,16 @@ def main():
     print("Spec: minimum rate and sensitivity per setting")
     for name, k2_min, e in spec():
         print(f"  {name:18} k2 >= {k2_min:.0e} /M/s    follows inherited excess >= {e:.0e}")
-    if CANDIDATES:
-        keys = ["R1", "R2", "R3", "R4", "R5", "R6", "R7"]
-        print(f"\n{'candidate':42} " + " ".join(keys) + "  score")
-        for name, marks in CANDIDATES.items():
-            score = sum({"Y": 1, "P": 0.5}.get(marks[k], 0) for k in keys)
-            print(f"{name:42} " + "  ".join(marks[k] for k in keys) + f"   {score:.1f}/7")
-
+    gate = {"Y": 0, "P": 1, "N": 2, "?": 1}
+    score = {n: sum({"Y": 1, "P": 0.5}.get(m[k], 0) for k in KEYS) for n, m in CANDIDATES.items()}
+    ranked = sorted(CANDIDATES, key=lambda n: (gate[CANDIDATES[n]["R8"]], -score[n]))
+    print(f"\n{'candidate (R8 gate first, then score)':47} " + " ".join(KEYS) + "  score")
+    for name in ranked:
+        print(f"{name:47} " + "  ".join(CANDIDATES[name][k] for k in KEYS) + f"   {score[name]:.1f}/9")
+    return ranked
 
 if __name__ == "__main__":
-    main()
+    ranked = main()
+    # every crystal or surface route (R8 = N) ranks below every solution route
+    assert all(CANDIDATES[n]["R8"] == "N" for n in ranked[ranked.index("Attrition deracemization, aa deriv (2008)"):])
+    assert ranked[0] == "Ghadiri peptide replicator (2001)"
