@@ -81,6 +81,33 @@ over a set's runs.
  aggregates (aggregates are mixed), and Choi's n_eff below the crystal count is not the general case.  B3 or A1 fails: a
  stray bias steered the runs.  Every outcome is reported as found.
 
+RESULTS (blind_units.log, 2026-10-17): 5 of 9 held (B1, A1, A2, A3, A4); 2 FAILED (A5, A6); 2 NOT SCORABLE (B2, B3).
+Values were read by separate readers after the predictions commit (0121436) and entered unchanged.
+ Bak, main series: only 3 markers, P_CSB 1.0 at 0.164 uL, 8/10 at 0.870 uL, 7/10 at 1.726 uL.  B1 held (rho = -1),
+ weakly: a random order of 3 gives rho = -1 one time in 6.  B2 NOT SCORABLE: 3 markers and none at or below 0.4.  The
+ exponential fit gives V0 = 4.6 uL (least squares).  B3 NOT SCORABLE: no all-L / all-D counts in the main text, and the
+ SI was not reachable (403).  The P = 1 markers of all series share one "(66/66)" label, so their drop counts are unknown.
+ Post hoc (printed, not scored): the Tinc 90 C series has 11 markers falling from 1.0 to 5/16; its free-width fit gives
+ h = 1.75, a broad fall like the counting rule's 1.40, not a step at the paper's critical volume (about 0.19 uL).
+ Asakura, unstirred: n_eff = 272 at 150 C (7 of 10 runs at ee 0, the largest 17%) and 8.6 at 152 C.  Stirred at 150 C:
+ n_eff = 3.2 at 200 rpm and 1.96 at 500 rpm.  A1 held: 11 S / 12 R over 23 runs with a hand (P(split | Delta = 1) =
+ 3.3e-4); without the two 0 rpm markers at |ee| <= 1, 10 S / 11 R and 6.5e-4, still held.  A2 and A3 held.  A3 is close
+ to its threshold but does not hang on the readings: the printed means (+70, -72) fix mean |ee| = 0.711, and mean ee^2 >=
+ mean |ee|^2 gives n_eff <= 1.98 for any spread.  A4 held, but not by the stated mechanism: the paper counts fewer visible
+ aggregates at 150 C (24 in 10 runs) than at 152 C (32).  A5 FAILED: the 13 masses the paper says grew from one nucleus
+ include every 150 C mass at ee 0 and 6 of 9 at 152 C at |ee| <= 4%; only 3 (31, 59, 83%) are clearly one-handed.  A6
+ FAILED at 150 C: n_eff's 95% low end is 88 against 2.4 aggregates per run (at 152 C, 2.8 against 3.2 holds).  0 rpm
+ (reported): 4 separable markers give n_eff = 111; with the uncountable blob as 6 more zeros (10 runs) it is 276, the
+ same as Fig. 2's 150 C runs, which those may be.
+ Code-only additions after the first run: BAK_TINC90 and the POST HOC line.  No prediction, threshold or value changed.
+ Reading: A5 and A6 fail together, in the direction fixed in advance: at 150 C the model's unit is not the visible mass.
+ The paper says the same (Discussion): the solid grows as an aggregate of small R and S crystallites, so a mass from one
+ nucleus is racemic and the run's ee is the vote of about 90 or more crystallites.  The counting rule then still holds
+ (<ee^2> = 1/n_eff, n_eff large, ee near 0); what fails is equating a unit with an aggregate.  Choi's n_eff below the
+ crystal count (blind_lab.py C1) is not general: here n_eff is far above the visible count.  Stirring cut n_eff from
+ about 270 to about 2 in the same melt at the same temperature, as for NaClO3 in solution.  Bak's main series is too
+ short to test the breadth of the fall; the one long series, not pre-registered, falls broadly.
+
 Run: UV_CACHE_DIR=~/Library/Caches/uv uv run --no-project --with numpy --with scipy python blind_units.py > blind_units.log
 """
 from math import log
@@ -92,13 +119,30 @@ from blind_lab import best, loglik, steer, two_sided
 
 RES = {}
 
-# Outcomes: entered after the predictions commit by a separate reader.  None = not yet entered.
-BAK_MAIN = None   # [(Vc in uL, P_CSB, drops in the marker or None)], Fig. 2a main series
-BAK_LD = None     # (all-L drops, all-D drops), or () if not given
-AS_UNSTIRRED = None   # {150: [ee %, 10 runs], 152: [...]}, Fig. 2
-AS_STIRRED = None     # {0: [signed ee %], 200: [...], 500: [...]}, Fig. 4
-AS_MASSES = None      # [(temperature C, run, ee %)], Table 1
-AS_AGG = None         # {150: mean aggregates per run, 152: ...} or {"pooled": ...}; {} if not given
+# Outcomes: entered after the predictions commit (0121436), as read by separate readers on 2026-10-17, unchanged.
+# Figure values are marker centres from 8x renders against the axis ticks (about +-0.3-1% in Vc, +-0.3-1 point in ee).
+# Bak: (k/n) labels on the P < 1 markers; the P = 1 markers of every series share one "(66/66)" label, so drops = None.
+# The SI (pubs.acs.org) returned 403; the main text gives no all-L / all-D counts.
+BAK_MAIN = [(0.164, 1.0, None), (0.870, 0.80, 10), (1.726, 0.70, 10)]   # Fig. 2a blue squares
+BAK_LD = ()
+# Fig. 2a red circles (Tsat 50 C, Tinc 90 C, FC-40, PMMA), for the record; used only by the POST HOC line.
+BAK_TINC90 = [(0.052, 1.0), (0.066, 1.0), (0.072, 1.0), (0.114, 1.0), (0.136, 1.0), (0.145, 1.0), (0.173, 1.0),
+              (0.196, 10 / 12), (0.357, 5 / 6), (0.711, 2 / 6), (2.188, 5 / 16)]
+# Asakura Fig. 2 plots |ee|; 150 C has 3 markers plus 7 at 0 ("Seven plots are thus superimposed at ee of 0%").
+# Readings reproduce the printed Mean/SD (3/6 and 27/22).
+AS_UNSTIRRED = {150: [17.2, 8.4, 1.1, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+                152: [60.4, 49.1, 44.3, 43.4, 33.3, 19.2, 11.4, 9.4, 1.1, 0.0]}
+# Fig. 4, ee > 0 = excess S.  0 rpm: separable markers only; a blob at 0 holds an uncountable number more (its edges
+# are the +1.0 and -0.5 markers), and the paper does not say whether these are Fig. 2's 150 C runs.  500 rpm readings
+# reproduce the printed means +70 and -72; no mean is printed at 200 rpm.
+AS_STIRRED = {0: [17.4, 1.0, -0.5, -7.6],
+              200: [75.5, 33.7, 25.4, 19.8, 6.5, -36.8, -62.1, -73.9, -77.7, -82.4],
+              500: [77.7, 75.3, 69.1, 58.1, -61.5, -68.5, -73.9, -77.7, -78.5]}
+# Table 1: "solid masses that grew from a single nucleus", run = crystallization number in the sample no.
+AS_MASSES = [(150, 1, 0.0), (150, 1, 0.0), (150, 2, 0.0), (150, 3, 0.0),
+             (152, 1, 0.0), (152, 1, -4.0), (152, 2, -59.0), (152, 3, -3.0), (152, 4, -2.0),
+             (152, 5, 0.0), (152, 6, 31.0), (152, 7, 83.0), (152, 7, 0.0)]
+AS_AGG = {150: 2.4, 152: 3.2}   # "total number of such aggregates in the 10 crystallizations at 150°C was 24"; 152 C: 32
 
 
 def check(p, ok, detail):
@@ -181,6 +225,10 @@ def main():
         check("B3", two_sided(a, a + b) > 0.05, f"all-L {a}, all-D {b}, p(50/50) = {two_sided(a, a + b):.3f}")
     else:
         check("B3", "NOT SCORABLE", "all-L / all-D counts not given")
+    # POST HOC, added after the results were seen; not a prediction and not scored.
+    Vr, Pr = np.array(BAK_TINC90).T
+    print(f"  POST HOC, Tinc 90 C series ({len(Vr)} markers, least squares): h = {free_width(Vr, Pr)[1]:.2f} "
+          f"(Vk = {free_width(Vr, Pr)[0]:.3g} uL), V0 = {exp_fit(Vr, Pr):.3g} uL")
 
     print("\n=== Asakura et al. 2002 ===")
     ne = {}

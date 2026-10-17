@@ -1,0 +1,43 @@
+Bak, counting rule P_CSB = exp(-V/V0): 0.8 -> 0.2 over a factor 7.21 in V, 0.9 -> 0.1 over 21.9; free-width h equivalent 1.40; h = 3 is a factor 2.52
+Asakura, 95% lower factor on n_eff for m = 10 runs: 0.325
+  A1 power: an even split of 20 runs has P(split | Delta = 1) = 4.0e-04
+  A1 power: an even split of 30 runs has P(split | Delta = 1) = 1.4e-05
+  A1 power: an even split of 40 runs has P(split | Delta = 1) = 5.4e-07
+
+=== Bak et al. 2023, Fig. 2a main series ===
+  Vc = 0.164 uL: P_CSB = 1.000, drops None
+  Vc = 0.87 uL: P_CSB = 0.800, drops 10
+  Vc = 1.73 uL: P_CSB = 0.700, drops 10
+  B1 HELD: Spearman rho(Vc, P_CSB) = -1.000 over 3 markers
+  reported: exp fit V0 = 4.61 uL (least squares)
+  B2 NOT SCORABLE: 3 markers, P_CSB range 0.70-1.00
+  B3 NOT SCORABLE: all-L / all-D counts not given
+  POST HOC, Tinc 90 C series (11 markers, least squares): h = 1.75 (Vk = 0.703 uL), V0 = 1.4 uL
+
+=== Asakura et al. 2002 ===
+  unstirred 150 C, 10 runs: ee % [17.2, 8.4, 1.1, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], n_eff = 272.03 (95% low 88.33)
+  unstirred 152 C, 10 runs: ee % [60.4, 49.1, 44.3, 43.4, 33.3, 19.2, 11.4, 9.4, 1.1, 0.0], n_eff = 8.62 (95% low 2.80)
+  0 rpm, 4 runs: ee % [17.4, 1.0, -0.5, -7.6], n_eff = 110.57
+  200 rpm, 10 runs: ee % [75.5, 33.7, 25.4, 19.8, 6.5, -36.8, -62.1, -73.9, -77.7, -82.4], n_eff = 3.18
+  500 rpm, 9 runs: ee % [77.7, 75.3, 69.1, 58.1, -61.5, -68.5, -73.9, -77.7, -78.5], n_eff = 1.96
+  A1 HELD: 11 S / 12 R, p(50/50) = 1.000, P(split | Delta = 1) = 3.3e-04
+  A2 HELD: n_eff 200 rpm 3.18, 500 rpm 1.96, unstirred 150 C 272.03
+  A3 HELD: n_eff(500 rpm) = 1.96
+  A4 HELD: n_eff 150 C 272.03, 152 C 8.62
+  single mass 150 C run 1: ee +0.0%
+  single mass 150 C run 1: ee +0.0%
+  single mass 150 C run 2: ee +0.0%
+  single mass 150 C run 3: ee +0.0%
+  single mass 152 C run 1: ee +0.0%
+  single mass 152 C run 1: ee -4.0%
+  single mass 152 C run 2: ee -59.0%
+  single mass 152 C run 3: ee -3.0%
+  single mass 152 C run 4: ee -2.0%
+  single mass 152 C run 5: ee +0.0%
+  single mass 152 C run 6: ee +31.0%
+  single mass 152 C run 7: ee +83.0%
+  single mass 152 C run 7: ee +0.0%
+  A5 FAILED: 13 masses, smallest |ee| 0.0%
+  A6 FAILED: 150: n_eff low 88.33 vs aggregates 2.40 per run; 152: n_eff low 2.80 vs aggregates 3.20 per run
+
+5 of 9 predictions HELD: A1 HELD, A2 HELD, A3 HELD, A4 HELD, A5 FAILED, A6 FAILED, B1 HELD, B2 NOT SCORABLE, B3 NOT SCORABLE
