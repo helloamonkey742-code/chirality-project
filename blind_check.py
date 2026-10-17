@@ -63,14 +63,30 @@ all Deck runs have no final hand, B1-B3 are reported as NOT SCORABLE, not as hel
  that system. If B3 or B4 fails, a stray bias in the stock steered 5 mL vials, so b * sqrt(N) >= 1 there. Either outcome is
  reported as found.
 
+RESULTS (blind_check.log, 2026-10-16): 5 of 5 held (B1-B5). Counts were read from the open text by a separate reader after
+the predictions commit (ec19c77) and entered unchanged.
+ Deck: all 72 crystallizers reached one hand: 42 L, 30 D (p = 0.195 for 50/50; the paper's own text gives the same 30/42 and
+ 19%). Per experiment L/D: A1 6/2, A2 4/4, B1 6/2, B2 5/3, C 6/2, D1 4/4, D2 3/5, G 5/3, H 3/5. No experiment went 8/0. The spread
+ across experiments is what coin flips give (D = 8.00 against an expected 9; P = 0.579), so vials from one stock did not agree.
+ A Delta >= 1 steering bias would make a split this even with chance 1.6e-7.
+ Steendam: 39 S, 29 R of 68 (p = 0.275; Delta >= 1 bias ruled out, 1.4e-7). Not scored: the same paragraph says runs with freshly
+ prepared starting materials again went to S more often, with no counts given.
+ Code-only fix after the first run: check() now converts numpy bools, which had made the tally line print "4 of 5" and B3 "True".
+ No prediction or threshold was changed.
+ Reading: in two systems the model's zone rule puts in the "chance" zone, the hands split as chance predicts, at the level
+ of a whole lab and of a shared stock. This is weak support (see LIMITS): it shows no hidden steering bias of Delta >= 1 at the
+ 5 mL scale, not that the sqrt(N) rule is right.
+
 Run: /opt/anaconda3/bin/python blind_check.py > blind_check.log
 """
 from math import comb, erf, sqrt
 
 import numpy as np
 
-DECK = None       # filled after the predictions are committed: {label: (hand_1, hand_2, no_hand)}, from DK25 Table 1
-STEENDAM = None   # filled after the predictions are committed: (hand_1, hand_2), from ST14
+# Entered after the predictions were committed (ec19c77), as read from the open text by a separate reader on 2026-10-16.
+DECK = {"A1": (6, 2, 0), "A2": (4, 4, 0), "B1": (6, 2, 0), "B2": (5, 3, 0), "C": (6, 2, 0),   # (L, D, no hand), DK25 Table 1
+        "D1": (4, 4, 0), "D2": (3, 5, 0), "G": (5, 3, 0), "H": (3, 5, 0)}
+STEENDAM = (39, 29)   # (S-1, R-1) enantiopure end states, ST14 Results ("Chiral outcome and rate of the reaction")
 
 RES = {}
 phi = lambda x: 0.5 * (1 + erf(x / sqrt(2)))
@@ -78,6 +94,7 @@ P1 = phi(1.0)   # chance the favoured hand wins at Delta = 1 (0.84)
 
 
 def check(p, ok, detail):
+    ok = ok if isinstance(ok, str) else bool(ok)   # numpy bools are not `True`; code-only fix after the first run
     RES[p] = ok
     print(f"  {p} {'HELD' if ok is True else 'FAILED' if ok is False else ok}: {detail}")
 
