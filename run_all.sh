@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # Re-run every model and check. Default: fast set (~2 min). --full adds the 3D runs (~50 min).
-# --paper adds the scripts behind the paper's headline tables and figures (~52 min); --full --paper runs both.
-# Any failed self-check stops the script with a non-zero exit.
+# --paper adds the scripts behind the paper's headline tables and figures (~70 min); --full --paper runs both.
+# A failed assertion stops the run with a non-zero exit (verify_seeds.py instead prints ASSERT FAILED per seed). A failed
+# prediction (Section 2.7 of the paper) does not stop a script: read the HELD/FAILED lines and each RESULTS docstring.
 set -euo pipefail
 cd "$(dirname "$0")"
 if [ -z "${PYTHON:-}" ]; then
@@ -24,7 +25,11 @@ paper=(sweep2.py sweep3.py "multiwall.py 1" "multiwall.py 2" "multiwall.py 3" "m
   rerun_base.py tidal_mix.py tidal_mix_g005.py handoff.py "deephand_scale.py 3" rho2side.py "rho2side.py posthoc"
   "front2d.py worlds" pin_onset.py two_zone.py polar_gap.py currents.py realistic.py earth.py field_walls.py
   field_flips.py wobble.py wobble_sweep.py verify_seeds.py kz_large.py journals/make_fig_schematic2.py
-  journals/make_fig_sensitivity3.py make_fig_shares3.py make_fig_threshold2.py)
+  journals/make_fig_sensitivity3.py make_fig_shares3.py make_fig_threshold2.py
+  # Added 2026-10-16 (~17 min; advect2d.py alone ~13 min). life_test.py and life_few.py need scikit-learn,
+  # abiotic_vs_life.py needs rdkit (requirements.txt).
+  abiotic_vs_life.py advect2d.py coarsen_slow.py g_wide.py kcheck.py lid_melt.py life_few.py life_test.py persist.py
+  plume_feedstock.py plume_share.py plume_signal.py sugar_bands.py sugar_measured.py sugar_pair.py)
 # Not in any tier (hours each, or extra packages); run by hand with the section arguments in each docstring:
 # front2d.py W1..3Db, gradient_ramp.py, kz_patches.py, deephand_scale.py 1 <w> (section 3 reads its ROW lines),
 # realistic.py 5, sphere_layers.py 2b, verify_sstar.py (needs gsw), frank_sbml.py (needs antimony + libroadrunner).
@@ -42,4 +47,4 @@ for s in "${scripts[@]}"; do
   echo "== $s"
   "$PY" $s 2>&1 | { grep -v Warning || true; }  # $s unquoted: some entries carry a section argument
 done
-echo "== all checks passed (${#scripts[@]} scripts)"
+echo "== finished ${#scripts[@]} scripts with no error exit (failed predictions do not stop a script; see each RESULTS docstring)"

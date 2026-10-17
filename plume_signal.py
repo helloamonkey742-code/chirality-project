@@ -3,7 +3,7 @@
 
 THE RULE (paraphrased).  The ocean's organics are probably dominated by an abiotic, racemic background, so any network signal
 is diluted.  An abiotic L-excess (for example from the weak force) could still be detectable in a plume sample.  Unless the
-excess is significant AND appears in more than 2-3 amino acids, it would be read as abiotic.  He did not follow our question
+excess is significant AND appears in more than 2-3 amino acids, it would be read as abiotic.  They did not follow our question
 whether a plume sample tells an ocean-wide excess from a local one (does the plume carry the hand of the whole ocean, or only
 of the layer it comes from?).
 

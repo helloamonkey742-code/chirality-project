@@ -107,6 +107,11 @@ RESULTS (sugar_measured.log, 2026-10-16): 9 of 9 held (P1-P9), whole script 16 s
  limit that the pairing is explained, not which pair: g_a > 0 is still taken from the amino-acid PVED. The gain-ratio mapping
  (rho = G_as / G_sa, equal damping) is crude, the sign is not uniformly natural (proline, lyxose, arabinose), and the numbers marked
  "text" in the facts table are from open full texts read through a web-fetch summary and not checked against the PDFs.
+ CORRECTION (2026-10-16, after review; the lines above are left as written): the sugar -> aa tally is 3 natural / 1 against,
+ not 3 / 0.  Wagner et al. 2017 (W17) gives the natural L precursor only with D-lyxose and mixtures of D-sugars; D-ribose and
+ D-deoxyribose, the RNA sugars, give the unnatural D side.  So "fix the SIGN of both couplings as natural for ... ribose" does
+ not hold for sugar -> aa.  The P8 line and its count are left as logged.  sugar_bands.py recomputes the tally and the band
+ choices (natural-pair share 0.743-0.847, rescue 0.485-0.695); this Reading is superseded by sugar_bands.py.
 """
 import time
 

@@ -667,9 +667,10 @@ python breakeven.py   # what each unknown input would have to be (asserts), ~5 s
 python assumed_rules.py # the two assumed rules and a bigger weak force (asserts), ~5 s
 python earth_breakeven.py # how small Earth's magnetic-field share must be (asserts), ~1–2 min
 ./run_all.sh        # fast set (~2 min); --full adds the 3D + real-chemistry runs (~50 min);
-                    # --paper adds the scripts behind the paper's tables and figures (~52 min)
+                    # --paper adds the scripts behind the paper's tables and figures (~70 min)
 ```
-Needs numpy, scipy, matplotlib and numba (multiwall.py and the scripts that import it); verify_sstar.py also needs gsw.
+Needs numpy, scipy, matplotlib and numba (multiwall.py and the scripts that import it); life_test.py and life_few.py also
+need scikit-learn, abiotic_vs_life.py needs rdkit, and verify_sstar.py needs gsw.
 Tested versions are in `requirements.txt`. To use a different interpreter: `PYTHON=/path/to/python ./run_all.sh`.
 
 Code: MIT licence (see `LICENSE`).

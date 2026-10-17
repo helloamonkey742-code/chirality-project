@@ -32,7 +32,7 @@ RESULTS (life_few.log, 2026-10-16): 6 of 6 held (R1-R6), 20 s.
  called (n = 8 with Iva) 0.258 / 0.152 / 0.089 / 0.000; acc_V_AB 0.753 / 0.704 / 0.665 / 0.606.  Fixed visible set, breadth 7:
  full 0.606, no Iva 0.524, Iva only 0.524.
  Reading: whether a plume can tell life from an abiotic amplifier depends on how many amino acids the amplifier acts on, which
- nothing in the model or the literature I read sets.  If it acts on 2-3 (Davila's premise), his >= 4 rule is right 99% of the
+ nothing in the model or the literature I read sets.  If it acts on 2-3 (Davila's premise), their >= 4 rule is right 99% of the
  time it calls life and life is confidently identified in a quarter of cases; if it acts on all 7 with life's hand, neither
  holds.  The rule's recall stays about 22% because most life samples leave too few amino acids above 5%.  On a fixed visible
  set, the protein ee alone and Iva alone are equally weak (0.524 each, where 0.5 is chance), so Iva is not "decisive"; together
