@@ -101,12 +101,57 @@ seed-following only, with no excess growing from 50/50, unless one number differ
   unmeasured: the ligation rates, K, and whether Ala-Ala catalyses like Pro-Pro.
 - **Arm G** (`rna_copying.py`, rates from Walton & Szostak 2017): the 50/50 state is lost only if
   r = (wrong-hand addition rate)/(right-hand addition rate) exceeds 1, inside a window set by washout.
-  Essex et al. 2026 point to r < 1, so the expected result is a seeded excess rising to a bounded
-  plateau (about 0.35 for a +20% feed at r = 0.1) and the 0% set staying at 50/50 at every feed.
-  **Measure r first:** primer extension by D- vs L-activated monomer on a D-template, in the arm's own
-  buffer. r > 1 makes arm G a candidate for R9; r < 1 settles it as seed-following only.
+  Essex et al. 2026 give r = 0.40 (95% 0.22–0.98) from their kinetic constants and 0.5 by two other
+  routes (`arm_g_rates.py`), so the expected result is a seeded excess rising to a bounded plateau
+  (0.67 for a +20% feed at r = 0.40) and the 0% set staying at 50/50 at every feed. Their direct D/L
+  competition gives r = 0.49 or 1.14 depending on which gel bands were counted, which the paper does
+  not say; 1.14 is inside the window (m* = 10 mM feed). **Measure r first:** primer extension by D- vs L-activated monomer on a D-template, in the arm's own
+  buffer (protocol: "Arm G step 0" below). r > 1 makes arm G a candidate for R9; r < 1 settles it as
+  seed-following only.
 - If either arm does cross, both models predict a slow tip-over (supercritical pitchfork, no
   hysteresis), so the stepped-feed runs above test R9 directly.
+
+### Arm G step 0: measure r before any cycling run
+
+r decides arm G (`rna_copying.py`), and the model defines it in a 50/50 monomer pool. The decisive run is
+therefore a competition, not two separate runs, because mixed D/L bridged dinucleotides form only in a
+racemic pool. It takes days and needs no cycling reactor.
+Published values (Essex et al. 2026, full text and SI; `arm_g_rates.py` → `arm_g_rates.log`), all in
+200 mM HEPES pH 8.0, 100 mM Mg²⁺, D-RNA primer and template:
+- monomer only, excess free 2-AI (Fig. 1): r = k_L/k_D = 0.059;
+- bridged pathway: k/K of the four A*C hand combinations (Fig. 4) weighted by the hetero- and
+  homochiral formation rates from a 1:1 pool (Fig. S3; hydrolysis equal, Fig. S6): r = 0.40, 95%
+  0.22–0.98 from the reported SEs, P(r > 1) = 0.025. 96% of L additions go through the L(+1)/D(+2)
+  heterochiral bridge, and r barely changes with pool composition (0.39 from 52.5% to 95% D);
+- monomer bridged to a D-trimer (Fig. 5): r = 0.50;
+- direct competition, 5–90% ee, 24 h, % reduction of extension vs pure D (Fig. 9): r = 0.49 if the
+  reduction counts products past +2 (D needed at +1 and +2), r = 1.14 (per point 1.06–1.23) if it
+  counts products past +1. The paper does not say which. 1.14 needs the C_L*C_D bridge to add as
+  well as C_D*C_D (k/K ratio 0.97), against 0.33 measured for A*C.
+Model at these r (n = 3, c = 0.5, w = 0.02): every r ≤ 0.98 leaves 50/50 stable at every feed, with a
++20% feed reaching a plateau of 0.32 (r = 0.06), 0.67 (0.40) or 0.85 (0.49); r = 1.14 gives m* = 10.1 mM.
+So four of five estimates say seed-following only, but the one direct competition, the quantity the
+model needs, is ambiguous and its high reading puts arm G inside the window. Run 3 below decides it;
+so would the authors' band assignment for Fig. 9. Earlier work gives the direction only (Joyce et
+al. 1984, Schmidt, Nielsen & Orgel 1996 and 1997, Kozlov, Pitsch & Orgel 1998); Joyce et al. also
+find L built in as a chain terminator in racemic runs, so L addition is not negligible.
+- Duplex: 5′-labelled D-RNA primer on a D-RNA template whose next templating site is C (repeat with G).
+  Buffer, Mg²⁺, pH and temperature are those of arm G's cold phase.
+- Monomer: 2-AI-activated D- and L-nucleotides, made the same way. Check each stock's enantiomeric
+  purity by chiral HPLC first: D contaminating the L stock makes L look faster.
+- Three runs, triplicate, early time (< 20% of primer extended):
+  1. D monomer only → k_D (primer extension, as Walton & Szostak 2017).
+  2. L monomer only → k_L. Context only: with pure L only L/L bridged species form, so this is not r.
+  3. **Racemic monomer, L mass-tagged** (¹³C/¹⁵N-labelled base or sugar). r = (+1 primer ending in L) /
+     (+1 primer ending in D), read by LC-MS. Without a labelled L monomer: chase run 3 with excess D
+     monomer; D-ended +1 primers extend and L-ended ones stall (check with run 2's products), so
+     r ≈ stalled / extended +1 at the moment of the chase.
+- Decision, on the 95% interval of r from run 3:
+  - entirely below 1: arm G is seed-following only; run the seeded sets (R2, R6), skip the R9 sweep;
+  - entirely between 1 and r_max = (c(1−w)/w)^(1/n) − 1 (1.9 at n = 3, c = 0.5, w = 0.02): run the
+    stepped-feed R9 sets around the threshold feed m* that `rna_copying.py` gives for that r;
+  - straddles 1: add replicates before deciding.
+- With mixed sequences the model's r is the composition-weighted average, so measure at least C and G.
 
 ### Arm F wet-lab specifications: prebiotic nucleotide precursor synthesis with dipeptide catalysis
 
@@ -296,6 +341,9 @@ That would look like "amplification" in the L-seeded vials. Safeguards:
 - Higgs & Blackmond 2025, *PNAS* 122:e2423683122, doi:10.1073/pnas.2423683122
 - Joyce, Visser, van Boeckel, van Boom, Orgel & van Westrenen 1984, "Chiral selection in poly(C)-directed synthesis of oligo(G)", *Nature* 310:602, doi:10.1038/310602a0
 - Essex, Jia, Zhang & Szostak 2026, "Effects of chemically activated L-nucleotides on nonenzymatic RNA copying", ChemRxiv preprint, doi:10.26434/chemrxiv.15005970/v1
+- Schmidt, Nielsen & Orgel 1996, "PNAs — a prebiotic template?", *Orig. Life Evol. Biosph.* 26:421, doi:10.1007/BF02459847
+- Schmidt, Nielsen & Orgel 1997, "Enantiomeric cross-inhibition in the synthesis of oligonucleotides on a nonchiral template", *J. Am. Chem. Soc.* 119:1494, doi:10.1021/ja963563c
+- Kozlov, Pitsch & Orgel 1998, "Oligomerization of activated D- and L-guanosine mononucleotides on templates containing D- and L-deoxycytidylate residues", *PNAS* 95:13448, doi:10.1073/pnas.95.23.13448
 - Walton & Szostak 2017, "A kinetic model of nonenzymatic RNA polymerization by cytidine-5′-phosphoro-2-aminoimidazolide", *Biochemistry* 56:5739, doi:10.1021/acs.biochem.7b00792
 - Kim, Todisco, Radakovic & Szostak 2025, "Stereoselectivity of aminoacyl-RNA loop-closing ligation", *J. Am. Chem. Soc.* 147:19539, doi:10.1021/jacs.4c16905
 - Viedma 2005, *PRL* 94:065504, doi:10.1103/PhysRevLett.94.065504

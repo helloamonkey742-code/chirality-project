@@ -29,9 +29,10 @@ MEASURED (Walton & Szostak 2017, Biochemistry 56:5739, doi:10.1021/acs.biochem.7
     k4   = 3.33e-3 /h  activated monomer (Cp*) hydrolysis, Table 1 (upper limit, t1/2 > 8.7 d)
     kobs = 5.0-9.7 /h  primer extension with 24 mM Cp*, Fig. 8a (midpoint 7.35 used)
     T_in = 3 uM        template concentration used there (as a FEED level it is assumed)
-QUALITATIVE ONLY (Essex, Jia, Zhang & Szostak 2026, ChemRxiv, doi:10.26434/chemrxiv.15005970/v1):
-    L/L bridged dinucleotides extend D primer-templates "much more slowly" than D/D, and an
-    L nucleotide at a D 3' end is a chain terminator -> r < 1. No number is given, so r is scanned.
+MEASURED (Essex, Jia, Zhang & Szostak 2026, ChemRxiv, doi:10.26434/chemrxiv.15005970/v1; arm_g_rates.py):
+    an L nucleotide at a D 3' end is a chain terminator. r = 0.06 monomer only, 0.40 (95% 0.22-0.98)
+    bridged pathway from k/K, 0.50 monomer + D-trimer. Their direct D/L competition (Fig. 9) gives
+    0.49 or 1.14 depending on which gel bands were counted (not stated), so r is still scanned here.
 ASSUMED (scanned or stated):
     r      wrong/right addition rate ratio     0.1 (measured direction) and 1.2; scan 0.1-2
     c      self-copying efficiency per cycle  0.5; scan 0.1-1
