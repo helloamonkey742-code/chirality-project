@@ -52,7 +52,7 @@ CANDIDATES = {
     "Soai reaction (1995; 2003)":            _m("Y P P N Y Y N P N"),  # from 5e-7 ee; organozinc, toluene; <= 3.6e9 decide (soai_check.py S4)
     "Viedma ripening, NaClO3 (2005)":        _m("Y P Y P Y Y N N N"),  # racemic -> 100%, grinding, inorganic
     "Attrition deracemization, aa deriv (2008)": _m("Y Y Y P Y Y P N N"),  # needs derivative + racemizer
-    "Ghadiri peptide replicator (2001)":     _m("Y Y P N Y Y Y Y ?"),  # designed 32-mer peptides
+    "Ghadiri peptide replicator (2001)":     _m("Y Y P N Y Y Y Y N"),  # designed 32-mer peptides; R9 = N inferred, not modelled: Saghatelian 2001 own-hand-only catalysis, no D/L cross-inhibition, rho ~0.5-0.65, so racemic stays stable (as arm G, r < 1)
     "Joyce RNA cross-inhibition (1984)":     _m("N Y P Y ? N Y Y N"),  # inhibition only
     "Blackmond eutectic (2006)":             _m("N N N P Y P Y N N"),  # amplifies existing ee; CHCl3
     "Magnetite crystallization (2023)":      _m("N N P Y Y Y Y N N"),  # racemic -> ~60% ee, then crystals

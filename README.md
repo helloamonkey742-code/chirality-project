@@ -455,7 +455,7 @@ Scored from the literature (Y = meets, P = partly, N = fails, ? = no data):
 
 | candidate | R1 | R2 | R3 | R4 | R5 | R6 | R7 | R8 | R9 | score |
 |---|---|---|---|---|---|---|---|---|---|---|
-| Ghadiri peptide replicator (2001) | Y | Y | P | N | Y | Y | Y | Y | ? | **6.5** |
+| Ghadiri peptide replicator (2001) | Y | Y | P | N | Y | Y | Y | Y | N | **6.5** |
 | Transamination + ligation network, fed (Higgs & Blackmond 2025; arm E) | P | P | Y | Y | N | ? | Y | Y | N | 5.0 |
 | Nonenzymatic RNA copying with 2-aminoimidazole-activated nucleotides (Essex et al. 2026, preprint) | P | Y | P | Y | N | ? | Y | Y | N | 5.0 |
 | Joyce RNA cross-inhibition (1984) | N | Y | P | Y | ? | N | Y | Y | N | 4.5 |
@@ -500,6 +500,7 @@ New rows (abstracts checked in OpenAlex or PubMed, 2026-10-17):
   epimerization needs a catalyst (Danger, Plasson and Pascal, 2010, doi:10.1089/ast.2009.0450). NCA
   oligomerization in water enriches homochiral oligomers from 20% ee L-Leu (Hitz and Luisi, 2004,
   doi:10.1023/b:orig.0000009831.85557.25).
+- **Ghadiri peptide replicator:** in the 2001 data (Saghatelian, Yokobayashi, Soltani and Ghadiri, *Nature* 409:797, doi:10.1038/35057238) each template catalyses only its own hand's fragments, wrong-hand fragments and templates neither inhibit nor promote it, and growth is sub-exponential (rho ~0.5-0.65), so by the arm G criterion (cross-competition must beat self-competition) the 50/50 state stays stable and R9 = N, inferred rather than modelled.
 
 **The pattern (the main finding of this part):** the candidates *with* self-amplification (R1)
 fail on prebiotic inputs (R4). The candidates that are prebiotic (R4) lack self-amplification.
