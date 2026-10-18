@@ -101,3 +101,82 @@ ANSWERS
      normal form holds, F_RNA = 0.58 vs 0.70). For r < 1: no instability to cross -> R9 not met.
 
 self-check passed
+
+
+ARM G WITH A SHARED ACHIRAL ACTIVATOR POOL AND TEMPLATE GROWTH ORDER p (added; everything above is unchanged)
+    c_eff = c a/(a+Ka) (T/Tref)^(p-1) per template, one activator used per monomer added; n, c, w, h as LO
+    p = 0.5 parabolic, 1 exponential (= original map when a -> inf), 2 hyperbolic (control)
+    Ka = m_in/2 mM; a_in set so that the racemic state has a*/(a*+Ka) = sat; Tref = T* of the original map
+    |lam D-L| = leading eigenvalue modulus of the D-L block of the full 5-variable Jacobian (> 1: racemic lost);
+    |lam sum| = same for the symmetric block (< 1: the racemic state is an attractor of the symmetric map)
+    att = iterating the map from 5% off returns to the Newton fixed point; fill = T reached from the feed-filled
+    reactor (T_in/2, m_in/2, a = a_in) / T*;  seed: excess 1e-3 in T_D vs T_L, |ee| after 20000 cycles
+
+  m_in = 20 mM
+    r    p  sat     a_in   T* (uM)      m*  c_eff  |lam D-L|  |lam sum|  att   fill  seed |ee|  verdict
+ 0.40  0.5  0.1      2.9    102.49    7.91  0.084    0.98853    0.98093  yes  1.000   1.09e-14  decays
+ 0.40  0.5  0.5     22.2    369.50    4.05  0.221    0.98134    0.97674  yes  1.000   1.95e-15  decays
+ 0.40  0.5  0.9      118    303.81    2.87  0.438    0.97996    0.97674  yes  1.000   2.65e-15  decays
+ 0.40  1.0  0.1     1.33      4.11    8.58  0.050    0.99267    0.99216  yes  1.000   1.04e-14  decays
+ 0.40  1.0  0.5     22.8    361.82    3.79  0.250    0.98293    0.97674  yes  1.000   1.07e-14  decays
+ 0.40  1.0  0.9      118    300.61    2.83  0.450    0.97979    0.97674  yes  1.000   1.94e-15  decays
+ 0.40  2.0  0.1     1.29      1.51    8.60  0.000    0.98013    0.98013  yes  1.000   3.53e-15  decays
+ 0.40  2.0  0.5     23.6    345.85    3.45  0.300    0.98843    0.98010  yes  0.004   3.29e-15  decays
+ 0.40  2.0  0.9      118    296.93    2.79  0.464    0.97827    0.97998  yes  0.005   6.08e-15  decays
+ 0.50  0.5  0.1     2.61     75.31    8.03  0.095    0.98892    0.98138  yes  1.000   8.75e-15  decays
+ 0.50  0.5  0.5     21.8    337.54    4.22  0.224    0.98364    0.97674  yes  1.000   2.47e-16  decays
+ 0.50  0.5  0.9      118    284.40    2.95  0.439    0.98242    0.97674  yes  1.000   1.35e-14  decays
+ 0.50  1.0  0.1     1.32      3.31    8.59  0.050    0.99092    0.99053  yes  1.000   6.55e-17  decays
+ 0.50  1.0  0.5     22.4    333.45    3.96  0.250    0.98836    0.97674  yes  1.000   1.58e-14  decays
+ 0.50  1.0  0.9      118    281.60    2.92  0.450    0.98564    0.97674  yes  1.000   9.27e-15  decays
+ 0.50  2.0  0.1     1.29      1.50    8.60  0.000    0.98012    0.98012  yes  1.000   3.53e-15  decays
+ 0.50  2.0  0.5     23.3    321.85    3.60  0.298    1.00036    0.98197  yes  0.005   9.93e-01  GROWS
+ 0.50  2.0  0.9      118    278.31    2.88  0.464    0.99520    0.98170  yes  0.006   5.67e-14  decays
+ 0.60  0.5  0.1     2.37     55.49    8.14  0.107    0.98916    0.98191  yes  1.000   1.08e-14  decays
+ 0.60  0.5  0.5     21.4    307.55    4.40  0.227    0.98543    0.97674  yes  1.000   3.43e-15  decays
+ 0.60  0.5  0.9      118    267.05    3.05  0.439    0.98441    0.97674  yes  1.000   9.35e-15  decays
+ 0.60  1.0  0.1     1.32      2.85    8.59  0.050    0.98945    0.98913  yes  1.000   1.14e-14  decays
+ 0.60  1.0  0.5       22    306.70    4.15  0.250    0.99198    0.97674  yes  1.000   6.97e-15  decays
+ 0.60  1.0  0.9      118    264.64    3.01  0.450    0.98980    0.97674  yes  1.000   1.54e-14  decays
+ 0.60  2.0  0.1     1.29      1.50    8.60  0.000    0.98011    0.98011  yes  1.000   3.53e-15  decays
+ 0.60  2.0  0.5     22.9    299.71    3.77  0.295    1.00687    0.98383  yes  0.005   9.93e-01  GROWS
+ 0.60  2.0  0.9      118    261.75    2.96  0.463    1.00320    0.98338  yes  0.006   9.92e-01  GROWS
+
+  m_in = 200 mM (10x feed: monomer in large excess)
+    r    p  sat     a_in   T* (uM)      m*  c_eff  |lam D-L|  |lam sum|  att   fill  seed |ee|  verdict
+ 0.40  0.5  0.1     52.4   3237.73   69.01  0.056    0.98744    0.98056  yes  1.000   8.71e-15  decays
+ 0.40  0.5  0.5      306   7362.17    4.48  0.186    0.98017    0.97674  yes  1.000   4.64e-15  decays
+ 0.40  0.5  0.9 1.24e+03   4453.12    2.90  0.430    0.97935    0.97674  yes  1.000   9.57e-15  decays
+ 0.40  1.0  0.1     13.1     14.00   85.93  0.050    0.99785    0.99765  yes  1.000   5.26e-14  decays
+ 0.40  1.0  0.5      307   6174.21    3.80  0.250    0.97969    0.97674  yes  1.000   4.96e-15  decays
+ 0.40  1.0  0.9 1.24e+03   4328.33    2.84  0.450    0.97861    0.97674  yes  1.000   4.72e-15  decays
+ 0.40  2.0  0.1     68.4   4543.06   62.15  0.056    1.01436    0.98235  yes  0.000   1.00e+00  GROWS
+ 0.40  2.0  0.5      309   5275.00    3.32  0.325    0.97828    0.97674  yes  0.000   4.46e-15  decays
+ 0.40  2.0  0.9 1.24e+03   4223.48    2.79  0.468    0.97701    0.97674  yes  0.000   4.94e-15  decays
+ 0.50  0.5  0.1     41.9   2031.91   73.55  0.069    0.98833    0.98080  yes  1.000   5.90e-15  decays
+ 0.50  0.5  0.5      305   7048.58    4.75  0.185    0.98222    0.97674  yes  1.000   6.24e-15  decays
+ 0.50  0.5  0.9 1.24e+03   4230.78    2.99  0.429    0.98159    0.97674  yes  1.000   1.04e-14  decays
+ 0.50  1.0  0.1       13      5.47   85.97  0.050    0.99451    0.99444  yes  1.000   2.77e-14  decays
+ 0.50  1.0  0.5      307   5883.87    3.97  0.250    0.98398    0.97674  yes  1.000   6.19e-15  decays
+ 0.50  1.0  0.9 1.24e+03   4109.49    2.92  0.450    0.98316    0.97674  yes  1.000   1.11e-14  decays
+ 0.50  2.0  0.1     88.5   5302.29   53.51  0.069    1.01256    0.98150  yes  0.000   1.00e+00  GROWS
+ 0.50  2.0  0.5      308   5013.35    3.44  0.326    0.98738    0.97674  yes  0.000   1.63e-14  decays
+ 0.50  2.0  0.9 1.24e+03   4008.43    2.87  0.468    0.98638    0.97674  yes  0.000   1.43e-14  decays
+ 0.60  0.5  0.1     34.6   1316.26   76.66  0.083    0.98894    0.98110  yes  1.000   8.35e-15  decays
+ 0.60  0.5  0.5      304   6781.57    5.09  0.184    0.98401    0.97674  yes  1.000   6.22e-15  decays
+ 0.60  0.5  0.9 1.24e+03   4038.86    3.09  0.429    0.98356    0.97674  yes  1.000   6.16e-15  decays
+ 0.60  1.0  0.1       13      3.73   85.98  0.050    0.99196    0.99192  yes  1.000   1.16e-14  decays
+ 0.60  1.0  0.5      307   5634.52    4.16  0.250    0.98773    0.97674  yes  1.000   1.17e-14  decays
+ 0.60  1.0  0.9 1.24e+03   3920.33    3.02  0.450    0.98714    0.97674  yes  1.000   7.82e-15  decays
+ 0.60  2.0  0.1      114   6135.19   42.45  0.084    1.01101    0.98102  yes  0.000   1.00e+00  GROWS
+ 0.60  2.0  0.5      308   4787.50    3.57  0.326    0.99522    0.97674  yes  0.000   3.41e-14  decays
+ 0.60  2.0  0.9 1.24e+03   3822.43    2.96  0.469    0.99449    0.97674  yes  0.000   3.76e-14  decays
+
+    min d a'/d a over all rows = 0.813 (> 0: per-cycle activator map valid, as Dd for the monomer)
+    leading D-L modulus per growth order p, r = 0.4-0.6, all activator levels, both feeds:
+      p = 0.5: max |lam| = 0.98916 at m_in 20, r 0.6, act 0.1; lost (|lam| > 1) in 0 of 18 rows
+      p = 1.0: max |lam| = 0.99785 at m_in 200, r 0.4, act 0.1; lost (|lam| > 1) in 0 of 18 rows
+      p = 2.0: max |lam| = 1.01436 at m_in 200, r 0.4, act 0.1; lost (|lam| > 1) in 6 of 18 rows
+    rows where the seeded excess grows but |lam D-L| < 1, or decays but |lam D-L| > 1: 0
+
+activator self-check passed: p = 1, a_in = 1e12 vs original map (r = 0.5, 20 mM): |dT| = 8.7e-15, |dm| = 1.5e-12, |d lam D-L| = 2.0e-10 (lam = 0.98529894); activator use - monomer use = 8.9e-16

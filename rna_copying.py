@@ -24,6 +24,15 @@ Difference mode (x = T_D - T_L, y = m_D - m_L) at the racemic fixed point:
 So r > 1 (cross-competition beats self-competition, Lotka-Volterra) is NECESSARY.
 For r < 1 each hand eats its own monomer: coexistence, the racemic state is stable at every feed.
 
+Added: shared achiral activator pool a and template growth order p (step_act, activator_scan; printed last, the
+maps above are untouched). c -> c_eff = c a/(a+Ka) (T_hand/Tref)^(p-1), one activator per monomer added (the same
+E terms as the monomer): a' = (1-w) [(1-h) a - c_D T_D (E_R,D + E_W,D) - c_L T_L (E_R,L + E_W,L)] + w a_in.
+a is symmetric, so it enters only the symmetric block; the D-L block feels it through the operating point and
+through p alone: A = (1-w)(1 + p c_eff S), C = -(1-w) p c_eff (E_R - E_W) (<0 for r < 1). Where copying just
+balances washout (1-w)(1 + c_eff S) = 1, A - 1 = (p-1) w, and the +1 crossing (A-1)(1-Dd) = B|C| needs A > 1:
+impossible for p <= 1, possible for p > 1 when B|C| < (p-1) w (1-Dd) (small B: monomer in excess).
+Assumed: Ka = m_in/2, h_a = h, Tref = T of the original map's racemic fixed point.
+
 Inputs.
 MEASURED (Walton & Szostak 2017, Biochemistry 56:5739, doi:10.1021/acs.biochem.7b00792):
     k4   = 3.33e-3 /h  activated monomer (Cp*) hydrolysis, Table 1 (upper limit, t1/2 > 8.7 d)
@@ -52,9 +61,18 @@ RESULT (rna_copying.log):
  (c) Inside that window: supercritical pitchfork in feed, no hysteresis, slow tip-over; the
      normal form holds (slow sweeps within 0.02) with F_RNA = 0.58 vs frank.py's 0.70.
      For r < 1, the direction the chemistry points, there is nothing to cross: R9 not met.
+ (d) shared activator + growth order p (r = 0.4, 0.5, 0.6; c, n, w, h as LO; a*/(a*+Ka) = 0.1, 0.5, 0.9; feed 20
+     and 200 mM; 18 rows per p, 54 in all; the 10x feed is the monomer-in-excess case): p = 0.5 and p = 1 never
+     lose the racemic state (max |lam D-L| 0.9892 and 0.9979; p = 1 is near-neutral only at 10x feed with the
+     activator limiting, a*/(a*+Ka) = 0.1, where c_eff = 0.05 and m* ~ 86 mM). p = 2 (control) does, in 6 of 18
+     rows (|lam| 1.0004-1.0144; the seeded excess grows to |ee| ~ 1; seed and eigenvalue agree in all 54 rows). The
+     activator level alone never does it: at p <= 1 it moves the operating point only. But p = 2 is bistable and
+     those lost states are the upper (copying-sustained) branch, T* 0.26-0.32 mM at 20 mM feed and 4-6 mM at 200 mM
+     (not physical for T_in = 3 uM); the feed-filled reactor stays on the T_in-fed branch (fill column 0.000-0.006
+     of T*), so the loss needs a start with templates already at that level.
 """
 import numpy as np
-from scipy.optimize import brentq
+from scipy.optimize import brentq, fsolve
 from scipy.special import gammainc
 from scipy.stats import norm
 from sim import delta
@@ -184,6 +202,128 @@ def ramp(g, omega, tau, k, mstar, runs=2000, seed=0):
     return (z[0] > z[1]).mean(), norm.cdf(d_real), ratio, amp, zc[0]
 
 
+# ---- shared achiral activator pool and template growth order p (off unless act is passed) ----
+PA = np.vstack([PM, [0, 0]])                            # D-L subspace of z = [T_D, T_L, m_D, m_L, a]
+PS = np.array([[1, 0, 0], [1, 0, 0], [0, 1, 0], [0, 1, 0], [0, 0, 2 ** .5]]) / 2 ** .5   # symmetric subspace
+
+
+def step_act(z, m_in, act, n, r, c, w, e=0.0, g=0.0):
+    """step() with an achiral activator pool a shared by both hands. act = (a_in, Ka, p, Tref).
+    c_eff = min(1, c a/(a+Ka) (T_hand/Tref)^(p-1)) replaces c for each hand; one activator per monomer added:
+    a' = (1-w) [(1-h) a - c_D T_D (E_R,D + E_W,D) - c_L T_L (E_R,L + E_W,L)] + w a_in   (h = H, as the monomer)."""
+    TD, TL, mD, mL, a = z
+    a_in, Ka, p, Tref = act
+    cD, cL = (min(1.0, c * a / (a + Ka) * (T / Tref) ** (p - 1)) for T in (TD, TL))
+    SD, RD, WD = attempt((1 + g) * mD, (1 - g) * mL, n, r)
+    SL, RL, WL = attempt((1 - g) * mL, (1 + g) * mD, n, r)
+    z2 = np.array([(1 - w) * TD * (1 + cD * SD) + w * T_IN / 2,
+                   (1 - w) * TL * (1 + cL * SL) + w * T_IN / 2,
+                   (1 - w) * ((1 - H) * mD - cD * TD * RD - cL * TL * WL) + w * m_in * (1 + e) / 2,
+                   (1 - w) * ((1 - H) * mL - cL * TL * RL - cD * TD * WD) + w * m_in * (1 - e) / 2,
+                   (1 - w) * ((1 - H) * a - cD * TD * (RD + WD) - cL * TL * (RL + WL)) + w * a_in])
+    return z2, cD * TD * SD, cL * TL * SL
+
+
+def mode_act(z, m_in, act, k):
+    """Eigenvalues of the D-L block (as mode) and of the symmetric block [T_D+T_L, m_D+m_L, a]; also the Jacobian."""
+    J = np.empty((5, 5))
+    for i in range(5):
+        d = np.zeros(5)
+        d[i] = 1e-6 * z[i]
+        J[:, i] = (step_act(z + d, m_in, act, **k)[0] - step_act(z - d, m_in, act, **k)[0]) / (2 * d[i])
+    return np.linalg.eigvals(PA.T @ J @ PA), np.linalg.eigvals(PS.T @ J @ PS), J
+
+
+def sym_fixed(m_in, act, k, z, cycles=8000):
+    """Racemic fixed point of step_act: iterate the map inside the symmetric subspace, then Newton-polish.
+    Also returns how far the iteration still was from it (relative; ~0 = it converged, i.e. an attractor)."""
+    z = np.array(z, float)
+    for _ in range(cycles):
+        z = step_act(z, m_in, act, **k)[0]
+        z[:2], z[2:4] = z[:2].mean(), z[2:4].mean()
+    x = fsolve(lambda x: step_act(x[[0, 0, 1, 1, 2]], m_in, act, **k)[0][[0, 2, 4]] - x, z[[0, 2, 4]], xtol=1e-13)
+    return x[[0, 0, 1, 1, 2]], np.abs(z[[0, 2, 4]] / x - 1).max()
+
+
+def fixed_act(m_in, f, p, k):
+    """Racemic state with a*/(a* + Ka) = f, Ka = m_in/2, Tref = T of the ORIGINAL map's racemic fixed point
+    (so c_eff = c there at every p when a -> inf). Newton on (T, m, a_in) at a* = Ka f/(1-f). Returns z, act."""
+    z4, Ka, w = fixed_point(m_in, **k), m_in / 2, k["w"]
+    a = Ka * f / (1 - f)
+    res = lambda x: step_act([x[0], x[0], x[1], x[1], a], m_in, (x[2], Ka, p, z4[0]), **k)[0][[0, 2, 4]] - [x[0], x[1], a]
+    x = fsolve(res, [z4[0], z4[2], a * (1 - (1 - w) * (1 - H)) / w], xtol=1e-13)
+    return np.array([x[0], x[0], x[1], x[1], a]), (x[2], Ka, p, z4[0])
+
+
+def seed_run(z, m_in, act, k, ee0, cycles=20000):
+    """Seed an excess ee0 of T_D over T_L; return the largest |ee| = |T_D - T_L|/(T_D + T_L) over the last 200 cycles."""
+    z = z * [1 + ee0, 1 - ee0, 1, 1, 1]
+    tail = []
+    for i in range(cycles):
+        z = step_act(z, m_in, act, **k)[0]
+        if i >= cycles - 200:
+            tail.append(abs(z[0] - z[1]) / (z[0] + z[1]))
+    return max(tail)
+
+
+def activator_scan():
+    """Can a shared activator pool + growth order p > 1 make the racemic state unstable at r < 1?"""
+    print("\n\nARM G WITH A SHARED ACHIRAL ACTIVATOR POOL AND TEMPLATE GROWTH ORDER p (added; everything above is unchanged)")
+    print("    c_eff = c a/(a+Ka) (T/Tref)^(p-1) per template, one activator used per monomer added; n, c, w, h as LO")
+    print("    p = 0.5 parabolic, 1 exponential (= original map when a -> inf), 2 hyperbolic (control)")
+    print("    Ka = m_in/2 mM; a_in set so that the racemic state has a*/(a*+Ka) = sat; Tref = T* of the original map")
+    print("    |lam D-L| = leading eigenvalue modulus of the D-L block of the full 5-variable Jacobian (> 1: racemic lost);")
+    print("    |lam sum| = same for the symmetric block (< 1: the racemic state is an attractor of the symmetric map)")
+    print("    att = iterating the map from 5% off returns to the Newton fixed point; fill = T reached from the feed-filled")
+    print("    reactor (T_in/2, m_in/2, a = a_in) / T*;  seed: excess 1e-3 in T_D vs T_L, |ee| after 20000 cycles")
+    ps, rs, fs, ee0 = (0.5, 1.0, 2.0), (0.4, 0.5, 0.6), (0.1, 0.5, 0.9), 1e-3
+    lam, grow, da_min = {}, {}, np.inf
+    for m_in in (20.0, 200.0):
+        print(f"\n  m_in = {m_in:g} mM" + (" (10x feed: monomer in large excess)" if m_in > 20 else ""))
+        print(f"{'r':>5} {'p':>4} {'sat':>4} {'a_in':>8} {'T* (uM)':>9} {'m*':>7} {'c_eff':>6} {'|lam D-L|':>10} {'|lam sum|':>10} "
+              f"{'att':>4} {'fill':>6} {'seed |ee|':>10}  verdict")
+        for r in rs:
+            k = dict(LO, r=r)
+            for p in ps:
+                for f in fs:
+                    z, act = fixed_act(m_in, f, p, k)
+                    zi, drift = sym_fixed(m_in, act, k, z * 1.05)
+                    att = drift < 1e-6 and np.allclose(zi, z, rtol=1e-6)
+                    zf = np.array([T_IN / 2, T_IN / 2, m_in / 2, m_in / 2, act[0]])
+                    for _ in range(10000):
+                        zf = step_act(zf, m_in, act, **k)[0]
+                    ev, es, J = mode_act(z, m_in, act, k)
+                    ee = seed_run(z, m_in, act, k, ee0)
+                    da_min = min(da_min, J[4, 4])
+                    lam[m_in, r, p, f], grow[m_in, r, p, f] = abs(ev).max(), ee > ee0
+                    print(f"{r:5.2f} {p:4.1f} {f:4.1f} {act[0]:8.3g} {z[0] * 1e3:9.2f} {z[2]:7.2f} {k['c'] * f * (z[0] / act[3]) ** (p - 1):6.3f} "
+                          f"{abs(ev).max():10.5f} {abs(es).max():10.5f} {'yes' if att else 'NO':>4} {zf[0] / z[0]:6.3f} {ee:10.2e}  "
+                          f"{'GROWS' if ee > ee0 else 'decays'}")
+    print(f"\n    min d a'/d a over all rows = {da_min:.3f} (> 0: per-cycle activator map valid, as Dd for the monomer)")
+    print("    leading D-L modulus per growth order p, r = 0.4-0.6, all activator levels, both feeds:")
+    for p in ps:
+        v = [(l, key) for key, l in lam.items() if key[2] == p]
+        mx = max(v)
+        print(f"      p = {p:3.1f}: max |lam| = {mx[0]:.5f} at m_in {mx[1][0]:g}, r {mx[1][1]}, act {mx[1][3]};"
+              f" lost (|lam| > 1) in {sum(l > 1 for l, _ in v)} of {len(v)} rows")
+    print(f"    rows where the seeded excess grows but |lam D-L| < 1, or decays but |lam D-L| > 1: "
+          f"{sum(grow[key] != (l > 1) for key, l in lam.items())}")
+
+    k = dict(LO, r=0.5)                                  # self-check: p = 1, a_in huge  ==  the original map
+    z4 = fixed_point(20.0, **k)
+    act = (1e12, 1.0, 1.0, z4[0])
+    z5 = sym_fixed(20.0, act, k, list(z4) + [act[0]])[0]
+    l0, l5 = abs(mode(z4, 20.0, k)[0]).max(), abs(mode_act(z5, 20.0, act, k)[0]).max()
+    zt = np.array([0.3, 0.2, 2.0, 3.0, 5.0])             # bookkeeping: activator used = monomer used (both hands)
+    z2 = step_act(zt, 20.0, (7.0, 4.0, 2.0, 0.25), e=0.1, **k)[0]
+    use_m = (1 - k["w"]) * (1 - H) * (zt[2] + zt[3]) + k["w"] * 20.0 - z2[2] - z2[3]
+    use_a = (1 - k["w"]) * (1 - H) * zt[4] + k["w"] * 7.0 - z2[4]
+    dT, dm, dl = abs(z5[0] - z4[0]), abs(z5[2] - z4[2]), abs(l5 - l0)
+    assert max(dT, dm, dl) < 1e-6 and abs(use_m - use_a) < 1e-12, "activator self-check failed"
+    print(f"\nactivator self-check passed: p = 1, a_in = 1e12 vs original map (r = 0.5, 20 mM): |dT| = {dT:.1e}, |dm| = {dm:.1e}, "
+          f"|d lam D-L| = {dl:.1e} (lam = {l0:.8f}); activator use - monomer use = {use_m - use_a:.1e}")
+
+
 def main():
     print("Arm G: nonenzymatic RNA copying (2-AI monomers), fed reactor, temperature cycling")
     print(f"measured: k4 = {K4} /h, kobs = {KOBS} /h (midpoint of 5.0-9.7) at 24 mM, T_in = {T_IN * 1e3:.0f} uM (Walton & Szostak 2017)")
@@ -288,6 +428,7 @@ def main():
     assert (abs(er / ew - p / (1 - p)) < 1e-12 and sym and lo_stable and mstar is not None
             and max(diffs) < 0.03), "self-check failed"
     print("\nself-check passed")
+    activator_scan()
 
 
 if __name__ == "__main__":
