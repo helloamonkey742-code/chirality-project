@@ -135,6 +135,23 @@ model needs, is ambiguous and its high reading puts arm G inside the window. Run
 so would the authors' band assignment for Fig. 9. Earlier work gives the direction only (Joyce et
 al. 1984, Schmidt, Nielsen & Orgel 1996 and 1997, Kozlov, Pitsch & Orgel 1998); Joyce et al. also
 find L built in as a chain terminator in racemic runs, so L addition is not negligible.
+The gel (Essex SI Fig. S8, SI page 14; `fig_s8_bands.py` → `fig_s8_bands.log`) does not decide the reading when read against a control.
+Against the pictured pure-D lane, past +1 gives 36.9% at 5% ee and past +2 gives 86.9%, vs 51.9% in Fig. 9
+(rms misfit over 7 lanes 10.3 pp and 46.9 pp). Against a control extrapolated from the competition lanes to
+100% ee, past +1 misfits by 12.0 pp and past +2 by 5.1 pp (5 of 7 lanes within 5 pp). But the pure-D lane is
+on a different gel and looks unmatched: past +2 would give 67% at 90% ee, where Fig. 9 says 6.1%. The
+control-free ratio f(5%)/f(90%) is a tie: target 0.512, measured 0.66 (past +1) and 0.40 (past +2).
+Fitting all 7 competition lanes instead of that two-lane ratio, with no pure-D control (`fig_s8_r_fit.py` →
+`fig_s8_r_fit.log`), the +1 share of extended primers is g = s + (1−s)·pL, pL = r·xL/(r·xL + xD), where s is the
+share of D-ended primers that stall at +1 anyway. Free fit: r = 0.557 (95% profile 0.448–0.676, lane bootstrap
+0.447–0.646), s = 0.204, residuals within about 2 pp, and r = 1 is rejected (F = 73.75 vs critical 6.61). With s
+anchored by the 90% lane, r = 0.622 (0.526–0.729); across the margin and baseline variants r = 0.56–0.64, with
+a 95% upper limit of 0.79. r = 1 needs s below 0.10: s = 0.10 gives r = 0.89, and s = 0 gives
+r = 1.26 but a bad fit (rms 8.9 pp vs 1.3 pp). This is an upper bound: competitive inhibition by heterochiral
+bridged dinucleotides could make s rise with L, which would push the true r lower. It is one representative
+gel, so the intervals are optimistic. The fit agrees with the k/K estimate (0.40) and Fig. 9 reading (b)
+(0.49) and disfavours reading (a) (1.14). So the gel favours r < 1 (about 0.56, at most 0.79) unless s < 0.10;
+Szostak's reply is still the direct check. The question was emailed to Szostak on 2026-10-17.
 - Duplex: 5′-labelled D-RNA primer on a D-RNA template whose next templating site is C (repeat with G).
   Buffer, Mg²⁺, pH and temperature are those of arm G's cold phase.
 - Monomer: 2-AI-activated D- and L-nucleotides, made the same way. Check each stock's enantiomeric

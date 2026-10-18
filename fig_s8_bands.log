@@ -1,0 +1,42 @@
+Fig. S8 band fractions (% of lane signal, background subtracted, mean over lane width)
+      lane   primer      +1      +2    >=+3  past +1  past +2   peak rows (+3,+2,+1,primer)
+      *C_D      1.1    16.7    23.1    59.0     82.2     59.0   (478, 539, 600, 665)
+      *C_L     35.0    51.7     7.9     5.5     13.3      5.5   
+     5% ee      1.5    46.7    44.1     7.8     51.9      7.8   (459, 534, 609, 697)
+    10% ee      1.7    43.6    44.3    10.4     54.8     10.4   (472, 537, 602, 676)
+    20% ee      2.4    39.7    45.1    12.7     57.9     12.7   (479, 542, 605, 675)
+    40% ee      0.5    37.1    49.6    12.8     62.4     12.8   (487, 548, 610, 678)
+    60% ee      1.6    31.0    51.6    15.8     67.4     15.8   (489, 550, 611, 677)
+    80% ee      1.9    25.4    54.3    18.3     72.6     18.3   (491, 552, 613, 679)
+    90% ee      0.7    20.5    59.1    19.7     78.8     19.7   (494, 555, 616, 684)
+
+control (left gel, *C_D lane): past +1 82.2%, past +2 59.0%
+control (competition lanes extrapolated to 100 %ee): past +1 79.8%, past +2 20.8%  (linear R2 vs ee: a 0.99, b 0.95)
+
+% reduction in primer extension (Fig. 9c vs this gel)
+   %ee   Fig.9 |  a: D-lane  b: D-lane |  a: extrap  b: extrap
+     5    51.9 |       36.9       86.9 |       35.0       62.8
+    10    50.0 |       33.4       82.4 |       31.4       50.1
+    20    42.1 |       29.6       78.4 |       27.5       38.9
+    40    32.0 |       24.0       78.3 |       21.8       38.6
+    60    20.9 |       17.9       73.2 |       15.5       24.1
+    80    11.9 |       11.6       68.9 |        9.0       12.0
+    90     6.1 |        4.1       66.6 |        1.3        5.4
+
+agreement with Fig. 9c over 7 lanes (rms pp, lanes within 5 pp)
+  vs left-gel *C_D lane      reading (a): rms  10.3, within tol 3/7, TD2 5% ee:  36.9 (Fig. 9: 51.9)
+  vs left-gel *C_D lane      reading (b): rms  46.9, within tol 0/7, TD2 5% ee:  86.9 (Fig. 9: 51.9)
+  vs extrapolated 100 %ee    reading (a): rms  12.0, within tol 2/7, TD2 5% ee:  35.0 (Fig. 9: 51.9)
+  vs extrapolated 100 %ee    reading (b): rms   5.1, within tol 5/7, TD2 5% ee:  62.8 (Fig. 9: 51.9)
+
+control-free shape test: fit f(ee) = c * (1 - R_Fig9(ee)); c = implied pure-D value, misfit = rms relative residual,
+  ratio = [f(5%)/f(90%)] / [(1-R5)/(1-R90)] (1.00 if the reading reproduces Fig. 9; control cancels)
+  reading (a): implied pure-D  89.7% (left-gel *C_D lane 82.2%, extrapolated 79.8%), misfit 12.9%, ratio 1.29
+  reading (b): implied pure-D  20.3% (left-gel *C_D lane 59.0%, extrapolated 20.8%), misfit  9.0%, ratio 0.77
+
+sensitivity (lane-width margin px, baseline): 5% ee reduction; 90% ee reduction; control past +1/+2; shape misfit a/b
+  margin 12, linear: 5%  D-lane a  36.9 b  86.9 extrap a  35.0 b  62.8 | 90% D-lane a   4.1 b  66.6 | ctrl 82.2/59.0 | misfit a 12.9 b  9.0
+  margin 24, linear: 5%  D-lane a  37.3 b  86.7 extrap a  35.1 b  62.4 | 90% D-lane a   4.9 b  66.7 | ctrl 82.2/58.8 | misfit a 12.6 b  9.0
+  margin 12, const : 5%  D-lane a  37.1 b  87.5 extrap a  34.9 b  62.5 | 90% D-lane a   4.3 b  67.4 | ctrl 82.3/60.2 | misfit a 13.2 b 23.7
+  margin 24, const : 5%  D-lane a  37.6 b  87.3 extrap a  35.0 b  62.0 | 90% D-lane a   5.1 b  67.7 | ctrl 82.4/60.1 | misfit a 12.8 b 23.0
+selfcheck OK
