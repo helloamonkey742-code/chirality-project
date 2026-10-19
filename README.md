@@ -488,12 +488,20 @@ New rows (abstracts checked in OpenAlex or PubMed, 2026-10-17):
   washout (1 < r < 1.9). `arm_g_rates.py` takes r from Essex et al.: 0.059 (monomer only, Fig. 1), 0.40
   (95% 0.22–0.98; bridged pathway from k/K and formation rates, Figs. 4, S3) and 0.50 (monomer + D-trimer,
   Fig. 5); their direct competition (Fig. 9) gives 0.49 if the reduction counts products past +2 and 1.14
-  (per point 1.06–1.23) if past +1, and the paper does not say which. Every r ≤ 0.98 leaves the 50/50 state
-  stable at every feed: a seeded excess is copied to a bounded plateau (0.67 for a +20% feed at r = 0.40),
-  but no excess grows from 50/50 (R5 = N, R9 = N), although the copying itself is fast (~7 additions per
-  hour at 24 mM). r = 1.14 would give m* = 10.1 mM feed, so the hand of the +1 nucleotide in Fig. 9's
-  racemic lane decides it; if r > 1, the system tips over slowly (supercritical pitchfork, the normal form
-  holds, F = 0.58 vs 0.70 in `frank.py`).
+  (per point 1.06–1.23) if past +1, and the paper does not say which. A fit to the +1 band share of the 7
+  competition lanes of SI Fig. S8, with no pure-D control (`fig_s8_r_fit.py`), gives r = 0.557 (95%
+  0.448–0.676; upper bound 0.79 across band variants) and rejects r = 1 unless s, the share of D-ended
+  primers that stall at +1 anyway, is below 0.10 (the 90% ee lane suggests s ≈ 0.18). It is an upper bound
+  (competitive inhibition would push r lower) from one gel read off a PDF figure; it agrees with the 0.40
+  and 0.49 estimates and disfavours 1.14, and Szostak's reply (asked 2026-10-17) is still the direct check.
+  A shared achiral activator pool does not tip it either (`rna_copying.py`): at growth order p = 0.5 or 1
+  the 50/50 state is never lost at r = 0.4–0.6 (0 of 36 rows, max |λ| 0.989 and 0.998), and only the p = 2
+  control loses it (6 of 18 rows), on a template-rich branch a feed-filled reactor does not reach. Every
+  r ≤ 0.98 leaves the 50/50 state stable at every feed: a seeded excess is copied to a bounded plateau
+  (0.67 for a +20% feed at r = 0.40), but no excess grows from 50/50 (R5 = N, R9 = N), although the copying
+  itself is fast (~7 additions per hour at 24 mM). r = 1.14 would give m* = 10.1 mM feed, but the gel now
+  favours r < 1; if r > 1, the system tips over slowly (supercritical pitchfork, the normal form holds,
+  F = 0.58 vs 0.70 in `frank.py`).
 - **APED peptides:** a model in which activation, polymerization, epimerization and depolymerization
   break symmetry (Plasson et al., 2004). In the parts tested in water, heterochiral peptides are cleaved
   to diketopiperazines faster (helpful), but the epimerization equilibrium favours them (unhelpful), and
