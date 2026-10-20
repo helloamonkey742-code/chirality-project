@@ -59,7 +59,7 @@ CANDIDATES = {
     # Added 2026-10-17 (abstracts checked in OpenAlex/PubMed):
     "Transamination + ligation network, fed (2025)": _m("P P Y Y N ? Y Y N"),  # Higgs & Blackmond 2025 model; Yu 2024, Deng 2024 steps; arm_e_rates.py: at Yu's rates the excess decays at 1-5 mM, catalysed rate 735-3658x short
     "Nonenzymatic RNA copying, 2-AI (2026)":  _m("P Y P Y N ? Y Y N"),  # Essex 2026 preprint: L-nt terminates D-RNA copying; no sustained replication yet; rna_copying.py: racemic stable for r < 1 (seed-following only); Essex rates give r = 0.40 (arm_g_rates.py); gel fit r ~0.56 (fig_s8_r_fit.py), shared activator does not tip it at p <= 1
-    "APED peptides via NCAs (2004-2010)":     _m("P P P P ? P Y Y ?"),  # Plasson 2004 model; Danger 2010: DKP removes heterochiral faster, equilibrium favours it; Hitz & Luisi 2004: from 20% ee
+    "APED peptides via NCAs (2004-2010)":     _m("P P P P ? P Y Y P"),  # Plasson 2004 model; Danger 2010: DKP removes heterochiral faster, equilibrium favours it; Hitz & Luisi 2004: from 20% ee; aped.py: R9 = P, racemic lost only with Plasson's signs (0/16 Danger-like sets) and ctot >= ~1 M; R5 ? (NCA activation rate unmeasured)
 }
 
 

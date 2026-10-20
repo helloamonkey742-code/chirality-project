@@ -458,8 +458,8 @@ Scored from the literature (Y = meets, P = partly, N = fails, ? = no data):
 | Ghadiri peptide replicator (2001) | Y | Y | P | N | Y | Y | Y | Y | N | **6.5** |
 | Transamination + ligation network, fed (Higgs & Blackmond 2025; arm E) | P | P | Y | Y | N | ? | Y | Y | N | 5.0 |
 | Nonenzymatic RNA copying with 2-aminoimidazole-activated nucleotides (Essex et al. 2026, preprint) | P | Y | P | Y | N | ? | Y | Y | N | 5.0 |
+| APED peptides via NCAs (Plasson 2004; Danger 2010; Hitz & Luisi 2004) | P | P | P | P | ? | P | Y | Y | P | 5.0 |
 | Joyce RNA cross-inhibition (1984) | N | Y | P | Y | ? | N | Y | Y | N | 4.5 |
-| APED peptides via NCAs (Plasson 2004; Danger 2010; Hitz & Luisi 2004) | P | P | P | P | ? | P | Y | Y | ? | 4.5 |
 | Soai reaction (1995; from 5×10⁻⁷ ee in 2003) | Y | P | P | N | Y | Y | N | P | N | 4.5 |
 | Attrition deracemization, amino-acid derivative (Noorduin 2008) | Y | Y | Y | P | Y | Y | P | N | N | 6.0 |
 | Viedma ripening, NaClO₃ (2005) | Y | P | Y | P | Y | Y | N | N | N | 5.0 |
@@ -507,7 +507,7 @@ New rows (abstracts checked in OpenAlex or PubMed, 2026-10-17):
   to diketopiperazines faster (helpful), but the epimerization equilibrium favours them (unhelpful), and
   epimerization needs a catalyst (Danger, Plasson and Pascal, 2010, doi:10.1089/ast.2009.0450). NCA
   oligomerization in water enriches homochiral oligomers from 20% ee L-Leu (Hitz and Luisi, 2004,
-  doi:10.1023/b:orig.0000009831.85557.25).
+  doi:10.1023/b:orig.0000009831.85557.25). A re-implementation of the Plasson model from the authors' arXiv versions (`aped.py`, `aped.log`; the PNAS full text was not read) loses the 50/50 state only between 0.0105 and 2.11 M activation fuel at the base rates, only with Plasson's signs (heterochiral steps disfavoured: 5 of 16 such sets have a threshold, 0 of 16 Danger-like sets), and only at total residues of about 1 M or more (none at 0.5 M, against 10⁻⁶ to 10⁻² M in the scorecard settings), so R9 = P; R5 stays ? because the growth rate scales with the NCA activation rate, which is not measured (at the one quoted rate, 10⁻⁸ /s, the pond fails and the lake and ocean pass).
 - **Ghadiri peptide replicator:** in the 2001 data (Saghatelian, Yokobayashi, Soltani and Ghadiri, *Nature* 409:797, doi:10.1038/35057238) each template catalyses only its own hand's fragments, wrong-hand fragments and templates neither inhibit nor promote it, and growth is sub-exponential (rho ~0.5-0.65), so by the arm G criterion (cross-competition must beat self-competition) the 50/50 state stays stable and R9 = N, inferred rather than modelled.
 
 **The pattern (the main finding of this part):** the candidates *with* self-amplification (R1)
