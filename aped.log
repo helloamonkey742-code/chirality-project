@@ -1,0 +1,107 @@
+APED racemic-state stability (aped.py); base = Plasson & Bersini 2009 parameters
+base: {'ctot': 2.0, 'kA': 1.0, 'kH': 1.0, 'kP': 1.0, 'kD': 1.0, 'kE': 1.0, 'kR': 0.0001, 'al': 0.1, 'be': 0.1, 'ga': 0.1, 'Kact': 1e-06, 'Kdim': 0.001, 'Kfx': 1e-09, 'Vy': 1.0, 'act': 'B'}
+
+== 0. first-run model A (activation kA [/s] independent of x; only the reverse rate carries x) ==
+[A] lower threshold x_c1 = 0.0011206 M; downward crossings on 1e-9..1e4 M: 0; Re(lambda_lead) at 1e2, 1e3, 1e4 M = 1.523854e-03, 1.523879e-03, 1.523881e-03 /s (saturates: x enters only through the reverse activation, so no upper threshold is possible)
+
+== 1. leading difference-mode eigenvalue vs drive x (every 5th of 131 points) ==
+      x [M]    affinity ln(Vx/Vy)     Re(lambda) [1/s]    Im(lambda)
+  1.000e-09       0.00         -2.35264e-04     +0.00e+00
+  3.162e-09       1.15         -2.35264e-04     +0.00e+00
+  1.000e-08       2.30         -2.35264e-04     +0.00e+00
+  3.162e-08       3.45         -2.35263e-04     +0.00e+00
+  1.000e-07       4.61         -2.35262e-04     +0.00e+00
+  3.162e-07       5.76         -2.35257e-04     +0.00e+00
+  1.000e-06       6.91         -2.35240e-04     +0.00e+00
+  3.162e-06       8.06         -2.35190e-04     +0.00e+00
+  1.000e-05       9.21         -2.35029e-04     +0.00e+00
+  3.162e-05      10.36         -2.34522e-04     +0.00e+00
+  1.000e-04      11.51         -2.32918e-04     +0.00e+00
+  3.162e-04      12.66         -2.27853e-04     +0.00e+00
+  1.000e-03      13.82         -2.11895e-04     +0.00e+00
+  3.162e-03      14.97         -1.62007e-04     +0.00e+00
+  1.000e-02      16.12         -9.87266e-06     +0.00e+00
+  3.162e-02      17.27         +4.19660e-04     +0.00e+00
+  1.000e-01      18.42         +1.37887e-03     +0.00e+00
+  3.162e-01      19.57         +2.39776e-03     +0.00e+00
+  1.000e+00      20.72         +1.52111e-03     +0.00e+00
+  3.162e+00      21.87         -7.15416e-04     +0.00e+00
+  1.000e+01      23.03         -1.39395e-03     +0.00e+00
+  3.162e+01      24.18         -8.24037e-04     +0.00e+00
+  1.000e+02      25.33         -3.26818e-04     +0.00e+00
+  3.162e+02      26.48         -1.11521e-04     +0.00e+00
+  1.000e+03      27.63         -3.61441e-05     +0.00e+00
+  3.162e+03      28.78         -1.15197e-05     +0.00e+00
+  1.000e+04      29.93         -3.65189e-06     +0.00e+00
+[P1] lower threshold x_c1 = 0.010457 M  (paper: 0.0105)   upward crossings on grid: 1
+[P2] upper threshold x_c2 = 2.1133 M  (paper: 2.11)     downward crossings on grid: 1
+[P3] sign: Re<0 below x_c1 and above x_c2: True; Re>0 between: True
+[P3] Im(lambda_lead) at x_c1 = 0.00e+00, at x_c2 = 0.00e+00; max |Im| of the leading eigenvalue over the 131-point scan = 0.00e+00
+     all 4 difference-mode eigenvalues at x=0.01046: [-2.074235+0.j -1.428352+0.j -0.799161+0.j  0.      +0.j]
+     all 4 difference-mode eigenvalues at x=0.15: [-1.696152-0.168447j -1.696152+0.168447j -0.920733+0.j
+  0.001812+0.j      ]
+     all 4 difference-mode eigenvalues at x=2.113: [-3.387807+0.j -1.717007+0.j -0.986876+0.j -0.      +0.j]
+[P4] finite-difference vs analytic difference-mode Jacobian over the 131 points: max |dJ|/max|J| = 1.84e-10; max |d Re(lambda_lead)| = 4.90e-11
+
+== 2. seeded integration, ee(0) = 1e-6 ==
+[P5] x = 0.004 M: lambda_lead = -1.4291e-04/s, measured early rate of ee = -1.4291e-04/s, final ee = +6.1437e-12, pool drift = -3.8e-15
+[P5] x = 0.15 M: lambda_lead = +1.8121e-03/s, measured early rate of ee = +1.8121e-03/s, final ee = +7.6370e-01, pool drift = -5.2e-14
+[P5] x = 8 M: lambda_lead = -1.4139e-03/s, measured early rate of ee = -1.4139e-03/s, final ee = +6.0928e-12, pool drift = -4.1e-14
+
+== 3. hysteresis: quasi-static sweeps from the homochiral state at x = 0.15 M (40 steps/decade, 5e4 s each) ==
+     down: |ee| at x = 0.15 0.7637; last x with |ee| > 1e-3: 0.0089349 M; ratio to x_c1 = 0.8544
+     up:   last x with |ee| > 1e-3: 2.1188 M; ratio to x_c2 = 1.0026
+[P6] hysteresis present (down ratio < 0.95 or up ratio > 1.05): True; within 10% of thresholds: True
+     |ee| on the down-sweep near x_c1: 0.475 0.443 0.406 0.362 0.308 0.243 0.165 0.0847 0.0279
+
+== 4. stereoselectivity grid: window of x (1e-6..1e3 M, 8 pts/decade) where Re(lambda_lead) > 0; s = stable everywhere ==
+  alpha = 0.1:   gamma ->             0.1             0.3               1               3              10
+    beta = 0.1         1.3e-02-2e+00               s               s               s               s
+    beta = 0.2         4.2e-02-3e-01               s               s               s               s
+    beta = 1                       s               s               s               s               s
+    beta = 10                      s               s               s               s               s
+  alpha = 0.35:   gamma ->             0.1             0.3               1               3              10
+    beta = 0.1         4.2e-03-6e+00   1.0e-02-1e+00               s               s               s
+    beta = 0.2         7.5e-03-2e+00               s               s               s               s
+    beta = 1                       s               s               s               s               s
+    beta = 10                      s               s               s               s               s
+  alpha = 1:   gamma ->             0.1             0.3               1               3              10
+    beta = 0.1                     s               s               s               s               s
+    beta = 0.2                     s               s               s               s               s
+    beta = 1                       s               s               s               s               s
+    beta = 10                      s               s               s               s               s
+  alpha = 3:   gamma ->             0.1             0.3               1               3              10
+    beta = 0.1                     s               s               s               s               s
+    beta = 0.2                     s               s               s               s               s
+    beta = 1                       s               s               s               s               s
+    beta = 10                      s               s               s               s               s
+  alpha = 10:   gamma ->             0.1             0.3               1               3              10
+    beta = 0.1                     s               s               s               s               s
+    beta = 0.2                     s               s               s               s               s
+    beta = 1                       s               s               s               s               s
+    beta = 10                      s               s               s               s               s
+[P7] alpha >= 1 sets with an unstable window: 0 of 60
+[P8] (0.35, 0.2, 0.3): max Re(lambda) = -1.8971e-04; unstable window none
+[P9] (alpha, beta, gamma) = (0.1, 1, 1): max Re(lambda) = -1.3267e-03; unstable points 0
+     Plasson-sign sets (alpha<1, gamma<1) with a threshold: 5 of 16; Danger-like sets (alpha>1, gamma>1) with a threshold: 0 of 16
+
+== 5. R5: growth rate of the difference mode ==
+[P10] base set: sigma_max = 0.0024332 /s at x = 0.3852 M; apparent activation rate there a = kA x = 0.3852 /s; s* = sigma/a = 0.0063166 (sigma/kH = 0.0024332); e = k2_eff/kP = sigma/(kP ctot) = 0.0012166
+      sigma_max(ctot) with the other base rates fixed (x in 1e-4..1e4 M):
+        ctot = 0.5    sigma_max = -9.2864e-07 /s at x = 1.000e+04 M  (s* = -9.2864e-11, e = -1.8573e-06)
+        ctot = 1      sigma_max = +3.5715e-04 /s at x = 2.276e-01 M  (s* = +1.5695e-03, e = +3.5715e-04)
+        ctot = 2      sigma_max = +2.4332e-03 /s at x = 3.852e-01 M  (s* = +6.3166e-03, e = +1.2166e-03)
+        ctot = 5      sigma_max = +7.9662e-03 /s at x = 5.882e-01 M  (s* = +1.3543e-02, e = +1.5932e-03)
+        ctot = 20     sigma_max = +1.9858e-02 /s at x = 1.096e+00 M  (s* = +1.8111e-02, e = +9.9292e-04)
+        ctot = 100    sigma_max = +3.2130e-02 /s at x = 2.425e+00 M  (s* = +1.3251e-02, e = +3.2130e-04)
+        ctot = 1000   sigma_max = +4.1749e-02 /s at x = 8.169e+00 M  (s* = +5.1104e-03, e = +4.1749e-05)
+      rescale time so that a = 1e-08 /s (the one quoted real-system rate, a tunable fuel-supply rate; sigma = s* a):
+        Warm little pond  floor sigma >= 10/tau = 3.17e-09 /s (k2 >= 3.17e-07 /M/s); sigma = 6.32e-11 /s -> fail; a needed = 5.02e-07 /s; kP needed = 2.60e-04 /M/s
+        Lake / lagoon     floor sigma >= 10/tau = 3.17e-11 /s (k2 >= 3.17e-07 /M/s); sigma = 6.32e-11 /s -> pass; a needed = 5.02e-09 /s; kP needed = 2.60e-04 /M/s
+        Open ocean        floor sigma >= 10/tau = 3.17e-15 /s (k2 >= 3.17e-09 /M/s); sigma = 6.32e-11 /s -> pass; a needed = 5.02e-13 /s; kP needed = 2.60e-06 /M/s
+[P10] pond floor fails: True; lake and ocean floors pass: True
+[P11] proposed R9 = P (Plasson sign: threshold; Danger-like sign: none); proposed R5 = ? (missing number if '?': measured apparent NCA activation rate a at each setting's c)
+
+runtime 86.0 s
+
+self-check passed
