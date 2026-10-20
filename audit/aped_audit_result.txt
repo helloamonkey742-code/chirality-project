@@ -1,0 +1,194 @@
+APED BLINDED REIMPLEMENTATION AUDIT -- RESULT (session audit-aped)
+===================================================================
+Script : audit/aped_audit.py   sha256 97ccf25a11d8619cbdde42818e0bc8068077e15f74fb0ebd39b6bf8ec9c1fd4a
+Log    : audit/aped_audit.log  sha256 89edd267eb60b2361829490decc5d679befae75c1016d4227d673a311c9ae916
+Run date (final run): Mon Oct 19 23:51:10 PDT 2026   (`date`)
+Predictions: written and hashed BEFORE run 1 (sha256 350d96c4...1c51a8c41b, Mon Oct 19 23:38:52 PDT 2026,
+  stored in the docstring of aped_audit.py; the script re-hashes the block at every run: MATCH, log line 1).
+Run 1 (23:38-23:44) had sections A-D. Section E (follow-ups) was added AFTER run 1 and the script re-run once
+  before unblinding; the predictions block was not touched. Section F (log lines 231-238) was added AFTER
+  unblinding, so the hashes above are of the final script/log; Part 1 numbers are unchanged by it
+  (sections A-E print identically; only line numbers >= 231 are new).
+Blinding: aped.py, aped.log, scorecard.py, README.md, journals/* were not opened, and the repo was not
+  grepped for "aped"/"Plasson", until PART 2 below. Part 1 was written before unblinding.
+
+PART 1 -- BLINDED RESULTS
+-------------------------
+SOURCE
+  Plasson, Bersini & Commeyras, PNAS 101:16733 (2004), doi:10.1073/pnas.0405293101. Open-access full text on
+  PMC534711 (HTML) plus Fig. 1/3/4/5 images and the Methods matrix images M1/M2/M3, saved under
+  papers/audit-aped/. (The PMC "PDF" link and Europe PMC XML did not deliver; not worked around.)
+
+MODEL AS READ (8 species, 16 mass-action steps; state order l d l* d* ll dd dl ld, as in the paper's M1)
+  Activation        X  -> X*        rate a[X]            (X = L, D)   FIRST-ORDER in the deactivated monomer
+  Deactivation      X* -> X         rate b[X*]
+  Polymerisation    X* + Y -> XY    rate p[X*][Y] (X=Y), alpha*p[X*][Y] (X!=Y)   (activated residue on the left)
+  Hydrolysis        XY -> X + Y     rate h[XX], beta*h[XY]
+  Epimerisation     XY -> XX        rate e[XY]           (left residue flips to match the right one)
+                    XX -> XY        rate gamma*e[XX]
+  Total residue c = l+d+l*+d*+2(ll+dd+dl+ld) is conserved (asserted in the script).
+  Reading of the activation step: mass action, a*[L], a*[D]. Evidence: the paper's own Methods Jacobian M1
+  (b=beta=gamma=0) has d[L*]/d[L] = a - x_l and d[L]/d[L] = -a - x_l - alpha*x_d, i.e. activation is linear in
+  [L]. My Jacobian equals M1 entry for entry to 3.6e-15 on 200 random states (log line 2). The paper has no
+  explicit fuel species, so "drive" is the activation rate a (equivalently a/b for the steady activated pool).
+  Parameter sets (all from the paper):
+    S0 Fig.3 simplified: b=0, beta=gamma=0, a=h=e=p=1, alpha=0.1.
+    S1 Methods/Fig.4: b=0, a=h=e=p=1, alpha=0.1, beta=gamma=0.01; c = 2 M in Methods but c = 1 M in the Fig.4
+       caption (the paper contradicts itself; at 1 M S1 has no racemic state, log line 56).
+    S2 Fig.5: a=1e-8, b=5e-4, p=2e-2, alpha=0.35, h=e=1e-7, beta=0.2, gamma=0.3 (units mol/L, s).
+  Method: racemic fixed point found by 1-D root find (closed form in the rest); Jacobian split by mirror
+  symmetry into antisymmetric (chiral) and symmetric blocks; U = real positive eigenvalue in the antisymmetric
+  block, O = complex pair with Re>0, S = stable. Radau time integration from ee0=0.01 as a check.
+
+VALIDATION AGAINST THE PAPER'S OWN FIGURES (log lines 6-42)
+  * Racemic existence for b=0 is c > 2a/(p(1+alpha)), independent of beta, gamma, h, e. Matches the paper's
+    Fig.3F formula; numerical edges 1.9802 / 1.81818 / 1.33333 / 1 for alpha = .01/.1/.5/1 equal the formula.
+  * Fig.3 points A (dead), B (-> ee=1), C (decays), D (damped oscillation): reproduced.
+  * Fig.5: ee after 2e10 s from ee0=0.01: 1 M 0.6949 (paper plateau ~0.695; text "about 70%"), 400 mM 0.6562,
+    200 mM 0.5842, 100 mM 0.0956 (still rising: 0.413 at 1e12 s), 20 mM ~0. Reproduced.
+  * NOT reproduced: Fig.3E / Fig.3F oscillatory (Hopf) boundary. By eye I read alpha_c ~ 12, 17, 21, 27 at
+    c = 1, 2, 3, 5. My model: Hopf (Re>0 complex pair) exists only for c < ~1.6 and alpha_c = 19.5 (c=.1),
+    21.3 (.5), 39.0 (1), 56.8 (1.2), 160.5 (1.5); none found up to alpha = 1e5 for c >= 1.8 (log E3, lines
+    220-229; also lines 29-36). At c=2, alpha=100 my racemic state is damped (-0.0056+0.929i) and a 0.1-0.9
+    perturbation decays. Unresolved; could be my by-eye reading of the panel or something in the paper's
+    figure. It is the oscillatory sector and does not enter questions (a)-(c).
+
+QUESTION (c): SMALLEST TOTAL RESIDUE CONCENTRATION AT WHICH THE RACEMIC STATE IS UNSTABLE
+  b = 0 (S0 and S1, alpha=0.1, a=p=1): c_min = 2a/(p(1+alpha)) = 1.81818 M. The racemic state is unstable at
+    birth (lambda = +3.8e-6 at c0(1+1e-9), line 48; S1 2.3e-8, line 52). Below it no racemic state (system is
+    dead/stuck). So c_min is the existence threshold, not a separate stability threshold.
+    S1 at c = 1 M (Fig.4 caption): no racemic state; at 2 M (Methods): unstable (line 56).
+  S2 (b>0): racemic state exists at every c; stable below, unstable above c_min = 0.0669075 M = 66.9 mM
+    (line 55). Integration agrees: 20 mM ee~0, 100 mM slow growth (above).
+
+QUESTION (a): ACTIVATION DRIVE WINDOW
+  S0/S1, b=0, c=2 M, alpha=0.1: U on the whole grid 1e-6 <= a < 1.1; upper edge a = p*c*(1+alpha)/2 = 1.1 exactly
+    (lines 59-64); above it no racemic state. Below 1e-6 not scanned (b=0 case).
+  S2 (Fig.5 set), c = 1 M, b = 5e-4 fixed, a scanned:
+    sign-only upper edge a = 9.96437e-7 s^-1 (a/b = 1.99e-3) (line 198). The paper's a = 1e-8 is inside: lambda =
+    +6.06e-10 s^-1 (e-fold time 1.7e9 s ~ 52 yr); integration reaches ee = 0.6949.
+    LOWER EDGE IS AN ARTEFACT: run 1 reported S->U at a = 1.755e-11 (line 67) because classify() uses
+    tol = 1e-10*max|J| = 1.4e-12. Sign-only check (E1, lines 186-197): lambda = +0.0798*a for a <= 1e-10, still
+    positive at a = 1e-16, and the integration at a = 1e-12 (class "S" by tolerance) grows to ee = 0.7228
+    (line 82). So the instability extends to a -> 0 with growth rate ~ a; there is no lower threshold, only
+    a diverging timescale.
+    Upper edge vs total residue: c=0.2 M 1.507e-7; c=0.1 M 4.50e-8 (lines 71-76; same tolerance caveat for lower).
+    The window is not a function of a/b alone: at b = 5e-4, a = 1e-10 (a/b = 2e-7) is U (line 83-84), while at
+    a = 1e-8 fixed, b = 0.05 (a/b = 2e-7) is S; the b-scan gives U for b < 7.42e-3 (a/b > 1.35e-6) (line 79).
+
+QUESTION (b): DOES INSTABILITY NEED HETEROCHIRAL STEPS DISFAVOURED? BOTH SIGNS TESTED
+  S0 (beta=gamma=0), c=2: alpha<1 -> U (alpha = .01, .1, .5, .9); alpha = 1 marginal (lambda = -2e-16);
+    alpha > 1 -> S (damped oscillation, Re lambda -0.02 ... -0.0056 for alpha = 1.1 ... 100) (lines 95-108).
+  Full model, c=2, b=0, a=h=e=p=1, 27 combos (alpha, beta, gamma) in {0.1,1,10}^3 (lines 112-165):
+    U only at (0.1,0.1,0.1) (-> ee 0.8545 by integration). Every other combination S, including (0.1,0.1,1),
+    (0.1,1,0.1), (0.1,0.1,10), (0.1,10,0.1) and every alpha = 1 or 10 entry (integration agrees).
+  Finer boundary at alpha = 0.1, c = 2 (E2, E2d, lines 199-219): U iff beta*gamma < 0.06923 (the flip point
+    gives beta*gamma = 0.06923 for beta = 0.1, 0.2, 0.3, 0.5, 1, 2; so it is the product that matters, and
+    beta or gamma > 1 is tolerated if the other is small enough). At beta=gamma=0.1, U for alpha 0.1..0.9, S for
+    alpha >= 1 (E2c); alpha = 0.01 at beta=gamma=0.1 is S (c = 2 is only 1% above c_exist = 1.98 there; not
+    interpreted further).
+  S2 at c=1 M, a=1e-8 (lines 167-182): each of alpha, beta, gamma set to its neutral value 1, or multiplied by
+    10, gives S; multiplied by 0.1 (beta -> .02, gamma -> .03) stays U. alpha*0.1 = 0.035 gives S at this fixed a
+    (the window moves with alpha; not interpreted). Setting alpha=1 alone, or beta=gamma=1 alone, or all three
+    to 1: S.
+  Answer: yes. Symmetry-breaking (real) instability of the racemic state needs polymerisation selectivity
+  alpha < 1 AND a sufficiently small beta*gamma (< 0.069 at alpha=0.1). Heterochiral steps favoured
+  (alpha, beta or gamma >= 1 in the sense of the tests above) gives no real instability anywhere I tested.
+  What alpha > 1 does give is damped oscillation, and a Hopf instability only at c < ~1.6 with alpha > ~20.
+
+PREDICTION TALLY (aped_audit.py docstring, hashed before run 1)
+  P1 existence formula, c_exist 1.8182, S1 at 1 M dead ........ CONFIRMED
+  P2 c_min 1.8182 for S0 and S1 ............................... CONFIRMED
+  P3 U for 1e-6 <= a < 1.1, edge exactly 1.1 ................... CONFIRMED (edge 1.1)
+  P4 a = 1e-8 inside S2 window .................................. CONFIRMED (edges: see above; lower edge turned out to be an artefact)
+  P5 S2 c_min in 20-100 mM; ee(1 M) in [0.65,0.75] ............. CONFIRMED (66.9 mM; 0.6949)
+  P6 alpha=.1 U; alpha=10 damped; alpha=100 unstable-oscillatory at c=2; alpha_c(2)~17 ... PARTLY WRONG
+     first two right; alpha=100 at c=2 is damped, alpha_c(c=2) does not exist in my model
+  P7 U iff alpha<1 and at least one of beta, gamma <1 .......... WRONG
+     (0.1,0.1,0.1) U, (0.1,1,1) S, (0.1,10,10) S and the no-alpha=10 claim were right; (0.1,0.1,10) and
+     (0.1,10,0.1) came out S. Correct rule at alpha=0.1: beta*gamma < 0.0692.
+  P8 integration agrees with Jacobian sign .................... CONFIRMED (all 27+ cases, S2 window; the
+     a = 1e-12 mismatch was the classifier tolerance, not the dynamics)
+  P9 Jacobian = paper's M1 ...................................... CONFIRMED (3.6e-15)
+
+PART 2 -- AFTER UNBLINDING (opened aped.py and aped.log at 2026-10-19 ~23:49 PDT; Ln = line n of aped.log)
+-------------------------------------------------------------------------------------------------------
+HEADLINE: aped.py is not a model of the PNAS 2004 paper. Its docstring (aped.py lines 18-25) says so: the PNAS
+full text "could not be retrieved", so it implements the Plasson & Bersini 2009 J Phys Chem B microreversible model
+(arXiv:0804.4834 Eqs 30-34, Table 2; arXiv:0804.3939), and takes (alpha,beta,gamma)=(0.35,0.2,0.3), a=1e-8 from
+Gleiser & Walker, not from Plasson 2004. The PNAS open full text WAS retrievable here as PMC534711 HTML +
+figure/matrix images (papers/audit-aped/); only the PDF endpoint failed. So there are two different models:
+
+DIFFERENCES IN EQUATIONS / PARAMETER READING (mine = PNAS 2004 as published; theirs = aped.py net(), lines 141-165)
+  1. Reversibility. Mine: all 16 steps irreversible (PNAS Fig.1). aped.py: every step reversible with back-rates
+     from microreversibility (Kact, Kdim, Kfx, Vy, leaving group Y). Not in the 2004 text.
+  2. Drive. Mine: no fuel species; drive = activation constant a (or a/b), first-order rate a[X] (M1 matrix).
+     aped.py: constant fuel concentration x; activation X + L <-> L* + Y with forward kA*x (reading B) or kA
+     (reading A); reverse kA*Kfx/Kact (B). x is a concentration in M; a is a rate constant in s^-1.
+  3. Deactivation b. PNAS: b = 0 (Fig.3/4) or 5e-4 s^-1 (Fig.5). aped.py: kH = 1 s^-1 (reversible deactivation).
+  4. Racemisation. PNAS 2004: none. aped.py: monomer L <-> D at kR = 1e-4 s^-1 (aped.py line 157).
+  5. Selectivities. PNAS Fig.4/Methods: alpha=0.1, beta=gamma=0.01. aped.py base: 0.1/0.1/0.1 (2009 values).
+  6. Same in both (checked by reading aped.py net()): polymerisation hetero = alpha*kP with activated residue first
+     (L*+D -> LD); depolymerisation hetero = beta*kD; epimerisation flips the FIRST residue (DL -> LL at kE,
+     back gamma*kE; mine LD->DD at e, DD->LD at gamma*e, mirror pairs identical). ctot = 2 M and a=h=e=p=1 base
+     rates match the PNAS Methods values.
+  7. P8 ("real-system" set 0.35/0.2/0.3) in aped.py is run at the 2009 base rates (all 1, kR=1e-4), not at the
+     Fig.5 rates (a=1e-8, b=5e-4, p=2e-2, h=e=1e-7), so it is not a test of the PNAS Fig.5 system.
+  Which matches the paper's own text? Mine: Jacobian equals the paper's M1 matrix to 3.6e-15 (log line 2), and
+  reproduces Fig.3F's existence formula and the Fig.5 curves (1 M 0.6949, 400 mM 0.6562, 200 mM 0.5842).
+  aped.py cannot be checked against the 2004 figures as written; its own check is against the 2009 paper's
+  x_c1 = 0.0105 M and x_c2 = 2.11 M (L36-L37), which I did not verify (2009 text not read).
+
+COMPARISON (numbers on both sides)
+  Threshold window (aped.log L36-37 vs mine)
+    aped.py: Re(lambda)>0 for fuel x in (0.010457 M, 2.1133 M); real eigenvalue at both ends; -2.35e-4 s^-1 at
+      x = 1e-9 M (L9).
+    mine, S0/S1 (b=0, c=2 M, alpha=0.1): U for activation 1e-6 <= a < 1.1 s^-1, upper edge is the EXISTENCE
+      limit a = p c (1+alpha)/2 (racemic state vanishes), no lower edge found (log 59-64).
+    mine, Fig.5 set (b=5e-4, c=1 M): U for 0 < a < 9.96437e-7 s^-1 (a/b < 1.993e-3), lambda = 0.0798*a for small a:
+      no lower edge, upper edge a genuine sign change (log 65-68, 184-198).
+    MISMATCH in structure and in numbers (different variables: x in M vs a in s^-1). Cause of the lower
+    threshold: aped.py's monomer racemisation. Adding kR to MY model (log 235-238; S0 rates, alpha=beta=gamma=0.1,
+    c=2): lower edge appears at a = 1.76e-5 (kR=1e-6) and 1.82e-3 (kR=1e-4), i.e. about 18*kR; none at kR=0
+    (lambda>0 from 1e-8). The upper edge stays at the existence limit 1.1. So the "stable at low drive, lost as the
+    drive rises" pattern behind R9 comes from racemisation, which the 2004 model does not have: without it the
+    PNAS racemic state is marginal at zero drive and unstable at every a > 0 (when c > c_min).
+  Sign test (aped.log L83-86 vs mine)
+    L83 alpha >= 1: 0 of 60 sets unstable. Mine: alpha=1 and 10, all 9 (beta,gamma) combos each: all S (log
+      lines 112-165); alpha=1, 1.5, 3, 10 at beta=gamma=0.1: S (log 212). MATCH.
+    L85 (0.1, 1, 1) stable (Re -1.33e-3). Mine (0.1, 1, 1): S (lambda -0.03003, log 121). MATCH (sign).
+    L86 Plasson-sign sets 5 of 16 unstable; Danger-like (alpha, gamma > 1) 0 of 16. Mine agrees that heterochiral-
+      favoured gives none and that alpha<1 with small beta*gamma gives U (beta*gamma < 0.0692 at alpha=0.1).
+      Cell differences: aped.py has (alpha=0.1, beta=0.1, gamma=0.3) stable (L59) while mine is U there
+      (beta*gamma = 0.03 < 0.0692, E2/E2d).
+    L84 (0.35, 0.2, 0.3) stable, max Re -1.8971e-4 at the 2009 rates. MISMATCH: mine at the PNAS Methods rates
+      (a=h=e=p=1, b=0): U, lambda +0.01465 (c=2), +0.02183 (c=5) (log 232-233); at the paper's Fig.5 rates: U in
+      a < 9.96e-7 (log 198), c_min 66.9 mM (log 55). aped.py's "real-system set is stable" is a statement
+      about its own 2009-rate model, not about the PNAS Fig.5 system.
+  Total-residue test (aped.log L91-97 and L99-103 vs mine)
+    aped.py: ctot = 0.5 M never unstable (sigma_max -9.29e-7 s^-1, L91-97); ctot = 1 M unstable (+3.57e-4 s^-1
+      at x = 0.2276 M); lower ctot not scanned, so c_min is only bracketed in (0.5, 1) M at those rates.
+    mine: c_min = 1.81818 M for b=0, alpha=0.1 (existence threshold; S0 and S1; log 44-51); 66.9 mM for the Fig.5
+      set (b>0; stability threshold; log 55). The two kinds differ: b=0 gives an existence threshold, b>0 a
+      stability threshold. aped.py (kH=1 s^-1, i.e. b>0) is the second kind, MISMATCH in number only because
+      every rate differs. Nothing in my numbers supports or contradicts aped's bracket (0.5, 1) M.
+    L99-103 (R5 floors, sigma = 6.32e-11 s^-1 at a = 1e-8 s^-1) depend on the 2009 model's sigma_max; I did not
+      reproduce them.
+
+IS aped.py's SWITCH TO MASS ACTION (reading A -> B after run 1) SUPPORTED BY THE PAPER'S TEXT?
+  Yes in form, and for a reason aped.py could not see: the PNAS Methods Jacobian M1 (b=beta=gamma=0) has
+  d[L*]/d[L] = a - x_l and d[L]/d[L] = -a - x_l - alpha*x_d, so activation is first-order mass action, rate = drive
+  constant * [monomer] (the paper's drive is the constant a itself). Reading B (forward kA*x*[L], x constant) has
+  that structure with a_eff = kA*x; reading A (forward rate independent of the drive, x only in the reverse step)
+  has no counterpart in the 2004 text and is the wrong one. The docstring is honest that B was chosen after run 1
+  because A cannot give an upper threshold (aped.py lines 30-33; aped.log L4-L5), so B holding P1/P2 is not an
+  independent test; my reading of M1 is the independent support. Caveat: the 2004 model's activation is
+  irreversible and its upper edge for b=0 is the existence limit, not an eigenvalue sign change, so B's
+  reversible form (reverse kA*Kfx/Kact) is not from the 2004 paper either.
+
+CONSEQUENCES FOR THE PROJECT (for the parent to decide; nothing edited)
+  * R9 = P: the heterochiral-favoured side agrees (both models: no instability for alpha >= 1). The "threshold as
+    drive rises" half rests on racemisation kR, absent from PNAS 2004.
+  * Any text calling aped.py a reproduction of "Plasson 2004 / PNAS" is not accurate; the model is the 2009 one.
+  * The unresolved Fig.3E/F oscillatory boundary (above) is not explained by aped.py either (it reports no
+    complex leading pair, L39-L41).

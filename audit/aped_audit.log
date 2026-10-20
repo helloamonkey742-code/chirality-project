@@ -1,0 +1,240 @@
+predictions sha256 recomputed: 350d96c44d8b55e8cb2d2a23b290a8d9ad5ec1279035fe0cffa16c1c51a8c41b | recorded: 350d96c44d8b55e8cb2d2a23b290a8d9ad5ec1279035fe0cffa16c1c51a8c41b | MATCH
+P9 max|J - M1| over 200 random states (b=beta=gamma=0): 3.552713678800501e-15
+max|J - finite diff| (S2, random state): 1.852735880176316e-11 (relative)
+mirror symmetry |rhs(Px)-P rhs(x)|: 0.0
+
+=== A. VALIDATION against the paper's own figures ===
+Fig.3F existence boundary c=2a/(p(1+alpha)) [S0]; computed edge of racemic existence vs formula
+  S0 alpha=0.01: classes along grid [0.3..5] (120 pts): none on [0.3,1.942]; U on [1.989,5]
+     edge none->U at c = 1.9802
+     formula 2/(1+alpha) = 1.980198
+  S0 alpha=0.1: classes along grid [0.3..5] (120 pts): none on [0.3,1.809]; U on [1.852,5]
+     edge none->U at c = 1.81818
+     formula 2/(1+alpha) = 1.818182
+  S0 alpha=0.5: classes along grid [0.3..5] (120 pts): none on [0.3,1.33]; U on [1.362,5]
+     edge none->U at c = 1.33333
+     formula 2/(1+alpha) = 1.333333
+  S0 alpha=1.0: classes along grid [0.3..5] (120 pts): none on [0.3,0.9784]; S on [1.002,5]
+     edge none->S at c = 1
+     formula 2/(1+alpha) = 1.000000
+Fig.3 marked points (S0, ee0=0.1 for A; 0.01 otherwise):
+  A dead: alpha=0.1 c=1: class=none lam_a=None lam_sym_max=None
+    [int] A dead: c=1 tend=200 ee: start +0.1000 max|ee| 0.1070 end +0.10703 sign-changes 0; residue drift 1.1e-15
+  B asym: alpha=0.1 c=3: class=U lam_a=0.037891534928082886 lam_sym_max=-3.4118552312055284e-16
+    [int] B asym: c=3 tend=660 ee: start +0.0100 max|ee| 1.0000 end +1.00000 sign-changes 0; residue drift 2.3e-14
+  C sym: alpha=1.1 c=3.2: class=S lam_a=(-0.01810449487611328+0j) lam_sym_max=1.2373728970652443e-16
+    [int] C sym: c=3.2 tend=1.38e+03 ee: start +0.0100 max|ee| 0.0103 end +0.00000 sign-changes 0; residue drift 1.9e-15
+  D sym+osc: alpha=50 c=2: class=S lam_a=(-0.012888250604773284+0.8684118952641351j) lam_sym_max=-2.5168806503743267e-17
+    [int] D sym+osc: c=2 tend=1.94e+03 ee: start +0.0100 max|ee| 0.0112 end +0.00000 sign-changes 403; residue drift 1.1e-16
+  E unstable-osc: alpha=100 c=2: class=S lam_a=(-0.005615045054270071+0.9286489699265345j) lam_sym_max=-3.5341626766218355e-16
+    [int] E unstable-osc: c=2 tend=4.45e+03 ee: start +0.0100 max|ee| 0.0119 end +0.00000 sign-changes 944; residue drift 6.7e-16
+alpha_c(c) (Hopf edge, S0) vs Fig.3F read by eye (c=1:~12, 2:~17, 3:~21, 5:~27):
+  c=1.0: classes along grid [2..200] (100 pts): S on [2,37.48]; O on [39.26,200]
+     edge S->O at al = 38.2351
+  c=2.0: classes along grid [2..200] (100 pts): S on [2,200]
+  c=3.0: classes along grid [2..200] (100 pts): S on [2,200]
+  c=5.0: classes along grid [2..200] (100 pts): S on [2,200]
+Fig.5 check (S2, ee0=0.01) final ee vs figure (1M:0.695, 400mM:~0.655, 200mM:~0.585 @2e10 s, 100mM:~0.09 @2e10 s, 20mM flat):
+   c=  1000 mM: ee(2e10 s)=+0.6949  ee(1e12 s)=+0.6949
+   c=   400 mM: ee(2e10 s)=+0.6562  ee(1e12 s)=+0.6562
+   c=   200 mM: ee(2e10 s)=+0.5842  ee(1e12 s)=+0.5864
+   c=   100 mM: ee(2e10 s)=+0.0956  ee(1e12 s)=+0.4133
+   c=    20 mM: ee(2e10 s)=+0.0002  ee(1e12 s)=-0.0000
+
+=== B. c_min: smallest c at which the racemic state is unstable ===
+ S0 a=1 alpha=.1 b=0 beta=gamma=0
+  c scan: classes along grid [0.001..10] (160 pts): none on [0.001,1.759]; U on [1.864,10]
+     edge none->U at c = 1.81818
+     at c0(1+1e-9), c0=1.818182: class=U lam_a=3.833095082586099e-06 lam_sym_max=-3.199908698168223e-16
+ S1 alpha=.1 beta=gamma=.01 b=0
+  c scan: classes along grid [0.001..10] (160 pts): none on [0.001,1.759]; U on [1.864,10]
+     edge none->U at c = 1.81818
+     at c0(1+1e-9), c0=1.818182: class=U lam_a=2.3016077404395625e-08 lam_sym_max=-1.3112103692267728e-16
+ S2 (Fig.5 set)
+  c scan: classes along grid [0.0001..10] (220 pts): S on [0.0001,0.0643]; U on [0.06777,10]
+     edge S->U at c = 0.0669075
+ S1 with c = 1 M (Fig.4 caption) vs 2 M (Methods): none vs U
+
+=== C. drive window (activation a) ===
+ S0 c=2 alpha=.1 b=0; formula upper edge p c (1+alpha)/2 = 1.1
+  a scan: classes along grid [1e-06..10] (200 pts): U on [1e-06,1.035]; none on [1.123,10]
+     edge U->none at a = 1.1
+ S1 c=2 b=0
+  a scan: classes along grid [1e-06..10] (200 pts): U on [1e-06,1.035]; none on [1.123,10]
+     edge U->none at a = 1.1
+ S2 c=1.0 M, b=5e-4 fixed, a scanned
+  a scan: classes along grid [1e-16..100] (300 pts): S on [1e-16,1.728e-11]; U on [1.985e-11,9.847e-07]; S on [1.131e-06,100]
+     edge S->U at a = 1.75523e-11
+     edge U->S at a = 9.96331e-07
+ S2 c=0.2 M, b=5e-4 fixed, a scanned
+  a scan: classes along grid [1e-16..100] (300 pts): S on [1e-16,6.547e-12]; U on [7.521e-12,1.414e-07]; S on [1.624e-07,100]
+     edge S->U at a = 6.9285e-12
+     edge U->S at a = 1.50705e-07
+ S2 c=0.1 M, b=5e-4 fixed, a scanned
+  a scan: classes along grid [1e-16..100] (300 pts): S on [1e-16,8.639e-12]; U on [9.923e-12,4.062e-08]; S on [4.665e-08,100]
+     edge S->U at a = 8.96746e-12
+     edge U->S at a = 4.49977e-08
+ S2 c=1 M: drive as a/b (b scanned at a=1e-8 fixed) -- same window in the other variable
+  b scan: classes along grid [1e-12..100] (300 pts): U on [1e-12,0.006804]; S on [0.007579,100]
+     edge U->S at b = 0.00742409
+ integration checks across the S2 window (c=1 M): a = 1e-12, 1e-10, 1e-8, 1e-6, 1e-4, 1e-2
+   a=1e-12 class=S lam_a_max=7.976751775120501e-14
+    [int] S2 a=1e-12: c=1 tend=1e+14 ee: start +0.0100 max|ee| 0.7228 end +0.72278 sign-changes 0; residue drift 2.2e-15
+   a=1e-10 class=U lam_a_max=7.95221828967517e-12
+    [int] S2 a=1e-10: c=1 tend=1.51e+12 ee: start +0.0100 max|ee| 0.7225 end +0.72253 sign-changes 0; residue drift 1.1e-15
+   a=1e-08 class=U lam_a_max=6.056879996083188e-10
+    [int] S2 a=1e-08: c=1 tend=1.98e+10 ee: start +0.0100 max|ee| 0.6949 end +0.69489 sign-changes 0; residue drift 1.6e-15
+   a=1e-06 class=S lam_a_max=-4.27932783222987e-12
+    [int] S2 a=1e-06: c=1 tend=2.8e+12 ee: start +0.0100 max|ee| 0.0100 end +0.00000 sign-changes 0; residue drift 1.7e-13
+   a=0.0001 class=S lam_a_max=-3.5265421251025216e-09
+    [int] S2 a=0.0001: c=1 tend=3.4e+09 ee: start +0.0100 max|ee| 0.0100 end +0.00000 sign-changes 0; residue drift 5.3e-15
+   a=0.01 class=S lam_a_max=-4.030603351117688e-09
+    [int] S2 a=0.01: c=1 tend=2.98e+09 ee: start +0.0100 max|ee| 0.0100 end +0.00000 sign-changes 0; residue drift 2.7e-14
+
+=== D. sign tests ===
+ S0 c=2 beta=gamma=0, alpha scan:
+   alpha=0.01  class=U lam_a=0.0032367  sym-block max Re=-3.68e-17
+   alpha=0.1   class=U lam_a=0.025248  sym-block max Re=-1.07e-16
+   alpha=0.5   class=U lam_a=0.046822  sym-block max Re=-7.08e-17
+   alpha=0.9   class=U lam_a=0.014796+0j  sym-block max Re=-4.44e-16
+   alpha=1     class=S lam_a=-1.9871e-16+0j  sym-block max Re=-2.85e-16
+   alpha=1.1   class=S lam_a=-0.019236+0j  sym-block max Re=-2.3e-16
+   alpha=2     class=S lam_a=-0.098985+0.17465j  sym-block max Re=1.22e-16
+   alpha=5     class=S lam_a=-0.085924+0.41129j  sym-block max Re=-1.39e-16
+   alpha=10    class=S lam_a=-0.060705+0.58369j  sym-block max Re=-7.5e-17
+   alpha=17    class=S lam_a=-0.04026+0.7001j  sym-block max Re=6.21e-17
+   alpha=25    class=S lam_a=-0.027833+0.77156j  sym-block max Re=2.32e-16
+   alpha=50    class=S lam_a=-0.012888+0.86841j  sym-block max Re=-2.52e-17
+   alpha=100   class=S lam_a=-0.005615+0.92865j  sym-block max Re=-3.53e-16
+    [int] S0 alpha=0.1: c=2 tend=1.58e+03 ee: start +0.0100 max|ee| 1.0000 end +1.00000 sign-changes 0; residue drift 2.3e-14
+    [int] S0 alpha=10: c=2 tend=659 ee: start +0.0100 max|ee| 0.0100 end +0.00000 sign-changes 64; residue drift 2.4e-15
+    [int] S0 alpha=100: c=2 tend=7.12e+03 ee: start +0.0100 max|ee| 0.0110 end +0.00000 sign-changes 944; residue drift 6.7e-16
+ full model c=2, b=0, a=h=e=p=1: class / lam_a over (alpha,beta,gamma) in {0.1,1,10}^3, then integration
+   (alpha,beta,gamma)=(0.1,0.1,0.1) class=U lam_a_max=0.01762 sym-block max Re=-1.4e-16
+    [int]    : c=2 tend=1.7e+03 ee: start +0.0100 max|ee| 0.8545 end +0.85445 sign-changes 0; residue drift 3.3e-15
+   (alpha,beta,gamma)=(0.1,0.1,1) class=S lam_a_max=-0.004516 sym-block max Re=-1.6e-16
+    [int]    : c=2 tend=6.64e+03 ee: start +0.0100 max|ee| 0.0100 end +0.00000 sign-changes 0; residue drift 0.0e+00
+   (alpha,beta,gamma)=(0.1,0.1,10) class=S lam_a_max=-0.008439 sym-block max Re=-9.1e-18
+    [int]    : c=2 tend=3.55e+03 ee: start +0.0100 max|ee| 0.0100 end +0.00000 sign-changes 0; residue drift 1.6e-15
+   (alpha,beta,gamma)=(0.1,1,0.1) class=S lam_a_max=-0.00382 sym-block max Re=6.9e-18
+    [int]    : c=2 tend=7.85e+03 ee: start +0.0100 max|ee| 0.0100 end +0.00000 sign-changes 0; residue drift 1.3e-15
+   (alpha,beta,gamma)=(0.1,1,1) class=S lam_a_max=-0.03003 sym-block max Re=-2.3e-16
+    [int]    : c=2 tend=999 ee: start +0.0100 max|ee| 0.0100 end +0.00000 sign-changes 0; residue drift 1.9e-15
+   (alpha,beta,gamma)=(0.1,1,10) class=S lam_a_max=-0.03527 sym-block max Re=3.8e-16
+    [int]    : c=2 tend=851 ee: start +0.0100 max|ee| 0.0100 end +0.00000 sign-changes 0; residue drift 1.1e-15
+   (alpha,beta,gamma)=(0.1,10,0.1) class=S lam_a_max=-0.01609 sym-block max Re=0
+    [int]    : c=2 tend=1.86e+03 ee: start +0.0100 max|ee| 0.0100 end +0.00000 sign-changes 0; residue drift 1.4e-15
+   (alpha,beta,gamma)=(0.1,10,1) class=S lam_a_max=-0.04707 sym-block max Re=-2.3e-17
+    [int]    : c=2 tend=637 ee: start +0.0100 max|ee| 0.0100 end +0.00000 sign-changes 0; residue drift 2.2e-16
+   (alpha,beta,gamma)=(0.1,10,10) class=S lam_a_max=-0.07823 sym-block max Re=-2.8e-16
+    [int]    : c=2 tend=383 ee: start +0.0100 max|ee| 0.0100 end +0.00000 sign-changes 0; residue drift 7.8e-16
+   (alpha,beta,gamma)=(1,0.1,0.1) class=S lam_a_max=-0.005164+0j sym-block max Re=4.8e-16
+    [int]    : c=2 tend=5.81e+03 ee: start +0.0100 max|ee| 0.0100 end +0.00000 sign-changes 0; residue drift 1.3e-14
+   (alpha,beta,gamma)=(1,0.1,1) class=S lam_a_max=-0.03548 sym-block max Re=4.4e-16
+    [int]    : c=2 tend=845 ee: start +0.0100 max|ee| 0.0100 end +0.00000 sign-changes 0; residue drift 1.8e-15
+   (alpha,beta,gamma)=(1,0.1,10) class=S lam_a_max=-0.0757 sym-block max Re=6e-16
+    [int]    : c=2 tend=396 ee: start +0.0100 max|ee| 0.0100 end +0.00000 sign-changes 0; residue drift 8.9e-16
+   (alpha,beta,gamma)=(1,1,0.1) class=S lam_a_max=-0.02144+0j sym-block max Re=4.4e-16
+    [int]    : c=2 tend=1.4e+03 ee: start +0.0100 max|ee| 0.0100 end +0.00000 sign-changes 0; residue drift 2.1e-15
+   (alpha,beta,gamma)=(1,1,1) class=S lam_a_max=-0.1557+0j sym-block max Re=3.8e-16
+    [int]    : c=2 tend=193 ee: start +0.0100 max|ee| 0.0100 end +0.00000 sign-changes 0; residue drift 1.1e-15
+   (alpha,beta,gamma)=(1,1,10) class=S lam_a_max=-0.3123 sym-block max Re=0
+    [int]    : c=2 tend=96.1 ee: start +0.0100 max|ee| 0.0100 end +0.00000 sign-changes 0; residue drift 1.2e-15
+   (alpha,beta,gamma)=(1,10,0.1) class=S lam_a_max=-0.03552 sym-block max Re=4.4e-16
+    [int]    : c=2 tend=845 ee: start +0.0100 max|ee| 0.0100 end +0.00000 sign-changes 0; residue drift 7.8e-16
+   (alpha,beta,gamma)=(1,10,1) class=S lam_a_max=-0.2757 sym-block max Re=4.4e-16
+    [int]    : c=2 tend=109 ee: start +0.0100 max|ee| 0.0100 end +0.00000 sign-changes 0; residue drift 5.6e-16
+   (alpha,beta,gamma)=(1,10,10) class=S lam_a_max=-0.7073 sym-block max Re=1.1e-15
+    [int]    : c=2 tend=42.4 ee: start +0.0100 max|ee| 0.0100 end +0.00000 sign-changes 0; residue drift 1.1e-16
+   (alpha,beta,gamma)=(10,0.1,0.1) class=S lam_a_max=-0.09667+0.5694j sym-block max Re=-3e-16
+    [int]    : c=2 tend=310 ee: start +0.0100 max|ee| 0.0100 end +0.00000 sign-changes 40; residue drift 6.7e-16
+   (alpha,beta,gamma)=(10,0.1,1) class=S lam_a_max=-0.1198+0.4608j sym-block max Re=-9.5e-17
+    [int]    : c=2 tend=250 ee: start +0.0100 max|ee| 0.0100 end -0.00000 sign-changes 27; residue drift 1.0e-15
+   (alpha,beta,gamma)=(10,0.1,10) class=S lam_a_max=-0.1183+0.188j sym-block max Re=-4.5e-16
+    [int]    : c=2 tend=254 ee: start +0.0100 max|ee| 0.0100 end -0.00000 sign-changes 11; residue drift 1.1e-15
+   (alpha,beta,gamma)=(10,1,0.1) class=S lam_a_max=-0.3393+0.4874j sym-block max Re=0
+    [int]    : c=2 tend=88.4 ee: start +0.0100 max|ee| 0.0100 end -0.00000 sign-changes 10; residue drift 2.2e-15
+   (alpha,beta,gamma)=(10,1,1) class=S lam_a_max=-0.4374+0.421j sym-block max Re=-6e-16
+    [int]    : c=2 tend=68.6 ee: start +0.0100 max|ee| 0.0100 end +0.00000 sign-changes 7; residue drift 4.4e-16
+   (alpha,beta,gamma)=(10,1,10) class=S lam_a_max=-0.4581 sym-block max Re=-6.9e-17
+    [int]    : c=2 tend=65.5 ee: start +0.0100 max|ee| 0.0100 end +0.00000 sign-changes 0; residue drift 6.7e-16
+   (alpha,beta,gamma)=(10,10,0.1) class=S lam_a_max=-0.1063 sym-block max Re=1.9e-16
+    [int]    : c=2 tend=282 ee: start +0.0100 max|ee| 0.0100 end +0.00000 sign-changes 0; residue drift 7.8e-15
+   (alpha,beta,gamma)=(10,10,1) class=S lam_a_max=-0.2379 sym-block max Re=-9.1e-16
+    [int]    : c=2 tend=126 ee: start +0.0100 max|ee| 0.0100 end +0.00000 sign-changes 0; residue drift 1.0e-15
+   (alpha,beta,gamma)=(10,10,10) class=S lam_a_max=-0.3973 sym-block max Re=0
+    [int]    : c=2 tend=75.5 ee: start +0.0100 max|ee| 0.0100 end +0.00000 sign-changes 0; residue drift 7.8e-16
+ S2 sign flips (c=1 M): each of alpha,beta,gamma moved to 1/x or 1x or 10x of its paper value
+   al = 0.035: class=S lam_a_max=-4.269e-10
+   al = 0.35: class=U lam_a_max=6.057e-10
+   al = 3.5: class=S lam_a_max=-7.295e-09
+   al = 35: class=S lam_a_max=-2.766e-08
+   be = 0.02: class=U lam_a_max=1.583e-09
+   be = 0.2: class=U lam_a_max=6.057e-10
+   be = 2: class=S lam_a_max=-2.572e-09
+   be = 20: class=S lam_a_max=-4.198e-09
+   ga = 0.03: class=U lam_a_max=1.426e-09
+   ga = 0.3: class=U lam_a_max=6.057e-10
+   ga = 3: class=S lam_a_max=-4.346e-09
+   ga = 30: class=S lam_a_max=-1.31e-08
+ S2 with beta=gamma=1 and alpha=0.35 (polymerisation selectivity only):  ('S', np.float64(-5.719730920646332e-09))
+ S2 with alpha=1, beta=.2, gamma=.3 (hydrolysis/epimerisation selectivity only):  ('S', np.float64(-7.596677578854539e-10))
+ S2 alpha=1, beta=gamma=1:  ('S', np.float64(-5.810466764956772e-09))
+
+=== E. follow-ups added after run 1 (tolerance artefact, finer sign boundary, Hopf region) ===
+ E1 S2 c=1 M b=5e-4: lam_a_max(a) and lam_a/a, sign only (no tolerance); max|J| shown
+   a=1e-16: lam_a_max=7.977e-18  lam/a=0.07977  max|J|=0.014  tol_used=1.4e-12
+   a=1e-14: lam_a_max=7.977e-16  lam/a=0.07977  max|J|=0.014  tol_used=1.4e-12
+   a=1e-12: lam_a_max=7.977e-14  lam/a=0.07977  max|J|=0.014  tol_used=1.4e-12
+   a=1e-11: lam_a_max=7.975e-13  lam/a=0.07975  max|J|=0.014  tol_used=1.4e-12
+   a=1e-10: lam_a_max=7.952e-12  lam/a=0.07952  max|J|=0.014  tol_used=1.4e-12
+   a=1e-08: lam_a_max=6.057e-10  lam/a=0.06057  max|J|=0.0112  tol_used=1.12e-12
+   a=1e-07: lam_a_max=1.639e-09  lam/a=0.01639  max|J|=0.00446  tol_used=4.46e-13
+   a=5e-07: lam_a_max=7.806e-10  lam/a=0.001561  max|J|=0.00176  tol_used=1.76e-13
+   a=9e-07: lam_a_max=1.215e-10  lam/a=0.000135  max|J|=0.00133  tol_used=1.33e-13
+   a=9.9e-07: lam_a_max=7.768e-12  lam/a=7.846e-06  max|J|=0.00128  tol_used=1.28e-13
+   a=1e-06: lam_a_max=-4.279e-12  lam/a=-4.279e-06  max|J|=0.00127  tol_used=1.27e-13
+   a=1.1e-06: lam_a_max=-1.189e-10  lam/a=-0.0001081  max|J|=0.00122  tol_used=1.22e-13
+   sign-only upper edge (U->S) at a = 9.96437e-07 (U->S); a/b = 0.001993
+ E2 full model c=2, alpha=0.1: class on a (beta, gamma) grid (U = symmetry-breaking real instability)
+   beta\gamma  0.01  0.03   0.1   0.2   0.3   0.5   0.7     1     2
+        0.01     U     U     U     U     U     U     U     U     U
+        0.03     U     U     U     U     U     U     U     U     U
+         0.1     U     U     U     U     U     U     S     S     S
+         0.2     U     U     U     U     U     S     S     S     S
+         0.3     U     U     U     U     S     S     S     S     S
+         0.5     U     U     U     S     S     S     S     S     S
+         0.7     U     U     S     S     S     S     S     S     S
+           1     U     U     S     S     S     S     S     S     S
+           2     U     U     S     S     S     S     S     S     S
+ E2b beta=gamma=x, alpha=0.1: class for x in [0.01, 0.1, 0.2, 0.3, 0.5, 0.7, 1.0]
+    ['U', 'U', 'U', 'S', 'S', 'S', 'S']
+ E2c alpha scan at beta=gamma=0.1, c=2: [(0.01, 'S'), (0.1, 'U'), (0.5, 'U'), (0.9, 'U'), (1, 'S'), (1.5, 'S'), (3, 'S'), (10, 'S')]
+ E2d alpha=0.1, c=2: gamma at which U->S flips, for fixed beta (sign-based, bisection) and beta*gamma there
+   beta=0.1: U->S at gamma=0.6923; beta*gamma=0.06923
+   beta=0.2: U->S at gamma=0.3462; beta*gamma=0.06923
+   beta=0.3: U->S at gamma=0.2308; beta*gamma=0.06923
+   beta=0.5: U->S at gamma=0.1385; beta*gamma=0.06923
+   beta=1: U->S at gamma=0.06923; beta*gamma=0.06923
+   beta=2: U->S at gamma=0.03462; beta*gamma=0.06923
+ E3 S0 (beta=gamma=0): smallest alpha on a log grid [1,1e5] with Re(lam_antisym)>1e-9, vs c (None = not found)
+   c=0.1: alpha_c(Hopf) = 19.53
+   c=0.5: alpha_c(Hopf) = 21.3
+   c=1: alpha_c(Hopf) = 39.04
+   c=1.2: alpha_c(Hopf) = 56.8
+   c=1.5: alpha_c(Hopf) = 160.51
+   c=1.8: alpha_c(Hopf) = None
+   c=2: alpha_c(Hopf) = None
+   c=3: alpha_c(Hopf) = None
+   c=5: alpha_c(Hopf) = None
+
+=== F. added AFTER unblinding: like-for-like probes ===
+ F1 selectivities (alpha,beta,gamma)=(0.35,0.2,0.3), S0 rates a=h=e=p=1, b=0, c=2: ('U', np.float64(0.014649683408435976))
+ F1 selectivities (alpha,beta,gamma)=(0.35,0.2,0.3), S0 rates a=h=e=p=1, b=0, c=5: ('U', np.float64(0.02182516786752707))
+ F1 alpha=beta=gamma=0.1, S0 rates, c=2: ('U', np.float64(0.017616077461393487))
+ F2 PNAS model + monomer racemisation kR, S0 rates, alpha=beta=gamma=0.1, b=0, c=2: a-range with lambda>0 (400-pt log grid 1e-8..1.1)
+   kR=0: lambda>0 for a in [1e-08, 1.05]; max lambda 0.0244; lambda(a=1e-8)=1.15e-09
+   kR=1e-06: lambda>0 for a in [1.76e-05, 1.05]; max lambda 0.0244; lambda(a=1e-8)=-2e-06
+   kR=0.0001: lambda>0 for a in [0.00182, 1.05]; max lambda 0.0243; lambda(a=1e-8)=-0.0002
+
+DONE
