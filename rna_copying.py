@@ -35,8 +35,11 @@ Assumed: Ka = m_in/2, h_a = h, Tref = T of the original map's racemic fixed poin
 
 Inputs.
 MEASURED (Walton & Szostak 2017, Biochemistry 56:5739, doi:10.1021/acs.biochem.7b00792):
-    k4   = 3.33e-3 /h  activated monomer (Cp*) hydrolysis, Table 1 (upper limit, t1/2 > 8.7 d)
-    kobs = 5.0-9.7 /h  primer extension with 24 mM Cp*, Fig. 8a (midpoint 7.35 used)
+    k4   = 3.33e-3 /h  activated monomer (Cp*) hydrolysis, Table 1 ((3.33 +/- 0.03)e-3, upper limit, t1/2 > 8.7 d)
+    kobs = 5.0-9.7 /h  primer extension with 24 mM Cp*, Fig. 8a (midpoint 7.35 used). It rises 5.0 -> 9.7 in
+                       the first 2 h, then falls to 3.4 by 10 h. mu depends on kobs*t_cold*m only, so the
+                       T_in -> 0 onset is exactly prop. to 1/kobs; at HI, m* = 20.2 / 14.1 / 9.9 / 7.7 mM for
+                       kobs = 3.4 / 5.0 / 7.35 / 9.7. The r > 1 condition does not depend on kobs.
     T_in = 3 uM        template concentration used there (as a FEED level it is assumed)
 MEASURED (Essex, Jia, Zhang & Szostak 2026, ChemRxiv, doi:10.26434/chemrxiv.15005970/v1; arm_g_rates.py):
     an L nucleotide at a D 3' end is a chain terminator. r = 0.06 monomer only, 0.40 (95% 0.22-0.98)
