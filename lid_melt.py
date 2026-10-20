@@ -39,6 +39,11 @@ RESULTS (lid_melt.log, 2026-10-14): 7 of 7 held. 13 s.
  Reading: a melt lid lowers every world in proportion and changes the ranking only if it is much likelier on Ganymede
  than on Europa (by about a third of draws, or a fifth against the Juno shell). Composition moves Europa and Enceladus
  by up to 18 and 13 points but leaves the order Ganymede > Europa > Enceladus.
+ Published Europa case (added 2026-10-19 after the run; read from the abstract only): K. Soderlund suggested Hussmann &
+ Spohn 2004 Icarus 171, 391-410 (10.1016/j.icarus.2004.05.020); in both of its Io-Europa thermal-orbital models Europa's
+ ice shell is several tens of km thick today and thickening (freezing at its base), so Europa p_melt = 0 is the published
+ case, the one the break-even test above uses. It does not model Ganymede's shell, so Ganymede's p_melt has no published
+ value and its break-even (0.32 / 0.34 against 20 km of ice, 0.18 / 0.21 against the Juno shell) stays the test.
 """
 import os
 import sys
