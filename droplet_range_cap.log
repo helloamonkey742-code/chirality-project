@@ -1,0 +1,10 @@
+true misread e -> P(NOT SCORABLE from the control cap), 128 controls, k >= 13
+  e = 0.02: 0.000
+  e = 0.03: 0.000
+  e = 0.04: 0.002
+  e = 0.05: 0.012
+  e = 0.06: 0.044
+  e = 0.07: 0.113
+  e = 0.08: 0.224
+  e = 0.09: 0.367
+  e = 0.10: 0.519

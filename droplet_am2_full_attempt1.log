@@ -1,0 +1,13 @@
+Unit droplet_am2_full.  Model study on simulated drops, not data.  Predictions sha256 4a0900aea24cc052301df5d906824b25759df1b3c8b6c4ca66527880431bd9ce (droplet_am2_full_predictions.txt, asserted).
+Rule AM2 (plateau h in both families, cap) and rule B at several thresholds on the same simulated runs; nothing existing is edited.  NOT APPLIED: every wording proposal.
+Thresholds: B -2.21; Bsub -2.0587861532873992 (B recalibrated on the subset, informational); AM2 -2.4 (K-world, droplet_ctrl_am2) and -2.403298187255859 (R-world, droplet_range_a);
+AMs -2.463367462158203 (AM2, subset misread {0, .06, .10}); AMf -2.9762901306152343 (AM2, full 12-condition grid).  Suffix n = no control cap.  Processes 3.
+
+GATES AND CHECKS
+  c* literals:
+    AM2 full grid: recomputed -2.9762901306152343 literal -2.9762901306152343 equal
+    AM2 subset {0,.06,.10}: recomputed -2.463367462158203 literal -2.463367462158203 equal
+    B subset {0,.06,.10}: recomputed -2.0587861532873992 literal -2.0587861532873992 equal
+    AM2 of droplet_range_a (87 + 27 floor cells): recomputed -2.403298187255859 literal -2.403298187255859 equal
+  GATE K (droplet_ctrl_am2.part2 text, B/AM2/Bn/AM2n columns): PASS: 114 printed lines against droplet_ctrl_am2.log:58-172; first differences []
+  GATE K3 (droplet_ctrl_am2.stage3 text): PASS: 17 printed lines against droplet_ctrl_am2.log:173-189; B reproduces bak_policy_b.log 36/36; first differences []

@@ -1,0 +1,64 @@
+droplet_am2_gate_predictions.txt  (written 2026-10-21 PDT, before any result of droplet_am2_gate.py exists; the sha256 of this file is asserted in droplet_am2_gate.py)
+
+Unit droplet_am2_gate.  Model study on SIMULATED drops, not data.  journals/droplet_prereg.md and every existing file are untouched; every wording proposal is
+NOT APPLIED.  Settles three points left open by journals/new_analyses_droplet_ctrl_am2.md (section 5, last bullet; section 4; section 2 last bullets).
+
+DISCLOSED BEFORE THIS FILE.  (1) Read, not run: journals/new_analyses_droplet_ctrl_am2.md, droplet_ctrl_am2.py and .log, misread_sim.py and .log (lines 1-12),
+droplet_range_common.py, droplet_range_a.py/.log (c* lines 1-12, 118-150), bak_policy_b.py and .log, droplet_ctrl_am2_predictions.txt, droplet_sim2.py (lines 1-150).
+(2) Hand arithmetic only, no code, for the bands: the c* values at other control counts are extrapolated from misread_sim.log:4-6 (B: -2.61 / -2.21 / -2.03 at 64 /
+128 / 192), which fit c*(n) = c_inf - a / sqrt(n) with a = 10.9 and c_inf = -1.24 to within the printed rounding (checked by hand: -2.61, -2.21, -2.03).  The smooth-truth
+bands use the single-dataset "sharp" values of bak_policy_b.log / droplet_ctrl_am2.log:176-187 as a rough noncentrality.  (3) Nothing in this unit has been run.  Only
+non-result commands (ls, ps, sysctl, python3 --version) came before this file.  A timing or cache build, if any, will be named in droplet_am2_gate.py.
+
+THE THREE POINTS AND WHAT THE SCRIPT DOES
+(1) Is the failed gate P7 (droplet_ctrl_am2.log:163, 56 of 60) caused by -2.21 being a rounded c*?  Calibrate B at 128 controls exactly as misread_sim.py does: 87 counting+drying
+    cells (droplet_range_common.null_cells) x 12 conditions (misread_sim.CONDS: CV 0.05/0.15 x true misread 0/.02/.04/.06/.08/.10), 1000 runs per cell, seeds [4, i, j], protocol
+    droplet_range_common.protocol2(exact=True) (same random stream as droplet_sim2.protocol), 192 control draws per run after the runs (rng.random((1000, 192)) < eps, first 128
+    used), e_hat = (k + 0.5)/(n_c + 1), eligible = scorable, range >= 0.4, z <= 1.645, at least 50 eligible runs, c* = minimum over the 1044 cells of the 5th percentile of L.
+    Print c*_B(128) to 4 decimals and its cell.  Then rerun the 60-cell gate (87 counting cells + probit s = 0.1/0.15/0.2/0.3, 12 conditions, 500 runs, seeds [5, i, j], no control cap,
+    through the unchanged droplet_range_common.run_batch with the patched controls of droplet_ctrl_am2.py) with the unrounded c* ("Bu") and, on the same simulated data, with -2.21 ("Bn",
+    the control: it must give the 56 of 60 of the earlier unit).
+(2) What c* do B and AM2 need at 480 controls (60 per level)?  The same 1044 cells and the same simulated runs (same seeds [4, i, j]); a second block of 480 control draws per run
+    (rng.random((1000, 480)) < eps, drawn after the 192-block) gives e_hat = (k + 0.5)/481; B = fit groups c0, s0; AM2 = c0, cH, s0, sH (droplet_range_common.Fitter, plateau h in both
+    families).  The same recipe at 128 controls gives c*_AM2(128) for comparison with the -2.40 that came from droplet_range_a.py (300 runs, 8 conditions, 87 + 27 floor cells).  Not
+    done: evaluation of power or false STEP at 480 controls with these c* (no fresh-seed run), and the 10% cap.
+(3) How often does each rule reject a SHARP step when the truth is smooth?  Bak et al. (2023) Fig. 2a, Tinc 90 C series (blind_units.BAK_TINC90 through exclusion_bak.bak): 11 levels, n = 3,
+    6 or 10 at the seven P = 1 markers (not printed in the paper) and 12, 6, 6, 16 at the last four.  For each n in (3, 6, 10) and each misread e in (0, .02, .04, .06, .08, .10) (18 cells):
+    smooth truth = the best COUNT curve (c0 grid) fitted to that series at that n and e; sharp truth = the best STEP curve with s <= 0.15 (s0 grid) fitted the same way.  Simulate k ~
+    Binomial(n, e + (1 - 2e) P_true) per level, 500 runs per cell and truth, fresh seeds [31, n index, e index, truth index], refit each run with the misread rate e known (e_fit = e, as in
+    bak_policy_b.py; no control noise).  sharp = 2 (best ll over the rule's groups - best ll among the rule's STEP curves with s <= 0.15), exactly as droplet_ctrl_am2.py stage 3; B uses c0, s0
+    (STEP curves: s0), AM2 uses c0, cH, s0, sH (STEP curves: s0 and sH).  Rejection = sharp > 3.84.  Every run counts, scorable or not (stage 3 also ignored scorability).  The same simulated
+    data is scored under both rules.  Paired number: the same share when the truth is the sharp step, i.e. how often a sharp step that IS true is rejected (my reading of "sharp-truth
+    detection rate": a rule that rejects everything would look good on the smooth truth and show a large number here).
+
+PREDICTIONS
+G1  Reproduction.  c*_B(128) unrounded lies in [-2.2100, -2.2050] (it prints as -2.21; it is above -2.21 because all four P7 misses have the earlier unit's -2.21 run LOWER than the log) and its
+    cell is "dry a=1.67" at CV 0.05, misread 0.04 (misread_sim.log:5).  (Weaker, reproduction only: inside [-2.2150, -2.2050] with the same cell.)
+G2  Gate.  With the unrounded c* ("Bu"): at least 58 of the 60 cells equal the printed digits of misread_sim.log (point 60), including the four cells that missed (droplet_ctrl_am2.log:67, 68, 69, 98);
+    every cell within the old tolerance (0.015 / 0.004); counting maximum 0.054 (+-0.004); NOT SCORABLE 0.00 in all 12 conditions.  With -2.21 ("Bn") the 56 of 60 and the same four cells recur.
+K1  c*_AM2(128) by this recipe lies in [-2.50, -2.15] (point -2.31); it is within 0.10 of the -2.40 used in droplet_ctrl_am2.
+K2  c*_B(480) lies in [-1.84, -1.64] (point -1.74).
+K3  c*_AM2(480) lies in [-1.95, -1.65] (point -1.80), and c*_AM2(480) - c*_B(480) lies in [-0.20, +0.05].
+S1  Smooth truth, rule B, share with sharp > 3.84, by true misread (the band applies to each of n = 3, 6, 10):
+      e 0.00 [0.97, 1.00]   e 0.02 [0.88, 1.00]   e 0.04 [0.75, 1.00]   e 0.06 [0.55, 0.95]   e 0.08 [0.40, 0.85]   e 0.10 [0.25, 0.75]
+    At least 15 of the 18 cells inside their band, and within each n the share does not rise with e by more than 0.04 from one e to the next.
+S2  Smooth truth, rule AM2: at most 0.65 in every one of the 18 cells and at most 0.35 in the nine cells with e >= 0.06 (central guess 0.30-0.50 at e <= 0.02, n = 3; 0.05-0.20 at e >= 0.06).
+S3  Paired smooth-truth contrast: AM2 is no higher than B + 0.03 in any cell, and B - AM2 >= 0.30 in each of the nine cells with e <= 0.04.
+S4  Sharp truth, both rules: the share with sharp > 3.84 is at most 0.15 in every one of the 18 cells (central guess 0.02-0.08).
+
+DECISION RULES (fixed now; "A" = AM2, "B" = rule B)
+D1  Gate.  If G1's weak form fails (c* outside [-2.2150, -2.2050] or another worst cell), my calibration does not reproduce misread_sim and nothing in this unit about c* is usable: report that and stop.
+    If G1 holds and G2 holds, the rounding of c* to two decimals explains the four misses: the R1 "NOT TRUSTED" on the AM2-versus-B comparison (new_analyses_droplet_ctrl_am2.md section 5) is
+    lifted for the B column; with R2's conditions already met numerically there (48 of 48 step cells within 0.05, AM2 counting maximum 0.052 <= 0.07), AM2 changes the Section 3 / 10 percentages
+    by at most 0.05 PROVIDED c*_AM2 = -2.40 stands, which holds if K1 holds (within 0.10); if c*_AM2(128) is farther than 0.10 from -2.40, that unit's AM2 columns must be rerun with the recalibrated c*
+    before being quoted.  A prereg that prints power tables to the digit must then quote c* to four decimals.  If G1 holds and G2 fails (fewer than 58 of 60 with the unrounded c*), rounding is NOT the cause and
+    the AM2 comparison stays NOT TRUSTED.
+D2  Control count.  Report c*_B(480) and c*_AM2(480) to four decimals with their cells.  If |c*_B(480) - c*_B(128)| > 0.25 (K2 predicts about 0.47), W1 of the earlier unit (480 controls) cannot be adopted
+    without a c* tied to the control count, and the prereg must say which c* goes with which count.  If |c*_AM2(480) - c*_B(480)| <= 0.05 one threshold could serve both rules at 480; otherwise AM2 needs its own.
+    This unit did not evaluate false STEP or power at 480, so c*(480) is a calibration value, not a validated one.
+D3  Smooth truth.  P_B, P_A = shares in S1, S2 (18 cells).  If P_A <= 0.50 in at least 15 of 18 cells and P_B >= 0.75 in at least 7 of the 9 cells with e <= 0.04: AM2 gives up most of the ability to reject a
+    sharp step in smooth Bak-like data; the stage-3 reading holds in simulation, not only on one dataset; adopting AM2 means the prereg can no longer claim that a SMOOTH label rejects a sharp step (it can claim only
+    "smooth, or a step with a plateau"), which the author must weigh against B's plateau blind spot.  If P_A >= 0.50 in at least 9 of 18 cells: AM2 keeps much of the power and the single-dataset values understated it.
+    Otherwise: mixed; report the table and propose no sentence.
+D4  Size.  If either rule's sharp-truth share (S4) exceeds 0.15 in any cell, that rule's "sharp > 3.84 rejects a sharp step" is not a 5%-level statement and any prereg sentence using it must quote the simulated rate.
+D5  Nothing is edited in journals/droplet_prereg.md or any existing file; all wording is marked NOT APPLIED.

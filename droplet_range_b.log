@@ -1,0 +1,101 @@
+Model study on simulated drops, not data.  Rule B (measured misread from 128 controls, c* -2.21), CV 0.05 unless stated.
+u = V* / V0_pilot.  Prior spans: S1 = (0.35, 1.39) (plan's own allowance), S2 = (0.14, 2.8) (0.2-4 x).  Designs, nominal drops (levels x 25 + 128 controls): base 328, ext4 328, K10 378, K12 428
+
+u-scan, V0_pilot imposed, STEP share (300 runs).  Columns u = 0.05 0.07 0.1 0.14 0.2 0.28 0.35 0.4 0.57 0.8 1 1.13 1.39 1.6 1.9 2.26 2.7 3.2 4.5 6.4
+  base s=0.1 misread 0.00: 0.00 0.00 0.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 0.97 0.00 0.00 0.00
+  base s=0.1 misread 0.03: 0.00 0.00 0.00 1.00 0.98 1.00 1.00 1.00 1.00 1.00 1.00 0.99 1.00 0.99 1.00 1.00 0.95 0.00 0.00 0.00
+  base s=0.1 misread 0.06: 0.00 0.00 0.00 0.94 0.94 0.94 0.95 0.97 0.93 0.93 0.94 0.94 0.93 0.94 0.94 0.95 0.88 0.00 0.00 0.00
+  base s=0.15 misread 0.00: 0.00 0.00 0.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 0.87 0.00 0.00 0.00
+  base s=0.15 misread 0.03: 0.00 0.00 0.00 0.99 0.98 1.00 1.00 1.00 0.98 0.99 0.99 1.00 0.97 0.99 0.98 0.99 0.79 0.00 0.00 0.00
+  base s=0.15 misread 0.06: 0.00 0.00 0.00 0.91 0.85 0.91 0.93 0.93 0.92 0.93 0.92 0.94 0.89 0.93 0.89 0.90 0.71 0.00 0.00 0.00
+  ext4 s=0.1 misread 0.00: 0.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 0.00
+  ext4 s=0.1 misread 0.03: 0.00 1.00 1.00 1.00 0.99 1.00 1.00 0.99 1.00 1.00 1.00 1.00 1.00 0.99 0.99 1.00 0.98 0.99 1.00 0.00
+  ext4 s=0.1 misread 0.06: 0.00 0.94 0.95 0.91 0.93 0.94 0.95 0.96 0.95 0.94 0.94 0.95 0.94 0.93 0.94 0.94 0.90 0.95 0.95 0.00
+  ext4 s=0.15 misread 0.00: 0.00 0.99 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 0.00
+  ext4 s=0.15 misread 0.03: 0.00 0.94 0.97 0.98 0.97 1.00 1.00 1.00 1.00 1.00 1.00 1.00 0.99 0.98 0.98 0.97 0.96 0.98 0.96 0.00
+  ext4 s=0.15 misread 0.06: 0.00 0.91 0.86 0.91 0.90 0.95 0.94 0.93 0.92 0.92 0.93 0.95 0.86 0.91 0.89 0.91 0.90 0.91 0.92 0.00
+  K10  s=0.1 misread 0.00: 0.00 0.00 0.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 0.00
+  K10  s=0.1 misread 0.03: 0.00 0.00 0.00 1.00 0.99 1.00 1.00 1.00 1.00 0.99 0.99 1.00 1.00 0.99 1.00 0.99 0.98 1.00 1.00 0.00
+  K10  s=0.1 misread 0.06: 0.00 0.00 0.00 0.92 0.93 0.96 0.96 0.96 0.93 0.95 0.93 0.98 0.96 0.94 0.96 0.94 0.94 0.93 0.93 0.00
+  K10  s=0.15 misread 0.00: 0.00 0.00 0.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 0.00
+  K10  s=0.15 misread 0.03: 0.00 0.00 0.00 0.98 0.98 1.00 1.00 1.00 1.00 0.98 1.00 1.00 0.99 0.99 0.98 0.98 0.97 0.99 0.96 0.00
+  K10  s=0.15 misread 0.06: 0.00 0.00 0.00 0.88 0.88 0.93 0.95 0.94 0.92 0.92 0.91 0.91 0.93 0.95 0.95 0.89 0.85 0.92 0.87 0.00
+  K12  s=0.1 misread 0.00: 0.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 0.00
+  K12  s=0.1 misread 0.03: 0.00 0.99 1.00 1.00 1.00 1.00 1.00 1.00 0.99 0.99 1.00 0.99 1.00 0.99 1.00 0.99 0.99 0.99 1.00 0.00
+  K12  s=0.1 misread 0.06: 0.00 0.95 0.95 0.96 0.95 0.95 0.95 0.96 0.95 0.96 0.93 0.95 0.94 0.96 0.93 0.93 0.93 0.97 0.93 0.00
+  K12  s=0.15 misread 0.00: 0.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 0.00
+  K12  s=0.15 misread 0.03: 0.00 0.97 0.96 0.99 1.00 1.00 0.99 0.99 0.98 0.98 0.99 1.00 0.99 0.99 1.00 0.97 0.96 0.99 0.96 0.00
+  K12  s=0.15 misread 0.06: 0.00 0.89 0.85 0.90 0.92 0.92 0.91 0.94 0.92 0.89 0.94 0.90 0.93 0.95 0.93 0.92 0.87 0.91 0.90 0.00
+
+Edges (smallest u with STEP >= 0.95; largest u reached with STEP >= 0.95 at every grid u from 0.35 up)
+  base s=0.1 misread 0.00: u_lo 0.14, u_hi 2.7
+  base s=0.1 misread 0.03: u_lo 0.14, u_hi 2.7
+  base s=0.1 misread 0.06: u_lo 0.35, u_hi 0.4
+  base s=0.15 misread 0.00: u_lo 0.14, u_hi 2.26
+  base s=0.15 misread 0.03: u_lo 0.14, u_hi 2.26
+  base s=0.15 misread 0.06: u_lo None, u_hi None
+  ext4 s=0.1 misread 0.00: u_lo 0.07, u_hi 4.5
+  ext4 s=0.1 misread 0.03: u_lo 0.07, u_hi 4.5
+  ext4 s=0.1 misread 0.06: u_lo 0.1, u_hi None
+  ext4 s=0.15 misread 0.00: u_lo 0.07, u_hi 4.5
+  ext4 s=0.15 misread 0.03: u_lo 0.1, u_hi 4.5
+  ext4 s=0.15 misread 0.06: u_lo 0.28, u_hi None
+  K10  s=0.1 misread 0.00: u_lo 0.14, u_hi 4.5
+  K10  s=0.1 misread 0.03: u_lo 0.14, u_hi 4.5
+  K10  s=0.1 misread 0.06: u_lo 0.28, u_hi 0.4
+  K10  s=0.15 misread 0.00: u_lo 0.14, u_hi 4.5
+  K10  s=0.15 misread 0.03: u_lo 0.14, u_hi 4.5
+  K10  s=0.15 misread 0.06: u_lo 1.6, u_hi None
+  K12  s=0.1 misread 0.00: u_lo 0.07, u_hi 4.5
+  K12  s=0.1 misread 0.03: u_lo 0.07, u_hi 4.5
+  K12  s=0.1 misread 0.06: u_lo 0.07, u_hi 0.8
+  K12  s=0.15 misread 0.00: u_lo 0.07, u_hi 4.5
+  K12  s=0.15 misread 0.03: u_lo 0.07, u_hi 4.5
+  K12  s=0.15 misread 0.06: u_lo 1.6, u_hi None
+
+Lowest STEP share over the grid points of each span
+  base S1 s=0.1 misread 0.03: 0.99; S1 s=0.1 misread 0.06: 0.93; S1 s=0.15 misread 0.03: 0.97; S1 s=0.15 misread 0.06: 0.89; S2 s=0.1 misread 0.03: 0.95; S2 s=0.1 misread 0.06: 0.88; S2 s=0.15 misread 0.03: 0.79; S2 s=0.15 misread 0.06: 0.71
+  ext4 S1 s=0.1 misread 0.03: 0.99; S1 s=0.1 misread 0.06: 0.94; S1 s=0.15 misread 0.03: 0.99; S1 s=0.15 misread 0.06: 0.86; S2 s=0.1 misread 0.03: 0.98; S2 s=0.1 misread 0.06: 0.90; S2 s=0.15 misread 0.03: 0.96; S2 s=0.15 misread 0.06: 0.86
+  K10  S1 s=0.1 misread 0.03: 0.99; S1 s=0.1 misread 0.06: 0.93; S1 s=0.15 misread 0.03: 0.98; S1 s=0.15 misread 0.06: 0.91; S2 s=0.1 misread 0.03: 0.98; S2 s=0.1 misread 0.06: 0.92; S2 s=0.15 misread 0.03: 0.97; S2 s=0.15 misread 0.06: 0.85
+  K12  S1 s=0.1 misread 0.03: 0.99; S1 s=0.1 misread 0.06: 0.93; S1 s=0.15 misread 0.03: 0.98; S1 s=0.15 misread 0.06: 0.89; S2 s=0.1 misread 0.03: 0.99; S2 s=0.1 misread 0.06: 0.93; S2 s=0.15 misread 0.03: 0.96; S2 s=0.15 misread 0.06: 0.87
+
+Known issue: base design, u = 1.39, s = 0.1, CV 0.05, true misread 0.03, 2000 runs, STEP share:
+  rule A (fixed 3% term, c* -1.61) 1.000; rule B (measured) 0.994; E0 (no misread term in either fit, c* -2.21) 0.069
+  all verdicts, B: STEP 0.994 SMOOTH 0.006 FLAT 0.000 RISING 0.000 NS 0.000; E0: STEP 0.069 SMOOTH 0.922 FLAT 0.009 RISING 0.000 NS 0.000
+  E0 and B across the u grid, base, s = 0.1, misread 0.03: u=0.05: 0.00/0.00 u=0.07: 0.00/0.00 u=0.1: 0.00/0.00 u=0.14: 0.42/1.00 u=0.2: 0.66/0.98 u=0.28: 0.97/1.00 u=0.35: 1.00/1.00 u=0.4: 1.00/1.00 u=0.57: 0.80/1.00 u=0.8: 0.42/1.00 u=1: 0.23/1.00 u=1.13: 0.12/0.99 u=1.39: 0.06/1.00 u=1.6: 0.08/0.99 u=1.9: 0.03/1.00 u=2.26: 0.03/1.00 u=2.7: 0.01/0.95 u=3.2: 0.00/0.00 u=4.5: 0.00/0.00 u=6.4: 0.00/0.00
+
+Full pipeline (pilot ladder 0.25-16 uL, 20 drops; exact pilot fit), s = 0.1, CV 0.05, misread 0.03, 600 runs: STEP share, u = V* / V0_pilot 2.5 / 50 / 97.5 percentiles
+  V* (uL):       0.1    0.2    0.4    0.7      1      2    3.1      4      7     12     20     32     64
+  STEP base   0.902  0.957  0.993  0.997  0.998  0.998  0.998  0.997  0.995  0.990  0.680  0.793  0.908
+  STEP ext4   0.935  0.960  0.998  0.995  0.998  0.997  0.997  0.998  0.993  1.000  0.900  0.915  0.982
+  STEP K10    0.855  0.967  0.998  0.997  0.997  0.998  0.995  0.998  0.998  1.000  0.663  0.773  0.927
+  STEP K12    0.938  0.963  0.997  1.000  0.995  0.997  0.995  0.990  1.000  0.995  0.928  0.933  0.970
+  u 2.5%        0.10   0.19   0.29   0.36   0.41   0.49   0.62   0.55   0.63   0.49   0.03   0.05   0.10
+  u median      0.34   0.67   0.54   0.55   0.60   0.65   0.75   0.69   0.79   0.60   0.13   0.20   0.41
+  u 97.5%      36.20  67.68   1.09   0.82   0.83   0.84   0.88   0.86   0.95   0.74   0.30   0.46   0.92
+  other verdicts, base: V*=0.1: SMOOTH 0.00 FLAT 0.00 RISING 0.00 NS 0.10; V*=0.2: SMOOTH 0.01 FLAT 0.00 RISING 0.00 NS 0.04; V*=32: SMOOTH 0.01 FLAT 0.00 RISING 0.00 NS 0.20; V*=64: SMOOTH 0.00 FLAT 0.00 RISING 0.00 NS 0.09
+
+False STEP at the frozen c* = -2.21 (87 counting+drying cells, CV 0.05 / misread 0.03 and CV 0.15 / misread 0.06, 300 runs): highest STEP share
+  base 0.043 (run1 dry bulk no quench         , CV 0.05, misread 0.03)
+  ext4 0.037 (run1 dry bulk no quench         , CV 0.05, misread 0.03)
+  K10  0.050 (run1 dry bulk no quench         , CV 0.05, misread 0.03)
+  K12  0.060 (dry a=1.67, CV 0.05, misread 0.03)
+
+Cost (drops per run incl. 128 controls; measured mean over S2 grid points, s = 0.1, misread 0.03): base 343 (nominal 328), ext4 344 (nominal 328), K10 383 (nominal 378), K12 428 (nominal 428)
+
+Predictions (droplet_range_predictions_v2.txt):
+  P17 FAILED: lowest base STEP on S1: s=0.1 misread 0.0: 1.000, s=0.1 misread 0.03: 0.990, s=0.1 misread 0.06: 0.930, s=0.15 misread 0.0: 1.000, s=0.15 misread 0.03: 0.970, s=0.15 misread 0.06: 0.893
+  P18 HELD: E0 0.069 vs measured 0.994
+  P19 HELD: base u_lo 0.14, u_hi 2.7
+  P20 HELD: base STEP at u = 0.05 0.00, 0.07 0.00, 4.5 0.00, 6.4 0.00
+  P21 HELD: central 95% of u: V*=0.7: 0.36-0.82; V*=2: 0.49-0.84; V*=3.1: 0.62-0.88; V*=7: 0.63-0.95
+  P22 HELD: base STEP: V*=0.1 0.902, V*=1 0.998, V*=2 0.998, V*=4 0.997, V*=7 0.995, V*=64 0.908
+  P23 HELD: K10 u_hi 4.5 vs base 2.7; K10 null max 0.050
+  P24 FAILED: S2 coverage (all four conditions >= 0.95): base False, ext4 False, K10 False, K12 False
+
+Decision (b): lowest-cost design (by measured mean drops) whose lowest STEP share over the span is >= 0.95 in (0.05, 0.03) and (0.05, 0.06) at s = 0.1, 0.15, and whose highest null STEP is <= 0.07
+  S1 (0.35, 1.39): no design qualifies
+  S2 (0.14, 2.8): no design qualifies
+  lowest STEP share over s = 0.1, 0.15 and misread 0.03, 0.06, then edges (u_lo, u_hi): base (None, None), ext4 (None, None), K10 (None, None), K12 (1.6, None)
+
+wall time 193s

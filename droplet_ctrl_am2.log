@@ -1,0 +1,191 @@
+Unit droplet_ctrl_am2: control-drop count (exact binomial) and rule AM2 against rule B.  Simulated drops, not data.  Predictions sha256 e60efb84dfc449661160e4f6becdba3dd277cc7753c9cbc77e6c3c5fd22f1a32.
+PART 1.  Exact binomial arithmetic (scipy.stats.binom), n controls = 128..1024, true misread p the same for every control.
+NS = P(k > n/10), FS (false SCORABLE) = P(k <= n/10).  No cost per control is stated in the prereg (Sections 6-9): counts only.
+
+  n     k_max  NS(6%)  NS(8%)  NS(10%)  FS(11%)  FS(12%)  FS(13%)  FS(14%)  
+  128   12     0.044    0.224    0.519    0.339    0.222    0.136    0.079    
+  129   12     0.047    0.232    0.531    0.328    0.213    0.129    0.074    
+  130   13     0.025    0.157    0.427    0.425    0.294    0.189    0.114    
+  139   13     0.040    0.222    0.530    0.324    0.206    0.122    0.067    
+  140   14     0.021    0.152    0.429    0.417    0.282    0.177    0.103    
+  160   16     0.016    0.141    0.434    0.402    0.261    0.156    0.085    
+  192   19     0.012    0.136    0.459    0.364    0.219    0.118    0.058    
+  240   24     0.005    0.107    0.446    0.356    0.198    0.096    0.041    
+  256   25     0.006    0.125    0.497    0.304    0.157    0.070    0.027    
+  320   32     0.002    0.081    0.453    0.321    0.155    0.061    0.020    
+  400   40     0.001    0.062    0.458    0.293    0.123    0.040    0.010    
+  480   48     0.000    0.048    0.462    0.269    0.098    0.026    0.005    
+  500   50     0.000    0.045    0.462    0.264    0.093    0.024    0.005    
+  509   50     0.000    0.059    0.516    0.221    0.072    0.017    0.003    
+  510   51     0.000    0.044    0.463    0.261    0.091    0.023    0.004    
+  512   51     0.000    0.047    0.475    0.251    0.086    0.021    0.004    
+  560   56     0.000    0.038    0.464    0.248    0.079    0.018    0.003    
+  640   64     0.000    0.029    0.467    0.230    0.065    0.012    0.001    
+  768   76     0.000    0.025    0.508    0.179    0.038    0.005    0.000    
+  800   80     0.000    0.018    0.470    0.199    0.043    0.005    0.000    
+  1000  100    0.000    0.010    0.473    0.169    0.027    0.002    0.000    
+  1019  101    0.000    0.012    0.511    0.144    0.021    0.001    0.000    
+  1020  102    0.000    0.010    0.474    0.166    0.025    0.002    0.000    
+  1024  102    0.000    0.011    0.490    0.155    0.023    0.002    0.000    
+
+  Smallest n meeting the target (first); smallest n after which it holds for every larger n up to 1024 (stable); the same over n % 10 == 0 and
+  n % 80 == 0 (16 controls per level x 8 levels with an integral 10% threshold); min / max of the probability over all n = 128..1024.
+  NS(6%) <= 0.05   first   128 stable   128 | n%10==0: first   130 stable   130 | n%80==0: first   160 stable   160 | min 0.000 at n=1020, max 0.047 at n=129
+  NS(8%) <= 0.05   first   470 stable   550 | n%10==0: first   470 stable   470 | n%80==0: first   480 stable   480 | min 0.010 at n=1020, max 0.232 at n=129
+  NS(10%) <= 0.05  first  None stable  None | n%10==0: first  None stable  None | n%80==0: first  None stable  None | min 0.427 at n=130, max 0.531 at n=129
+  FS(11%) <= 0.10  first  None stable  None | n%10==0: first  None stable  None | n%80==0: first  None stable  None | min 0.144 at n=1019, max 0.425 at n=130
+  FS(12%) <= 0.10  first   389 stable   471 | n%10==0: first   480 stable   480 | n%80==0: first   480 stable   480 | min 0.021 at n=1019, max 0.294 at n=130
+  FS(13%) <= 0.10  first   179 stable   231 | n%10==0: first   240 stable   240 | n%80==0: first   240 stable   240 | min 0.001 at n=1019, max 0.189 at n=130
+  FS(14%) <= 0.10  first   128 stable   141 | n%10==0: first   150 stable   150 | n%80==0: first   160 stable   160 | min 0.000 at n=1019, max 0.114 at n=130
+
+  Lower caps (NOT SCORABLE iff k > cap * n), pair NS(6%) <= 0.05 and FS(11%) <= 0.10; stable = holds for every larger n up to 1024.
+  cap  6%: NS(6%)<=.05 first None stable None | FS(11%)<=.10 first 128 stable 128 | pair first None stable None
+  cap  7%: NS(6%)<=.05 first None stable None | FS(11%)<=.10 first 128 stable 128 | pair first None stable None
+  cap  8%: NS(6%)<=.05 first 363 stable 438 | FS(11%)<=.10 first 149 stable 201 | pair first 363 stable 438  | at the stable n: NS(6%) 0.036, NS(8%) 0.458, NS(10%) 0.910, FS(11%) 0.023, FS(12%) 0.004
+  cap  9%: NS(6%)<=.05 first 156 stable 212 | FS(11%)<=.10 first 355 stable 435 | pair first 355 stable 435  | at the stable n: NS(6%) 0.005, NS(8%) 0.201, NS(10%) 0.735, FS(11%) 0.098, FS(12%) 0.027
+  cap 10%: NS(6%)<=.05 first 128 stable 128 | FS(11%)<=.10 first None stable None | pair first None stable None
+
+Part 1 predictions
+  P1 HELD: 6%: first 128, stable 128, max over n 0.047 at n=129
+  P2 HELD: 8%: first 470, stable 550, some n above first has NS > 0.05: True
+  P3 HELD: 10%: min 0.427 at n=130, max 0.531, any n with NS <= .05: False
+  P4 HELD: 11%: FS(128) 0.339, min 0.144 at n=1019, any n with FS <= .10: False
+  P5 FAILED: first n with FS <= .10: 12% 389, 13% 179, 14% 128; FS(14%, 128) 0.079
+  P6 HELD: pair stable n by cap: 6%: None, 7%: None, 8%: 438, 9%: 435, 10%: None
+  P6 price clause (no numeric band in the file, reported not scored): cap 8%, n = 438: NS at a true 8% = 0.458, at a true 10% = 0.910
+  P6 price clause (no numeric band in the file, reported not scored): cap 9%, n = 435: NS at a true 8% = 0.201, at a true 10% = 0.735
+
+PART 2.  Model study, not data.  500 runs per cell, seeds [5, i, j], 128 controls.  'no cap' (Bn, AM2n) = misread_sim.log's policy B and the prereg Sections 3 and 10;
+'cap' (B, AM2) = prereg Section 2 item 1 as written (NOT SCORABLE when more than 10% of the 128 controls are read wrong).
+'Bn' = this run with c* = -2.21 (misread_sim used its unrounded calibrated value, so 0-2 runs per cell can flip).
+
+Counting cells: highest STEP share over the 87 cells  (log column: misread_sim.log:10-21, B 128)
+  CV   misread  log B128        Bn    Bn-log      AM2n   AM2n-Bn     B cap   AM2 cap   AM2c-Bc
+  0.05 0.00        0.048     0.048     0.000     0.046    -0.002     0.048     0.046    -0.002
+  0.05 0.02        0.054     0.054     0.000     0.052    -0.002     0.054     0.052    -0.002
+  0.05 0.04        0.040     0.040     0.000     0.040     0.000     0.040     0.040     0.000
+  0.05 0.06        0.028     0.026    -0.002     0.034     0.008     0.020     0.028     0.008
+  0.05 0.08        0.044     0.042    -0.002     0.044     0.002     0.024     0.024     0.000
+  0.05 0.10        0.034     0.032    -0.002     0.038     0.006     0.008     0.010     0.002
+  0.15 0.00        0.024     0.024     0.000     0.026     0.002     0.024     0.026     0.002
+  0.15 0.02        0.020     0.020     0.000     0.024     0.004     0.020     0.024     0.004
+  0.15 0.04        0.026     0.026     0.000     0.034     0.008     0.026     0.034     0.008
+  0.15 0.06        0.042     0.042     0.000     0.044     0.002     0.036     0.038     0.002
+  0.15 0.08        0.026     0.026     0.000     0.028     0.002     0.014     0.018     0.004
+  0.15 0.10        0.036     0.036     0.000     0.044     0.008     0.006     0.012     0.006
+
+probit s=0.1: STEP share  (log column: misread_sim.log:31-42, B 128)
+  CV   misread  log B128        Bn    Bn-log      AM2n   AM2n-Bn     B cap   AM2 cap   AM2c-Bc
+  0.05 0.00         1.00      1.00      0.00      1.00      0.00      1.00      1.00      0.00
+  0.05 0.02         1.00      1.00     -0.00      1.00      0.00      1.00      1.00      0.00
+  0.05 0.04         1.00      1.00     -0.00      1.00      0.00      0.99      1.00      0.00
+  0.05 0.06         0.99      0.99      0.00      1.00      0.00      0.95      0.95      0.00
+  0.05 0.08         0.97      0.97      0.00      0.97      0.00      0.78      0.78      0.00
+  0.05 0.10         0.95      0.95      0.00      0.96      0.01      0.45      0.46      0.01
+  0.15 0.00         1.00      1.00      0.00      1.00      0.00      1.00      1.00      0.00
+  0.15 0.02         1.00      1.00     -0.00      1.00      0.00      1.00      1.00      0.00
+  0.15 0.04         0.98      0.98      0.00      0.98      0.00      0.98      0.98      0.00
+  0.15 0.06         0.96      0.96     -0.00      0.96      0.01      0.91      0.92      0.01
+  0.15 0.08         0.93      0.93     -0.00      0.93      0.01      0.70      0.71      0.01
+  0.15 0.10         0.90      0.90      0.00      0.91      0.01      0.42      0.43      0.01
+
+probit s=0.15: STEP share  (log column: misread_sim.log:46-57, B 128)
+  CV   misread  log B128        Bn    Bn-log      AM2n   AM2n-Bn     B cap   AM2 cap   AM2c-Bc
+  0.05 0.00         1.00      1.00      0.00      1.00      0.00      1.00      1.00      0.00
+  0.05 0.02         1.00      1.00     -0.00      1.00      0.00      1.00      1.00      0.00
+  0.05 0.04         0.99      0.99      0.00      0.99     -0.00      0.99      0.99     -0.00
+  0.05 0.06         0.96      0.96      0.00      0.97      0.01      0.91      0.92      0.01
+  0.05 0.08         0.96      0.95     -0.01      0.96      0.00      0.73      0.74      0.00
+  0.05 0.10         0.92      0.92      0.00      0.93      0.01      0.41      0.41      0.01
+  0.15 0.00         1.00      1.00      0.00      1.00      0.00      1.00      1.00      0.00
+  0.15 0.02         0.99      0.99     -0.00      0.99      0.00      0.99      0.99      0.00
+  0.15 0.04         0.95      0.95     -0.00      0.95      0.00      0.94      0.94      0.00
+  0.15 0.06         0.91      0.91      0.00      0.92      0.01      0.87      0.87      0.01
+  0.15 0.08         0.86      0.86     -0.00      0.87      0.01      0.63      0.64      0.01
+  0.15 0.10         0.81      0.81     -0.00      0.82      0.01      0.33      0.34      0.01
+
+probit s=0.2: STEP share  (log column: misread_sim.log:61-72, B 128)
+  CV   misread  log B128        Bn    Bn-log      AM2n   AM2n-Bn     B cap   AM2 cap   AM2c-Bc
+  0.05 0.00         1.00      1.00      0.00      1.00      0.00      1.00      1.00      0.00
+  0.05 0.02         0.99      0.99      0.00      0.99      0.00      0.99      0.99      0.00
+  0.05 0.04         0.96      0.96      0.00      0.96     -0.00      0.96      0.96     -0.00
+  0.05 0.06         0.92      0.92      0.00      0.94      0.01      0.87      0.89      0.01
+  0.05 0.08         0.91      0.91      0.00      0.92      0.01      0.69      0.70      0.01
+  0.05 0.10         0.82      0.82      0.00      0.83      0.01      0.38      0.39      0.01
+  0.15 0.00         1.00      1.00      0.00      1.00      0.00      1.00      1.00      0.00
+  0.15 0.02         0.97      0.97     -0.00      0.97      0.00      0.97      0.97      0.00
+  0.15 0.04         0.88      0.88     -0.00      0.88      0.01      0.88      0.88      0.01
+  0.15 0.06         0.84      0.84     -0.00      0.84     -0.00      0.80      0.79     -0.00
+  0.15 0.08         0.77      0.77      0.00      0.77     -0.00      0.56      0.56      0.00
+  0.15 0.10         0.68      0.68     -0.00      0.69      0.01      0.28      0.29      0.01
+
+probit s=0.3: STEP share  (log column: misread_sim.log:76-87, B 128)
+  CV   misread  log B128        Bn    Bn-log      AM2n   AM2n-Bn     B cap   AM2 cap   AM2c-Bc
+  0.05 0.00         0.98      0.98     -0.00      0.98      0.00      0.98      0.98      0.00
+  0.05 0.02         0.83      0.83     -0.00      0.82     -0.01      0.83      0.82     -0.01
+  0.05 0.04         0.69      0.69      0.00      0.69      0.00      0.69      0.69      0.00
+  0.05 0.06         0.64      0.64      0.00      0.62     -0.02      0.60      0.58     -0.02
+  0.05 0.08         0.54      0.54      0.00      0.54     -0.00      0.36      0.37      0.01
+  0.05 0.10         0.47      0.47     -0.00      0.45     -0.02      0.16      0.16     -0.00
+  0.15 0.00         0.90      0.90     -0.00      0.89     -0.01      0.90      0.89     -0.01
+  0.15 0.02         0.70      0.70     -0.00      0.67     -0.02      0.70      0.67     -0.02
+  0.15 0.04         0.55      0.55      0.00      0.55      0.00      0.55      0.55      0.00
+  0.15 0.06         0.46      0.46      0.00      0.46      0.00      0.43      0.43      0.00
+  0.15 0.08         0.40      0.40     -0.00      0.40      0.00      0.25      0.26      0.00
+  0.15 0.10         0.37      0.37      0.00      0.38      0.01      0.09      0.10      0.01
+
+probit s=0.15: NOT SCORABLE share  (log column misread_sim.log:91-102, B 128, no cap)
+  CV   misread  log B128        Bn      AM2n     B cap   AM2 cap  binomial
+  0.05 0.00        0.000     0.000     0.000     0.000     0.000     0.000
+  0.05 0.02        0.000     0.000     0.000     0.000     0.000     0.000
+  0.05 0.04        0.000     0.000     0.000     0.000     0.000     0.002
+  0.05 0.06        0.000     0.000     0.000     0.052     0.052     0.044
+  0.05 0.08        0.000     0.000     0.000     0.224     0.224     0.224
+  0.05 0.10        0.000     0.000     0.000     0.530     0.530     0.519
+  0.15 0.00        0.000     0.000     0.000     0.000     0.000     0.000
+  0.15 0.02        0.000     0.000     0.000     0.000     0.000     0.000
+  0.15 0.04        0.000     0.000     0.000     0.006     0.006     0.002
+  0.15 0.06        0.000     0.000     0.000     0.044     0.044     0.044
+  0.15 0.08        0.000     0.000     0.000     0.232     0.232     0.224
+  0.15 0.10        0.000     0.000     0.000     0.522     0.522     0.519
+
+Summary in the form of prereg Sections 3 and 10 (percent of runs called STEP; prereg quotes: counting max 5.4%, s<=0.15 91-100% and 81-97%, s=0.2 84-100% and 68-91%)
+                                  log B128           Bn         AM2n        B cap      AM2 cap
+  counting max, all 12                 5.4          5.4          5.2          5.4          5.2
+  s<=0.15, misread <= 0.06          91-100       91-100       92-100       87-100       87-100
+  s<=0.15, misread 0.08-0.10         81-97        81-97        82-97        33-78        34-78
+  s=0.2,  misread <= 0.06           84-100       84-100       84-100       80-100       79-100
+  s=0.2,  misread 0.08-0.10          68-91        68-91        69-92        28-69        29-70
+  s=0.3,  misread <= 0.06            46-98        46-98        46-98        43-98        43-98
+  s=0.3,  misread 0.08-0.10          37-54        37-54        38-54         9-36        10-37
+
+Predictions, part 2
+  P7 FAILED: 56/60 cells equal the printed digits, all within tolerance: True, counting max 0.054 (log 0.054), Bn NS share all 0.00: True
+  P8 HELD: 48/48 cells within 0.05; AM2n-Bn range [-0.024, +0.014]; s<=0.15 max |d| 0.012; cells beyond 0.05: []
+  P9 HELD: AM2n counting max 0.052, max |AM2n-Bn| per condition 0.008
+  P10 HELD: cap NS share at s=0.15: CV0.05/0.06: B 0.052 AM2 0.052, CV0.05/0.08: B 0.224 AM2 0.224, CV0.05/0.1: B 0.530 AM2 0.530, CV0.15/0.06: B 0.044 AM2 0.044, CV0.15/0.08: B 0.232 AM2 0.232, CV0.15/0.1: B 0.522 AM2 0.522; at misread <= 0.04 max 0.006
+  P11 HELD: violations 0 []; B cap, s=0.15, CV 0.05, misread 0.10: 0.41 (no cap 0.92)
+  P12 HELD: max (cap - no cap) counting maximum: B +0.000, AM2 +0.000
+
+Decision rules
+  R1: the gate (P7) FAILED -> the AM2 comparison is NOT TRUSTED; no prereg wording is proposed from it.
+
+STAGE 3 (POST HOC).  Bak et al. (2023) Fig. 2a re-fit; no control drops, so the misread rate is tried at 0-10% and the unprinted drop counts at P = 1 at n = 3, 6, 10.
+B = c* -2.21 (must reproduce bak_policy_b.log); AM2 = c* -2.40.  sharp = 2 (best ll - best ll among STEP curves with s <= 0.15), > 3.84 rejects a sharp step;
+for AM2 the STEP curves include the plateau family, so a sharp step with a plateau is not rejected.
+Tinc 90 C n=3  B   | e 0.00: L +8.14 sharp 282.7 SMOOTH | e 0.02: L +4.44 sharp  22.7 SMOOTH | e 0.04: L +2.85 sharp  13.0 SMOOTH | e 0.06: L +1.89 sharp   8.0 SMOOTH | e 0.08: L +1.21 sharp   4.8 SMOOTH | e 0.10: L +0.67 sharp   2.6 SMOOTH
+Tinc 90 C n=3  AM2 | e 0.00: L -0.02 sharp   3.0 SMOOTH | e 0.02: L +0.02 sharp   3.2 SMOOTH | e 0.04: L +0.06 sharp   1.2 SMOOTH | e 0.06: L +0.04 sharp   0.3 SMOOTH | e 0.08: L -0.06 sharp   0.0 SMOOTH | e 0.10: L -0.22 sharp   0.0 SMOOTH
+Tinc 90 C n=6  B   | e 0.00: L +7.15 sharp 280.7 SMOOTH | e 0.02: L +3.60 sharp  21.0 SMOOTH | e 0.04: L +2.17 sharp  11.6 SMOOTH | e 0.06: L +1.31 sharp   6.8 SMOOTH | e 0.08: L +0.74 sharp   3.9 SMOOTH | e 0.10: L +0.29 sharp   1.8 SMOOTH
+Tinc 90 C n=6  AM2 | e 0.00: L -0.06 sharp   2.2 SMOOTH | e 0.02: L -0.04 sharp   2.7 SMOOTH | e 0.04: L -0.04 sharp   0.8 SMOOTH | e 0.06: L -0.09 sharp   0.1 SMOOTH | e 0.08: L -0.23 sharp   0.0 SMOOTH | e 0.10: L -0.38 sharp   0.0 SMOOTH
+Tinc 90 C n=10 B   | e 0.00: L +6.29 sharp 278.9 SMOOTH | e 0.02: L +2.82 sharp  19.4 SMOOTH | e 0.04: L +1.57 sharp  10.4 SMOOTH | e 0.06: L +0.81 sharp   5.8 SMOOTH | e 0.08: L +0.35 sharp   3.0 SMOOTH | e 0.10: L -0.02 sharp   1.2 SMOOTH
+Tinc 90 C n=10 AM2 | e 0.00: L -0.17 sharp   1.6 SMOOTH | e 0.02: L -0.15 sharp   2.2 SMOOTH | e 0.04: L -0.20 sharp   0.6 SMOOTH | e 0.06: L -0.28 sharp   0.0 SMOOTH | e 0.08: L -0.44 sharp   0.0 SMOOTH | e 0.10: L -0.57 sharp   0.0 SMOOTH
+main      n=3  B   | e 0.00: L +0.75 sharp  38.3 NS | e 0.02: L +0.60 sharp   5.8 NS | e 0.04: L +0.46 sharp   3.4 NS | e 0.06: L +0.33 sharp   2.1 NS | e 0.08: L +0.23 sharp   1.3 NS | e 0.10: L +0.15 sharp   0.8 NS
+main      n=3  AM2 | e 0.00: L +0.09 sharp   1.5 NS | e 0.02: L +0.08 sharp   1.5 NS | e 0.04: L +0.07 sharp   1.5 NS | e 0.06: L +0.06 sharp   1.6 NS | e 0.08: L +0.05 sharp   1.4 NS | e 0.10: L +0.03 sharp   0.8 NS
+main      n=6  B   | e 0.00: L +0.69 sharp  38.1 NS | e 0.02: L +0.54 sharp   5.7 NS | e 0.04: L +0.41 sharp   3.3 NS | e 0.06: L +0.30 sharp   2.0 NS | e 0.08: L +0.21 sharp   1.3 NS | e 0.10: L +0.13 sharp   0.8 NS
+main      n=6  AM2 | e 0.00: L +0.05 sharp   1.4 NS | e 0.02: L +0.05 sharp   1.4 NS | e 0.04: L +0.04 sharp   1.5 NS | e 0.06: L +0.04 sharp   1.5 NS | e 0.08: L +0.03 sharp   1.3 NS | e 0.10: L +0.02 sharp   0.8 NS
+main      n=10 B   | e 0.00: L +0.62 sharp  38.0 NS | e 0.02: L +0.49 sharp   5.5 NS | e 0.04: L +0.37 sharp   3.2 NS | e 0.06: L +0.27 sharp   2.0 NS | e 0.08: L +0.18 sharp   1.2 NS | e 0.10: L +0.11 sharp   0.8 NS
+main      n=10 AM2 | e 0.00: L +0.00 sharp   1.3 NS | e 0.02: L +0.01 sharp   1.4 NS | e 0.04: L +0.01 sharp   1.4 NS | e 0.06: L +0.01 sharp   1.5 NS | e 0.08: L +0.01 sharp   1.3 NS | e 0.10: L +0.01 sharp   0.8 NS
+
+B reproduces bak_policy_b.log: 36 of 36 (L, sharp, label) entries equal the printed ones
+
+HELD 10 of 12: P1 HELD, P2 HELD, P3 HELD, P4 HELD, P5 FAILED, P6 HELD, P7 FAILED, P8 HELD, P9 HELD, P10 HELD, P11 HELD, P12 HELD

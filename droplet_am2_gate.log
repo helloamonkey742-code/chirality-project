@@ -1,0 +1,135 @@
+Unit droplet_am2_gate.  Model study on simulated drops, not data.  Predictions sha256 db59504ecfae5b78f71118b6d306aecd21b788beaf3bc993e01eaf0878251b0e.  Self-checks passed (calibration pipeline = misread_sim.run_cell on 2 cells;
+sharp on the real Bak 90 C series = bak_policy_b.log and droplet_ctrl_am2.log for B and AM2 at all 18 (n, misread) pairs).
+
+PART 1 and 2.  Calibration: 87 counting+drying cells x 12 conditions, 1000 runs per cell, seeds [4, i, j]; c* = lowest 5th percentile of L over cells with >= 50 eligible runs.
+  rule  n_c    c* (6 decimals)    set by (cell, CV, misread)                          next two lowest cells
+  B     128   -2.205492        dry a=1.67             CV 0.05 misread 0.04   -2.1558 run1 dry bulk no quench 0.05/0.08; -2.0588 dry a=1.67 0.05/0.06
+  AM2   128   -2.976290        run1 dry bulk front w 0.1  B 10 CV 0.15 misread 0.08   -2.5667 run1 excl bulk front w 0.1  B 10 0.05/0.08; -2.4634 run1 excl bulk front w 0.1  B 10 0.05/0.10
+  B     480   -2.019774        dry a=1.67             CV 0.05 misread 0.04   -1.8902 dry a=1.67 0.05/0.00; -1.8859 run1 dry bulk front w 0.5  B 1 0.05/0.00
+  AM2   480   -2.797970        run1 dry bulk front w 0.1  B 10 CV 0.15 misread 0.08   -2.3639 run1 dry bulk front w 0.1  B 10 0.05/0.08; -2.3433 run1 excl bulk diff  w 0.01 B 1 0.05/0.06
+  misread_sim.log:4-6 print c*_B(64/128/192) = -2.61 / -2.21 / -2.03; droplet_ctrl_am2 used -2.21 (B) and -2.40 (AM2, droplet_range_a.log: 300 runs, 8 conditions, 87 + 27 floor cells).
+
+GATE.  The 60 cells of P7 (500 runs, seeds [5, i, j], 128 controls, no control cap).  Bn = c* -2.21 (the earlier unit's value); Bu = c* -2.205492 (this unit's calibration), same simulated runs.
+
+Counting cells: highest STEP share over the 87 cells  (log column: misread_sim.log:10-21, B 128)
+  CV   misread  log B128        Bn        Bu    Bn-log    Bu-log
+  0.05 0.00        0.048    0.048    0.048   +0.000   +0.000
+  0.05 0.02        0.054    0.054    0.054   +0.000   +0.000
+  0.05 0.04        0.040    0.040    0.040   +0.000   +0.000
+  0.05 0.06        0.028    0.026    0.028   -0.002   +0.000
+  0.05 0.08        0.044    0.042    0.044   -0.002   +0.000
+  0.05 0.10        0.034    0.032    0.034   -0.002   +0.000
+  0.15 0.00        0.024    0.024    0.024   +0.000   +0.000
+  0.15 0.02        0.020    0.020    0.020   +0.000   +0.000
+  0.15 0.04        0.026    0.026    0.026   +0.000   +0.000
+  0.15 0.06        0.042    0.042    0.042   +0.000   +0.000
+  0.15 0.08        0.026    0.026    0.026   +0.000   +0.000
+  0.15 0.10        0.036    0.036    0.036   +0.000   +0.000
+
+probit s=0.1: STEP share  (log column: misread_sim.log:31-42, B 128)
+  CV   misread  log B128        Bn        Bu    Bn-log    Bu-log
+  0.05 0.00         1.00     1.00     1.00   +0.000   +0.000
+  0.05 0.02         1.00     1.00     1.00   -0.002   -0.002
+  0.05 0.04         1.00     1.00     1.00   -0.002   -0.002
+  0.05 0.06         0.99     0.99     0.99   +0.004   +0.004
+  0.05 0.08         0.97     0.97     0.97   +0.000   +0.000
+  0.05 0.10         0.95     0.95     0.95   +0.000   +0.000
+  0.15 0.00         1.00     1.00     1.00   +0.000   +0.000
+  0.15 0.02         1.00     1.00     1.00   -0.002   -0.002
+  0.15 0.04         0.98     0.98     0.98   +0.000   +0.000
+  0.15 0.06         0.96     0.96     0.96   -0.004   -0.004
+  0.15 0.08         0.93     0.93     0.93   -0.004   -0.002
+  0.15 0.10         0.90     0.90     0.90   +0.004   +0.004
+
+probit s=0.15: STEP share  (log column: misread_sim.log:46-57, B 128)
+  CV   misread  log B128        Bn        Bu    Bn-log    Bu-log
+  0.05 0.00         1.00     1.00     1.00   +0.000   +0.000
+  0.05 0.02         1.00     1.00     1.00   -0.004   -0.004
+  0.05 0.04         0.99     0.99     0.99   +0.002   +0.002
+  0.05 0.06         0.96     0.96     0.96   +0.000   +0.000
+  0.05 0.08         0.96     0.95     0.96   -0.006   -0.004
+  0.05 0.10         0.92     0.92     0.92   +0.000   +0.000
+  0.15 0.00         1.00     1.00     1.00   +0.000   +0.000
+  0.15 0.02         0.99     0.99     0.99   -0.004   -0.004
+  0.15 0.04         0.95     0.95     0.95   -0.004   -0.004
+  0.15 0.06         0.91     0.91     0.91   +0.000   +0.000
+  0.15 0.08         0.86     0.86     0.86   -0.002   -0.002
+  0.15 0.10         0.81     0.81     0.81   -0.002   -0.002
+
+probit s=0.2: STEP share  (log column: misread_sim.log:61-72, B 128)
+  CV   misread  log B128        Bn        Bu    Bn-log    Bu-log
+  0.05 0.00         1.00     1.00     1.00   +0.000   +0.000
+  0.05 0.02         0.99     0.99     0.99   +0.002   +0.002
+  0.05 0.04         0.96     0.96     0.96   +0.004   +0.004
+  0.05 0.06         0.92     0.92     0.92   +0.002   +0.002
+  0.05 0.08         0.91     0.91     0.91   +0.000   +0.000
+  0.05 0.10         0.82     0.82     0.82   +0.002   +0.002
+  0.15 0.00         1.00     1.00     1.00   +0.000   +0.000
+  0.15 0.02         0.97     0.97     0.97   -0.002   -0.002
+  0.15 0.04         0.88     0.88     0.88   -0.002   +0.000
+  0.15 0.06         0.84     0.84     0.84   -0.002   -0.002
+  0.15 0.08         0.77     0.77     0.77   +0.000   +0.000
+  0.15 0.10         0.68     0.68     0.68   -0.002   +0.002
+
+probit s=0.3: STEP share  (log column: misread_sim.log:76-87, B 128)
+  CV   misread  log B128        Bn        Bu    Bn-log    Bu-log
+  0.05 0.00         0.98     0.98     0.98   -0.004   -0.004
+  0.05 0.02         0.83     0.83     0.83   -0.004   -0.004
+  0.05 0.04         0.69     0.69     0.69   +0.000   +0.000
+  0.05 0.06         0.64     0.64     0.64   +0.002   +0.002
+  0.05 0.08         0.54     0.54     0.54   +0.000   +0.002
+  0.05 0.10         0.47     0.47     0.47   -0.002   -0.002
+  0.15 0.00         0.90     0.90     0.90   -0.004   -0.004
+  0.15 0.02         0.70     0.70     0.70   -0.002   -0.002
+  0.15 0.04         0.55     0.55     0.55   +0.002   +0.002
+  0.15 0.06         0.46     0.46     0.46   +0.002   +0.002
+  0.15 0.08         0.40     0.40     0.40   -0.002   -0.002
+  0.15 0.10         0.37     0.37     0.37   +0.002   +0.002
+
+probit s=0.15: NOT SCORABLE share (log column misread_sim.log:91-102): 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000
+  Bn: 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000
+  Bu: 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000
+Bn: 56/60 cells equal the printed digits; all within tolerance True; counting maximum 0.054; NS share all 0.00 True; cells that differ: [('cnt', 0.05, 0.06), ('cnt', 0.05, 0.08), ('cnt', 0.05, 0.1), (0.15, 0.05, 0.08)]
+Bu: 60/60 cells equal the printed digits; all within tolerance True; counting maximum 0.054; NS share all 0.00 True; cells that differ: []
+
+PART 3.  SMOOTH truth (best COUNT curve fitted to the series): share of 500 runs with sharp > 3.84 (SE <= 0.022).  Bak 90 C series, n = 3, 6 or 10 at the seven P = 1 markers, misread e known, seeds [31, n idx, e idx, 0].
+  n    rule   e=0.00  e=0.02  e=0.04  e=0.06  e=0.08  e=0.10
+  3    B       1.000   0.930   0.832   0.588   0.506   0.302
+  3    AM2     0.764   0.450   0.282   0.150   0.124   0.056
+  6    B       0.998   0.858   0.756   0.484   0.378   0.216
+  6    AM2     0.890   0.406   0.244   0.102   0.098   0.034
+  10   B       0.994   0.780   0.648   0.440   0.252   0.204
+  10   AM2     0.918   0.284   0.204   0.110   0.048   0.034
+
+PART 3.  SHARP truth (best STEP curve with s <= 0.15 fitted to the series): share of 500 runs with sharp > 3.84 (SE <= 0.022).  Bak 90 C series, n = 3, 6 or 10 at the seven P = 1 markers, misread e known, seeds [31, n idx, e idx, 1].
+  n    rule   e=0.00  e=0.02  e=0.04  e=0.06  e=0.08  e=0.10
+  3    B       0.000   0.032   0.022   0.020   0.010   0.012
+  3    AM2     0.000   0.018   0.010   0.010   0.004   0.006
+  6    B       0.000   0.020   0.032   0.028   0.032   0.016
+  6    AM2     0.000   0.012   0.014   0.020   0.014   0.012
+  10   B       0.000   0.014   0.026   0.040   0.018   0.018
+  10   AM2     0.000   0.008   0.012   0.024   0.006   0.008
+
+Paired number (mean over n = 3, 6, 10):  rule   smooth truth, e <= 0.04 | e >= 0.06      sharp truth, e <= 0.04 | e >= 0.06 | max
+                                          B      0.866 | 0.374                      0.016 | 0.022 | 0.040
+                                          AM2    0.494 | 0.084                      0.008 | 0.012 | 0.024
+
+Predictions (scored as written in droplet_am2_gate_predictions.txt)
+  G1 HELD: c*_B(128) = -2.205492, set by dry a=1.67 at CV 0.05, misread 0.04 (weak form [-2.2150, -2.2050] and same cell: HELD)
+  G2 HELD: Bu 60/60 equal digits (misses []), tolerance True, counting max 0.054, NS 0.00 True; control Bn 56/60 with misses [('cnt', 0.05, 0.06), ('cnt', 0.05, 0.08), ('cnt', 0.05, 0.1), (0.15, 0.05, 0.08)] (must be 56 and the four of droplet_ctrl_am2.log:67-69, 98)
+  K1 FAILED: c*_AM2(128) = -2.976290 (band [-2.50, -2.15]: False; within 0.10 of -2.40: False; point -2.31)
+  K2 FAILED: c*_B(480) = -2.019774 (band [-1.84, -1.64], point -1.74)
+  K3 FAILED: c*_AM2(480) = -2.797970 (band [-1.95, -1.65], point -1.80); AM2 - B at 480 = -0.7782 (band [-0.20, +0.05])
+  S1 FAILED: B smooth truth: 9/18 cells in band (cells outside: [(6, 0.02, 0.858), (6, 0.06, 0.484), (6, 0.08, 0.378), (6, 0.1, 0.216), (10, 0.02, 0.78), (10, 0.04, 0.648), (10, 0.06, 0.44), (10, 0.08, 0.252), (10, 0.1, 0.204)]); largest rise with e -0.048
+  S2 FAILED: AM2 smooth truth: max over 18 cells 0.918 (<= 0.65), max over the nine cells with e >= 0.06 0.150 (<= 0.35)
+  S3 FAILED: max (AM2 - B) -0.076 (<= +0.03); min (B - AM2) over the nine cells with e <= 0.04: +0.076 (>= 0.30)
+  S4 HELD: sharp truth: max share B 0.040, AM2 0.024 (<= 0.15)
+
+HELD 3 of 9: G1 HELD, G2 HELD, K1 FAILED, K2 FAILED, K3 FAILED, S1 FAILED, S2 FAILED, S3 FAILED, S4 HELD
+
+Decision rules
+  D1: G1 (weak form) and the gate hold with the unrounded c* (60/60) -> the rounding of c* to two decimals explains the misses of P7; R1 NOT TRUSTED is lifted for the B column (Bn control reproduced: True).  c*_AM2(128) = -2.9763 is farther than 0.10 from -2.40 -> droplet_ctrl_am2's AM2 columns must be rerun with the recalibrated c* before being quoted.  A prereg that prints power tables to the digit must quote c* to four decimals.
+  D2: |c*_B(480) - c*_B(128)| = 0.1857 -> <= 0.25: a c* tied to the control count is not forced by this calibration.  |c*_AM2(480) - c*_B(480)| = 0.7782 -> > 0.05: AM2 needs its own c*.  c*_B(480) = -2.0198, c*_AM2(480) = -2.7980; calibration values only (no false STEP or power evaluated at 480).
+  D3: P_A <= 0.50 in 15/18 cells and P_B >= 0.75 in 8/9 low-misread cells -> AM2 gives up most of the ability to reject a sharp step in smooth Bak-like data; adopting AM2 means the prereg can no longer claim that a SMOOTH label rejects a sharp step (only 'smooth, or a step with a plateau'), to be weighed against B's plateau blind spot.
+  D4: no sharp-truth share above 0.15 for either rule.
+  D5: nothing is edited in journals/droplet_prereg.md or any existing file; all wording is marked NOT APPLIED.

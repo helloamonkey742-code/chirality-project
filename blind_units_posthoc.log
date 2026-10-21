@@ -1,0 +1,52 @@
+self-check OK: n_eff of 150=272.03, 152=8.62, 0 rpm=110.57, 200 rpm=3.18, 500 rpm=1.96 match blind_units.log; predictions sha256 matches
+=== The failure, from blind_units.py's own data (blind_units.py:133, 145) ===
+  150 C: n_eff 272.0, 95% low 88.3, aggregates 2.4/run -> 113 units per aggregate (low end 36.8); 152 C: 2.69 per aggregate
+  low end <= 2.4 needs n_eff <= 7.39, i.e. rms ee >= 36.8 points (observed 6.1); the 7 zeros would have to be +-43.4 points
+  ratio of per-aggregate units 150 C / 152 C: 42x
+P4a (derived): smallest possible n_eff from any resample = 33.8 (max ee^2 0.0296); bootstrap (20000, seed 0) 2.5th percentile n_eff = 104.1 vs chi-square low end 88.3; both far above 2.4
+
+=== Asakura 2002: pre-registered predictions (blind_units_posthoc_predictions.txt), scored by the fixed rules ===
+  Rnuc(150 C) = 1/(979 s x 3.14 cm^2) = 0.000325 cm^-2 s^-1 (printed 0.000325; txt:168-172)
+  Rnuc(152 C) = 1/(3150 s x 3.14 cm^2) = 0.000101 cm^-2 s^-1 (printed 0.000101; txt:168-172)
+  Rnuc ratio 150/152 = 3.22x; units per aggregate need ~42x; visible aggregates 24 vs 32 (txt:191-194)
+  quote-check lines (txt): {'cannot really count the number of crystals': 185, 'recurrence of nucleations on or near the surface': 190, '20 ml of benzene': 121, '7 out of the 10 crystallizations': 128, 'polycrystalline aggregates consisting of both R- and S-': 155, 'very small R- and S-crystals': 275, 'large number of lattice': 238, 'tallites with many lattice defects': 307, '0.50 g': 105, 'mostly racemic': 129, 'ee as high as 17%': 248}
+  P1 (E1: paper describes merging of separately nucleated masses at 150 C): NO.  Nearest text says new nuclei form near a crystal and join the growing solid (txt:183-185), i.e. secondary nucleation.  E1 does not survive.
+  P2a (150 C solid = many small crystallites of both hands within a mass): HELD.  Discussion: at high supercooling the solid is a polycrystalline aggregate of very small R and S crystals (txt:275); the stirred-crystallization section allows either many small single-handed crystals or crystals with many lattice defects taking up both hands (txt:238-240); the paper does not choose.
+  P2b (independent crystallite count >= 37 per aggregate or 88 per run): NOT TESTABLE.  No count or size at 150 C; Fig. 1 is 152 C only, rings 1.0 mm apart, 'cloudy' (txt:77-81); the paper says the crystals cannot really be counted (txt:185).
+  P2c (faster or finer at 150 C): HELD in direction (first nucleus 979 s vs 3,150 s, Rnuc 3.2x); the size of the effect is not matched.
+  P3 (ee method and precision <= +-5 points): method found (JASCO polarimeter, the solid 'thus obtained' dissolved in 20 ml benzene, 1.0 dm cell, txt:120-122; no subsampling mentioned); precision NOT stated: NOT TESTABLE as worded.  The only route for E3 (aliquot averaging) is absent, so E3 does not survive.
+  P4b (paper's fitted low-stirring distribution SD <= 10.7 points): NOT TESTABLE; the paper gives the Langevin form and no fitted values.  (Its printed SD, 6% at 150 C, is the data blind_units.py already reproduced: blind_units.py:132.)
+  Survival by the fixed rule: E1 no; E2 YES (P2a, P2c HELD, none FAILED); E3 no; E4 not supported (P4a is derived from used data, not an unused item).
+  Reading: the visible aggregate is not the unit, so 'n_eff 272' cannot be compared with 2.4 aggregates.  The paper does not support 'n_eff counts independent crystallites': it counts none, and the near-zero ee of 150 C masses is also what lattice-defect incorporation of both hands would give (X3).  What E2 does not explain: the 42x per-aggregate jump over 2 K, and 7 of 10 runs at exactly 0 (X1).
+
+=== X1 (added after reading; not pre-registered, not scored): is the 150 C set a Gaussian vote with n_eff = 272? ===
+  Gaussian sd 6.06 points: P(|ee| < 0.5) = 0.066; P(>= 7 of 10 runs that close to 0) = 5.3e-07
+  Gaussian sd 6.06 points: P(|ee| < 1.0) = 0.131; P(>= 7 of 10 runs that close to 0) = 5.5e-05
+  Gaussian sd 6.06 points: P(|ee| < 2.0) = 0.258; P(>= 7 of 10 runs that close to 0) = 4.3e-03
+  observed: 7 of 10 runs at 0.0 (Fig. 2 caption, txt:128); the other three 17.2, 8.4, 1.1.  Table 1 is in whole percents, so +-0.5 is the resolution.
+
+=== X2 (added after reading; not pre-registered): Table 1 weights (unused) vs |ee| of single-nucleus masses (txt:132-151) ===
+  152 C only: n = 9, Spearman(|ee|, weight) = -0.66, permutation p = 0.07 (5000 shuffles, seed 0)
+  both temperatures (mixes temperature with size): n = 13, Spearman(|ee|, weight) = -0.71, permutation p = 0.01 (5000 shuffles, seed 0)
+  ee^2 x weight (mg), 152 C, in Table 1 order: 0.00, 0.03, 4.53, 0.03, 0.01, 0.00, 5.57, 11.02, 0.00 (under a Gaussian vote with one crystallite size these would be equal in expectation)
+  150 C masses weigh 31-165 mg (6-33% of the 0.50 g charge, txt:105) and all read 0
+
+=== X3 provenance of 'about 90 or more crystallites' (blind_units.py RESULTS) ===
+  '90' at txt:37: ...one in 150 crystallizations produce an ee greater than 90%.
+  none is a crystallite count; the phrase is the project's n_eff low end (88.33), not the paper's.
+
+=== Bak 2023: B2 and B3 ===
+  B2 gate (blind_units.py:218, unchanged): 3 main-series markers, P_CSB 0.70-1.00 -> NOT SCORABLE
+  to reach P_CSB <= 0.4 the series would need Vc about 4.2 uL if exp(-V/V0) holds with V0 = 4.61 uL (an assumption, not data)
+  bak_2023.pdf main text: P_CSB defined as (N_L + N_D)/N_tot with N_mix (txt:103-110); values given only as 0.8 at 0.87 uL and 0.7 at 1.72 uL, with some drops holding both hands (txt:128-130); no N_L or N_D value anywhere.
+  Figure S1a-d are cited as the supporting images (txt:116-156); they are in the SI, not in the PDF.
+  Fig. 2a labels give (k/n) only for P < 1 markers; the P = 1 markers share one '(66/66)' label (blind_units.py:124).
+  Fig. 3 (caption txt:180) plots supersaturation vs volume per drop, not N_L / N_D, and names no series.
+  ACS SI https://pubs.acs.org/doi/suppl/10.1021/acs.jpclett.2c03873/suppl_file/jz2c03873_si_001.pdf: plain HEAD request returned HTTP 403 on 2026-10-19 (Cloudflare); not retried, no workaround.  Europe PMC REST (DOI 10.1021/acs.jpclett.2c03873): pmid 36652610, inEPMC N, isOpenAccess N, hasSuppl N.
+  B3 NOT SCORABLE unchanged (blind_units.py:223-227 needs BAK_LD = (all-L, all-D)).  B2 NOT SCORABLE unchanged.
+  ITEMS NEEDED (open the SI in a browser, or ask the corresponding authors Su Yeon Bak and Gerard Coquerel):
+   (1) the SI PDF jz2c03873_si_001.pdf: any table giving N_L, N_D, N_mix per Vc bin or per series.  Figure S1 is described as images,
+       so expect to need (2).
+   (2) the per-drop record behind Fig. 2a for the main series (Tsat 50 C, Tinc 25 C, FC-40, PMMA): for each drop Vc and outcome L / D / mixed.
+       That one table makes B3 (all-L and all-D counts) scorable and, with at least 4 volume bins and one at P_CSB <= 0.4, B2 too.
+   (3) for B2 only: if the series has no drop above about 1.7 uL, drops at larger Vc (about 4 uL or more) in the same conditions.

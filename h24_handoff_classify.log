@@ -1,0 +1,93 @@
+=== h24_handoff classify: the 600 old runs (deephand_scale.log ROW lines), descriptive ===
+plain deepest-hand rule misses 114; observed final = hand of the domain above the rule domain in 114 of them; rule domain is the top one in 0; unfinished runs (no Te) 0
+
+-- THR = 1 misses: 40 of 600 (the 93.3 % ceiling) --
+type U = handed up (rule domain d/w < 1) but the rule domain's own hand won; type S = kept the rule domain (d/w >= 1) but it lost to the domain above
+type      w   i  R/H  n doms  K Kd     u ln rho   d/w     eps d/w above bottom?  Te/Tc Te/tmax
+S     0.035   8   12  6    5  4  0  0.38   0.88  1.64  0.0135      4.30    True   0.83   0.263
+S     0.035  36    3  6    6  5  0  0.39   3.28  1.02  0.0994      2.58    True   0.05   0.007
+S     0.035  40    2 10   10  7  2  0.44   2.92  1.59  0.0047      1.59   False   0.01   0.001
+S     0.035  79  100  3    3  2  0  0.12   0.57  1.39  0.0121     11.72    True   0.48   0.159
+S     0.035  80    2  6    5  4  0  0.64   3.86  1.43  0.0503      4.37    True   1.00   0.106
+S     0.035 112    6  6    6  5  0  0.35   1.92  1.20  0.0467      3.43    True   0.04   0.010
+S     0.035 114  100  6    6  5  0  0.27   0.45  1.30  0.0089      4.85    True   0.07   0.025
+S     0.035 119  100 10    5  4  0  0.63   0.08  1.84  0.0007      5.82    True   0.71   0.245
+S     0.035 121    3  3    3  2  0  0.17   3.44  1.04  0.1163      6.06    True   1.30   0.163
+S     0.035 130    2 10   10  7  2  0.09   3.19  1.57  0.0152      1.57   False   0.00   0.001
+S     0.035 140    2  6    3  2  0  0.46   3.95  1.05  0.0545      4.40    True   1.65   0.181
+S     0.035 142    6  6    6  5  0  0.33   1.47  1.24  0.0232      3.80    True   0.03   0.010
+S     0.035 146    3 10    8  7  0  0.89   3.66  1.18  0.1377      3.88    True   0.09   0.009
+S      0.02  33   12  3    3  2  0  0.07   0.63  1.53  0.0036     20.68    True   0.50   0.165
+S      0.02  42    6 10   10  9  0  0.31   2.05  1.03  0.0332      3.35    True   0.02   0.005
+S      0.02  56    3 10    7  6  0  0.59   2.45  1.78  0.0164      5.98    True   0.45   0.098
+S      0.02  70    2 10   10  6  3  0.60   2.71  2.85  0.0020      2.85   False   0.92   0.229
+S      0.02  81    3  6    6  5  0  0.23   2.94  1.16  0.0390      4.97    True   0.35   0.062
+S      0.02 110    2  6    4  3  0  0.34   3.90  1.39  0.0241     11.59    True   0.13   0.017
+S      0.02 111    3  6    6  5  0  0.27   3.96  1.12  0.1147      4.06    True   0.32   0.031
+S      0.02 140    2  6    5  4  0  0.28   3.73  1.22  0.0105      4.23    True   1.51   0.245
+S      0.01   4  100  3    3  2  0  0.06   4.07  1.23  0.1296     19.32    True   2.36   0.218
+S      0.01  14  100 10    6  5  0  0.16   0.69  1.45  0.0045     18.48    True   0.84   0.273
+S      0.01  50    2  6    5  4  0  0.16   3.77  1.38  0.0023      8.57    True   1.30   0.255
+S      0.01  59  100 10    7  6  0  0.20   1.28  1.63  0.0115     24.02    True   0.83   0.242
+S      0.01  95    2  6    3  2  0  0.13   4.15  1.03  0.0146     22.51    True   1.22   0.155
+S      0.01  98   12  6    4  3  0  0.08   0.91  1.33  0.0043     15.79    True   0.89   0.280
+S      0.01 117    6 10   10  9  0  0.25   1.16  2.03  0.0031      8.21    True   0.99   0.303
+S     0.005  39  100  6    6  5  0  0.05   3.42  1.02  0.0447     18.64    True   2.28   0.308
+S     0.005  48   12  3    3  2  0  0.03   2.99  1.33  0.0281     49.23    True   1.33   0.219
+S     0.005  54  100  6    6  5  0  0.04   1.58  1.22  0.0084     27.34    True   1.08   0.293
+S     0.005  66    3  6    6  5  0  0.06   4.04  1.06  0.0362     16.54    True   2.95   0.307
+S     0.005  81    3  6    6  5  0  0.05   2.03  1.29  0.0004     24.76    True   0.67   0.229
+U     0.035  10    2 10   10  9  0  0.67   3.84  0.88  0.0379      1.31    True   1.30   0.168
+U     0.035  56    3 10    7  6  0  0.28   3.92  0.37  0.2096      1.34    True   0.41   0.044
+U     0.035  57    6 10   10  9  0  0.57   4.48  0.68  0.4053      1.18    True   2.85   0.179
+U     0.035  73   12 10   10  9  0  0.48   3.17  0.73  0.2011      1.51    True   1.42   0.200
+U     0.035  83   12  6    5  4  0  0.45   4.27  0.97  0.3580      2.13    True   0.10   0.007
+U     0.035  86    3 10    7  6  0  0.67   4.45  0.79  0.2709      1.18    True   3.17   0.212
+U     0.035 118   12 10   10  9  0  0.65   3.19  0.97  0.1930      1.47    True   1.41   0.189
+misses: type U 7, type S 33; rule domain is the bottom domain in 37; rule d/w in [0,1) 7, [1,2) 31, [2,3) 2, >= 3 0; by w: 0.035: 20, 0.02: 8, 0.01: 7, 0.005: 5, 0.0025: 0; by n: 3: 5, 6: 19, 10: 16
+
+-- thickness: P(rule domain holds) by its d/w (runs whose rule domain is not the top one) --
+  d/w [0, 0.5): n= 57    1.8 +-  1.8 %
+  d/w [0.5, 1): n= 31   19.4 +-  7.2 %
+  d/w [1, 1.5): n= 44   45.5 +-  7.6 %
+  d/w [1.5, 2): n= 35   80.0 +-  6.9 %
+  d/w [2, 3): n= 68   97.1 +-  2.1 %
+  d/w [3, 1e+09): n=362  100.0 +-  0.0 %
+  d/w in [1, 2), by w: 0.035: n= 41   68.3 +-  7.4 %; 0.02: n= 25   72.0 +-  9.2 %; 0.01: n=  8   25.0 +- 16.4 %; 0.005: n=  5    0.0 +-  0.0 %; 0.0025: n=  0
+
+-- sweep timing, rule domains with 1 <= d/w < 3 and not the top one (held vs lost) --
+  held: n=114  Te/Tc median 1.35 (10-90 %: 0.49-3.29);  Te/tmax median 0.200, max 0.344
+  lost: n=33  Te/Tc median 0.83 (10-90 %: 0.03-1.62);  Te/tmax median 0.165, max 0.308
+  all 600 runs: max Te/tmax 0.347 (>= 1 would mean a cut-off run)
+
+-- layer count: P(rule domain holds), 1 <= d/w < 3, not the top domain --
+  n = 3: n= 27   81.5 +-  7.6 %
+  n = 6: n= 57   68.4 +-  6.2 %
+  n = 10: n= 63   84.1 +-  4.6 %
+  3 domains: n= 27   74.1 +-  8.6 %
+  4 domains: n=  8   75.0 +- 16.4 %
+  5 domains: n= 11   54.5 +- 15.7 %
+  6 domains: n= 46   76.1 +-  6.4 %
+  10 domains: n= 45   88.9 +-  4.7 %
+
+-- what predicts holding (training rows: rule domain not the top one, d/w < 3), 10-fold x 20 CV accuracy --
+  d/w                                  n=235  accuracy 84.5 %
+  ln d/w                               n=235  accuracy 84.9 %
+  d/w + ln eps  (V2)                   n=235  accuracy 90.3 %
+  d/w + ln d/w above                   n=235  accuracy 92.4 %
+  d/w + ln eps + ln d/w above  (V3)    n=235  accuracy 92.9 %
+
+-- d/w-only ceiling: best single threshold on d/w (each domain walked up while d/w < thr; chain exhausted -> rule domain), tuned on the same runs --
+  old runs: best thr 1.25 -> 95.2 % (571 / 600); THR = 1: 93.3 %; plateau (>= best - 0.5 point): thr 1.20-1.25
+
+-- variants V1-V3, fit on the old runs (235 training rows) --
+V2: columns (const, dwm, leps) coefficients [-2.67, 5.65, 1.5]; ln eps clip [-8.38, -0.46], ln dab clip [0.15, 4.35]
+V3: columns (const, dwm, leps, ldab) coefficients [-1.76, 7.33, 1.68, -1.98]; ln eps clip [-8.38, -0.46], ln dab clip [0.15, 4.35]
+  old runs, in sample: 600 runs
+    plain                  overall n=600   81.0 +-  1.6 %; fired n=  0; exhausted chains 0
+    THR = 1                overall n=600   93.3 +-  1.0 %; fired n= 88   92.0 +-  2.9 %; exhausted chains 0
+    THR = 3                overall n=600   76.8 +-  1.7 %; fired n=235   40.9 +-  3.2 %; exhausted chains 63
+    V1 (THR 1.25)          overall n=600   95.2 +-  0.9 %; fired n=109   89.9 +-  2.9 %; exhausted chains 2
+    V2                     overall n=600   96.8 +-  0.7 %; fired n=116   91.4 +-  2.6 %; exhausted chains 0
+    V3                     overall n=600   98.2 +-  0.5 %; fired n=110   97.3 +-  1.6 %; exhausted chains 0
+old runs, 10-fold x 5 CV overall agreement: V1 95.2 % (fired 89.9); V2 96.4 % (fired 90.1); V3 97.7 % (fired 95.8)

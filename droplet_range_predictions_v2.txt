@@ -1,0 +1,87 @@
+droplet_range_predictions_v2.txt  (v2, written 2026-10-21 before any results run; hash in droplet_range_a.py / droplet_range_b.py)
+
+WHY V2.  droplet_range_predictions.txt (v1, sha256 4ddcacbe36cd7b3af69e7868352b9d0ac5c4af1700de4b2a3a168f0b30ef1564, written 00:39:04 PDT) is left
+as it was.  No results run of either script had been made when this file was written (only the timing and cache runs named in v1 and below).  The
+machine load average was 40 to 69 on 10 cores (uptime, 00:57 and 01:09), so each of the 4 worker processes got about a third of a core or less, and the
+v1 run counts (about 1.3 M runs for part (a)) would not fit the 45-minute budget.  v2 changes run counts only, plus three clarifications that the
+v1 wording left open (marked [clarified]).  The predictions P1-P24 and the decision rules are word for word as in v1.
+Statistical resolution at the new counts: the standard error of a share near 0.05 is 0.011 at 400 runs and 0.013 at 300, so the 0.07 thresholds of
+P12, P13 and P23 can fail on sampling noise alone; a failure is reported as a failure, with the share and the run count.
+
+Unit droplet_range.  Model study on SIMULATED drops, not data.  The D2 rule of journals/droplet_prereg.md Section 2 is
+frozen and is not changed here; amendments below are proposals only.  Disclosed before this file: one timing run
+(scratchpad time1.py) that ran droplet_sim2.truths() once and run_cell on 300 runs of "probit s=0.15" to size the
+compute; it printed no verdict shares.
+
+SETUP (both parts)
+- Protocol: droplet_sim2.protocol (pilot ladder 0.25-16 uL, 20 drops; 8 levels 0.2-1.6 x V0_pilot, ratio exp(Q) = 1.346,
+  25 drops per level; extension rule, cap 2 levels; 128 controls, 64 one-seed + 64 two-seed).  droplet_range_common.protocol2
+  reproduces it exactly for the same seed when misreads are symmetric (checked in its self-check).
+- Rules, all with the per-run measured misread e_hat = (k + 0.5)/129 unless said:
+  A   = droplet_sim2 rule as first frozen: fixed 3% term, c* = -1.61, no control cap (what droplet_sim2.log used).
+  B   = the rule now in prereg Section 2: e_hat in both fits, c* = -2.21, NOT SCORABLE if k/128 > 0.10 (prereg Section 2 item 1).
+  AM1 = proposal 1: B plus a plateau h in the STEP family only.
+  AM2 = proposal 2: B plus a plateau h in BOTH families.
+  Plateau: P = h + (1 - h) F(.) for h in {0.05,0.1,0.15,0.2,0.25,0.3,0.35,0.4,0.5}, fitted in addition to the frozen
+  h = 0 grids (so every amended likelihood is >= the frozen one), on coarser mu and Vc grids (0.1 and 0.04 in ln units).
+  c*_AM1 and c*_AM2 are set the way c*_B was (lowest 5th percentile of L over counting cells x conditions, runs that are
+  scorable, range >= 0.4 and z <= 1.645, at least 50 such runs) on a CALIBRATION seed, from the 87 counting cells plus 27
+  counting-with-floor cells; then frozen; every number below is on a fresh EVALUATION seed.
+- Truth for the plateau map: P = h + (1 - h) Phi(-ln(V/3.1 uL)/s), no empty drops.  "main" condition = pipette CV 0.05,
+  true symmetric misread 0.03.  Share = fraction of runs given that verdict.  Other conditions: (CV 0.05, 0), (0.05, 0.06), (0.15, 0.03).
+- Calibration conditions: CV {0.05, 0.15} x misread {0, 0.03, 0.06, 0.10}; 300 runs per cell-condition (v1: 600); evaluation 400 (v1: 500).
+  Plateau map: 600 runs per cell-condition (v1: 1000).  Scenarios: 600.  Part (b): 300 runs per cell-condition in the u-scan (v1: 500) and in the null check
+  (v1: 300), 600 runs per V* in the full pipeline (v1 gave no number), 2000 for P18.
+
+PART (a)  PLATEAU BLIND SPOT  (h in {0,0.1,0.2,0.25,0.3,0.4,0.5} x s in {0.05,0.1,0.15,0.3})
+P1  Replication.  Rule A, main condition, h = 0.3, s = 0.15: STEP share in [0.02, 0.09] (droplet_sim2.log gives 0.05).
+P2  Rule B, main condition, h = 0: STEP >= 0.95 at s = 0.05, 0.1 and 0.15.
+P3  The blind spot persists under B.  Rule B, h = 0.3, s = 0.05, 0.1, 0.15: STEP <= 0.15 in each of the four conditions.
+P4  Monotone fall.  Rule B, main, s = 0.1 and 0.15: going h = 0, 0.1, 0.2, 0.25, 0.3, 0.4, 0.5, STEP never rises by more than 0.03 between neighbours.
+P5  Where it fails.  Rule B, main, s = 0.1 and 0.15: STEP(h = 0.1) >= 0.80, and 0.10 <= STEP(h = 0.2) <= 0.80.
+P6  High plateau (two nuclei cap, h = 0.5).  Rule B, main, s = 0.1 and 0.15: STEP <= 0.15 (verdict is SMOOTH or NOT SCORABLE).
+P7  Ceiling below 1 (polycrystalline or two-nuclei small drops), P = c Phi(-ln(V/3.1)/s).  Rule B, main, c = 0.9, s = 0.1 and 0.15: STEP >= 0.80.
+P8  One-way detection miss (a mixed drop read single with probability m, never the reverse; s = 0.1; controls then read wrong at m/2
+    on average).  Rule B, main: m = 0.06 and 0.12: STEP >= 0.85; m = 0.20: NOT SCORABLE share >= 0.30 (control cap).
+P9  Informative exclusion of unreadable mixed drops (share u of mixed drops dropped, P_read = P/(P + (1-P)(1-u)), s = 0.15).
+    Rule B, main, u = 0.5, 0.8, 0.9: STEP >= 0.90 each.
+P10 Replication of c*.  Rule B recalibrated with this script's conditions on the 87 counting cells: c*_B0 in [-2.9, -1.7] (frozen: -2.21).
+P11 c*_AM2 in [-5.0, -1.5].
+P12 False STEP of AM2.  Evaluation seed, every condition: highest STEP share over (87 counting cells, 27 exclusion curves of
+    exclusion_bak.py, 27 counting-with-floor cells) <= 0.07.
+P13 B is not fooled by floors.  Rule B (c* = -2.21), the 27 counting-with-floor cells, every condition: highest STEP share <= 0.07.
+P14 AM2 sees plateaus.  Main, h = 0.1, 0.2, 0.3, s = 0.1 and 0.15: AM2 STEP >= 0.80 in each.
+P15 AM2 keeps pure steps.  Main, h = 0: AM2 STEP >= 0.95 at s = 0.05, 0.1, 0.15, and at s = 0.3 AM2 STEP >= (rule B STEP) - 0.15.
+P16 Floor in COUNT buys power.  Main, h = 0, s = 0.3: STEP(AM2) - STEP(AM1) >= 0.05.  If this fails, AM1 (the smaller change) is preferred.
+
+PART (b)  VOLUME RANGE  (step at Vc = u x V0_pilot; u = 0.05, 0.07, 0.1, 0.14, 0.2, 0.28, 0.35, 0.4, 0.57, 0.8, 1.0, 1.13,
+1.39, 1.6, 1.9, 2.26, 2.7, 3.2, 4.5, 6.4; s in {0.1, 0.15}; V0_pilot imposed, no pilot noise; rule B, c* = -2.21, 128 controls)
+Prior spans.  S1 = [0.35, 1.39], the plan's own allowance (true V0 within 0.5-2 x V0_pilot, step at 0.693 x V0).
+S2 = [0.14, 2.8], the same allowance widened to 0.2-4 x.
+Designs (cost = 25 x levels + 128 controls, before extension levels): base 8 levels 0.2-1.6, extension cap 2 (328 drops);
+ext4 base with extension cap 4 (328 + up to 100); K10 10 levels 0.2-2.9 (378); K12 12 levels 0.11-2.9 (428).
+P17 Plan's span.  Base design, CV 0.05, s = 0.1 and 0.15: STEP >= 0.95 at every grid u in S1 at misread 0 and 0.03; >= 0.90 at misread 0.06.
+P18 Known issue.  [clarified: E0 uses the same c* as the measured rule, -2.21, not recalibrated]  Base design, u = 1.39, s = 0.1, CV 0.05, true misread 0.03: STEP share with both fits ignoring misreads
+    (e_hat = 0) is at least 0.10 below the share with e_hat measured.  (droplet_power.log lines 6-9 give 0.84 vs 1.00 for the old h <= 3 fit.)
+P19 Edges.  Base, CV 0.05, misread 0.03, s = 0.1: lower edge u_lo (smallest grid u with STEP >= 0.95) in [0.14, 0.28];
+    upper edge u_hi (largest grid u such that STEP >= 0.95 at every grid point from 0.35 up to u) in [1.9, 3.2].
+P20 Outside the range.  Base, same condition: STEP <= 0.50 at u = 0.05 and 0.07, and at every u >= 4.5.
+P21 Pilot placement.  Full pipeline (pilot included), s = 0.1, CV 0.05, true V* = 0.7, 2, 3.1, 7 uL: the central 95% of u = V*/V0_pilot
+    lies inside [0.35, 1.39] at each V*.
+P22 Absolute volume.  [clarified: V* grid 0.1, 0.2, 0.4, 0.7, 1, 2, 3.1, 4, 7, 12, 20, 32, 64 uL, all four designs run, only the base design is predicted; scenarios
+    ceiling c = 0.8 and 0.7 are also run, not predicted]  Full pipeline, base design, CV 0.05, misread 0.03, s = 0.1: STEP >= 0.95 at V* = 1, 2, 4, 7 uL, and < 0.95 at
+    V* = 0.1 uL and at V* = 64 uL.
+P23 Extra top levels.  [clarified: u_hi taken in the P19 condition, CV 0.05, misread 0.03, s = 0.1]  K10 has u_hi at least 0.5 above base u_hi on the grid (strictly larger), and its highest STEP share at the
+    frozen c* over the 87 counting cells (CV 0.05 / misread 0.03 and CV 0.15 / misread 0.06, 300 runs) is <= 0.07.
+P24 Cost.  The base design fails S2 (some grid u in S2 under 0.95 in condition CV 0.05 / misread 0.03, s = 0.1 or 0.15) and at least one of
+    ext4, K10, K12 keeps STEP >= 0.95 on all S2 grid points in conditions (0.05, 0.03) and (0.05, 0.06), s = 0.1 and 0.15.
+
+DECISION RULES
+(a) The blind spot "matters" if rule B STEP(h = 0.2, s = 0.1) < 0.80 in the main condition.  If it matters AND AM2 holds P12, P14 and P15,
+    the notes file proposes AM2 (AM1 instead if P16 fails and AM1 also meets P12, P14, P15), marked not applied.  If it matters but AM2 breaks one
+    of P12, P14, P15, the notes propose a limit sentence only.  If it does not matter, no amendment is proposed.
+(b) Recommended design for a span = the lowest-cost design among base, ext4, K10, K12 whose lowest STEP share over the span grid is >= 0.95
+    in (CV 0.05, misread 0.03) and (CV 0.05, misread 0.06) at s = 0.1 and 0.15, and whose highest null STEP share at the frozen c* is <= 0.07.
+    If none qualifies, the notes give the widest span a design does reach.
+Failed predictions are reported as failed; this file is not edited after the first results run (a v3 file would be named
+droplet_range_predictions_v3.txt and the scripts would say so).

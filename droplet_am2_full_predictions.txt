@@ -1,0 +1,61 @@
+droplet_am2_full_predictions.txt  (written 2026-10-21 PDT, before any result of droplet_am2_full.py exists; the sha256 of this file is asserted in droplet_am2_full.py)
+
+Unit droplet_am2_full.  Model study on SIMULATED drops, not data.  journals/droplet_prereg.md and every existing file are untouched; every wording proposal is NOT APPLIED.
+Question: does rule AM2 (plateau h in both families) still fix the plateau blind spot of rule B, and what does it cost, once its threshold is the full-grid calibration
+c*_AM2(128) = -2.9762901306152343 (droplet_am2_gate.log:6-9; 12 conditions, 1000 runs, 87 cells) and not the -2.40 of droplet_range_a.log:8 (8 conditions, 300 runs)?
+Also at the value from the subset of conditions with true misread in {0, .06, .10}: -2.463367462158203 (same calibration arrays, 6 of the 12 conditions).
+
+DISCLOSED BEFORE THIS FILE.  (1) Read, not run: droplet_range_common.py, droplet_range_a.py and .log (lines 1-32, 118-180), droplet_ctrl_am2.py and .log (lines 55-200),
+droplet_am2_gate.py and .log (lines 1-12, 90-135), droplet_am2_gate_predictions.txt, journals/new_analyses_droplet_am2_gate.md.  (2) One scratchpad helper (cstar_chk.py) recomputed c* from
+am2_gate/cal_*.npy and read droplet_range/cache/a_cal.pkl: B(128) -2.205492 / subset -2.058786; AM2(128) -2.976290 / subset -2.463367; AM2 range_a value (87 + 27 floor cells) -2.403298187255859.
+No verdict share was computed.  (3) The bands below are hand arithmetic only: they start from the AM2 digits at -2.40 in droplet_range_a.log:122-149 and droplet_ctrl_am2.log:154-160 and
+move them by the change of the threshold (about 0.58 for the full-grid value, 0.06 for the subset value) with a rough slope of 0.12 STEP share per unit of c* near 90% power, taken from the
+smoke count in the droplet_range_a.py docstring (AM2 173 of 200 STEP at h = 0.3, s = 0.1 with c* = -3.0, against 0.94 at -2.40), and, for the false STEP, from the chi-square(1) tail ratio
+P(2|c*| > 5.95)/P(2|c*| > 4.80) = 0.52.  (4) Nothing in this unit has been run.  Only non-result commands (ls, sed, cat, uptime) came before this file.
+
+WHAT THE SCRIPT DOES (new files only; it imports droplet_ctrl_am2, droplet_range_a and droplet_range_common and edits nothing)
+Same simulated runs, several thresholds: rules are added to droplet_range_common.RULES in-process (same fit groups, same cap), so one fit per run feeds every c*.  AM2 = groups c0, cH, s0, sH, cap
+as written in prereg Section 2 item 1; AMf = AM2 at -2.9762901306152343; AMs = AM2 at -2.463367462158203; Bsub = B at its own subset value -2.0587861532873992 (INFORMATIONAL only: B
+recalibrated the same way would gain power too); the "n" suffix is the no-cap version.  c* literals are checked against the arrays when those exist.
+K-world (droplet_ctrl_am2.stage2 unchanged: 87 counting+drying cells + probit s = 0.1/0.15/0.2/0.3, 12 conditions, 500 runs, seeds [5, i, j], exact pilot, controls drawn as misread_sim does):
+  the prereg Section 10 summary and the counting maximum at every threshold.  Reproduction gate: droplet_ctrl_am2.part2 is called on B, AM2 (-2.40), Bn, AM2n and its printed text must equal
+  droplet_ctrl_am2.log from "PART 2." to the line before "STAGE 3", line for line (including the failed P7 of that log).
+R-world (droplet_range_a unchanged: original controls, exact unset): false STEP, 87 counting + 27 exclusion + 27 floor cells x 8 conditions x 400 runs, seeds [11, i, j], 20 cells per batch; plateau
+  map, 28 truths x 4 conditions x 600 runs, seeds [12, i, j], 13 cells per batch.  Reproduction gate: the B and AM2 (unrounded -2.403298187255859) columns of the false-STEP table and the printed
+  plateau lines of rules B and AM2 must equal droplet_range_a.log digit for digit; the counts must equal droplet_range/cache/a_ev.pkl and a_map.pkl when those files exist.
+Structure assertions on the same runs (exact, not predictions): STEP count at -2.9763 <= at -2.4634 <= at -2.40 for every cell; FLAT, RISING, NS counts and STEP + SMOOTH are equal across thresholds; cap STEP <= no-cap STEP.
+Bak smooth truth: the rejection rate of a sharp step uses the statistic "sharp" = 2 (best ll - best ll among STEP curves with s <= 0.15), which contains no c*; droplet_am2_gate.py Part 3 (500 runs, seeds
+  [31, a, b, tr]) is therefore valid at every c* and is NOT rerun; the script reads the paired numbers back from droplet_am2_gate.log and asserts them.  The real Bak 90 C and main series
+  labels are recomputed at B -2.21 and at AM2 -2.40 / -2.4634 / -2.9763 (stage 3 of droplet_ctrl_am2 reproduced from its own function first).
+
+PREDICTIONS (percent = share of runs called STEP; "main" = CV 0.05, misread 0.03, s = 0.1)
+F1  Plateau map, R-world main condition, AM2 STEP share (600 runs, SE <= 0.02).  At -2.4034 (reproduction): h = 0.2 / 0.25 / 0.3 = 0.98 / 0.96 / 0.94 (droplet_range_a.log:151, 156, 161-ish, the main-condition lines; B is 0.73 / 0.30 / 0.05).
+    AMf (-2.9763): h = 0.2 in [0.92, 0.98] (point 0.955); h = 0.25 in [0.87, 0.96] (point 0.92); h = 0.3 in [0.80, 0.93] (point 0.875).
+    AMs (-2.4634): h = 0.2 in [0.96, 0.98] (point 0.975); h = 0.25 in [0.93, 0.96] (point 0.955); h = 0.3 in [0.90, 0.94] (point 0.93).
+    B (-2.21) unchanged from the log: 0.73 / 0.30 / 0.05; at h = 0.2 and 0.25 AMf beats B by at least 0.20 and by at least 0.55 respectively (s = 0.1).
+F2  Highest false STEP over the 87 counting cells, rule AM2 with the cap.
+    R-world (8 conditions, 400 runs): -2.4034 0.045 (log; reproduced); AMs in [0.030, 0.045] (point 0.040); AMf in [0.012, 0.035] (point 0.022).
+    K-world (12 conditions, 500 runs): -2.40 0.052 (droplet_ctrl_am2.log:157); AMs in [0.038, 0.052] (point 0.048); AMf in [0.017, 0.040] (point 0.029).
+    Bsub (informational): R-world in [0.045, 0.065], K-world in [0.054, 0.075].  Exclusion and floor groups are printed, not predicted.
+F3  Section 10 summary, K-world, percent STEP (low-high over the cells of each row).  B cap and Bn are the log's: counting 5.4; 87-100, 33-78; 80-100, 28-69; 43-98, 9-36 (cap) and
+    91-100, 81-97; 84-100, 68-91; 46-98, 37-54 (no cap), the order being s <= 0.15 misread <= 0.06 and 0.08-0.10; s = 0.2 the same two; s = 0.3 the same two.
+    AMf, cap (endpoint bands): counting max 2.9 [1.7, 4.0]; s<=.15 low: 83 [78, 88] high: 100 [99, 100]; s<=.15 (.08-.10) low 28 [22, 33] high 73 [68, 77]; s=.2 low 74 [68, 79] high 100 [99, 100];
+      s=.2 (.08-.10) low 24 [18, 29] high 63 [57, 69]; s=.3 low 38 [33, 43] high 96 [92, 98]; s=.3 (.08-.10) low 7 [4, 10] high 31 [26, 36].
+    AMfn, no cap: counting max 2.9 [1.7, 4.0]; s<=.15 low 87 [82, 91] high 100; s<=.15 (.08-.10) low 76 [70, 81] high 93 [89, 96]; s=.2 low 79 [74, 84] high 100; s=.2 (.08-.10) low 62 [56, 67] high 86 [80, 90];
+      s=.3 low 41 [36, 45] high 97 [94, 98]; s=.3 (.08-.10) low 33 [28, 37] high 50 [45, 53].
+    AMs (-2.4634), cap and no cap: every endpoint is at most the AM2 -2.40 endpoint of droplet_ctrl_am2.log:154-160 (exact, by monotonicity) and at least 0.03 below it in no row (each endpoint within [log - 3, log] points).
+    Largest drop of an endpoint against B, in percentage points: AMf in [4, 11] (point 7) in the cap pair and in [3, 10] (point 6) in the no-cap pair; AMs in [0, 3] in both.
+F4  Bak.  The paired numbers of droplet_am2_gate.log:113-116 (smooth truth B 0.866 | 0.374, AM2 0.494 | 0.084; sharp truth B 0.016 | 0.022, AM2 0.008 | 0.012) are unchanged at every c*, since "sharp" has no c*.
+    Real Bak 90 C series: the AM2 L values equal droplet_ctrl_am2.log (all in [-0.57, +0.09]), all 18 AM2 labels are SMOOTH at -2.40, -2.4634 and -2.9763; the 18 "main" labels are NS at every threshold.
+F5  Gates: the K-world text gate and the R-world digit gate both hold (the code and seeds are the earlier units').  The structure assertions hold.
+
+DECISION RULES (applied at the full-grid value -2.9763; the same three tests are printed for -2.4634 as information and do not decide)
+D0  If either reproduction gate fails, or a c* literal differs from its recomputation: "NOT TRUSTED", no recommendation.
+D1a Power on the blind spot: AMf STEP share at main, s = 0.1, h = 0.2 is at least 0.90.
+D1b Cost in the Section 10 ranges: in both pairs (AMf against B with the cap; AMfn against Bn without) each of the 12 endpoints satisfies AM2 >= B - 0.05.
+D2  False STEP: the AMf counting maximum is at most 0.07 in the K-world (12 conditions) and in the R-world (8 conditions).
+Recommendation.  D1a, D1b, D2 all hold: AM2 at -2.9763 is worth proposing (as a replacement for B, wording NOT APPLIED).  D1a and D2 hold but D1b fails: keep B; add a limit sentence that names the plateau blind
+spot with B's measured shares (h = 0.2 / 0.25 / 0.3); offer AM2 only as a labelled post hoc sensitivity analysis, because it buys the blind spot with power elsewhere and, by F4, gives up the claim that a SMOOTH
+label rejects a sharp step.  D1a fails: keep B plus the limit sentence; AM2 does not fix the blind spot at the honest c*.  D2 fails: AM2 is rejected.
+My expectation: D1a holds (95%), D2 holds (95%), D1b fails at -2.9763 (80%) and holds at -2.4634 (85%), so the recommendation is "keep B, limit sentence, AM2 as post hoc sensitivity analysis".
+Nothing is edited in journals/droplet_prereg.md or any existing file; all wording is marked NOT APPLIED.

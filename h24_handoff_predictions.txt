@@ -1,0 +1,109 @@
+h24_handoff_predictions.txt  (written 2026-10-21, before any result-producing run; frozen once hashed)
+
+Unit: h24_handoff.  Question: can a handoff rule predict the final hand of the radial runs in >= 95 % of runs out of
+sample (H24, journals/ija_draft.md near line 282; E58 at line 158), and what should happen to the world-wrapper draws
+where no layer up to the ice is thick enough?
+
+------------------------------------------------------------------------------------------------------------------
+WHAT WAS ALREADY SEEN (so these are not predictions)
+------------------------------------------------------------------------------------------------------------------
+- The 600 old runs (deephand_scale.log, seed 20261012) were read in full before this file was written, including in
+  scratchpad exploratory fits (logistic fits of "rule domain holds" on d/w, drift, neighbour d/w; cross-validation on
+  the old runs). The three variants below were chosen and fitted on those runs.
+  The old-run numbers (in sample and 10-fold x 5 CV) are therefore development numbers, not tests.
+- Development run (disclosed): `python h24_handoff.py fit` printed coefficients and old-run agreements. From it:
+  V2 coefficients (const, d/w, ln eps) = [-2.67, 5.65, 1.50]; V3 coefficients (const, d/w, ln eps, ln d/w above)
+  = [-1.76, 7.33, 1.68, -1.98]; ln eps clip [-8.38, -0.46], ln d/w-above clip [0.15, 4.35]; 235 training rows.
+  Old runs in sample: plain 81.0, THR=1 93.3, THR=3 76.8, V1 95.2, V2 96.8, V3 98.2 %.
+  Old runs 10-fold x 5 CV: V1 95.2, V2 96.4, V3 97.7 %.
+- The classification tables (h24_handoff_classify.log) are descriptive tables on those old runs. They carry no
+  pass/fail status.
+- Nothing has been simulated on seed 20261021 (fresh), on thin stacks, or on noise reseeds before this file is hashed.
+
+------------------------------------------------------------------------------------------------------------------
+THE RULES UNDER TEST (frozen; all fitted on the old 600 runs only)
+------------------------------------------------------------------------------------------------------------------
+Domains = maximal runs of equal hand in the stacked layers. The rule domain is the one containing r* (deepest-hand
+rule). Handoff: if the rule domain does not hold, the deciding role passes to the domain above, and so on.
+  d/w     = domain thickness / local wall width, at the domain middle (handoff.validate's quantity).
+  eps     = 2 w_loc(top) (x_top - 1) / r_top, x_top = r_top / r* (dimensionless drift of the domain's rising top wall).
+  dab     = d/w of the domain above.
+  THR     : holds iff d/w >= THR (handoff.py's rule; THR = 1 and THR = 3 are the published ones). Exhausted chain ->
+            no hand (counted as a miss).
+  V1      : the top domain holds iff d/w >= 1.25; every other domain holds iff d/w >= 1.25.
+  V2      : domain (not the top one) holds iff d/w >= 3 or z > 0, z = -2.67 + 5.65 d/w + 1.50 ln eps.
+  V3      : as V2 with z = -1.76 + 7.33 d/w + 1.68 ln eps - 1.98 ln dab.
+  In V2 and V3 the top domain holds iff d/w >= 1.25. ln eps and ln dab are clipped to the training range above.
+  Chain exhausted (no domain holds): fallback 'deep' = the rule domain's own hand (default, fixed now); the
+  alternatives 'top' (the top domain's hand) and 'none' are reported as secondary.
+Decision rule for the primary variant: the variant (V1, V2, V3) with the highest old-run CV overall agreement; ties
+within 0.2 points go to the one with fewer parameters. Chosen before testing; it uses only old runs.
+
+------------------------------------------------------------------------------------------------------------------
+THE TESTS
+------------------------------------------------------------------------------------------------------------------
+Fresh runs (F): deephand_scale.one with seed 20261021: w = 0.035, 0.02, 0.01, 0.005 with 150, 150, 150, 120 runs
+  (570); w = 0.0025 is skipped for cost (~10 min per run). Configurations drawn as in deephand_scale.config.
+Thin stacks (T): n = 10 layers, w = 0.10 and 0.07, 60 runs each (120), same seed family; they probe the regime
+  where every domain is thinner than a wall width (zero old runs).
+Noise reruns (N): every THR=1 miss of the old runs plus every old run with a non-top rule domain of 0.5 <= d/w < 3 at
+  w >= 0.005, same configuration, two fresh noise seeds each (177 configurations, 354 reruns).
+Agreement = predicted final hand == observed final hand (fin) from the simulation; 'fired' = the chosen domain is
+  not the rule domain. SE = binomial.
+
+PRIMARY
+P1  The primary variant (decision rule above) on the 570 fresh runs: overall agreement >= 95.0 % AND agreement on
+    fired runs >= 85.0 %.  PASS = both hold (the pre-registered target of handoff.py's docstring, point estimates).
+    FAIL otherwise; then H24 stays open and the report states the measured agreement with its SE and which
+    criterion failed.
+P2  The decision rule picks V3.  PASS if V3; FAIL otherwise (a record; it is a deterministic function of the old-run
+    CV numbers 95.2 / 96.4 / 97.7, so FAIL is not expected).
+
+SECONDARY (fresh runs, fallback 'deep')
+P3  V3 overall agreement >= V1 overall agreement + 1.0 point.
+P4  V1 overall agreement >= THR=1 (chain exhausted -> no hand) overall agreement + 0.5 point.
+P5  THR=3 (chain exhausted -> no hand) overall agreement < 85.0 %.  (The old runs give 76.8 %; the old-run w mix
+    gives about 76 % on the fresh w mix.)
+P6  A d/w-only rule has a ceiling: the best single d/w threshold chosen ON the fresh runs (an oracle, fallback 'deep',
+    grid 0 to 5 step 0.05) gives overall agreement <= 96.0 %, and the primary variant exceeds that oracle by
+    >= 0.5 point.  PASS = both.
+P7  Stratified: the primary variant has overall agreement >= 90.0 % in every w stratum (4) and every n stratum
+    (3, 6, 10) of the fresh runs.
+P8  Noise is not the ceiling: of the reruns of THR=1-miss configurations (40 configurations x 2), >= 90 % reproduce
+    the original run's final hand; of the reruns of the borderline configurations (137 x 2), >= 85 % do.
+    PASS = both.  (FAIL would mean part of the ~7 % residual is seed noise, not configuration.)
+
+THIN REGIME (thin stacks + old + fresh runs pooled; group G = runs whose every domain from the top down to the rule
+domain has d/w < 1)
+P9  G has at least 20 runs.  PASS if n(G) >= 20; if not, P10 and P11 are reported as NOT TESTABLE.
+P10 In G, the fraction whose final hand equals the top domain's hand exceeds the fraction whose final hand equals the
+    rule domain's hand by >= 10 points (prior: the chain keeps passing the role upward).
+P11 In G, neither fixed fallback ('deep', 'top') reaches 85 % (prior: the regime cannot be closed with a fixed
+    fallback). PASS if both are below 85 %.
+
+WORLDS (h24_handoff_worlds.py; N = 200000, seeds 0-3, fitted h as in handoff.py; B = primary variant, fallback 'deep')
+W1  Regression: the script's copy of handoff.hand reproduces handoff.hand run for run (arrays equal) for handoff off,
+    THR = 3 and THR = 1 in all 15 worlds (seed 0, no lid), and handoff.log's printed THR = 3 and THR = 1 columns.
+    PASS = exact.
+W2  Monotone-chain shortcut: the deciding layer is found by bisection on the layer index. Against an exact walk on the
+    first 1500 recursion draws of each of the 15 worlds (seed 0, no lid), mismatches <= 0.5 % of draws for V2 and
+    for V3.  PASS = both.
+W3  Early Earth ocean P_pved (final, seed 0) under B/deep lies in [97.0, 99.9] %.
+W4  The movement of the no-layer draws: M = P_pved(B, deep) - P_pved(B, none) lies in [0, 10] points in every one of
+    the 15 worlds, no lid and final; Early Earth M <= 2.5.  PASS = all.
+W5  Rank stability: Spearman correlation across the 15 worlds (no lid, seed 0) between P_pved under B/deep and under
+    THR = 1 is >= 0.98.
+W6  Seed span: max - min of P_pved over seeds 0-3 for B/deep is <= 0.5 point in every world (no lid and final).
+
+------------------------------------------------------------------------------------------------------------------
+DECISION RULE FOR WHAT GETS REPORTED
+------------------------------------------------------------------------------------------------------------------
+- P1 PASS: H24 (radial agreement >= 95 %) is reported as validated out of sample for w >= 0.005 and for the wrapper
+  geometries sampled (R/H 2-100, n = 3-10 layers), with the variant's SE. Scope limits stated: no w = 0.0025 runs, no
+  runs where all domains are thin unless P9 passes, 1-D radial model only.
+- P1 FAIL: H24 is reported as narrowed: the measured fresh agreement of every variant, the residual misses by type,
+  and why (thickness / drift / neighbour / noise) from P6-P8. The 93 % ceiling claim is then restated with the
+  numbers of this run, not with the old-run in-sample numbers.
+- No threshold, variant, coefficient or fallback is changed after the results run. If course must change, a v2
+  predictions file is written and the change is stated plainly in the notes.
+- Failed predictions are reported as failed, in the same table as the ones that held.

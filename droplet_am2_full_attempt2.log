@@ -1,0 +1,317 @@
+Unit droplet_am2_full.  Model study on simulated drops, not data.  Predictions sha256 4a0900aea24cc052301df5d906824b25759df1b3c8b6c4ca66527880431bd9ce (droplet_am2_full_predictions.txt, asserted).
+Rule AM2 (plateau h in both families, cap) and rule B at several thresholds on the same simulated runs; nothing existing is edited.  NOT APPLIED: every wording proposal.
+Thresholds: B -2.21; Bsub -2.0587861532873992 (B recalibrated on the subset, informational); AM2 -2.4 (K-world, droplet_ctrl_am2) and -2.403298187255859 (R-world, droplet_range_a);
+AMs -2.463367462158203 (AM2, subset misread {0, .06, .10}); AMf -2.9762901306152343 (AM2, full 12-condition grid).  Suffix n = no control cap.  Processes 3.
+
+GATES AND CHECKS
+  c* literals:
+    AM2 full grid: recomputed -2.9762901306152343 literal -2.9762901306152343 equal
+    AM2 subset {0,.06,.10}: recomputed -2.463367462158203 literal -2.463367462158203 equal
+    B subset {0,.06,.10}: recomputed -2.0587861532873992 literal -2.0587861532873992 equal
+    AM2 of droplet_range_a (87 + 27 floor cells): recomputed -2.403298187255859 literal -2.403298187255859 equal
+  GATE K (droplet_ctrl_am2.part2 text, B/AM2/Bn/AM2n columns): PASS: 114 printed lines against droplet_ctrl_am2.log:58-172; first differences []
+  GATE K3 (droplet_ctrl_am2.stage3 text): PASS: 17 printed lines against droplet_ctrl_am2.log:173-189; B reproduces bak_policy_b.log 36/36; first differences []
+  GATE R (droplet_range_a.log, B and AM2): PASS: 92 comparisons (log lines 13-252 of droplet_range_a.log, plus the pickles that exist); differences []
+  GATE BAK (droplet_am2_gate.log paired numbers): PASS: droplet_am2_gate.log:95-115: re-averaged tables {('smooth', 'B'): (0.866, 0.374), ('smooth', 'AM2'): (0.494, 0.084), ('sharp', 'B'): (0.016, 0.022), ('sharp', 'AM2'): (0.008, 0.012)}, paired line {'B': [0.866, 0.374, 0.016, 0.022, 0.04], 'AM2': [0.494, 0.084, 0.008, 0.012, 0.024]}
+  STRUCTURE (STEP order in c*, STEP + SMOOTH / FLAT / RISING / NS equal across thresholds, cap <= no cap): K-world violations [], R false-STEP runs [], R plateau map []
+  D0: gates hold and c* literals equal their recomputation -> results trusted
+
+SECTION 1.  R-world plateau map (droplet_range_a stage 3 seeds [12, i, j], 600 runs per cell): truth P = h + (1 - h) Phi(-ln(V / 3.1 uL) / s)
+Verdict shares, main condition (CV 0.05, misread 0.03)
+rule AMf (c* -2.9762901306152343)
+  h=0 s=0.05 STEP 1.00 SMOOTH 0.00 FLAT 0.00 RISING 0.00 NS 0.00
+  h=0 s=0.1 STEP 1.00 SMOOTH 0.00 FLAT 0.00 RISING 0.00 NS 0.00
+  h=0 s=0.15 STEP 0.99 SMOOTH 0.01 FLAT 0.00 RISING 0.00 NS 0.00
+  h=0 s=0.3 STEP 0.67 SMOOTH 0.33 FLAT 0.00 RISING 0.00 NS 0.00
+  h=0.1 s=0.05 STEP 0.99 SMOOTH 0.01 FLAT 0.00 RISING 0.00 NS 0.00
+  h=0.1 s=0.1 STEP 0.98 SMOOTH 0.02 FLAT 0.00 RISING 0.00 NS 0.00
+  h=0.1 s=0.15 STEP 0.97 SMOOTH 0.03 FLAT 0.00 RISING 0.00 NS 0.00
+  h=0.1 s=0.3 STEP 0.45 SMOOTH 0.55 FLAT 0.00 RISING 0.00 NS 0.00
+  h=0.2 s=0.05 STEP 0.98 SMOOTH 0.02 FLAT 0.00 RISING 0.00 NS 0.00
+  h=0.2 s=0.1 STEP 0.97 SMOOTH 0.03 FLAT 0.00 RISING 0.00 NS 0.00
+  h=0.2 s=0.15 STEP 0.89 SMOOTH 0.10 FLAT 0.00 RISING 0.00 NS 0.00
+  h=0.2 s=0.3 STEP 0.34 SMOOTH 0.66 FLAT 0.00 RISING 0.00 NS 0.00
+  h=0.25 s=0.05 STEP 0.97 SMOOTH 0.03 FLAT 0.00 RISING 0.00 NS 0.00
+  h=0.25 s=0.1 STEP 0.94 SMOOTH 0.06 FLAT 0.00 RISING 0.00 NS 0.00
+  h=0.25 s=0.15 STEP 0.86 SMOOTH 0.14 FLAT 0.00 RISING 0.00 NS 0.00
+  h=0.25 s=0.3 STEP 0.24 SMOOTH 0.76 FLAT 0.00 RISING 0.00 NS 0.00
+  h=0.3 s=0.05 STEP 0.95 SMOOTH 0.05 FLAT 0.00 RISING 0.00 NS 0.00
+  h=0.3 s=0.1 STEP 0.91 SMOOTH 0.09 FLAT 0.00 RISING 0.00 NS 0.00
+  h=0.3 s=0.15 STEP 0.74 SMOOTH 0.26 FLAT 0.00 RISING 0.00 NS 0.00
+  h=0.3 s=0.3 STEP 0.18 SMOOTH 0.80 FLAT 0.01 RISING 0.00 NS 0.00
+  h=0.4 s=0.05 STEP 0.80 SMOOTH 0.17 FLAT 0.03 RISING 0.00 NS 0.00
+  h=0.4 s=0.1 STEP 0.66 SMOOTH 0.26 FLAT 0.08 RISING 0.00 NS 0.00
+  h=0.4 s=0.15 STEP 0.47 SMOOTH 0.42 FLAT 0.10 RISING 0.00 NS 0.01
+  h=0.4 s=0.3 STEP 0.07 SMOOTH 0.69 FLAT 0.24 RISING 0.00 NS 0.01
+  h=0.5 s=0.05 STEP 0.35 SMOOTH 0.15 FLAT 0.38 RISING 0.00 NS 0.12
+  h=0.5 s=0.1 STEP 0.24 SMOOTH 0.16 FLAT 0.47 RISING 0.00 NS 0.13
+  h=0.5 s=0.15 STEP 0.14 SMOOTH 0.20 FLAT 0.56 RISING 0.00 NS 0.10
+  h=0.5 s=0.3 STEP 0.02 SMOOTH 0.17 FLAT 0.65 RISING 0.00 NS 0.15
+rule AMs (c* -2.463367462158203)
+  h=0 s=0.05 STEP 1.00 SMOOTH 0.00 FLAT 0.00 RISING 0.00 NS 0.00
+  h=0 s=0.1 STEP 1.00 SMOOTH 0.00 FLAT 0.00 RISING 0.00 NS 0.00
+  h=0 s=0.15 STEP 0.99 SMOOTH 0.01 FLAT 0.00 RISING 0.00 NS 0.00
+  h=0 s=0.3 STEP 0.76 SMOOTH 0.24 FLAT 0.00 RISING 0.00 NS 0.00
+  h=0.1 s=0.05 STEP 1.00 SMOOTH 0.00 FLAT 0.00 RISING 0.00 NS 0.00
+  h=0.1 s=0.1 STEP 0.99 SMOOTH 0.01 FLAT 0.00 RISING 0.00 NS 0.00
+  h=0.1 s=0.15 STEP 0.98 SMOOTH 0.02 FLAT 0.00 RISING 0.00 NS 0.00
+  h=0.1 s=0.3 STEP 0.56 SMOOTH 0.45 FLAT 0.00 RISING 0.00 NS 0.00
+  h=0.2 s=0.05 STEP 0.99 SMOOTH 0.01 FLAT 0.00 RISING 0.00 NS 0.00
+  h=0.2 s=0.1 STEP 0.98 SMOOTH 0.02 FLAT 0.00 RISING 0.00 NS 0.00
+  h=0.2 s=0.15 STEP 0.93 SMOOTH 0.07 FLAT 0.00 RISING 0.00 NS 0.00
+  h=0.2 s=0.3 STEP 0.43 SMOOTH 0.57 FLAT 0.00 RISING 0.00 NS 0.00
+  h=0.25 s=0.05 STEP 0.98 SMOOTH 0.02 FLAT 0.00 RISING 0.00 NS 0.00
+  h=0.25 s=0.1 STEP 0.96 SMOOTH 0.04 FLAT 0.00 RISING 0.00 NS 0.00
+  h=0.25 s=0.15 STEP 0.90 SMOOTH 0.10 FLAT 0.00 RISING 0.00 NS 0.00
+  h=0.25 s=0.3 STEP 0.32 SMOOTH 0.68 FLAT 0.00 RISING 0.00 NS 0.00
+  h=0.3 s=0.05 STEP 0.97 SMOOTH 0.03 FLAT 0.00 RISING 0.00 NS 0.00
+  h=0.3 s=0.1 STEP 0.94 SMOOTH 0.06 FLAT 0.00 RISING 0.00 NS 0.00
+  h=0.3 s=0.15 STEP 0.81 SMOOTH 0.19 FLAT 0.00 RISING 0.00 NS 0.00
+  h=0.3 s=0.3 STEP 0.25 SMOOTH 0.73 FLAT 0.01 RISING 0.00 NS 0.00
+  h=0.4 s=0.05 STEP 0.85 SMOOTH 0.11 FLAT 0.03 RISING 0.00 NS 0.00
+  h=0.4 s=0.1 STEP 0.72 SMOOTH 0.20 FLAT 0.08 RISING 0.00 NS 0.00
+  h=0.4 s=0.15 STEP 0.55 SMOOTH 0.35 FLAT 0.10 RISING 0.00 NS 0.01
+  h=0.4 s=0.3 STEP 0.12 SMOOTH 0.64 FLAT 0.24 RISING 0.00 NS 0.01
+  h=0.5 s=0.05 STEP 0.39 SMOOTH 0.11 FLAT 0.38 RISING 0.00 NS 0.12
+  h=0.5 s=0.1 STEP 0.27 SMOOTH 0.13 FLAT 0.47 RISING 0.00 NS 0.13
+  h=0.5 s=0.15 STEP 0.18 SMOOTH 0.16 FLAT 0.56 RISING 0.00 NS 0.10
+  h=0.5 s=0.3 STEP 0.03 SMOOTH 0.17 FLAT 0.65 RISING 0.00 NS 0.15
+
+STEP share by plateau h (rows) and s = 0.05, 0.1, 0.15, 0.3 (columns), every condition (B and AM2 lines equal droplet_range_a.log:151-168)
+  CV 0.05 misread 0.0 rule B: h=0 1.00 1.00 1.00 0.98 | h=0.1 1.00 1.00 1.00 0.89 | h=0.2 0.82 0.82 0.73 0.29 | h=0.25 0.36 0.29 0.23 0.06 | h=0.3 0.07 0.05 0.03 0.00 | h=0.4 0.00 0.00 0.00 0.00 | h=0.5 0.00 0.00 0.00 0.00
+  CV 0.05 misread 0.0 rule Bsub: h=0 1.00 1.00 1.00 0.99 | h=0.1 1.00 1.00 1.00 0.92 | h=0.2 0.83 0.83 0.75 0.32 | h=0.25 0.38 0.31 0.25 0.07 | h=0.3 0.07 0.06 0.03 0.01 | h=0.4 0.00 0.00 0.00 0.00 | h=0.5 0.00 0.00 0.00 0.00
+  CV 0.05 misread 0.0 rule AM2: h=0 1.00 1.00 1.00 0.97 | h=0.1 1.00 1.00 1.00 0.82 | h=0.2 1.00 1.00 1.00 0.57 | h=0.25 1.00 1.00 0.99 0.44 | h=0.3 0.99 0.99 0.94 0.32 | h=0.4 0.90 0.80 0.63 0.15 | h=0.5 0.30 0.21 0.13 0.03
+  CV 0.05 misread 0.0 rule AMs: h=0 1.00 1.00 1.00 0.97 | h=0.1 1.00 1.00 1.00 0.81 | h=0.2 1.00 1.00 1.00 0.55 | h=0.25 1.00 1.00 0.99 0.42 | h=0.3 0.99 0.98 0.94 0.31 | h=0.4 0.90 0.80 0.62 0.15 | h=0.5 0.30 0.21 0.12 0.02
+  CV 0.05 misread 0.0 rule AMf: h=0 1.00 1.00 1.00 0.94 | h=0.1 1.00 1.00 1.00 0.72 | h=0.2 1.00 1.00 1.00 0.47 | h=0.25 1.00 1.00 0.97 0.36 | h=0.3 0.99 0.98 0.90 0.24 | h=0.4 0.88 0.75 0.56 0.10 | h=0.5 0.28 0.19 0.10 0.02
+  CV 0.05 misread 0.03 rule B: h=0 1.00 1.00 0.99 0.77 | h=0.1 0.98 0.96 0.93 0.48 | h=0.2 0.73 0.73 0.59 0.20 | h=0.25 0.36 0.30 0.23 0.04 | h=0.3 0.08 0.05 0.04 0.01 | h=0.4 0.00 0.00 0.00 0.00 | h=0.5 0.00 0.00 0.00 0.00
+  CV 0.05 misread 0.03 rule Bsub: h=0 1.00 1.00 0.99 0.79 | h=0.1 0.98 0.96 0.94 0.54 | h=0.2 0.76 0.75 0.63 0.23 | h=0.25 0.38 0.34 0.27 0.06 | h=0.3 0.08 0.06 0.04 0.01 | h=0.4 0.00 0.00 0.00 0.00 | h=0.5 0.00 0.00 0.00 0.00
+  CV 0.05 misread 0.03 rule AM2: h=0 1.00 1.00 0.99 0.77 | h=0.1 1.00 0.99 0.98 0.57 | h=0.2 0.99 0.98 0.93 0.44 | h=0.25 0.98 0.96 0.90 0.32 | h=0.3 0.97 0.94 0.81 0.25 | h=0.4 0.86 0.73 0.56 0.12 | h=0.5 0.39 0.27 0.18 0.03
+  CV 0.05 misread 0.03 rule AMs: h=0 1.00 1.00 0.99 0.76 | h=0.1 1.00 0.99 0.98 0.56 | h=0.2 0.99 0.98 0.93 0.43 | h=0.25 0.98 0.96 0.90 0.32 | h=0.3 0.97 0.94 0.81 0.25 | h=0.4 0.85 0.72 0.55 0.12 | h=0.5 0.39 0.27 0.18 0.03
+  CV 0.05 misread 0.03 rule AMf: h=0 1.00 1.00 0.99 0.67 | h=0.1 0.99 0.98 0.97 0.45 | h=0.2 0.98 0.97 0.89 0.34 | h=0.25 0.97 0.94 0.86 0.24 | h=0.3 0.95 0.91 0.74 0.18 | h=0.4 0.80 0.66 0.47 0.07 | h=0.5 0.35 0.24 0.14 0.02
+  CV 0.05 misread 0.06 rule B: h=0 0.96 0.96 0.93 0.58 | h=0.1 0.86 0.84 0.74 0.32 | h=0.2 0.58 0.50 0.43 0.08 | h=0.25 0.28 0.23 0.14 0.04 | h=0.3 0.07 0.05 0.03 0.01 | h=0.4 0.00 0.00 0.00 0.00 | h=0.5 0.00 0.00 0.00 0.00
+  CV 0.05 misread 0.06 rule Bsub: h=0 0.96 0.96 0.93 0.60 | h=0.1 0.88 0.85 0.77 0.37 | h=0.2 0.62 0.56 0.50 0.10 | h=0.25 0.33 0.27 0.18 0.05 | h=0.3 0.08 0.06 0.04 0.01 | h=0.4 0.00 0.00 0.00 0.00 | h=0.5 0.00 0.00 0.00 0.00
+  CV 0.05 misread 0.06 rule AM2: h=0 0.96 0.96 0.93 0.57 | h=0.1 0.93 0.92 0.86 0.46 | h=0.2 0.94 0.90 0.82 0.30 | h=0.25 0.88 0.85 0.77 0.28 | h=0.3 0.90 0.82 0.72 0.18 | h=0.4 0.78 0.66 0.54 0.12 | h=0.5 0.38 0.31 0.20 0.04
+  CV 0.05 misread 0.06 rule AMs: h=0 0.96 0.96 0.93 0.56 | h=0.1 0.93 0.92 0.86 0.45 | h=0.2 0.93 0.90 0.82 0.29 | h=0.25 0.88 0.85 0.75 0.26 | h=0.3 0.90 0.82 0.71 0.17 | h=0.4 0.77 0.66 0.53 0.11 | h=0.5 0.38 0.30 0.19 0.04
+  CV 0.05 misread 0.06 rule AMf: h=0 0.96 0.96 0.93 0.46 | h=0.1 0.92 0.90 0.84 0.38 | h=0.2 0.92 0.88 0.78 0.22 | h=0.25 0.87 0.82 0.68 0.20 | h=0.3 0.88 0.77 0.63 0.12 | h=0.4 0.70 0.58 0.45 0.08 | h=0.5 0.34 0.25 0.15 0.02
+  CV 0.15 misread 0.03 rule B: h=0 0.99 0.98 0.97 0.62 | h=0.1 0.92 0.88 0.86 0.33 | h=0.2 0.58 0.56 0.47 0.12 | h=0.25 0.21 0.21 0.12 0.04 | h=0.3 0.05 0.03 0.03 0.00 | h=0.4 0.00 0.00 0.00 0.00 | h=0.5 0.00 0.00 0.00 0.00
+  CV 0.15 misread 0.03 rule Bsub: h=0 0.99 0.98 0.97 0.65 | h=0.1 0.93 0.90 0.89 0.39 | h=0.2 0.62 0.61 0.53 0.16 | h=0.25 0.25 0.23 0.15 0.06 | h=0.3 0.05 0.04 0.03 0.01 | h=0.4 0.00 0.00 0.00 0.00 | h=0.5 0.00 0.00 0.00 0.00
+  CV 0.15 misread 0.03 rule AM2: h=0 0.99 0.99 0.97 0.62 | h=0.1 0.96 0.95 0.94 0.40 | h=0.2 0.93 0.91 0.84 0.30 | h=0.25 0.91 0.84 0.73 0.23 | h=0.3 0.83 0.78 0.60 0.18 | h=0.4 0.60 0.48 0.32 0.10 | h=0.5 0.17 0.13 0.10 0.02
+  CV 0.15 misread 0.03 rule AMs: h=0 0.99 0.99 0.97 0.61 | h=0.1 0.96 0.95 0.93 0.39 | h=0.2 0.93 0.90 0.84 0.28 | h=0.25 0.90 0.83 0.72 0.23 | h=0.3 0.83 0.78 0.59 0.17 | h=0.4 0.59 0.48 0.32 0.10 | h=0.5 0.17 0.13 0.09 0.01
+  CV 0.15 misread 0.03 rule AMf: h=0 0.98 0.98 0.96 0.53 | h=0.1 0.95 0.92 0.88 0.31 | h=0.2 0.90 0.86 0.76 0.20 | h=0.25 0.85 0.76 0.65 0.17 | h=0.3 0.78 0.70 0.50 0.13 | h=0.4 0.51 0.39 0.25 0.07 | h=0.5 0.13 0.09 0.07 0.01
+
+NOT SCORABLE share, rule B (rows as above; equal to droplet_range_a.log:169-173)
+  CV 0.05 misread 0.0: h=0 0.00 0.00 0.00 0.00 | h=0.1 0.00 0.00 0.00 0.00 | h=0.2 0.00 0.00 0.00 0.00 | h=0.25 0.00 0.00 0.00 0.00 | h=0.3 0.00 0.00 0.00 0.00 | h=0.4 0.00 0.00 0.00 0.00 | h=0.5 0.10 0.09 0.12 0.16
+  CV 0.05 misread 0.03: h=0 0.00 0.00 0.00 0.00 | h=0.1 0.00 0.00 0.00 0.00 | h=0.2 0.00 0.00 0.00 0.00 | h=0.25 0.00 0.00 0.00 0.00 | h=0.3 0.00 0.00 0.00 0.00 | h=0.4 0.00 0.00 0.01 0.01 | h=0.5 0.12 0.13 0.10 0.15
+  CV 0.05 misread 0.06: h=0 0.04 0.04 0.04 0.05 | h=0.1 0.05 0.03 0.05 0.04 | h=0.2 0.02 0.04 0.04 0.06 | h=0.25 0.05 0.05 0.04 0.04 | h=0.3 0.03 0.05 0.04 0.04 | h=0.4 0.03 0.06 0.03 0.05 | h=0.5 0.20 0.19 0.17 0.19
+  CV 0.15 misread 0.03: h=0 0.00 0.00 0.00 0.00 | h=0.1 0.00 0.00 0.00 0.00 | h=0.2 0.00 0.00 0.00 0.00 | h=0.25 0.00 0.00 0.00 0.00 | h=0.3 0.00 0.00 0.00 0.00 | h=0.4 0.00 0.00 0.00 0.01 | h=0.5 0.12 0.13 0.14 0.15
+
+SECTION 2.  R-world false STEP (droplet_range_a stage 2, seeds [11, i, j], 400 runs): highest STEP share over the cells of each group, by condition
+rule B (c* -2.21)
+  CV   misread |   count  excl floor
+  0.05 0.00    |    0.030 0.000 0.100
+  0.05 0.03    |    0.045 0.000 0.028
+  0.05 0.06    |    0.037 0.000 0.007
+  0.05 0.10    |    0.007 0.000 0.000
+  0.15 0.00    |    0.022 0.000 0.085
+  0.15 0.03    |    0.025 0.000 0.013
+  0.15 0.06    |    0.028 0.000 0.005
+  0.15 0.10    |    0.007 0.000 0.000
+  B count: max 0.045 (dry a=1.67, CV 0.05, misread 0.03)
+  B excl: max 0.000 (excl ring nu 1.0 e=0.50, CV 0.05, misread 0.0)
+  B floor: max 0.100 (dry a=1.67 floor 0.1, CV 0.05, misread 0.0)
+rule Bsub (c* -2.0587861532873992)
+  CV   misread |   count  excl floor
+  0.05 0.00    |    0.040 0.000 0.113
+  0.05 0.03    |    0.058 0.000 0.030
+  0.05 0.06    |    0.045 0.000 0.010
+  0.05 0.10    |    0.015 0.000 0.000
+  0.15 0.00    |    0.028 0.000 0.105
+  0.15 0.03    |    0.035 0.000 0.022
+  0.15 0.06    |    0.035 0.000 0.007
+  0.15 0.10    |    0.007 0.000 0.000
+  Bsub count: max 0.058 (dry a=1.67, CV 0.05, misread 0.03)
+  Bsub excl: max 0.000 (excl ring nu 1.0 e=0.50, CV 0.05, misread 0.0)
+  Bsub floor: max 0.113 (dry a=1.67 floor 0.1, CV 0.05, misread 0.0)
+rule AM2 (c* -2.403298187255859)
+  CV   misread |   count  excl floor
+  0.05 0.00    |    0.025 0.005 0.022
+  0.05 0.03    |    0.045 0.005 0.040
+  0.05 0.06    |    0.035 0.003 0.033
+  0.05 0.10    |    0.015 0.003 0.020
+  0.15 0.00    |    0.022 0.005 0.025
+  0.15 0.03    |    0.022 0.003 0.033
+  0.15 0.06    |    0.035 0.005 0.015
+  0.15 0.10    |    0.010 0.005 0.013
+  AM2 count: max 0.045 (dry a=1.67, CV 0.05, misread 0.03)
+  AM2 excl: max 0.005 (excl base nu 1.0 e=0.33, CV 0.05, misread 0.0)
+  AM2 floor: max 0.040 (dry a=1.67 floor 0.2, CV 0.05, misread 0.03)
+rule AMs (c* -2.463367462158203)
+  CV   misread |   count  excl floor
+  0.05 0.00    |    0.025 0.005 0.022
+  0.05 0.03    |    0.035 0.005 0.037
+  0.05 0.06    |    0.035 0.003 0.033
+  0.05 0.10    |    0.015 0.003 0.018
+  0.15 0.00    |    0.022 0.005 0.025
+  0.15 0.03    |    0.022 0.003 0.030
+  0.15 0.06    |    0.035 0.005 0.015
+  0.15 0.10    |    0.007 0.003 0.010
+  AMs count: max 0.035 (dry a=1.67, CV 0.05, misread 0.03)
+  AMs excl: max 0.005 (excl base nu 1.0 e=0.33, CV 0.05, misread 0.0)
+  AMs floor: max 0.037 (dry a=1.67 floor 0.2, CV 0.05, misread 0.03)
+rule AMf (c* -2.9762901306152343)
+  CV   misread |   count  excl floor
+  0.05 0.00    |    0.020 0.005 0.013
+  0.05 0.03    |    0.028 0.003 0.028
+  0.05 0.06    |    0.025 0.003 0.018
+  0.05 0.10    |    0.005 0.003 0.010
+  0.15 0.00    |    0.018 0.003 0.013
+  0.15 0.03    |    0.013 0.003 0.018
+  0.15 0.06    |    0.018 0.005 0.010
+  0.15 0.10    |    0.007 0.003 0.005
+  AMf count: max 0.028 (dry a=1.67, CV 0.05, misread 0.03)
+  AMf excl: max 0.005 (excl volume nu 0.3 e=0.17, CV 0.05, misread 0.0)
+  AMf floor: max 0.028 (dry a=1.67 floor 0.2, CV 0.05, misread 0.03)
+
+SECTION 3.  K-world Section 10 (droplet_ctrl_am2.stage2 seeds [5, i, j], 500 runs, 128 controls)
+
+With the control cap (prereg Section 2 item 1 as written)  (percent of runs called STEP; counting max over the 87 cells and 12 conditions, then low-high over the cells of each row)
+                                       B       Bsub        AM2        AMs        AMf
+  counting max, all 12               5.4        6.0        5.2        5.0        4.2
+  s<=0.15, misread <= 0.06        87-100     88-100     87-100     87-100     83-100
+  s<=0.15, misread 0.08-0.10       33-78      34-78      34-78      33-78      30-77
+  s=0.2,  misread <= 0.06         80-100     81-100     79-100     79-100     73-100
+  s=0.2,  misread 0.08-0.10        28-69      30-71      29-70      29-70      25-67
+  s=0.3,  misread <= 0.06          43-98      46-98      43-98      43-97      36-95
+  s=0.3,  misread 0.08-0.10         9-36      10-38      10-37      10-36       7-29
+
+Without the cap (what the prereg Sections 3 and 10 print)  (percent of runs called STEP; counting max over the 87 cells and 12 conditions, then low-high over the cells of each row)
+                                      Bn      Bsubn       AM2n       AMsn       AMfn
+  counting max, all 12               5.4        6.0        5.2        5.0        4.2
+  s<=0.15, misread <= 0.06        91-100     92-100     92-100     91-100     87-100
+  s<=0.15, misread 0.08-0.10       81-97      83-97      82-97      80-97      76-96
+  s=0.2,  misread <= 0.06         84-100     85-100     84-100     83-100     77-100
+  s=0.2,  misread 0.08-0.10        68-91      71-92      69-92      68-92      60-88
+  s=0.3,  misread <= 0.06          46-98      50-98      46-98      46-97      39-95
+  s=0.3,  misread 0.08-0.10        37-54      41-56      38-54      37-53      30-44
+
+Cap: STEP share of AMf minus B, probit cells (rows: CV, true misread; columns: s), percentage points; B share in brackets
+  CV   misread            s=0.1          s=0.15           s=0.2           s=0.3
+  0.05 0.00       +0.0 (100)   +0.0 (100)   +0.0 (100)   -3.0 ( 98)
+  0.05 0.02       +0.2 (100)   +0.0 (100)   -1.4 ( 99)   -7.4 ( 83)
+  0.05 0.04       -0.2 ( 99)   -0.2 ( 99)   -1.6 ( 96)  -10.6 ( 69)
+  0.05 0.06       +0.2 ( 95)   -0.8 ( 91)   -0.6 ( 87)  -11.0 ( 60)
+  0.05 0.08       -0.6 ( 78)   -0.6 ( 73)   -2.2 ( 69)   -7.0 ( 36)
+  0.05 0.10       -0.2 ( 45)   -0.2 ( 41)   -1.8 ( 38)   -2.6 ( 16)
+  0.15 0.00       +0.0 (100)   +0.0 (100)   -0.2 (100)   -8.2 ( 90)
+  0.15 0.02       -0.2 (100)   -0.6 ( 99)   -2.8 ( 97)  -13.6 ( 70)
+  0.15 0.04       -1.4 ( 98)   -1.6 ( 94)   -4.2 ( 88)  -10.6 ( 55)
+  0.15 0.06       -1.0 ( 91)   -3.6 ( 87)   -6.8 ( 80)   -7.2 ( 43)
+  0.15 0.08       -2.4 ( 70)   -3.4 ( 63)   -5.8 ( 56)   -6.8 ( 25)
+  0.15 0.10       -1.6 ( 42)   -2.4 ( 33)   -3.2 ( 28)   -1.8 (  9)
+
+No cap: STEP share of AMfn minus Bn, probit cells (rows: CV, true misread; columns: s), percentage points; Bn share in brackets
+  CV   misread            s=0.1          s=0.15           s=0.2           s=0.3
+  0.05 0.00       +0.0 (100)   +0.0 (100)   +0.0 (100)   -3.0 ( 98)
+  0.05 0.02       +0.2 (100)   +0.0 (100)   -1.4 ( 99)   -7.4 ( 83)
+  0.05 0.04       -0.2 (100)   -0.2 ( 99)   -1.6 ( 96)  -10.6 ( 69)
+  0.05 0.06       +0.2 ( 99)   -0.8 ( 96)   -0.6 ( 92)  -11.2 ( 64)
+  0.05 0.08       -0.6 ( 97)   -0.6 ( 95)   -2.6 ( 91)  -10.4 ( 54)
+  0.05 0.10       -0.4 ( 95)   -1.6 ( 92)   -4.4 ( 82)   -8.6 ( 47)
+  0.15 0.00       +0.0 (100)   +0.0 (100)   -0.2 (100)   -8.2 ( 90)
+  0.15 0.02       -0.2 (100)   -0.6 ( 99)   -2.8 ( 97)  -13.6 ( 70)
+  0.15 0.04       -1.4 ( 98)   -1.6 ( 95)   -4.2 ( 88)  -10.6 ( 55)
+  0.15 0.06       -1.0 ( 96)   -3.6 ( 91)   -6.8 ( 84)   -7.6 ( 46)
+  0.15 0.08       -2.6 ( 93)   -3.6 ( 86)   -7.0 ( 77)   -9.2 ( 40)
+  0.15 0.10       -2.8 ( 90)   -4.6 ( 81)   -7.8 ( 68)   -7.2 ( 37)
+
+Cap: STEP share of AMs minus B, probit cells (rows: CV, true misread; columns: s), percentage points; B share in brackets
+  CV   misread            s=0.1          s=0.15           s=0.2           s=0.3
+  0.05 0.00       +0.0 (100)   +0.0 (100)   +0.0 (100)   -0.4 ( 98)
+  0.05 0.02       +0.2 (100)   +0.0 (100)   +0.0 ( 99)   -1.2 ( 83)
+  0.05 0.04       +0.2 ( 99)   -0.2 ( 99)   -0.2 ( 96)   -1.2 ( 69)
+  0.05 0.06       +0.2 ( 95)   +1.2 ( 91)   +1.2 ( 87)   -2.8 ( 60)
+  0.05 0.08       +0.2 ( 78)   +0.2 ( 73)   +0.8 ( 69)   +0.4 ( 36)
+  0.05 0.10       +0.6 ( 45)   +0.8 ( 41)   +0.6 ( 38)   -0.4 ( 16)
+  0.15 0.00       +0.0 (100)   +0.0 (100)   +0.0 (100)   -1.6 ( 90)
+  0.15 0.02       +0.2 (100)   +0.2 ( 99)   -0.8 ( 97)   -3.6 ( 70)
+  0.15 0.04       +0.0 ( 98)   +0.4 ( 94)   +0.0 ( 88)   -0.6 ( 55)
+  0.15 0.06       +0.4 ( 91)   +0.4 ( 87)   -0.6 ( 80)   -0.4 ( 43)
+  0.15 0.08       +0.4 ( 70)   +0.4 ( 63)   -0.8 ( 56)   -0.8 ( 25)
+  0.15 0.10       +0.2 ( 42)   +0.2 ( 33)   +0.4 ( 28)   +0.6 (  9)
+
+  K-world counting maximum by condition, B: 0.048 0.054 0.040 0.020 0.024 0.008 0.024 0.020 0.026 0.036 0.014 0.006
+
+  K-world counting maximum by condition, AM2: 0.046 0.052 0.040 0.028 0.024 0.010 0.026 0.024 0.034 0.038 0.018 0.012
+
+  K-world counting maximum by condition, AMs: 0.042 0.050 0.040 0.028 0.022 0.010 0.024 0.024 0.030 0.036 0.016 0.010
+
+  K-world counting maximum by condition, AMf: 0.022 0.042 0.026 0.020 0.012 0.010 0.014 0.014 0.020 0.016 0.012 0.004
+
+  K-world counting maximum by condition, Bsub: 0.060 0.060 0.050 0.028 0.026 0.010 0.032 0.026 0.038 0.050 0.016 0.006
+
+SECTION 4.  Bak et al. (2023) Fig. 2a re-fit (POST HOC).  `sharp` has no c*, so droplet_am2_gate.log Part 3 (500 runs, seeds [31, a, b, tr]) is not rerun.
+  OK: droplet_am2_gate.log:95-115: re-averaged tables {('smooth', 'B'): (0.866, 0.374), ('smooth', 'AM2'): (0.494, 0.084), ('sharp', 'B'): (0.016, 0.022), ('sharp', 'AM2'): (0.008, 0.012)}, paired line {'B': [0.866, 0.374, 0.016, 0.022, 0.04], 'AM2': [0.494, 0.084, 0.008, 0.012, 0.024]}
+  Real series, rule AM2 (L does not depend on c*) and labels at each threshold; rule B at -2.21 equals bak_policy_b.log (gate K3):
+    Tinc 90 C: AM2 L in [-0.57, +0.06] over 18 (n, misread) pairs; labels AM2 -2.40: ['SMOOTH']; AMs -2.4634: ['SMOOTH']; AMf -2.9763: ['SMOOTH']; B -2.21: ['SMOOTH']
+    main     : AM2 L in [+0.00, +0.09] over 18 (n, misread) pairs; labels AM2 -2.40: ['NS']; AMs -2.4634: ['NS']; AMf -2.9763: ['NS']; B -2.21: ['NS']
+  my re-computation of L and the labels at B -2.21 / AM2 -2.40 equals the stage-3 text of droplet_ctrl_am2.log for all 36 x 2 rows: True
+
+SCORING (droplet_am2_full_predictions.txt, as written; bands are for the printed values)
+  F1 reproduction at -2.4034 (droplet_range_a.log:131, 135, 139; B 73, 77, 81): AM2 [np.float64(0.98), np.float64(0.96), np.float64(0.94)] (want 0.98/0.96/0.94), B [np.float64(0.73), np.float64(0.3), np.float64(0.05)] (want 0.73/0.30/0.05): True
+    AMf h=0.2 s=0.1: 0.9717 band [0.92, 0.98] hit  (B 0.7283, AM2 -2.4034 0.9817)
+    AMf h=0.25 s=0.1: 0.9433 band [0.87, 0.96] hit  (B 0.3050, AM2 -2.4034 0.9650)
+    AMf h=0.3 s=0.1: 0.9067 band [0.8, 0.93] hit  (B 0.0483, AM2 -2.4034 0.9417)
+    AMs h=0.2 s=0.1: 0.9800 band [0.96, 0.98] hit  (B 0.7283, AM2 -2.4034 0.9817)
+    AMs h=0.25 s=0.1: 0.9583 band [0.93, 0.96] hit  (B 0.3050, AM2 -2.4034 0.9650)
+    AMs h=0.3 s=0.1: 0.9400 band [0.9, 0.94] hit  (B 0.0483, AM2 -2.4034 0.9417)
+    AMf - B at h=0.2 / 0.25 (s=0.1): 0.2433 / 0.6383 (want >= 0.20 / >= 0.55): True
+  F1 HELD: 8 of 8 items
+  F2 FAILED: R-world counting max AM2 0.045 (want 0.045), AMs 0.035 ([0.030, 0.045]), AMf 0.028 ([0.012, 0.035]); K-world AM2 1.000 (want 0.052; droplet_ctrl_am2.log:154), AMs 1.000 ([0.038, 0.052]), AMf 1.000 ([0.017, 0.040]); per item [np.True_, np.True_, np.True_, np.False_, np.False_, np.False_]
+    informational: Bsub counting max R 0.058 (predicted [0.045, 0.065]), K 1.000 ([0.054, 0.075]); B R 0.045, K 1.000; exclusion max AM2/AMs/AMf 0.005/0.005/0.005, floor max 0.040/0.037/0.028
+
+  F3.  Section 10 endpoints (percent as printed; exact in brackets)
+  AMf, cap: 12 of 13 endpoints in their bands
+    counting max                          4.2  band [1.7, 4.0] point 2.9  MISS  (exact 4.20)
+    s<=0.15, misread <= 0.06 low         83.0  band [78, 88] point 83  hit  (exact 83.00)
+    s<=0.15, misread <= 0.06 high       100.0  band [99, 100] point 100  hit  (exact 100.00)
+    s<=0.15, misread 0.08-0.10 low       30.0  band [22, 33] point 28  hit  (exact 30.20)
+    s<=0.15, misread 0.08-0.10 high      77.0  band [68, 77] point 73  hit  (exact 77.20)
+    s=0.2,  misread <= 0.06 low          73.0  band [68, 79] point 74  hit  (exact 72.80)
+    s=0.2,  misread <= 0.06 high        100.0  band [99, 100] point 100  hit  (exact 100.00)
+    s=0.2,  misread 0.08-0.10 low        25.0  band [18, 29] point 24  hit  (exact 25.20)
+    s=0.2,  misread 0.08-0.10 high       67.0  band [57, 69] point 63  hit  (exact 67.00)
+    s=0.3,  misread <= 0.06 low          36.0  band [33, 43] point 38  hit  (exact 35.80)
+    s=0.3,  misread <= 0.06 high         95.0  band [92, 98] point 96  hit  (exact 94.60)
+    s=0.3,  misread 0.08-0.10 low         7.0  band [4, 10] point 7  hit  (exact 7.20)
+    s=0.3,  misread 0.08-0.10 high       29.0  band [26, 36] point 31  hit  (exact 28.80)
+  AMfn, no cap: 11 of 13 endpoints in their bands
+    counting max                          4.2  band [1.7, 4.0] point 2.9  MISS  (exact 4.20)
+    s<=0.15, misread <= 0.06 low         87.0  band [82, 91] point 87  hit  (exact 87.40)
+    s<=0.15, misread <= 0.06 high       100.0  band [99, 100] point 100  hit  (exact 100.00)
+    s<=0.15, misread 0.08-0.10 low       76.0  band [70, 81] point 76  hit  (exact 76.20)
+    s<=0.15, misread 0.08-0.10 high      96.0  band [89, 96] point 93  hit  (exact 96.40)
+    s=0.2,  misread <= 0.06 low          77.0  band [74, 84] point 79  hit  (exact 77.00)
+    s=0.2,  misread <= 0.06 high        100.0  band [99, 100] point 100  hit  (exact 100.00)
+    s=0.2,  misread 0.08-0.10 low        60.0  band [56, 67] point 62  hit  (exact 60.00)
+    s=0.2,  misread 0.08-0.10 high       88.0  band [80, 90] point 86  hit  (exact 88.40)
+    s=0.3,  misread <= 0.06 low          39.0  band [36, 45] point 41  hit  (exact 38.60)
+    s=0.3,  misread <= 0.06 high         95.0  band [94, 98] point 97  hit  (exact 94.60)
+    s=0.3,  misread 0.08-0.10 low        30.0  band [28, 37] point 33  hit  (exact 30.00)
+    s=0.3,  misread 0.08-0.10 high       44.0  band [45, 53] point 50  MISS  (exact 43.60)
+  AMs against AM2: every one of 13 endpoints <= and within 3 points: True; largest gap 0.80 points at s<=0.15, misread 0.08-0.10 low
+  AMsn against AM2n: every one of 13 endpoints <= and within 3 points: True; largest gap 1.60 points at s=0.3,  misread 0.08-0.10 low
+  largest endpoint drop AMf against B: 7.20 points at s=0.3,  misread <= 0.06 low (band (4, 11)); every endpoint AM >= B - 0.05: False
+  largest endpoint drop AMfn against Bn: 10.40 points at s=0.3,  misread 0.08-0.10 high (band (3, 10)); every endpoint AM >= B - 0.05: False
+  largest endpoint drop AMs against B: 0.60 points at s=0.2,  misread <= 0.06 low (band (0, 3)); every endpoint AM >= B - 0.05: True
+  largest endpoint drop AMsn against Bn: 1.20 points at s=0.3,  misread 0.08-0.10 high (band (0, 3)); every endpoint AM >= B - 0.05: True
+  F3 FAILED: AMf cap bands False, AMfn bands False, AMs within 3 points of AM2 [True, True], largest drops in band [np.True_, np.False_, np.True_, np.True_]
+  F4 HELD: paired numbers equal the predictions True; 18 Tinc 90 C AM2 labels SMOOTH at -2.40, -2.4634, -2.9763: True; 18 main labels NS at every threshold: True; my L and labels equal the stage-3 text: True
+  F5 HELD: K text gate True, K stage-3 gate True, R digit gate True, structure clean True
+
+DECISION RULES (at -2.9763; the same tests at -2.4634 are information)
+  AMf (c* -2.9762901306152343): D1a STEP(main, s=0.1, h=0.2) = 0.9717 >= 0.90: True; D1b cap pair False (largest drop 7.20 points), no-cap pair False (10.40 points): False; D2 counting max R 0.028, K cap 1.000, K no cap 0.042 <= 0.07: False
+  AMs (c* -2.463367462158203): D1a STEP(main, s=0.1, h=0.2) = 0.9800 >= 0.90: True; D1b cap pair True (largest drop 0.60 points), no-cap pair True (1.20 points): True; D2 counting max R 0.035, K cap 1.000, K no cap 0.050 <= 0.07: False
+  RECOMMENDATION: reject AM2 (D2 fails: false STEP above 0.07 at the full-grid threshold)
+  Expectation check (predictions file): D1a holds True (95%), D2 holds False (95%), D1b fails at -2.9763 True (80%), D1b holds at -2.4634 True (85%)
+
+HELD 3 of 5: F1 HELD, F2 FAILED, F3 FAILED, F4 HELD, F5 HELD

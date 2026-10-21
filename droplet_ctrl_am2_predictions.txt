@@ -1,0 +1,71 @@
+droplet_ctrl_am2_predictions.txt  (written 2026-10-21 01:53:18 PDT, before any result of droplet_ctrl_am2.py exists; sha256 in droplet_ctrl_am2.py)
+
+Unit droplet_ctrl_am2.  Part 1 is exact binomial arithmetic; Part 2 is a model study on SIMULATED drops, not data.  journals/droplet_prereg.md is not
+edited; every wording proposal is marked NOT APPLIED.
+
+DISCLOSED BEFORE THIS FILE.  (1) Read, not run: misread_sim.log, droplet_range_a.log (lines 1-12, 118-175), droplet_range_cap.log, droplet_range_common.py,
+misread_sim.py, journals/droplet_prereg.md Sections 2, 3, 6, 10.  (2) Hand arithmetic with normal approximations, no code, for the bands below.  (3) One
+scipy-free number known in advance from the task text and droplet_range_cap.log:4-10: P(NOT SCORABLE from the cap), 128 controls, true misread 4..10% =
+0.002 / 0.012 / 0.044 / 0.113 / 0.224 / 0.367 / 0.519.  (4) No simulation and no binomial table has been run.  A timing smoke run of the simulation
+(no verdicts printed) may come after this file; it will be named in droplet_ctrl_am2.py.
+
+DEFINITIONS (Part 1)
+- n controls (one drop each), K ~ Binomial(n, p), p the TRUE misread rate, the same for every control.  The cap of prereg Section 2 item 1 / Section 6:
+  NOT SCORABLE (NS) if K/n > 0.10, i.e. K > n/10.
+- NS(p, n) = P(K > n/10).  Goal (1): NS(p, n) <= 0.05 at p = 6%, 8%, 10%.
+- first(p) = smallest n in 128..1024 with NS(p, n) <= 0.05.  stable(p) = smallest n such that NS(p, n') <= 0.05 for EVERY n' in n..1024.  The cap is a
+  sawtooth in n: n = 10m ... 10m+9 share the threshold K >= m+1, so NS rises through those ten values and drops at n = 10m+10.
+- FS(p, n) = P(K <= n/10) = 1 - NS(p, n), "false SCORABLE": true p > 10% but measured <= 10%.  Goal (2): FS <= 0.10 at p = 11..14%.
+- Cost of a control: the prereg states none (checked: no cost, time or money figure for controls in Sections 6-9).  Counts only: n extra drops on top
+  of the 200 main-run drops (and up to 100 extension drops); 128 now, 16 per level over 8 levels.
+- Combos tried in addition to the cap kept at 10%: caps of 6, 7, 8, 9% (K > cap * n), for the pair NS(6%) <= 0.05 AND FS(11%) <= 0.10.
+
+PART 1 PREDICTIONS (n over 128..1024, every integer)
+P1  p = 6%.  first = 128.  stable in [128, 150].  max over n of NS(6%, n) in [0.044, 0.056] (at the top of a plateau near n = 129).
+P2  p = 8%.  first in [400, 520].  stable in [480, 640].  The sawtooth is visible: some n above first has NS > 0.05.
+P3  p = 10%.  No n in 128..1024 has NS <= 0.05.  min over n of NS(10%, n) in [0.42, 0.50] (at n near 1020); max over n in [0.52, 0.60].
+    NS at 10% never gets near 0.05 because the cap sits at the mean: P(K > np) tends to 1/2, not to 0.
+P4  p = 11%, cap 10%.  No n in 128..1024 has FS <= 0.10.  FS(11%, 128) in [0.30, 0.37]; min over n of FS(11%, n) in [0.12, 0.19].
+P5  p = 12%, 13%, 14% (cap 10%).  first n with FS <= 0.10: 12% in [420, 600]; 13% in [200, 330]; 14% at most 170 (FS(14%, 128) in [0.07, 0.13]).
+P6  Answer to "does any cap / count combination keep false-SCORABLE under 10%":  NO for the cap kept at 10% when the true rate is 11% (P4); yes only
+    for true rates >= about 12% with n >= about 500 (P5).  With a LOWER cap the pair NS(6%) <= 0.05 and FS(11%) <= 0.10 (stable over larger n) is met first
+    at cap 8% or 9% with n in [330, 520]; a 6% or 7% cap never meets it within 1024 (6%: NS(6%) is about 0.5 at that cap; 7%: needs about 1500).
+    Price of a lower cap: NS at a TRUE 8% (cap 8%) is about 0.5, so the 8-10% range described in prereg Section 3 becomes NS about half the time.
+
+PART 2 SETUP (what droplet_ctrl_am2.py does)
+- Cells: the Section 3 / Section 10 power tables are misread_sim.log's policy-B 128-control columns: 87 counting+drying cells (max STEP share per
+  condition, log lines 10-21), probit s = 0.1, 0.15, 0.2, 0.3 (lines 31-42, 46-57, 61-72, 76-87) and probit s = 0.15 NOT SCORABLE (lines 91-102), 12
+  conditions = CV {0.05, 0.15} x true misread {0, .02, .04, .06, .08, .10}, 500 runs per cell, seeds [5, i, j] (i over the 87 counting cells then the
+  4 steps, j over the 12 conditions), controls drawn as misread_sim.run_cell does (rng.random((500, 192)) < eps, first 128 used, drawn after the runs).
+- Rules, same simulated data for both: B = frozen (e_hat = (k+0.5)/129, c* = -2.21); AM2 = B plus a plateau h in both families, c* = -2.40
+  (droplet_range_a.log:122-149).  Each reported WITHOUT the 10% control cap (what misread_sim.log and the prereg Section 3 / 10 percentages are) and WITH
+  the cap (what Section 2 says).
+- B must reproduce the log first.  c* is -2.21 here, the rounded value; misread_sim used its unrounded calibrated c*_B(128), so a run or two per cell can
+  flip.
+
+PART 2 PREDICTIONS
+P7  B reproduction (no cap, 128 controls).  Of the 60 B cells (12 counting maxima + 48 step cells), at least 58 match the log to its printed digits;
+    every cell within 0.015 (2-decimal tables) or 0.004 (3-decimal counting table).  B128 counting maximum over all 12 conditions: 0.054 (+-0.004).
+    NS for probit s = 0.15 without cap: 0.00 in all 12 conditions.
+P8  AM2 against B, probit steps, no cap, 48 cells.  At least 45 of 48 cells have |AM2 - B| <= 0.05; every cell has AM2 - B in [-0.06, +0.02].  The
+    sharp steps (s = 0.1, 0.15) differ by <= 0.03 in every condition.  Any cell beyond 0.05 is an s = 0.3 or s = 0.2 cell at misread >= 6%.
+P9  AM2, counting cells, no cap.  Maximum STEP share over the 87 cells is <= 0.07 in every one of the 12 conditions, and within 0.03 of B's
+    maximum in the same condition.
+P10 With the 10% cap (Section 2 as written), probit s = 0.15: NS share by true misread  0.06 -> 0.044 (+-0.03), 0.08 -> 0.224 (+-0.05),
+    0.10 -> 0.519 (+-0.06), the same for B and AM2 within 0.02, and 0.00-0.01 at misread <= 0.04.
+P11 With the cap, STEP share is at most (no-cap STEP share) x (1 - NS share) + 0.03, for every s and both rules: the runs the cap keeps have a measured
+    rate at or below the cap, so the fit underestimates the true rate and calls fewer STEPs.  Example: s = 0.15, CV 0.05, misread 0.10: B with cap in [0.30, 0.50]
+    against 0.92 without.
+P12 The cap does not change the counting maxima (false STEP): with cap, B and AM2 maxima per condition <= the no-cap maxima + 0.01 (fewer runs survive, noise only).
+
+DECISION RULES (fixed now)
+R1 Gate.  If P7 fails (any B cell outside the tolerance, or fewer than 58 of 60 matching), the AM2 comparison is reported as NOT TRUSTED and no prereg
+   wording is proposed from it.
+R2 If the gate holds AND all 48 step cells have |AM2 - B| <= 0.05 AND the AM2 counting maximum is <= 0.07 in all 12 conditions:  AM2 can replace B without
+   changing the Section 3 / Section 10 percentages by more than 0.05; the proposed wording says "AM2 power within 0.05 of B's" (NOT APPLIED).
+R3 If the gate holds and any step cell has |AM2 - B| > 0.05, or any AM2 counting maximum exceeds 0.07: the Section 3 / Section 10 ranges must be restated
+   from the AM2 table (the cells that exceed are listed), and the proposed wording uses the AM2 ranges (NOT APPLIED).
+R4 Control count.  Report first and stable n at 6%, 8%, 10% as computed.  If no n <= 1024 reaches 0.05 at 10% (P3), say so; the proposed wording then
+   states the NS probability at true 8% and 10% instead of promising a count.  Prefer n = multiple of 10 (cap threshold integral); a change of n needs
+   c* recalibrated (B: -2.61 / -2.21 / -2.03 at 64 / 128 / 192, misread_sim.log:4-6), which this unit does not do.
+R5 Nothing is edited in journals/droplet_prereg.md; all wording is marked NOT APPLIED.
