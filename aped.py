@@ -136,6 +136,12 @@ Table 1 entry 3: carbamoyl-Ala 20 mM + Ala 100 mM, 80 C, 53 d -> Ala2 12.7%, Ala
 per new bond over 120 mM Ala -> a = 6.1e-9 /s (pond 0.012x, lake 1.2x, ocean pass), but at 80 C, not 25 C, and
 the SI time courses were not received. R5 stays ?: every measured uncatalysed a fails the pond and passes the
 lake and ocean, the mixed case; only an added oxidant or metal salt passes all three.
+CAVEAT ON R5 (added 2026-10-21 from aped_r5_scan2.py; changes no verdict): a measured a is necessary, not sufficient.
+sigma = s* a (s* = 0.0063166) is fitted at a/kH = 0.385 (L89) and does not hold at the lab rates for plain COS. In a slice at
+x = 1e4 M the difference mode is stable (sigma < 0) below a/kH = 1.6e-3 (kR = 0, kP = 1), 1.0e-2 (kR = 1e-4, kP = 1; this
+base set) and 4.1e-4 (kR = 0, kP = 22) (aped_r5_scan2.log:19, 37, 55); the floor a >= 10/(tau s*) is not the whole test.
+DO NOT IMPORT: the scan and prints below run at import (~86 s) and there is no __main__ guard. lit_r6.py execs this file
+up to its first header print; aped_r5.py, aped_r5_scan.py and aped_r5_scan2.py copy the functions. Keep both working.
 """
 import time
 

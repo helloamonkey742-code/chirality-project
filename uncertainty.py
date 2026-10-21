@@ -35,8 +35,8 @@ def logu(lo, hi):
     return 10 ** RNG.uniform(np.log10(lo), np.log10(hi), N)
 
 
-# horizontal D_h, icy moons: 1e-2..1e2 (ASSUMED bracket; Zhang, Kang & Marshall 2024 diagnose 0.03-2,
-#   Zeng & Jansen 2021 use 0.1-0.25 and find ~1000 yr to mix a hemisphere, Ashkenazy & Tziperman 2021 use 30)
+# horizontal D_h, icy moons: 1e-2..1e2 (ASSUMED bracket; Zhang, Kang & Marshall 2024 write K ~ 0.1, Zeng & Jansen 2021 use
+#   0.1-0.25 (~1000 yr to mix a hemisphere), Ashkenazy & Tziperman 2021 diagnose ~300 (viscosity-type), above the top)
 # vertical D_z, icy moons: 1e-10..1e-3 (Zeng & Jansen 2021 Sec. II.2 kappa_z, 3e-10..3e-3, rounded outward)
 # Earth: horizontal eddies 1e2..1e4 (Abernathey & Marshall 2013); vertical 1e-6..1e-4 (ASSUMED around Ledwell 1.1e-5)
 WORLDS = {  # volume m^3, size L m, conc range M, D_h range m^2/s, D_z range m^2/s, time range yr

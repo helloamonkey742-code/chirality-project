@@ -410,3 +410,9 @@
 - **Critic:** skipped — no claim was changed, only flagged.
 - **Prediction check:** right.
 - **Next:** IDLE unless the paper changes again. Open for the student: confirm the two Tagish Lake values from Glavin 2012 Table 1, widen the Murchison range, pdf/ not rebuilt.
+
+## 2026-10-21 13:14 — CORRECTION to the D_h literature figures in the 2026-09-25 18:05 entry (lines 174, 178, 182, 187; appended, the entry above is not rewritten)
+- **What was wrong:** line 174 gives Zhang, Kang & Marshall 2024 as "~0.03–2 m²/s", line 178 calls the bracket "around the 0.03–30 literature values", and uncertainty.py:38-39 said Ashkenazy & Tziperman 2021 "use 30". Zhang's full text (papers/h14_eddy/zhang2024_epmc.xml) has no 0.03–2; it says "K should be of order ∼0.1 m² s⁻¹" (lines 190-192 of this entry already quote that). Ashkenazy & Tziperman (papers/h14_eddy/ashkenazy2021.txt) have no 30 as a diffusivity.
+- **Corrected (DOCUMENTED, read 2026-10-21):** Ashkenazy & Tziperman set explicit horizontal tracer diffusion to 5 (2D) and 2 (3D) m²/s (txt lines 402-405) and diagnose a coefficient of "about 300 m²/s", about 200 as a rough lower bound for the global mean (lines 553-559); the 300 is viscosity-type and may overstate tracer diffusion. So the cited values run from about 0.1 (Zhang) to about 300 (A&T). The 10⁻²–10² bracket stays ASSUMED, with its top below the A&T number.
+- **Effect (MEASURED, dh_range.log, seed 0, N = 200,000, no lid):** raising the top to 3×10² / 10³ m²/s lowers each icy world's share by 0.18–0.65 / 0.46–1.31 points and flips no pair's order. The margins on lines 182 (50–450×) and 187 (50–140×) used 0.03 m²/s as the low end; at 0.1 they are about 180× (0.1 / 5.6×10⁻⁴) and 450× (0.1 / 2.2×10⁻⁴), arithmetic from line 182's thresholds, not rerun, so "sideways healing never binds" stands.
+- **Source:** journals/new_analyses_dh_range.md. No number or code in the entry above was changed.

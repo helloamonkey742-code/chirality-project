@@ -21,9 +21,11 @@ predictions were not changed.
  (P1) held, 0.05.  (P2) held: largest loss 0.0 points at f = 4 and 0.1 at f = 10.  (P3) the check passes on
  Ganymede 0.1 vs Europa 0.0 at f = 10, a difference below the printed rounding: counted as NOT held.
  (P4) held, 44.1 / 30.1 / 0.0 (f = 4).  (P5) held, 99.9.
- Why nothing moves: sideways coarsening takes at most 7% of the ocean's age in any draw of any world (Ganymede;
- median 0.01%), so it must be about 14x slower before it decides a single draw. The advect2d slowdown (>= 4x) is far
- inside that margin. The bound is for this model's ages (10^8-10^9 yr, Mimas 2-25 Myr), not for short-lived pools.
+ Why the loss is small: sideways coarsening takes at most 7% of the ocean's age in any draw of any world (Ganymede;
+ median 0.01%), but this is not a 14x margin: coarsening ADDS to the rise time (multiwall.py:421-422), so a draw near
+ its age limit is lost at any slowdown. h14_eddy.log:178-192 (all draws, main, no lid): first losses at f = 2 in 10 of
+ 15 worlds, 157 of 200,000 Ganymede draws at f = 10; too few to move a share (above). The bound is for this model's
+ ages (10^8-10^9 yr, Mimas 2-25 Myr), not for short-lived pools.
 """
 import numpy as np
 

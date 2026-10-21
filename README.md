@@ -442,7 +442,7 @@ early-Earth conditions. The models can't name the molecules, but they do set **r
 | R3 | driven: energy or feed keeps it from drifting back to 50/50 | open-system assumption |
 | R4 | works in water from simple early-Earth molecules | prebiotic plausibility |
 | R5 | fast enough: k2 ≥ 3×10⁻⁷ /M/s (pond, lake), 3×10⁻⁹ (ocean) | time rule, `ocean.py` |
-| R6 | works from a racemic or tiny excess (a pond follows 6×10⁻¹²) | `inherit.py` |
+| R6 | sensitive: follows an excess seeded into the pool down to the size it needs (a pond 6×10⁻¹²); passing on a feed excess does not count | `inherit.py` |
 | R7 | product is an amino acid, sugar or nucleotide (or passes its hand to one) | biology |
 | R8 | **many molecules decide**: homogeneous solution, molecule-sized voting units; no crystal, surface or aggregate carries the decision | only ~1–300 units decide in crystallizations (`crystal_check.py`, `blind_units.py`) |
 | R9 | tips over slowly: the 50/50 state is stable at low drive and is lost as the drive (feed) rises slowly | the sweep of Eq. 11; `frank.py` (Part 7) |
@@ -451,20 +451,34 @@ early-Earth conditions. The models can't name the molecules, but they do set **r
 only a decision made by a huge pool, and a decision made by a few crystals or grains is set by their
 own chance excess. So the table is ranked by R8 first (Y, then P, then N), then by score.
 
+*R6 tightened 2026-10-21* to the `inherit.py` rule: the pool must follow an excess seeded into it at the
+transition (Δ ≥ 2) down to the size it needs. Passing a feed excess through does not count: a 50/50 state
+that stays stable passes Δ ≥ 2 that way even at a catalysed share of 1.7×10⁻¹⁷ (`arm_e_r6.log:22-24`).
+Arms E and G go from ? to N. The eight literature rows were re-checked under the same rule (`lit_r6.py`,
+`lit_r6.log`, `journals/new_analyses_lit_r6.md`; predictions hashed first, 7 of 8 held) and are all N: a hand
+decided among N units cannot follow a seed below about 2/√N, so following a pond's 6×10⁻¹² needs about
+10²³ deciding molecules, and every literature route is decided by crystals, a surface or at most
+3.6×10⁹ molecules (Soai, `soai_check.py`), or its seed decays or does not set the hand (APED: the 50/50
+state is stable at every setting's concentration, 10⁻⁶ to 0.1 M; Ghadiri: no run follows a seed or
+amplifies ee; magnetite: the field-set magnetization sets the hand; attrition: every racemic start went to the R solid, which
+the authors put down to a trace chiral impurity, and 0.1 mol% of phenylglycine sets the hand, Noorduin et al.
+2008 in *JACS*). No candidate now meets R6. Ghadiri
+and Joyce tie for first at 5.5; the table keeps the scorecard's order between them.
+
 Scored from the literature (Y = meets, P = partly, N = fails, ? = no data):
 
 | candidate | R1 | R2 | R3 | R4 | R5 | R6 | R7 | R8 | R9 | score |
 |---|---|---|---|---|---|---|---|---|---|---|
-| Ghadiri peptide replicator (2001) | Y | Y | P | N | Y | Y | Y | Y | N | **6.5** |
-| Transamination + ligation network, fed (Higgs & Blackmond 2025; arm E) | P | P | Y | Y | N | ? | Y | Y | N | 5.0 |
-| Nonenzymatic RNA copying with 2-aminoimidazole-activated nucleotides (Essex et al. 2026, preprint) | P | Y | P | Y | N | ? | Y | Y | N | 5.0 |
-| APED peptides via NCAs (Plasson 2004; Danger 2010; Hitz & Luisi 2004) | P | P | P | P | ? | P | Y | Y | P | 5.0 |
-| Joyce RNA cross-inhibition (1984) | N | Y | P | Y | ? | N | Y | Y | N | 4.5 |
-| Soai reaction (1995; from 5×10⁻⁷ ee in 2003) | Y | P | P | N | Y | Y | N | P | N | 4.5 |
-| Attrition deracemization, amino-acid derivative (Noorduin 2008) | Y | Y | Y | P | Y | Y | P | N | N | 6.0 |
-| Viedma ripening, NaClO₃ (2005) | Y | P | Y | P | Y | Y | N | N | N | 5.0 |
-| Magnetite crystallization (Ozturk 2023) | N | N | P | Y | Y | Y | Y | N | N | 4.5 |
-| Blackmond eutectic (2006) | N | N | N | P | Y | P | Y | N | N | 3.0 |
+| Ghadiri peptide replicator (2001) | Y | Y | P | N | Y | N | Y | Y | N | **5.5** |
+| Joyce RNA cross-inhibition (1984) | N | Y | P | Y | Y | N | Y | Y | N | **5.5** |
+| Transamination + ligation network, fed (Higgs & Blackmond 2025; arm E) | P | P | Y | Y | N | N | Y | Y | N | 5.0 |
+| Nonenzymatic RNA copying with 2-aminoimidazole-activated nucleotides (Essex et al. 2026, preprint) | P | Y | P | Y | N | N | Y | Y | N | 5.0 |
+| APED peptides via NCAs (Plasson 2004; Danger 2010; Hitz & Luisi 2004) | P | P | P | P | ? | N | Y | Y | P | 4.5 |
+| Soai reaction (1995; from 5×10⁻⁷ ee in 2003) | Y | P | P | N | Y | N | N | P | N | 3.5 |
+| Attrition deracemization, amino-acid derivative (Noorduin 2008) | Y | Y | Y | P | Y | N | P | N | N | 5.0 |
+| Viedma ripening, NaClO₃ (2005) | Y | P | Y | P | Y | N | N | N | N | 4.0 |
+| Magnetite crystallization (Ozturk 2023) | N | N | P | Y | Y | N | Y | N | N | 3.5 |
+| Blackmond eutectic (2006) | N | N | N | P | Y | N | Y | N | N | 2.5 |
 
 New rows (abstracts checked in OpenAlex or PubMed, 2026-10-17):
 - **Transamination + ligation network:** a model of peptide-catalysed transamination plus peptide
@@ -474,6 +488,11 @@ New rows (abstracts checked in OpenAlex or PubMed, 2026-10-17):
   forward, s = k2b/k1b ≈ 6, range 4–9), the network fits Higgs's destructive mechanism, and at 1–5 mM it
   never passes the bifurcation: the uncatalysed background wins, and the catalysed rate would have to
   rise 735× (5 mM) to 3658× (1 mM). An excess decays (k₂ < 0), so R5 = N and R9 = N at measured rates.
+  The stable network passes a feed excess through (gain at most 2.45), so a 1% output needs a 0.2–0.4%
+  feed excess (5.8e-12 needed in the pond), and an excess seeded into the pool is followed only down to
+  44× the pond's need, so R6 = N (`arm_e_r6.py`; `arm_e_r6.log:34-36, 67`). At 1.5× the crossing multiplier (which is
+  369×, 3.9e4× and 3.0e7× the measured catalysed rate in pond, lake and ocean) it follows a feed excess far
+  below the need, but a seeded one only down to 1.25–1.85× it (`arm_e_r6.log:99-114`).
   At a rate high enough to cross, the network tips over slowly through a supercritical pitchfork and
   follows the static branch, so R9 would hold. Ligation rates and K were assumed and scanned (Deng 2024
   closed access).
@@ -497,9 +516,13 @@ New rows (abstracts checked in OpenAlex or PubMed, 2026-10-17):
   A shared achiral activator pool does not tip it either (`rna_copying.py`): at growth order p = 0.5 or 1
   the 50/50 state is never lost at r = 0.4–0.6 (0 of 36 rows, max |λ| 0.989 and 0.998), and only the p = 2
   control loses it (6 of 18 rows), on a template-rich branch a feed-filled reactor does not reach. Every
-  r ≤ 0.98 leaves the 50/50 state stable at every feed: a seeded excess is copied to a bounded plateau
+  r ≤ 0.98 leaves the 50/50 state stable at every feed: an excess in the feed is copied to a bounded plateau
   (0.67 for a +20% feed at r = 0.40), but no excess grows from 50/50 (R5 = N, R9 = N), although the copying
-  itself is fast (~7 additions per hour at 24 mM). r = 1.14 would give m* = 10.1 mM feed, but the gel now
+  itself is fast (~7 additions per hour at 24 mM). The excess has to be in the feed: one placed in the
+  templates with a 50/50 feed decays by 0.979, 0.988 and 0.9995 per cycle at r = 0.40, 0.56 and 0.98 and is
+  lost in 54 of 54 cases (100 yr to 1e8 yr, 1 h or 24 h cycles; `arm_g_r6.py`), so R6 = N. A 50/50 monomer pool slows
+  copying (onset feed 6.3–7.6 mM against 2.9 mM pure; yield at 20 mM 44–61% of a pure pool) but does not
+  stop it, and a 1% feed excess is still copied to 3.4–79%. r = 1.14 would give m* = 10.1 mM feed, but the gel now
   favours r < 1; if r > 1, the system tips over slowly (supercritical pitchfork, the normal form holds,
   F = 0.58 vs 0.70 in `frank.py`).
 - **APED peptides:** a model in which activation, polymerization, epimerization and depolymerization
@@ -508,7 +531,8 @@ New rows (abstracts checked in OpenAlex or PubMed, 2026-10-17):
   epimerization needs a catalyst (Danger, Plasson and Pascal, 2010, doi:10.1089/ast.2009.0450). NCA
   oligomerization in water enriches homochiral oligomers from 20% ee L-Leu (Hitz and Luisi, 2004,
   doi:10.1023/b:orig.0000009831.85557.25). A re-implementation of the model's reversible form with monomer racemization (Plasson and Bersini 2009, *J. Phys. Chem. B* 113:3477, doi:10.1021/jp803807p; `aped.py`, `aped.log`, from the arXiv version) loses the 50/50 state only between 0.0105 and 2.11 M activation fuel at the base rates, only with Plasson's signs (heterochiral steps disfavoured: 5 of 16 such sets have a threshold, 0 of 16 Danger-like sets), and only at total residues of about 1 M or more (none at 0.5 M, against 10⁻⁶ to 10⁻² M in the scorecard settings), so R9 = P; R5 stays ? because the growth rate scales with the NCA activation rate, which is not measured (at the one quoted rate, 10⁻⁸ /s, the pond fails and the lake and ocean pass). The racemization step is what makes the drive threshold: a blinded re-implementation of the original irreversible 2004 model from its open full text (PMC534711; `audit/aped_audit.py`), which has no racemization, has no lower drive threshold, and at its Fig. 5 rates loses the 50/50 state at any activation rate up to an upper edge (at 1 M) and, at the published activation rate, above 66.9 mM of total residues.
-- **Ghadiri peptide replicator:** in the 2001 data (Saghatelian, Yokobayashi, Soltani and Ghadiri, *Nature* 409:797, doi:10.1038/35057238) each template catalyses only its own hand's fragments, wrong-hand fragments and templates neither inhibit nor promote it, and growth is sub-exponential (rho ~0.5-0.65), so by the arm G criterion (cross-competition must beat self-competition) the 50/50 state stays stable and R9 = N, inferred rather than modelled.
+- **Ghadiri peptide replicator:** in the 2001 data (Saghatelian, Yokobayashi, Soltani and Ghadiri, *Nature* 409:797, doi:10.1038/35057238) each template catalyses only its own hand's fragments, wrong-hand fragments and templates neither inhibit nor promote it (the main text gives no growth order), so by the arm G criterion (cross-competition must beat self-competition) the 50/50 state stays stable and R9 = N, inferred rather than modelled.
+- **Joyce RNA cross-inhibition, R5 (2026-10-21):** read from the paper (Joyce et al., 1984, *Nature* 310:602, Table 1: poly(C) template, 0 °C, 7 days). With predictions hashed before reading (`joyce_r5_predictions.txt`; 5 of 6 held, the conditions prediction missed one run at 0.01 M), `joyce_r5.py` (`joyce_r5.log`) converts the share of G residues in oligomers of length ≥ 4 to k₂ = −ln(1−f)/(c·t): all-D ≥ 1.7×10⁻⁵ and racemic ≥ 1.7×10⁻⁶ /M/s, at least 5.6× the 3×10⁻⁷ floor (2.8× if the racemic concentration is per enantiomer, which the paper does not say), so R5 = Y. These are lower bounds (dimers and trimers are not counted) at lab concentration (10–100 mM). R5 = N is kept for rows where a model at measured rates shows an excess decaying; none has been run at Joyce's rates, and the reaction still only inhibits (R1 = N).
 
 **The pattern (the main finding of this part):** the candidates *with* self-amplification (R1)
 fail on prebiotic inputs (R4). The candidates that are prebiotic (R4) lack self-amplification.
@@ -524,7 +548,9 @@ none has been run as a slow sweep through its instability, and Soai, Viedma and 
 at 50/50 from the start as run. Models of the two prebiotic solution routes at measured rates
 (`arm_e_rates.py`, `rna_copying.py`) find the 50/50 state stable at every feed, so neither breaks
 symmetry yet; each would tip over slowly, as R9 asks, if one number changed (a catalysed rate
-735–3658× higher for the network; r > 1 for RNA copying). No prebiotic solution system has a measured number of deciding molecules
+735–3658× higher for the network; r > 1 for RNA copying). Until then both only pass on an excess that
+arrives in the feed (gain at most 2.45 for the network); an excess seeded into the network's pool must be
+44× the needed size, and one placed in RNA templates is lost (`arm_e_r6.py`, `arm_g_r6.py`), so both have R6 = N. No prebiotic solution system has a measured number of deciding molecules
 or a volume dependence (search of 2026-10-17).
 
 **Prediction:** the missing reaction is **self-amplifying chirality in water, from natural
@@ -534,7 +560,7 @@ within days. The spec says a reaction taking *years* at 10 mM (k2 ~ 10⁻⁷ /M/
 
 Two partial routes already cover the gap between them:
 - **Magnetite (2023)** starts from racemic, prebiotic RNA precursors and needs no autocatalysis
-  (~60% ee, then crystallization to pure).
+  (up to ~60% ee in the best run, ~35% on average, then crystallization to pure).
 - **Attrition deracemization** gives complete deracemization with grinding and a racemizing solution.
 
 A pool combining a surface step (to break symmetry) with crystallization (to amplify) would meet
@@ -679,7 +705,11 @@ star system could do that.
   3D runs use finite 128³ boxes.
 - Real ocean turbulence is not simple diffusion. Vertical mixing in icy-moon oceans is a model input
   (Zeng & Jansen 2021), uncertain over 10⁻¹⁰–10⁻³ m²/s. Sideways mixing is much faster (~0.1 m²/s, Zhang et al. 2024)
-  and never limits healing here. With weak vertical mixing the ocean forms layers; layers merge only as fast
+  and limits healing only if eddies larger than the wall width slow sideways coarsening more than about
+  40×: no share moves by a point below that, and early Earth keeps 99.9% up to about 2600×
+  (`h13h14_combined_cross.log`, `h13h14_extreme_locate.log`). The measured slowdown times the sphere's 17
+  gives 34–307×; at the real eddy ratio it is extrapolated to about 300–27,000×, so the early-Earth 99.9%
+  is not settled (`h14e_advect.log:88-95`). With weak vertical mixing the ocean forms layers; layers merge only as fast
   as vertical mixing allows (Part 3b, `sphere_layers.py`), so vertical mixing is again the key unknown.
   *(Note 2026-09-27, `vertical_mixing_lit.md`: Zeng & Jansen 2021 is still the only primary estimate. Their Sec. 2.2 was
   re-read this date and gives 3×10⁻¹⁰ to 3×10⁻³, DOCUMENTED. Ames et al. 2025 quote "10⁻⁷ to 10⁻³" citing the same paper,
@@ -773,13 +803,14 @@ Code: MIT licence (see `LICENSE`).
 - Breslow & Cheng 2010, *PNAS* 107:5723, doi:10.1073/pnas.1001639107 (L-amino acids → D-glyceraldehyde)
 - Hein, Tse & Blackmond 2011, *Nat. Chem.* 3:704, doi:10.1038/nchem.1108 (proline → enantiopure RNA precursor)
 - Tamura & Schimmel 2004, *Science* 305:1253, doi:10.1126/science.1099141 (D-RNA prefers L-amino acids)
-- Ozturk et al. 2023, *Sci. Adv.* 9:eadg8274, doi:10.1126/sciadv.adg8274 (magnetite → ~60% ee; conglomerate crystallization takes ~25% ee to homochiral; hemisphere-scale uniform magnetization argument)
+- Ozturk et al. 2023, *Sci. Adv.* 9:eadg8274, doi:10.1126/sciadv.adg8274 (magnetite → up to ~60% ee in the best run, ~35% on average over repeats; conglomerate crystallization takes ~25% ee to homochiral; hemisphere-scale uniform magnetization argument)
 - Faglioni, D'Agostino, Cadioli & Lazzeretti 2005, "Parity violation energy of biomolecules II: DNA", *Chem. Phys. Lett.* 407:522, doi:10.1016/j.cplett.2005.04.009 (weak force does not favour natural DNA helices)
 - Glavin & Dworkin 2009, *PNAS* 106:5487, doi:10.1073/pnas.0811618106 (Murchison L-isovaline ee 18.5 ± 2.6%)
 - Frank 1953, *Biochim. Biophys. Acta* 11:459 (autocatalysis + mutual antagonism model)
 - Soai et al. 1995, *Nature* 378:767, doi:10.1038/378767a0; Sato et al. 2003, *Angew. Chem.* 42:315, doi:10.1002/anie.200390105
 - Viedma 2005, *PRL* 94:065504, doi:10.1103/PhysRevLett.94.065504
 - Noorduin et al. 2008, *Angew. Chem.* 47:6445, doi:10.1002/anie.200801846
+- Noorduin et al. 2008, *J. Am. Chem. Soc.* 130:1158, doi:10.1021/ja7106349
 - Saghatelian et al. 2001, *Nature* 409:797, doi:10.1038/35057238
 - Joyce et al. 1984, *Nature* 310:602, doi:10.1038/310602a0
 - Klussmann et al. 2006, *Nature* 441:621, doi:10.1038/nature04780

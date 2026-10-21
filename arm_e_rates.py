@@ -150,6 +150,8 @@ def simulate(p, z0, T, f_of_t=None, g=0.0, n=600):
 GRID = dict(kh=np.logspace(-9, 0, 19)[:, None, None, None],    # /M/s ligation: [Deng] rate not obtained
             R=np.array([1.0, 2.0, 4.0])[None, :, None, None],  # [Deng] says R > 1; [Higgs] Fig. S1 to 4
             K=np.array([1e-6, 1e-4, 1e-3, 1e-2, 1e-1])[None, None, :, None],  # [PM]/[PL], [Higgs] SI Eq. 3
+            # f floor 1e-13 /s is too high for the ocean: its seed optimum needs f*tau >= 5, i.e. f >= 1.6e-15 /s at tau = 1e8 yr
+            #   (arm_e_r6.py:58 extends the grid to 1e-19, POST HOC; arm_e_r6.log:156-174)
             f=np.logspace(-13, -3, 41)[None, None, None, :])   # 1/s flow, a design choice
 C0S = (1 * mM, 2 * mM, 5 * mM)                                  # prebiotic feed (task)
 

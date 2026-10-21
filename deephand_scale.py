@@ -162,7 +162,7 @@ def one(w, i, rng, seed, dt=M.DT, dzw=DZW, tcap=None, **kw):
     tmax = 3 * max(Tup, Tdn) + 100 if tcap is None else tcap
     t0 = time.time()
     Te, fin, _, _ = M.simulate(R, H, Dt, xf, bounds, hands, seed, tmax, dz=w / dzw, dt=dt)
-    return dict(w=w, i=i, R=R, n=n, lr=round(lr, 4), u=round(u, 4), hands="".join("+-"[h < 0] for h in hands),
+    return dict(w=w, i=i, R=R, n=n, lr=round(lr, 4), u=round(u, 4), hands="".join("+-"[int(h < 0)] for h in hands),
                 K=len(upw), Kd=len(dnw), dw=round(float(dw), 3), Te=Te, fin=fin, ok=bool(Te and fin == hands[j]),
                 Tc=float(Tc), Tm=float(max(Tup, Tdn)), tmax=float(tmax), sec=round(time.time() - t0, 1))
 
