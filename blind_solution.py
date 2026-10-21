@@ -12,7 +12,7 @@ Three studies of other amplifiers were picked by title on 2026-10-17 from an Ope
        solution reaction's chance excess scales with its molecules.
  SH10: the Soai reaction started with an achiral amine (three amines; 75, 20 and 20 runs; no chiral additive), each run
        scored S or R by chiral HPLC.  A chance-zone test like blind_check.py, on runs Section 3.7 has not used.
- PG12's predictions were committed alone (ab32be9).  MW10 and SH10 were added in a second predictions commit, before any
+ PG12's predictions were committed alone (796c2f7).  MW10 and SH10 were added in a second predictions commit, before any
  outcome of the three papers was read; PG12's predictions were not changed.
 
 PROTOCOL.  As blind_units.py.  The predictor (Claude, an AI model) has not read these papers; it saw only setup reports
@@ -27,7 +27,7 @@ stirring "competes" with chemical induction; (v) the scout reported that the pap
 rate (a signed rate where the hand changes, so a zero crossing is likely in the doped series) and an amplitude lambda < 1
 "accounting for domain losses" (a hint that |ee| may stay below 1), and that a statement on behaviour at high rates was
 withheld; (vi) the authors' earlier work on stirred undoped monolayers (their ref. 26, Phys. Rev. Lett. 2009) may have
-been seen in training; its results are not recalled.  MW10 and SH10 (setup reports read 2026-10-17, after ab32be9):
+been seen in training; its results are not recalled.  MW10 and SH10 (setup reports read 2026-10-17, after 796c2f7):
 (vii) the MW10 title states the claim; its scout withheld which runs had reactant precipitation (so some may have),
 "significance-threshold tallies" and a yield range; (viii) the SH10 scout withheld per-amine and pooled S/R counts stated
 in the text and whether any run was scored without a hand; (ix) the repo's soai_check.py, written in an earlier session,
@@ -113,7 +113,7 @@ with eeCW > 0 and with eeCW < 0.  D = |Omega0(R) - Omega0(S)| / 2, the shift one
  Every outcome is reported as found.
 
 RESULTS (blind_solution.log, 2026-10-17): 8 of 11 held (M1-M4, A1, A3, S1, S2); 3 FAILED (A2, S3, S4).
-Values were read by separate readers after the predictions commits (ab32be9, ed58b58) and entered unchanged.
+Values were read by separate readers after the predictions commits (796c2f7, 2873906) and entered unchanged.
  PG12: Fig. 2 is vector graphics, so the reader took all 39 markers (13 per series) from the drawing commands.  Every
  series crosses.  Omega0 = +222 (R), -211 (S), -26 (rac) rpm; K = +1.55, +1.53, +1.15 per 1000 rpm.  M1 held (|R + S| =
  11 against 108 rpm), M2 held (31 against 54), M3 held (|K| ratio 1.35), M4 held.  The paper's own fit, lambda (Omega -

@@ -82,7 +82,7 @@ over a set's runs.
  stray bias steered the runs.  Every outcome is reported as found.
 
 RESULTS (blind_units.log, 2026-10-17): 5 of 9 held (B1, A1, A2, A3, A4); 2 FAILED (A5, A6); 2 NOT SCORABLE (B2, B3).
-Values were read by separate readers after the predictions commit (0121436) and entered unchanged.
+Values were read by separate readers after the predictions commit (c823968) and entered unchanged.
  Bak, main series: only 3 markers, P_CSB 1.0 at 0.164 uL, 8/10 at 0.870 uL, 7/10 at 1.726 uL.  B1 held (rho = -1),
  weakly: a random order of 3 gives rho = -1 one time in 6.  B2 NOT SCORABLE: 3 markers and none at or below 0.4.  The
  exponential fit gives V0 = 4.6 uL (least squares).  B3 NOT SCORABLE: no all-L / all-D counts in the main text, and the
@@ -119,7 +119,7 @@ from blind_lab import best, loglik, steer, two_sided
 
 RES = {}
 
-# Outcomes: entered after the predictions commit (0121436), as read by separate readers on 2026-10-17, unchanged.
+# Outcomes: entered after the predictions commit (c823968), as read by separate readers on 2026-10-17, unchanged.
 # Figure values are marker centres from 8x renders against the axis ticks (about +-0.3-1% in Vc, +-0.3-1 point in ee).
 # Bak: (k/n) labels on the P < 1 markers; the P = 1 markers of every series share one "(66/66)" label, so drops = None.
 # The SI (pubs.acs.org) returned 403; the main text gives no all-L / all-D counts.
