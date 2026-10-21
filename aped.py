@@ -117,6 +117,25 @@ unstable window exists for ctot = 1-1000 M with the other rates fixed and not at
 lower ctot was not scanned, and the scorecard concentrations are 1e-2, 1e-4 and 1e-6 M, so the pass
 verdicts use sigma at ctot = 2 M against each setting's own floor.
 Runtime: 123.3 s on the first model-B run, 86.0 s on the final rerun (L105, nice -n 10); log otherwise identical.
+POST-HOC (2026-10-20, after the run, not registered; changes no verdict). Desfoux, Rossi, Boiteau, Rydzek & Pascal
+2025 (Eur. J. Org. Chem. 29(1), doi:10.1002/ejoc.202500786) give one end point, not a rate law: Phe 25 mM +
+K3Fe(CN)6 50 mM, pH 6.5, COS for 24 h -> Phe2/Phe3/Phe4 1.4/0.5/0.3%, peptide ureas 47%, peptide hydantoins
+16.7% of Phe residues. As first-order a = ln(1/(1-f))/24 h: all products, f = 0.659 -> a = 1.25e-5 /s (all
+three pass); free-peptide bonds only, f = 0.0126 -> a = 1.47e-7 /s (pond fails at 0.29x its need, lake and
+ocean pass). R5 stays ?: the pond verdict flips on which a counts (ureas and hydantoins are dead ends this
+model lacks, and peptide ureas hold some peptide bonds, so the productive a lies between the two); the COS
+dose is a lab exposure with no stated concentration; the oxidant is 2 equiv ferricyanide. Settling it needs
+a measured a at a stated COS level (Leman et al. 2004, Danger et al. 2006; copies requested 2026-10-20).
+POST-HOC (2026-10-20, copies received, not registered; changes no verdict). Same a = ln(1/(1-f))/t. Leman, Orgel
+& Ghadiri 2004 (Science 306, 283, doi:10.1126/science.1102722) Table 1 entry 1: Phe 50 mM, COS ~400 mM, borate
+pH 9.6, 25 C, 56 h -> dipeptide 6.8%. The % basis is not stated, so f = 0.034-0.068 -> a = 1.7e-7 to 3.5e-7 /s:
+pond fails at 0.34-0.70x, lake and ocean pass. Thiocarbamate-start runs (entries 2-4) give 6-7% in 41-65 h, so
+cyclization limits the rate and more COS would not lift a. With 100 mM K3Fe(CN)6 (entry 9, 36.3% in 20 min)
+a = 1.7e-4 /s, all three pass. Danger, Boiteau, Cottet & Pascal 2006 (JACS 128, 7412, doi:10.1021/ja061339+)
+Table 1 entry 3: carbamoyl-Ala 20 mM + Ala 100 mM, 80 C, 53 d -> Ala2 12.7%, Ala3 1.9% of the activator; one NCA
+per new bond over 120 mM Ala -> a = 6.1e-9 /s (pond 0.012x, lake 1.2x, ocean pass), but at 80 C, not 25 C, and
+the SI time courses were not received. R5 stays ?: every measured uncatalysed a fails the pond and passes the
+lake and ocean, the mixed case; only an added oxidant or metal salt passes all three.
 """
 import time
 
