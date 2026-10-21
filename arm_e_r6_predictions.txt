@@ -1,0 +1,86 @@
+PREDICTIONS for arm_e_r6.py, arm_e_r6_analytic.py, arm_e_r6_langevin.py (written before the first results run)
+Unit arm_e_r6: scorecard.py:60 row "Transamination + ligation network, fed (2025)", column R6 ("?").
+R6 rule (scorecard.py:9): "sensitive enough: follows an inherited excess >= e_need (inherit.py)".
+Scorecard comment (scorecard.py:40): "R6 here = shown to work from racemic or <= ~1% ee".
+
+DISCLOSURE (what was computed before this file)
+  From arm_e_rates.log lines 24-36 only: max margin and F_c at C0 = 1, 2, 5 mM. One exploratory re-run of arm_e_rates at
+  5 mM, s = 6, F = 1 reproduced margin 0.01478 (x = 1.648e-6 M, y = 2.716e-4 M, P = 2.575e-6 /s, A = 2.824e-3 M). Hand
+  arithmetic: e_need*sqrt(N) = 25.1 (pond, lake), 79.4 (ocean). No gain, noise, e_min, F_c(pond/lake/ocean), lambda(F_b) or
+  Langevin number from the new scripts had been computed. The hand estimates below use those 5 mM numbers and algebra.
+  Arm G lessons applied (rna_seed_scan.log:105-113): its P1 (monotone in r) failed, P3 "5 and 200 mM within 5x" failed,
+  P4 e_min ranges were ~100x too high (noise is counting noise ~ 1/sqrt(N), not amplification), P5 letters (pred N, N, P)
+  came out Y, Y, Y. So here: ranges are written in units of 1/sqrt(N), and the vacuity of Delta >= 2 is handled in advance.
+
+DEFINITIONS (fixed before the run)
+  Model     Higgs & Blackmond 2025 destructive mechanism as arm_e_rates.rhs (state x, a, A, y, b), Yu 2024 rates:
+            KU, KB_SUM, s = k2b/k1b = 6.0 (sensitivity 4.0, 9.1) from arm_e_rates. Assumed grid = arm_e_rates.GRID
+            (kh 19 values 1e-9..1, R in {1,2,4}, K 5 values, f 41 values 1e-13..1e-3 /s). Deng 2024 rates not obtained.
+  Setting   (c, tau, V) = scorecard.SETTINGS; C0 = c (feed total concentration), Omega = V*1000*NA, N = Omega*C0;
+            e_need = inherit.e_need(c, V, 1e-3, tau) (pond 5.77e-12, lake 3.23e-14, ocean 2.80e-18; scorecard rounds 6e-12, 3e-14, 3e-18).
+  Cases     (a) measured rates: F = 1.
+            (b) crossing multiplier: F_c = arm_e_rates.f_crit(C0 = c, s = 6.0) (smallest F with lambda_max > 0 somewhere on the
+            grid); the network is run at F_b = 1.5*F_c. Sensitivity F = 1.1, 3, 10 times F_c and s = 4.0, 9.1.
+            F_c = inf (no crossing by F = 1e8) counts as "not met" in the (b) letters. kh = 1 is a grid edge; a sensitivity
+            extends kh to 1e4 /M/s (NOT used for letters).
+  Inherited excess, two variants, both run:
+            feed  g : feed L:D = (1+g):(1-g) (f*g*C0/2 into the a-equation), steady response read at tau.
+            seed ee0: at t = 0 both the monomer pool and the dimer pool carry ee0 (best case; a = ee0*x, b = ee0*y),
+                      read at tau. Sensitivity: monomer-only seed.
+  Readout   monomer ee = a/x; dimer ee = b/y; "best readout" = the smaller e_min of the two at each grid point.
+  Noise     linear-noise (chemical Langevin) variance of the odd (a, b) sector from the channel list, Sigma/Omega from
+            J S + S J^T + D = 0 (stable case); accumulated noise of the unstable mode (case b). Counting noise only.
+  Followed (literal) : Delta = mean/sd of the readout at tau >= 2 (P(correct sign) = Phi(Delta) >= 0.977). This is the existing rule.
+  Followed (strict)  : literal AND the readout excess at tau reaches >= 1% ee (the scorecard.py:40 reading); for case (b) also the
+                       nonlinear saturated ee >= 1% (arm_e_rates.simulate at the chosen point) and the linear growth from the
+                       inherited excess reaches 1% within tau (log-form gate).
+  e_min     smallest g (feed) or ee0 (seed) that is followed, minimised over the grid subset below.
+  Operating guard (stable points only): f*tau >= 5 and -lambda_slow*tau >= 5, so the pool is at steady state by tau (avoids the
+            static trap f -> 0, where dimers pile up and trivially keep a seed). Sensitivity: guard 1, 2, 3, 10.
+  Subsets   U (unconstrained): the whole guarded grid. E (engaged): grid points with margin >= 0.5 * (max margin of that
+            setting and case), i.e. where the network is as close to its bifurcation as the assumed grid permits.
+  Letters   Y: e_min <= e_need in all three settings; P: in some; N: in none (scorecard.py:9). Reported separately for
+            (a) and (b); literal and strict; feed and seed; subsets U and E. The EXISTING-RULE letter = literal, feed, subset U,
+            best readout. The SCORECARD-COMMENT letter = strict.
+
+PREDICTIONS (pass/fail rules in brackets; "xN" means value*sqrt(N) as e_min*sqrt(N))
+P1  Stable at measured rates: lambda_max(F = 1) <= 0 on the whole grid in all three settings (s = 6); max margin (F = 1):
+    pond 0.03 (0.01-0.08), lake 3e-4 (5e-5-1e-3), ocean 3e-6 (1e-8-1e-5). [pass: lambda_max <= 0 and each margin in range]
+P2  F_c(s = 6): pond 3.7e2 (1.5e2-1.5e3). Lake >= 3.7e4 and ocean >= 3.7e6 (or inf), because the optimum kh sits at the grid
+    edge already at 1 mM. [pass: pond in range; lake >= 3.0e4; ocean >= 3.0e6 or inf]
+P3  (a) feed, subset U, monomer readout: xN = e_min*sqrt(N) in [0.8, 2.2] in all three settings (bystander optimum: network
+    barely engaged, G ~ 1, x ~ C0/2, f within a decade of the 1e-3 edge). Ratio e_min/e_need in 0.03-0.09 (pond, lake) and
+    0.01-0.03 (ocean). Literal (a) letter = Y. [pass: all three xN in range, f_opt >= 1e-4, letter Y]
+P4  (a) gain G = readout excess per feed excess: max over grid in [1.0, 3.0]; at the max-margin point in [1.0, 1.1]. Output
+    excess at e_need is < 1e-10, so the strict (a) letter = N in all three settings (the network passes the feed through,
+    it does not amplify). [pass: both G ranges and strict N x3]
+P5  (a) feed, subset E (engaged): monomer readout xN in [8, 400] (central 50: the monomer pool is ~3e-4 of C0 at the 5 mM
+    optimum, so its counting noise is large); dimer readout xN in [1, 25] (central 4; dimer ee = 2 x monomer ee in steady state).
+    Best-readout letter for subset E, literal: Y (55% confidence); monomer-only subset E letter: P or N (pond and lake exceed
+    e_need, ocean passes if xN < 79). [pass: both xN ranges; best-readout E letter Y]
+P6  (a) seed, guard 5, subset U, best readout, monomer+dimer seed: xN in [100, 5000] (central 500: dimer reservoir keeps
+    e^-5 of the seed). Above e_need*sqrt(N) (25.1 pond/lake, 79.4 ocean) in all three, so seed letter N. Monomer-only seed at
+    an engaged point retains < 1e-3 of ee0 at f*tau = 5. At guard 1 the seed xN is in [3, 40] (letter Y likely).
+    [pass: guard-5 xN in range, letter N x3; monomer-only retention < 1e-3; guard-1 xN in range]
+P7  (b) crossing at F_b: lambda_max > 0 at F_b in the pond; lake as P2; ocean as P2. Where lambda_max > 0, the literal feed
+    e_Delta (Delta only) has xN in [0.5, 100]; literal (b) feed letter Y where F_c is finite. [pass: ranges, Y]
+P8  (b) the 1% gate (growth from e_need to 1% ee within tau needs lambda*tau >= ~23): lambda*tau at the best point is < 23 in
+    the pond, so the gated (strict) (b) letter for the pond is N (gated e_min > 1e3 * e_need); the ocean (if it crosses)
+    has lambda*tau >> 23 and the gate does not bind; gated (b) letter is N or P, not Y. [pass: pond gated N; letter in {N, P}]
+P9  Saturation at F_b: nonlinear ee_sat (arm_e_rates.simulate from a tiny seed) is in [0.02, 1] at the (b) points that cross.
+    [pass: all in range]
+P10 Independent check (arm_e_r6_analytic.py: full 5-species channels, finite-difference Jacobian, 5x5 Lyapunov, expm/eig):
+    agrees with arm_e_r6.py (J11..J22, G, Sigma_aa/Sigma_bb, e_min feed and seed, lambda, Delta_b) to rel 1e-5 at the reported
+    optima. [pass: max rel dev <= 1e-5; any larger deviation is reported as a failed prediction]
+P11 Langevin validation (arm_e_r6_langevin.py, CLE, N ~ 3e6, M >= 4000 trajectories, at the pond (a) engaged point):
+    V1 sd of the monomer excess at T = 4/f within 5% of the linear-noise value; V2a with g chosen for Delta = 1: P(sign
+    correct) = 0.841 +/- 0.04, and Delta = 2: 0.977 +/- 0.03; V2b (unstable, at the pond (b) point, N ~ 3e6, T = 3/lambda,
+    g for Delta_b = 1): P(sign) within 0.05 of Phi(Delta_b(T)) with the finite-time Delta_b. [pass: each within tolerance]
+P12 e_need recomputed equals the scorecard's rounded values (6e-12, 3e-14, 3e-18) to one significant digit. [pass/fail]
+
+DECISION RULE
+  (a) letters are the Y/P/N counts of settings with e_min <= e_need, for each of {literal, strict} x {feed, seed} x {U, E}.
+  A prediction "held" only if its bracketed rule is met in full; partial = failed. Failed predictions are reported in
+  journals/new_analyses_arm_e_r6.md with the reason. Nothing in this file is edited after the first results run; any change
+  of course goes into arm_e_r6_predictions_v2.txt and is said so in the notes.
+  Proposed wording for scorecard.py / README.md goes only in the notes file, marked "not applied".

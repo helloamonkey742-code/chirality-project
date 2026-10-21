@@ -1,0 +1,21 @@
+pre-registration files: arm_e_r6_predictions.txt sha256 235e93aa8a0e4e93bd8d68cecd97befa58eae407b22873ddb90d0f616ca3b9ab; arm_e_r6_langevin_predictions.txt sha256 4f4b5e3051eaa12d1b64a7959ad2bb083fe337145e705bf99b21442ebdaafaa7
+self-check passed: vectorised channels = arm_e_r6_analytic.props, racemic fixed point, deterministic limit
+
+V1/V2a pond point f = 1.778e-06, kh = 0.0003162, R = 1, K = 1e-06; Omega = 3e+08 (N = 3e+06), T = 4/f = 2.249e+06 s, 1793 steps, M = 20000 per population, 18 s
+  linear noise: x = 1.4370e-03 M, sa = 1.0770e-03, Ga = 1.01496, lambda1 = -1.7418e-06, m = 0.0147
+  V1: simulated sd of (L - D)/(2x) = 1.0737e-03  vs stationary linear noise 1.0770e-03: ratio 0.9969  (finite-T linear noise 1.0770e-03: ratio 0.9969); mean 8.38e-06 (se 7.6e-06)
+  V2a Delta = 1: g = 1.0612e-03; P(sign correct) = 0.8380 (se 0.0026) vs Phi(1) = 0.8413, tolerance +/- 0.04; finite-T Delta = 0.9994 -> Phi = 0.8412; mean response 0.9899 of the stationary value
+  V2a Delta = 2: g = 2.1223e-03; P(sign correct) = 0.9772 (se 0.0011) vs Phi(2) = 0.9772, tolerance +/- 0.03; finite-T Delta = 1.9989 -> Phi = 0.9772; mean response 0.9947 of the stationary value
+V2b pond point F = 553.03, f = 1e-06, kh = 0.003162, R = 1, K = 1e-04; Omega = 3e+08 (N = 3e+06), lambda = 1.0378e-08 /s, T = 3/lambda = 2.891e+08 s, 136288 steps, M = 4000 per population, 284 s
+  linear noise: Delta_b(T) per unit g = 5.8226e+03; sd(w) = 1.0244e-04
+  g = 0: simulated sd(w) = 3.4420e-05 vs linear 1.0244e-04: ratio 0.3360; median |L - D|/(2x) = 1.059e-01, 95th percentile 1.370e-01 (linearity check; ee_sat of this point is 0.129, arm_e_r6.log:104)
+  V2b Delta_b = 1: g = 1.7175e-04; P(sign of w) = 0.8405 (se 0.0058) vs Phi = 0.8413; mean w / linear mean = 0.285; (P(sign of L - D) = 0.8410, not scored)
+  V2b Delta_b = 2: g = 3.4349e-04; P(sign of w) = 0.9818 (se 0.0021) vs Phi = 0.9772; mean w / linear mean = 0.219; (P(sign of L - D) = 0.9820, not scored)
+V2b' pond point F = 553.03, f = 1e-06, kh = 0.003162, R = 1, K = 1e-04; Omega = 1e+14 (N = 1e+12), lambda = 1.0378e-08 /s, T = 3/lambda = 2.891e+08 s, 136288 steps, M = 4000 per population, 284 s
+  linear noise: Delta_b(T) per unit g = 3.3617e+06; sd(w) = 1.7744e-07
+  g = 0: simulated sd(w) = 1.7801e-07 vs linear 1.7744e-07: ratio 1.0032; median |L - D|/(2x) = 3.554e-04, 95th percentile 1.046e-03 (linearity check; ee_sat of this point is 0.129, arm_e_r6.log:104)
+  V2b' Delta_b = 1: g = 2.9747e-07; P(sign of w) = 0.8325 (se 0.0059) vs Phi = 0.8413; mean w / linear mean = 0.986; (P(sign of L - D) = 0.8333, not scored)
+  V2b' Delta_b = 2: g = 5.9495e-07; P(sign of w) = 0.9750 (se 0.0025) vs Phi = 0.9772; mean w / linear mean = 0.998; (P(sign of L - D) = 0.9752, not scored)
+
+P11 held: V1 pass, V2a1 pass, V2a2 pass, V2b pass
+Q (addendum, V2b') held: Q1 pass, Q3 pass, Q2a pass, Q2b pass   (wall 285 s, 3 cores)

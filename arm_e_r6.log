@@ -1,0 +1,204 @@
+pre-registration file arm_e_r6_predictions.txt: sha256 235e93aa8a0e4e93bd8d68cecd97befa58eae407b22873ddb90d0f616ca3b9ab
+self-check passed: hand case (kh = 0, ku = 0: G = 1, s = 1/sqrt(N)), J/margin/lambda vs arm_e_rates, Lyapunov vs scipy, seed closed form vs expm, unstable-mode variance vs ODE, F_c(5 mM, s = 6) = 740.3 vs arm_e_rates.f_crit
+
+(0) SETTINGS  C0 = c, Omega = V 1000 NA, N = c Omega, e_need = inherit.e_need(c, V, 1e-3, tau)
+    setting               c M   tau yr      V m3          N     e_need  e_need*sqrtN  scorecard
+    Warm little pond    1e-02    1e+02      3.14  1.892e+25  5.770e-12         25.09      6e-12
+    Lake / lagoon       1e-04    1e+04     1e+07  6.022e+29  3.234e-14         25.09      3e-14
+    Open ocean          1e-06    1e+08  1.33e+18  8.021e+38  2.802e-18         79.36      3e-18
+  P12 held: e_need to one digit: 6e-12, 3e-14, 3e-18
+
+(1) MEASURED RATES (F = 1, s = 6): stability, max margin; CROSSING MULTIPLIER F_c on the grid at C0 = c
+    setting            lambda_max /s  max margin   F_c s=4.0   F_c s=6.0   F_c s=9.1  F_c*C0 mM  F_c ext kh
+    Warm little pond      -9.992e-14   2.932e-02        1440       368.7         208       3687       368.7
+    Lake / lagoon         -1.000e-13   2.993e-04   1.601e+05    3.92e+04   2.204e+04       3920   3.687e+04
+    Open ocean            -1.000e-13   9.542e-07         inf   2.998e+07   1.404e+07  2.998e+04   3.687e+06
+  P1 held: lambda_max <= 0 everywhere at F = 1; max margins 2.93e-02, 2.99e-04, 9.54e-07
+  P2 held: F_c(s = 6) = 368.7, 3.92e+04, 2.998e+07
+
+(2) CASE (a) F = 1, FEED excess g (guard 5). e_min = smallest g followed (Delta >= 2); xN = e_min*sqrt(N); letter vs e_need
+  subset U whole guarded grid
+    monomer readout: letter Y (YYY for pond, lake, ocean)
+      Warm little pond  e_min = 4.604e-13 (xN         2, /e_need    0.0798) at f = 1.00e-03 kh = 1.0e-09 R = 4 K = 1e-06 cat share 1.7e-09 margin 6.2e-12
+      Lake / lagoon     e_min = 2.581e-15 (xN         2, /e_need    0.0798) at f = 1.00e-03 kh = 1.0e-09 R = 4 K = 1e-06 cat share 1.7e-13 margin 6.2e-16
+      Open ocean        e_min = 7.071e-20 (xN         2, /e_need    0.0252) at f = 1.00e-03 kh = 1.0e-09 R = 4 K = 1e-06 cat share 1.7e-17 margin 6.2e-20
+    dimer readout: letter Y (YYY for pond, lake, ocean)
+      Warm little pond  e_min = 3.882e-13 (xN      1.69, /e_need    0.0673) at f = 5.62e-06 kh = 1.0e+00 R = 4 K = 1e-06 cat share 3.3e-02 margin 5.6e-04
+      Lake / lagoon     e_min = 2.431e-15 (xN      1.89, /e_need    0.0752) at f = 3.16e-06 kh = 1.0e+00 R = 4 K = 1e-06 cat share 3.0e-04 margin 5.3e-05
+      Open ocean        e_min = 1.835e-19 (xN       5.2, /e_need    0.0655) at f = 3.16e-06 kh = 1.0e+00 R = 4 K = 1e-06 cat share 9.1e-07 margin 5.0e-07
+    best readout, literal: letter Y (YYY for pond, lake, ocean)
+      Warm little pond  e_min = 3.882e-13 (xN      1.69, /e_need    0.0673) at f = 5.62e-06 kh = 1.0e+00 R = 4 K = 1e-06 cat share 3.3e-02 margin 5.6e-04
+      Lake / lagoon     e_min = 2.431e-15 (xN      1.89, /e_need    0.0752) at f = 3.16e-06 kh = 1.0e+00 R = 4 K = 1e-06 cat share 3.0e-04 margin 5.3e-05
+      Open ocean        e_min = 7.071e-20 (xN         2, /e_need    0.0252) at f = 1.00e-03 kh = 1.0e-09 R = 4 K = 1e-06 cat share 1.7e-17 margin 6.2e-20
+    best readout, strict (>= 1% out): letter N (NNN for pond, lake, ocean)
+      Warm little pond  e_min = 2.042e-03 (xN  8.88e+09, /e_need  3.54e+08) at f = 3.16e-06 kh = 1.0e+00 R = 4 K = 1e-06 cat share 3.3e-02 margin 7.5e-04
+      Lake / lagoon     e_min = 2.400e-03 (xN  1.86e+12, /e_need  7.42e+10) at f = 3.16e-06 kh = 1.0e+00 R = 4 K = 1e-06 cat share 3.0e-04 margin 5.3e-05
+      Open ocean        e_min = 4.207e-03 (xN  1.19e+17, /e_need   1.5e+15) at f = 3.16e-06 kh = 1.0e+00 R = 4 K = 1e-06 cat share 9.1e-07 margin 5.0e-07
+  subset E engaged: margin >= half the max
+    monomer readout: letter Y (YYY for pond, lake, ocean)
+      Warm little pond  e_min = 8.451e-13 (xN      3.68, /e_need     0.146) at f = 1.78e-06 kh = 3.2e-04 R = 1 K = 1e-06 cat share 2.5e-02 margin 1.5e-02
+      Lake / lagoon     e_min = 4.788e-15 (xN      3.72, /e_need     0.148) at f = 1.78e-06 kh = 3.2e-02 R = 1 K = 1e-06 cat share 2.6e-04 margin 1.5e-04
+      Open ocean        e_min = 9.720e-20 (xN      2.75, /e_need    0.0347) at f = 3.16e-06 kh = 1.0e+00 R = 4 K = 1e-06 cat share 9.1e-07 margin 5.0e-07
+    dimer readout: letter Y (YYY for pond, lake, ocean)
+      Warm little pond  e_min = 4.808e-13 (xN      2.09, /e_need    0.0833) at f = 5.62e-09 kh = 1.0e+00 R = 2 K = 1e-06 cat share 4.5e-02 margin 1.6e-02
+      Lake / lagoon     e_min = 2.774e-15 (xN      2.15, /e_need    0.0858) at f = 5.62e-07 kh = 1.0e+00 R = 2 K = 1e-06 cat share 4.5e-04 margin 1.5e-04
+      Open ocean        e_min = 1.835e-19 (xN       5.2, /e_need    0.0655) at f = 3.16e-06 kh = 1.0e+00 R = 4 K = 1e-06 cat share 9.1e-07 margin 5.0e-07
+    best readout, literal: letter Y (YYY for pond, lake, ocean)
+      Warm little pond  e_min = 4.808e-13 (xN      2.09, /e_need    0.0833) at f = 5.62e-09 kh = 1.0e+00 R = 2 K = 1e-06 cat share 4.5e-02 margin 1.6e-02
+      Lake / lagoon     e_min = 2.774e-15 (xN      2.15, /e_need    0.0858) at f = 5.62e-07 kh = 1.0e+00 R = 2 K = 1e-06 cat share 4.5e-04 margin 1.5e-04
+      Open ocean        e_min = 9.720e-20 (xN      2.75, /e_need    0.0347) at f = 3.16e-06 kh = 1.0e+00 R = 4 K = 1e-06 cat share 9.1e-07 margin 5.0e-07
+    best readout, strict (>= 1% out): letter N (NNN for pond, lake, ocean)
+      Warm little pond  e_min = 2.678e-03 (xN  1.16e+10, /e_need  4.64e+08) at f = 5.62e-09 kh = 3.2e-01 R = 4 K = 1e-06 cat share 2.5e-02 margin 1.6e-02
+      Lake / lagoon     e_min = 2.746e-03 (xN  2.13e+12, /e_need  8.49e+10) at f = 1.78e-07 kh = 1.0e+00 R = 4 K = 1e-06 cat share 2.6e-04 margin 1.6e-04
+      Open ocean        e_min = 4.207e-03 (xN  1.19e+17, /e_need   1.5e+15) at f = 3.16e-06 kh = 1.0e+00 R = 4 K = 1e-06 cat share 9.1e-07 margin 5.0e-07
+  gain G = readout excess per feed excess (stable points)
+      Warm little pond  max Ga 2.449, Ga at max-margin point 1.0286; max Gb 4.898, Gb at max-margin 2.0572
+      Lake / lagoon     max Ga 2.084, Ga at max-margin point 1.0003; max Gb 4.167, Gb at max-margin 2.0005
+      Open ocean        max Ga 1.188, Ga at max-margin point 0.9699; max Gb 2.377, Gb at max-margin 1.9398
+  P3 held: U monomer xN = 2, 2, 2; f_opt = 1e-03, 1e-03, 1e-03
+  P4 FAILED: max Ga 2.449, 2.084, 1.188; Ga at max margin 1.0286, 1.0003, 0.9699; strict feed letter N
+  P5 FAILED: E monomer xN 3.68, 3.72, 2.75; dimer xN 2.09, 2.15, 5.2; best-readout E letter Y
+
+(3) CASE (a) F = 1, SEED excess ee0 (monomer + dimer both ee0; best readout; literal). Guard = f tau >= G and -lambda_slow tau >= G
+    guard   Warm l xN  /e_need   Lake / xN  /e_need   Open o xN  /e_need  letter
+        1        23.6     0.94       23.61    0.941  4.631e+137 5.84e+135  P
+        2       93.92     3.74       93.97     3.74  4.631e+137 5.84e+135  N
+        3       93.92     3.74       93.97     3.74  4.631e+137 5.84e+135  N
+        5        1095     43.6        1096     43.7  4.631e+137 5.84e+135  N
+       10   1.604e+08 6.39e+06   2.043e+08 8.14e+06  4.631e+137 5.84e+135  N
+  at guard 5, per readout/subset (inf = no grid point passes the guard)
+    seed_a U: letter N
+      seed_a U Warm little pond  e_min = 3.823e-07 (xN  1.66e+06, /e_need  6.63e+04) at f = 1.78e-09 kh = 3.2e-01 R = 1 K = 1e-06 cat share 3.9e-02 margin 2.9e-02
+      seed_a U Lake / lagoon     e_min = 1.056e-05 (xN   8.2e+09, /e_need  3.27e+08) at f = 1.78e-11 kh = 1.0e+00 R = 1 K = 1e-04 cat share 2.3e-04 margin 1.1e-05
+      seed_a U Open ocean        e_min = 1.707e+129 (xN 4.83e+148, /e_need 6.09e+146) at f = 1.00e-13 kh = 1.0e+00 R = 1 K = 1e-04 cat share 3.0e-06 margin 8.4e-10
+    seed_b U: letter N
+      seed_b U Warm little pond  e_min = 2.517e-10 (xN  1.09e+03, /e_need      43.6) at f = 1.78e-09 kh = 1.0e+00 R = 1 K = 1e-01 cat share 7.9e-02 margin 1.1e-04
+      seed_b U Lake / lagoon     e_min = 1.412e-12 (xN   1.1e+03, /e_need      43.7) at f = 1.78e-11 kh = 1.0e+00 R = 1 K = 1e-01 cat share 8.6e-04 margin 4.2e-08
+      seed_b U Open ocean        e_min = 1.635e+118 (xN 4.63e+137, /e_need 5.84e+135) at f = 1.00e-13 kh = 1.0e+00 R = 1 K = 1e-01 cat share 8.6e-06 margin 2.4e-12
+    seedm_lit U: letter N
+      seedm_lit U Warm little pond  e_min = 2.099e-07 (xN  9.13e+05, /e_need  3.64e+04) at f = 1.78e-09 kh = 3.2e-04 R = 1 K = 1e-01 cat share 7.2e-02 margin 3.2e-04
+      seedm_lit U Lake / lagoon     e_min = 1.013e-07 (xN  7.86e+07, /e_need  3.13e+06) at f = 1.78e-11 kh = 3.2e-02 R = 1 K = 1e-01 cat share 8.5e-04 margin 4.3e-08
+      seedm_lit U Open ocean        e_min = 2.067e+125 (xN 5.85e+144, /e_need 7.38e+142) at f = 1.00e-13 kh = 1.0e+00 R = 1 K = 1e-01 cat share 8.6e-06 margin 2.4e-12
+    seed_lit E: letter N
+      seed_lit E Warm little pond  e_min = 2.672e-10 (xN  1.16e+03, /e_need      46.3) at f = 1.78e-09 kh = 1.0e+00 R = 1 K = 1e-04 cat share 5.7e-02 margin 2.2e-02
+      seed_lit E Lake / lagoon     e_min = inf (xN       inf, /e_need       inf) at f = 1.00e-13 kh = 1.0e-09 R = 1 K = 1e-06 cat share 7.2e-15 margin 2.0e-16
+      seed_lit E Open ocean        e_min = inf (xN       inf, /e_need       inf) at f = 1.00e-13 kh = 1.0e-09 R = 1 K = 1e-06 cat share 7.2e-19 margin 2.0e-20
+    seedm_lit E: letter N
+      seedm_lit E Warm little pond  e_min = 3.923e-07 (xN  1.71e+06, /e_need   6.8e+04) at f = 1.78e-09 kh = 1.0e-01 R = 1 K = 1e-04 cat share 3.0e-02 margin 2.3e-02
+      seedm_lit E Lake / lagoon     e_min = inf (xN       inf, /e_need       inf) at f = 1.00e-13 kh = 1.0e-09 R = 1 K = 1e-06 cat share 7.2e-15 margin 2.0e-16
+      seedm_lit E Open ocean        e_min = inf (xN       inf, /e_need       inf) at f = 1.00e-13 kh = 1.0e-09 R = 1 K = 1e-06 cat share 7.2e-19 margin 2.0e-20
+    seed_strict U: letter N
+      seed_strict U Warm little pond  e_min = 2.320e+00 (xN  1.01e+13, /e_need  4.02e+11) at f = 1.78e-09 kh = 3.2e-01 R = 1 K = 1e-06 cat share 3.9e-02 margin 2.9e-02
+      seed_strict U Lake / lagoon     e_min = 2.737e+00 (xN  2.12e+15, /e_need  8.46e+13) at f = 1.78e-11 kh = 1.0e+00 R = 1 K = 1e-04 cat share 2.3e-04 margin 1.1e-05
+      seed_strict U Open ocean        e_min = 1.157e+135 (xN 3.28e+154, /e_need 4.13e+152) at f = 1.00e-13 kh = 1.0e+00 R = 1 K = 1e-04 cat share 3.0e-06 margin 8.4e-10
+  f tau at the best guard-5 seed point (a pool at the guard edge has f tau ~ 5; the f grid floor is 1e-13 /s): Warm l 5.61, Lake / 5.61, Open o 316
+  monomer-only seed, retained fraction of ee0 at tau, max over engaged guard-passing points (nan = no engaged point passes the guard): 4.98e-08, nan, nan
+  P6 FAILED: guard-5 xN 1095, 1096, 4.631e+137; retention 5.0e-08, nan, nan; guard-1 xN 23.6, 23.6, 4.63e+137
+
+(4) CASE (b) F = 1.5 F_c (s = 6; F_c = inf => not met). lambda_max, lambda*tau, Delta-only (literal) and strict e_min, saturation
+  feed lit: letter Y (YYY for pond, lake, ocean; before the ee_sat >= 1% test)
+      Warm little pond  F_c 368.7, F_b 553; e_min = 4.371e-14 (xN      0.19, /e_need   0.00758) at f = 5.62e-07 kh = 3.2e-03 R = 4 K = 1e-06 cat share 8.2e-01 margin 1.0e+00; lambda 2.23e-10 lambda*tau 0.702; ee_sat 0.026 (True)
+      Lake / lagoon     F_c 3.92e+04, F_b 5.881e+04; e_min = 5.934e-17 (xN     0.046, /e_need   0.00183) at f = 1.00e-06 kh = 1.0e+00 R = 2 K = 1e-06 cat share 9.0e-01 margin 1.0e+00; lambda -1.08e-10 lambda*tau -33.9; ee_sat nan (stable point)
+      Open ocean        F_c 2.998e+07, F_b 4.497e+07; e_min = 1.690e-20 (xN     0.479, /e_need   0.00603) at f = 5.62e-07 kh = 1.0e+00 R = 2 K = 1e-03 cat share 7.7e-01 margin 1.0e+00; lambda 2.64e-10 lambda*tau 8.32e+05; ee_sat 0.028 (True)
+  feed strict: letter Y (YYY for pond, lake, ocean; before the ee_sat >= 1% test)
+      Warm little pond  F_c 368.7, F_b 553; e_min = 1.301e-13 (xN     0.566, /e_need    0.0226) at f = 1.00e-06 kh = 3.2e-03 R = 1 K = 1e-04 cat share 8.6e-01 margin 1.0e+00; lambda 1.04e-08 lambda*tau 32.8; ee_sat 0.129 (True)
+      Lake / lagoon     F_c 3.92e+04, F_b 5.881e+04; e_min = 3.442e-16 (xN     0.267, /e_need    0.0106) at f = 5.62e-07 kh = 1.0e+00 R = 4 K = 1e-04 cat share 8.7e-01 margin 1.0e+00; lambda 1.97e-09 lambda*tau 623; ee_sat 0.076 (True)
+      Open ocean        F_c 2.998e+07, F_b 4.497e+07; e_min = 1.690e-20 (xN     0.479, /e_need   0.00603) at f = 5.62e-07 kh = 1.0e+00 R = 2 K = 1e-03 cat share 7.7e-01 margin 1.0e+00; lambda 2.64e-10 lambda*tau 8.32e+05; ee_sat 0.028 (True)
+  seed lit: letter N (NNN for pond, lake, ocean; before the ee_sat >= 1% test)
+      Warm little pond  F_c 368.7, F_b 553; e_min = 7.229e-12 (xN      31.4, /e_need      1.25) at f = 1.00e-09 kh = 1.0e+00 R = 1 K = 1e-06 cat share 8.2e-01 margin 1.0e+00; lambda 3.09e-11 lambda*tau 0.0975; ee_sat 0.213 (True)
+      Lake / lagoon     F_c 3.92e+04, F_b 5.881e+04; e_min = 5.690e-14 (xN      44.2, /e_need      1.76) at f = 3.16e-07 kh = 1.0e+00 R = 1 K = 1e-06 cat share 8.7e-01 margin 1.1e+00; lambda 1.90e-08 lambda*tau 6.01e+03; ee_sat 0.296 (True)
+      Open ocean        F_c 2.998e+07, F_b 4.497e+07; e_min = 5.182e-18 (xN       147, /e_need      1.85) at f = 1.78e-06 kh = 1.0e+00 R = 1 K = 1e-06 cat share 8.3e-01 margin 1.0e+00; lambda 7.16e-08 lambda*tau 2.26e+08; ee_sat 0.259 (True)
+  seed strict: letter N (NNN for pond, lake, ocean; before the ee_sat >= 1% test)
+      Warm little pond  F_c 368.7, F_b 553; e_min = 1.002e-11 (xN      43.6, /e_need      1.74) at f = 1.78e-07 kh = 3.2e-02 R = 1 K = 1e-06 cat share 8.8e-01 margin 1.1e+00; lambda 9.02e-09 lambda*tau 28.5; ee_sat 0.272 (True)
+      Lake / lagoon     F_c 3.92e+04, F_b 5.881e+04; e_min = 5.690e-14 (xN      44.2, /e_need      1.76) at f = 3.16e-07 kh = 1.0e+00 R = 1 K = 1e-06 cat share 8.7e-01 margin 1.1e+00; lambda 1.90e-08 lambda*tau 6.01e+03; ee_sat 0.296 (True)
+      Open ocean        F_c 2.998e+07, F_b 4.497e+07; e_min = 5.182e-18 (xN       147, /e_need      1.85) at f = 1.78e-06 kh = 1.0e+00 R = 1 K = 1e-06 cat share 8.3e-01 margin 1.0e+00; lambda 7.16e-08 lambda*tau 2.26e+08; ee_sat 0.259 (True)
+  UNSTABLE POINTS ONLY (lambda > 0 at the chosen parameters), subset U: e_min xN and /e_need per variant
+    u_feed    Warm l xN 0.19 (0.00758x e_need); Lake / xN 0.267 (0.0106x e_need); Open o xN 0.479 (0.00603x e_need)
+    u_feedS   Warm l xN 0.566 (0.0226x e_need); Lake / xN 0.267 (0.0106x e_need); Open o xN 0.479 (0.00603x e_need)
+    u_seed    Warm l xN 31.4 (1.25x e_need); Lake / xN 44.2 (1.76x e_need); Open o xN 147 (1.85x e_need)
+    u_seedS   Warm l xN 43.6 (1.74x e_need); Lake / xN 44.2 (1.76x e_need); Open o xN 147 (1.85x e_need)
+    u_seedm   Warm l xN 1.06e+03 (42.2x e_need); Lake / xN 833 (33.2x e_need); Open o xN 844 (10.6x e_need)
+    u_seedmS  Warm l xN 1.06e+03 (42.2x e_need); Lake / xN 833 (33.2x e_need); Open o xN 844 (10.6x e_need)
+  lambda_max at F_b: Warm little pond 1.865e-08, Lake / lagoon 2.443e-08, Open ocean 7.164e-08
+  P7 FAILED: literal feed xN Warm little pond 0.19, Lake / lagoon 0.046, Open ocean 0.479
+  P8 FAILED: pond strict feed lambda*tau 32.8, e_min/e_need 0.0226; strict (b) feed letter Y
+  P9 held: ee_sat at (b) points: 0.026, 0.028, 0.129, 0.076, 0.028, 0.213, 0.296, 0.259, 0.272, 0.296, 0.259
+
+(5) SENSITIVITY of (b): multiplier on F_c, s, and kh up to 1e4 (feed variant, subset U). xN = e_min*sqrt(N); strict gate = 1% growth in tau
+    case                       setting                  F_c    lam_max  lam*tau    lit xN lit/e_need  strict xN strict/e_need
+    mult 1.1                   Warm little pond       368.7   1.12e-09      3.2     0.434     0.0173   5.33e+06      2.12e+05
+    mult 1.1                   Lake / lagoon       3.92e+04   3.00e-09     49.1     0.114    0.00454      0.114       0.00454
+    mult 1.1                   Open ocean         2.998e+07   1.13e-08 4.63e+06     0.236    0.00298      0.462       0.00582
+    mult 1.5 (base)            Warm little pond       368.7   1.87e-08     32.8      0.19    0.00758      0.566        0.0226
+    mult 1.5 (base)            Lake / lagoon       3.92e+04   2.44e-08      623     0.046    0.00183      0.267        0.0106
+    mult 1.5 (base)            Open ocean         2.998e+07   7.16e-08 8.32e+05     0.479    0.00603      0.479       0.00603
+    mult 3                     Warm little pond       368.7   1.55e-07     43.2     0.126    0.00502      0.341        0.0136
+    mult 3                     Lake / lagoon       3.92e+04   1.76e-07      691     0.106    0.00422      0.106       0.00422
+    mult 3                     Open ocean         2.998e+07   2.59e-07 1.18e+06     0.399    0.00503      0.399       0.00503
+    mult 10                    Warm little pond       368.7   1.03e-06     81.3     0.216    0.00861      0.282        0.0112
+    mult 10                    Lake / lagoon       3.92e+04   1.11e-06 3.61e+04     0.233    0.00928      0.388        0.0154
+    mult 10                    Open ocean         2.998e+07   8.04e-07 1.81e+05     0.285    0.00359      0.285       0.00359
+    s = 4.0, mult 1.5          Warm little pond        1440   1.14e-08     27.5     0.221    0.00882      0.636        0.0253
+    s = 4.0, mult 1.5          Lake / lagoon      1.601e+05   1.78e-08      185     0.159    0.00633      0.159       0.00633
+    s = 4.0, mult 1.5          Open ocean               inf no crossing
+    s = 9.1, mult 1.5          Warm little pond         208   2.38e-08     25.9     0.246    0.00981       0.49        0.0195
+    s = 9.1, mult 1.5          Lake / lagoon      2.204e+04   3.03e-08     74.9     0.164    0.00655      0.164       0.00655
+    s = 9.1, mult 1.5          Open ocean         1.404e+07   9.33e-08 3.59e+07     0.415    0.00522      0.777       0.00979
+    kh to 1e4, mult 1.5        Warm little pond       368.7   1.87e-08     32.8      0.19    0.00758      0.566        0.0226
+    kh to 1e4, mult 1.5        Lake / lagoon      3.687e+04   1.87e-08     70.2    0.0723    0.00288       0.11        0.0044
+    kh to 1e4, mult 1.5        Open ocean         3.687e+06   1.87e-08 7.02e+05    0.0723   0.000911       0.11       0.00139
+
+    (a) sensitivity to s (F = 1, feed, guard 5): xN of U best readout / E best readout / strict U
+      s = 4.0: Warm little pond U 1.6887 E 2.0938 strict 2.04198e-03; Lake / lagoon U 1.8864 E 2.1524 strict 2.39962e-03; Open ocean U 2.0025 E 2.753 strict 4.20706e-03
+      s = 6.0: Warm little pond U 1.6886 E 2.0911 strict 2.04173e-03; Lake / lagoon U 1.8864 E 2.1524 strict 2.39960e-03; Open ocean U 2.0025 E 2.753 strict 4.20706e-03
+      s = 9.1: Warm little pond U 1.6885 E 2.089 strict 2.04155e-03; Lake / lagoon U 1.8864 E 2.1524 strict 2.39958e-03; Open ocean U 2.0025 E 2.753 strict 4.20706e-03
+
+(5b) POST HOC (not pre-registered): f grid extended to 1e-19 /s (4 per decade). Only the f floor changes; kh and the rest as the base grid.
+    quantity                                  Warm l        Lake /        Open o
+    (a) seed, best readout, guard 1 xN          23.6         23.61          23.6
+        ratio to e_need                       0.9405        0.9407        0.2973
+    (a) seed, best readout, guard 5 xN          1095          1096          1095
+        ratio to e_need                        43.63         43.67          13.8
+        f at the optimum (/s)              1.778e-09     1.778e-11     1.778e-15
+        letter (literal seed, guard 5) N
+    (a) seed, best readout, guard 10 xN     1.604e+08     2.043e+08     2.041e+08
+        ratio to e_need                    6.393e+06     8.143e+06     2.571e+06
+    (b) F_c (s = 6)                            368.7      3.92e+04     2.998e+07
+    (b) feed_lit xN                           0.1901       0.04605        0.4787
+        ratio to e_need                     0.007577      0.001835      0.006032
+    (b) feed_strict xN                         0.566        0.2671        0.4787
+        ratio to e_need                      0.02256       0.01064      0.006032
+    (b) seed_lit xN                            31.44         44.16         146.8
+        ratio to e_need                        1.253          1.76         1.849
+    (b) seed_strict xN                          43.6         44.16         146.8
+        ratio to e_need                        1.737          1.76         1.849
+
+(6) IMPLIED R6 LETTERS (Y = all three settings met, P = some, N = none), pond / lake / ocean
+    (a) literal  feed  U (EXISTING RULE)         Y  (YYY)
+    (a) literal  feed  E                         Y  (YYY)
+    (a) strict   feed  U (scorecard comment)     N  (NNN)
+    (a) strict   feed  E                         N  (NNN)
+    (a) literal  seed  U (guard 5)               N  (NNN)
+    (a) literal  seed  E                         N  (NNN)
+    (a) strict   seed  U                         N  (NNN)
+    (a) literal  seed  U, monomer-only seed      N  (NNN)
+    (b) literal  feed  U                         Y  (YYY; F_c = inf counts as not met; strict also needs ee_sat >= 1%)
+    (b) strict   feed  U                         Y  (YYY; F_c = inf counts as not met; strict also needs ee_sat >= 1%)
+    (b) literal  seed  U                         N  (NNN; F_c = inf counts as not met; strict also needs ee_sat >= 1%)
+    (b) strict   seed  U                         N  (NNN; F_c = inf counts as not met; strict also needs ee_sat >= 1%)
+    (b) literal  seed  U, monomer-only seed      N  (NNN; F_c = inf counts as not met; strict also needs ee_sat >= 1%)
+  Note: inherit.py's inherited excess e0 is a SEED in the pool at the transition (inherit.py:3-5); the feed variant is the continuous-bias analogue.
+
+PREDICTIONS vs RESULT (P10 in arm_e_r6_analytic.log, P11 in arm_e_r6_langevin.log)
+  P12: held
+  P1: held
+  P2: held
+  P3: held
+  P4: FAILED
+  P5: FAILED
+  P6: FAILED
+  P7: FAILED
+  P8: FAILED
+  P9: held
+
+results saved to arm_e_r6_results.json; runtime 114 s

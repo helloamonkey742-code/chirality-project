@@ -1,0 +1,24 @@
+Joyce et al. (1984) R5 predictions, written 2026-10-20 before papers/joyce_1984/paper.pdf (sent by C. McKay) was opened.
+
+Known beforehand (memory, not the paper): Joyce, Visser, van Boeckel, van Boom, Orgel and van Westrenen, Nature 310,
+602 (1984).  Poly(C)-templated oligomerization of guanosine 5'-phosphoro-2-methylimidazolide (2-MeImpG); an L residue
+added at the growing end blocks further D additions (enantiomeric cross-inhibition).  No rate for it has been read.
+scorecard.py has R5 = ? for it because no rate was found.
+
+R5 rule (scorecard.py): fast enough if k2 >= 10 / (c tau) = 3e-7 /M/s (pond and lake; ocean 3e-9).
+
+Estimate, fixed before reading: k2 = -ln(1 - f) / (c t), where
+  c = total activated-monomer concentration as printed (M);
+  t = reaction time as printed (s);
+  f = fraction of the monomer found in products of length >= 2 at time t.  If only longer products are reported, use
+      the smallest such fraction reported for that condition (conservative).  If f is read from a figure, say so.
+Scored on (D) the all-D reaction on poly(C), and (R) the racemic (D + L) reaction on poly(C), if it was run.
+Letter: Y if k2(D) and k2(R) >= 3e-7; P if k2(D) >= 3e-7 but k2(R) < 3e-7; N if k2(D) < 3e-7; ? if c, t or f cannot
+be found for the all-D reaction.  With no racemic reaction, score on D alone.
+
+P1  The paper prints no rate constant, only conditions, time and product yields or profiles.
+P2  Conditions: 0-5 C, c between 0.02 and 0.2 M, t between 1 and 30 days, Mg2+ present.
+P3  1e-6 <= k2(D) <= 1e-3 /M/s, so the all-D reaction meets R5.
+P4  The racemic reaction gives less or shorter oligomer than all-D, but k2(R) >= 3e-7 /M/s.
+P5  R5 = Y.
+P6  Nothing in the paper shows an excess being amplified (R1 stays N); no other scorecard letter is in question.

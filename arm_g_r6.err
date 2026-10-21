@@ -1,0 +1,7 @@
+/Users/saptarshighosh/Documents/chirality-project/arm_g_r6.py:150: ResourceWarning: unclosed file <_io.BufferedReader name='arm_g_r6_predictions.txt'>
+  assert hashlib.sha256(open("arm_g_r6_predictions.txt", "rb").read()).hexdigest() == PRED_SHA, "predictions file changed"
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/saptarshighosh/Documents/chirality-project/arm_g_r6.py:191: ResourceWarning: unclosed file <_io.TextIOWrapper name='rna_seed_scan.log' mode='r' encoding='utf-8'>
+  lines = open(LOG).read().splitlines()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+done 0

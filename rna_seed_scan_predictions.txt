@@ -1,0 +1,24 @@
+PREDICTIONS for rna_seed_scan.py (written before the first run; no gain, noise or e_min number from this script had been computed)
+
+Definitions (what is predicted)
+  seed ee0   = enantiomeric excess of the monomer FEED, m_in (1 +/- ee0)/2 (the "inherited excess"; rna_copying.run(e=ee0)).
+  ee_final   = steady-state product excess (D-L)/(D+L) of full-length copies (rna_copying.run readout), deterministic.
+  gain       = ee_final / ee0.
+  noise      = chemical-Langevin counting noise on the two template concentrations (the variance used in rna_copying.ramp),
+               system size Omega = N_setting / m_in molecules per mM, N_setting = c V 1000 N_A from scorecard.SETTINGS
+               (pond 1.9e25, lake 6.0e29, ocean 8.0e38); linear-noise stationary variance s^2 of the readout.
+  followed   = Delta = ee_final / s >= 2.   e_min = smallest seed followed.
+  cells      = r in {0.40, 0.56, 0.98} x feed in {5, 20, 200} mM; LO's n = 3, c = 0.5, w = 0.02.
+
+P1  The racemic state is stable (leading difference-mode |lambda| < 1) in all 9 cells; lambda grows with r.
+P2  Gain is constant (linear regime) for ee0 <= 1e-4 to 3 digits; at ee0 = 0.1 it is below the linear gain at r = 0.98.
+P3  Linear gain at 20 mM: r = 0.40: 3.5 (range 3-5); r = 0.56: 5.5 (4-9); r = 0.98: 150 (50-600).
+    At 5 and 200 mM the gain is within a factor 5 of the 20 mM value for each r.
+P4  e_min at 20 mM, pond: r = 0.40: 1e-10 (3e-11 - 3e-10); r = 0.56: 7e-11 (2e-11 - 2e-10); r = 0.98: 1.5e-11 (3e-12 - 1e-10).
+    Lake = pond / 178, ocean = pond / 6.5e6 (square roots of the N ratios; exact by construction).
+P5  Against scorecard e_need (pond 6e-12, lake 3e-14, ocean 3e-18):
+    r = 0.40 and 0.56 at 20 mM: e_min > e_need in all three settings (misses by 5x to 50x).
+    r = 0.98 at 20 mM: ocean meets e_need (e_min ~ 2e-18), pond and lake miss (50% confidence on the ocean).
+    Implied R6 letter (Y = all three met, P = some, N = none): N at r = 0.40 and 0.56, P at r = 0.98.
+P6  Seeding the TEMPLATES instead (rna_copying.seed_run semantics, no feed excess): the excess decays (final |ee_T| < ee0, gain ~ 0) for every r.
+P7  Self-check: run(e = 0.2, 5000 cycles, 20 mM) at r = 0.396 reproduces arm_g_rates.log:40 (0.668); at r = 0.40 it is 0.67 +/- 0.01.

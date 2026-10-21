@@ -1,0 +1,17 @@
+System I  D  0.025 M  f 0.74  k2 8.91e-05 /M/s  floor x  297
+System I  D  0.050 M  f 0.75  k2 4.58e-05 /M/s  floor x  153
+System I  DL 0.050 M  f 0.32  k2 1.28e-05 /M/s  floor x   43
+System I  DL 0.100 M  f 0.35  k2 7.12e-06 /M/s  floor x   24
+System II D  0.010 M  f 0.30  k2 5.90e-05 /M/s  floor x  197
+System II D  0.020 M  f 0.19  k2 1.74e-05 /M/s  floor x   58
+System II DL 0.010 M  f 0.02  k2 3.34e-06 /M/s  floor x   11
+System II DL 0.020 M  f 0.02  k2 1.67e-06 /M/s  floor x    6
+
+min k2(D) 1.74e-05, min k2(DL) 1.67e-06 /M/s; floor 3e-07; per-enantiomer DL basis: 8.35e-07
+P1 HELD   no rate constant, half-life or time course printed (one 7-day point)
+P2 FAILED 0 C, 7 d, Mg2+ held; c spans 0.01-0.1 M, System II 0.01 M is below 0.02
+P3 HELD   k2(D) 1.7e-05-8.9e-05
+P4 HELD   DL yields 32-35% vs D 74-75% (I), 2% vs 19-30% (II); min k2(DL) 1.7e-06
+P5 HELD   R5 = Y
+P6 HELD   only pure D, pure L and 1:1 DL monomer used; no starting excess, no amplification reported
+5 of 6 held.  R5 = Y (scorecard.py not changed).

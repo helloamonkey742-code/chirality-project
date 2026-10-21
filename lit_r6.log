@@ -1,0 +1,47 @@
+lit_r6_predictions.txt sha256 f0345e5059ec0c1de6124d19f5f6c54435d6ace047840c47d0c908f8901238ed (matches)
+
+[A2] ctot = 0.5 M: sigma_max = -9.2864e-07 /s at x = 1.000e+04 M (aped.log:91: -9.2864e-07): HELD
+[A1] ctot = 0.1    M: sigma_max = -2.0178e-07 /s at x = 1.000e+04 M  (stable)
+[A1] ctot = 0.01   M: sigma_max = -3.8195e-08 /s at x = 1.000e+04 M  (stable)
+[A1] ctot = 0.0001 M: sigma_max = -2.0200e-08 /s at x = 1.000e+04 M  (stable)
+[A1] ctot = 1e-06  M: sigma_max = -2.0020e-08 /s at x = 1.000e+04 M  (stable)
+[A1] racemic stable at every drive at all four: HELD  (1 s)
+
+now:
+  Ghadiri peptide replicator (2001)               R8 Y  R6 Y  6.5
+  Joyce RNA cross-inhibition (1984)               R8 Y  R6 N  5.5
+  Transamination + ligation network, fed (2025)   R8 Y  R6 N  5.0
+  Nonenzymatic RNA copying, 2-AI (2026)           R8 Y  R6 N  5.0
+  APED peptides via NCAs (2004-2010)              R8 Y  R6 P  5.0
+  Soai reaction (1995; 2003)                      R8 P  R6 Y  4.5
+  Attrition deracemization, aa deriv (2008)       R8 N  R6 Y  6.0
+  Viedma ripening, NaClO3 (2005)                  R8 N  R6 Y  5.0
+  Magnetite crystallization (2023)                R8 N  R6 Y  4.5
+  Blackmond eutectic (2006)                       R8 N  R6 P  3.0
+
+rule R:
+  Ghadiri peptide replicator (2001)               R8 Y  R6 N  5.5
+  Joyce RNA cross-inhibition (1984)               R8 Y  R6 N  5.5
+  Transamination + ligation network, fed (2025)   R8 Y  R6 N  5.0
+  Nonenzymatic RNA copying, 2-AI (2026)           R8 Y  R6 N  5.0
+  APED peptides via NCAs (2004-2010)              R8 Y  R6 N  4.5
+  Soai reaction (1995; 2003)                      R8 P  R6 N  3.5
+  Attrition deracemization, aa deriv (2008)       R8 N  R6 N  5.0
+  Viedma ripening, NaClO3 (2005)                  R8 N  R6 N  4.0
+  Magnetite crystallization (2023)                R8 N  R6 N  3.5
+  Blackmond eutectic (2006)                       R8 N  R6 N  2.5
+[K1] Ghadiri 5.5, Joyce 5.5, first = Ghadiri peptide replicator (2001): HELD (tie broken by dict order)
+[K2] R8 = N block: [('Attrition deracemization, aa deriv', 5.0), ('Viedma ripening, NaClO3', 4.0), ('Magnetite crystallization', 3.5), ('Blackmond eutectic', 2.5)]
+
+rule L:
+  Ghadiri peptide replicator (2001)               R8 Y  R6 N  5.5
+  Joyce RNA cross-inhibition (1984)               R8 Y  R6 N  5.5
+  Transamination + ligation network, fed (2025)   R8 Y  R6 N  5.0
+  Nonenzymatic RNA copying, 2-AI (2026)           R8 Y  R6 N  5.0
+  APED peptides via NCAs (2004-2010)              R8 Y  R6 P  5.0
+  Soai reaction (1995; 2003)                      R8 P  R6 P  4.0
+  Attrition deracemization, aa deriv (2008)       R8 N  R6 P  5.5
+  Viedma ripening, NaClO3 (2005)                  R8 N  R6 P  4.5
+  Magnetite crystallization (2023)                R8 N  R6 N  3.5
+  Blackmond eutectic (2006)                       R8 N  R6 P  3.0
+[K2] R8 = N block: [('Attrition deracemization, aa deriv', 5.5), ('Viedma ripening, NaClO3', 4.5), ('Magnetite crystallization', 3.5), ('Blackmond eutectic', 3.0)]

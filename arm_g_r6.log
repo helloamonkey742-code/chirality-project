@@ -1,0 +1,192 @@
+arm_g_r6: R6 for nonenzymatic RNA copying (rna_copying.py), feed seed vs template seed, racemic-pool poisoning
+settings: Warm little pond: c = 0.01 M, tau = 1e+02 yr = 8.77e+05 h, N = 1.89e+25, e_need = 5.8e-12; Lake / lagoon: c = 0.0001 M, tau = 1e+04 yr = 8.77e+07 h, N = 6.02e+29, e_need = 3.2e-14; Open ocean: c = 1e-06 M, tau = 1e+08 yr = 8.77e+11 h, N = 8.02e+38, e_need = 2.8e-18
+model: rna_copying with n = 3, c = 0.5, w = 0.02, T_in = 3 uM, kobs = 7.35/h, h = 3.3245e-03; cycle length L = 1 h, 24 h (unmeasured)
+
+self-checks passed: S(10,10; r = .5) = 0.247910 (hand 0.247910); lam r = .4 by quadratic formula = 0.979430 (log 0.97943); eigen-expansion = matrix_power at t = 1, 7, 100; plateau r = .396, +20% feed, 5000 cycles = 0.6687 (arm_g_rates.log:40: 0.668); linear vs nonlinear template response at t = 100, ee0 = 1e-4: +1.7e-10, -6.1e-09, -4.2e-09
+
+=== (a) FEED SEED: letters from rna_seed_scan.log (not re-derived here) ===
+  rna_seed_scan.log:26: 0.40     5     5.93             3.1e-12     0.53  1e-11            1.7e-14     0.53  1e-13            4.7e-19     0.17 <=1e-18   Y
+  rna_seed_scan.log:27: 0.40    20      3.4             4.8e-13    0.083  1e-12            2.7e-15    0.083  1e-14            7.3e-20    0.026 <=1e-18   Y
+  rna_seed_scan.log:28: 0.40   200     2.41             2.1e-13    0.036  1e-12            1.2e-15    0.036  1e-14            3.2e-20    0.011 <=1e-18   Y
+  rna_seed_scan.log:29: 0.56     5     5.69             3.3e-12     0.56  1e-11            1.8e-14     0.56  1e-13            5.0e-19     0.18 <=1e-18   Y
+  rna_seed_scan.log:30: 0.56    20     5.25             4.8e-13    0.084  1e-12            2.7e-15    0.084  1e-14            7.4e-20    0.026 <=1e-18   Y
+  rna_seed_scan.log:31: 0.56   200     3.67             2.6e-13    0.045  1e-12            1.4e-15    0.045  1e-14            4.0e-20    0.014 <=1e-18   Y
+  rna_seed_scan.log:32: 0.98     5     5.25             3.6e-12     0.62  1e-11            2.0e-14     0.62  1e-13            5.5e-19      0.2 <=1e-18   Y
+  rna_seed_scan.log:33: 0.98    20      115             1.7e-13     0.03  1e-12            9.7e-16     0.03  1e-15            2.6e-20   0.0094 <=1e-18   Y
+  rna_seed_scan.log:34: 0.98   200      101             1.5e-13    0.025  1e-12            8.2e-16    0.025  1e-15            2.2e-20    0.008 <=1e-18   Y
+  rna_seed_scan.log:111: letters at 20 mM: r = 0.4: Y, r = 0.56: Y, r = 0.98: Y  (pred N, N, P)
+  rna_seed_scan.log:115: ALL LETTERS at the base c = 0.5, template-only noise (r/feed): 0.4/5: Y, 0.4/20: Y, 0.4/200: Y, 0.56/5: Y, 0.56/20: Y, 0.56/200: Y, 0.98/5: Y, 0.98/20: Y, 0.98/200: Y
+  definition used there: followed = Delta = ee_final/s >= 2; e_min = 2 s/G; Y if e_min <= e_need in all three settings.
+  soundness: a signal-to-noise test of a bounded response (gain G = 2.4-115, racemic state stable) to a continuously supplied excess,
+  against an e_need that comes from a bifurcation ramp (inherit.py). It says the readout tracks the feed excess above counting noise.
+  It does not say the system selects one hand; the product excess stays below 1 for small seeds (see (c) ee-vs-yield).
+
+=== (b) TEMPLATE SEED (racemic feed; excess ee0 in T_D vs T_L only) ===
+difference-mode block at the racemic state: |lam| (leading), complex pair?, a_rho (weight of the leading mode in rho), max rho(t >= 1), T* (uM)
+    r  feed     |lam|  cplx  |a_rho|  max rho(t>=1)    T* uM  log10 s_pond
+ 0.40     5   0.99059  True   1.0402       0.991155     3.39        -11.04
+ 0.40    20   0.97943  True   1.5735       0.999896   287.94        -12.09
+ 0.40   200   0.97845  True   1.0294       0.999993  4057.64        -12.60
+ 0.56     5   0.99003  True   1.0265       0.990384     3.12        -11.03
+ 0.56    20   0.98797  True   1.2412       0.999885   260.30        -11.90
+ 0.56   200   0.98551  True   1.0203       0.999992  3739.42        -12.33
+ 0.98     5   0.98860  True   1.0010       0.988616     2.64        -11.02
+ 0.98    20   0.99948  True   1.0062       0.999854   205.64        -11.00
+ 0.98   200   0.99941  True   1.0009       0.999991  3170.25        -11.13
+
+OUTCOME at tau (LOST: rho(tau) < 0.5; KEPT >= 0.5; GROWN: rho > 1 at some t) and e_min^T = 2 s/|g_T(tau)|; 20 mM feed
+    r     L |   pond log10 ncyc  log10 rho_env  outcome  log10 e_min^T  log10 e_need | lagoon log10 ncyc  log10 rho_env  outcome  log10 e_min^T  log10 e_need |  ocean log10 ncyc  log10 rho_env  outcome  log10 e_min^T  log10 e_need | weak strong
+ 0.40   1 h |             5.94      -7.91e+03     LOST       none(>1)         -11.2 |             7.94      -7.91e+05     LOST       none(>1)         -13.5 |            11.94      -7.91e+09     LOST       none(>1)         -17.6 |    N     N
+ 0.40  24 h |             4.56           -330     LOST       none(>1)         -11.2 |             6.56       -3.3e+04     LOST       none(>1)         -13.5 |            10.56       -3.3e+08     LOST       none(>1)         -17.6 |    N     N
+ 0.56   1 h |             5.94      -4.61e+03     LOST       none(>1)         -11.2 |             7.94      -4.61e+05     LOST       none(>1)         -13.5 |            11.94      -4.61e+09     LOST       none(>1)         -17.6 |    N     N
+ 0.56  24 h |             4.56           -192     LOST       none(>1)         -11.2 |             6.56      -1.92e+04     LOST       none(>1)         -13.5 |            10.56      -1.92e+08     LOST       none(>1)         -17.6 |    N     N
+ 0.98   1 h |             5.94           -198     LOST       none(>1)         -11.2 |             7.94      -1.98e+04     LOST       none(>1)         -13.5 |            11.94      -1.98e+08     LOST       none(>1)         -17.6 |    N     N
+ 0.98  24 h |             4.56          -8.27     LOST         1e-2.4         -11.2 |             6.56           -827     LOST       none(>1)         -13.5 |            10.56      -8.27e+06     LOST       none(>1)         -17.6 |    N     N
+
+all 54 cells (3 r x 3 feeds x 3 settings x 2 cycle lengths): {'LOST': 54, 'KEPT': 0, 'GROWN': 0}
+20 mM cells with e_min^T < 1: [(0.98, '24 h', 'Warm little pond')]
+    r = 0.98, L = 24 h, Warm little pond: e_min^T = 10^-2.43 = 3.7e-03; e_need = 5.8e-12
+
+BREAK-EVEN cycle length for a template seed to be KEPT (rho_env = 0.5) over tau, if the per-cycle parameters (w = 0.02 ...) were unchanged
+  (a scale, not a model result: w, h would change with the cycle length)
+    r  feed  cycles to 0.5           pond         lagoon          ocean
+ 0.40     5          150.9       0.663 yr        66.3 yr    6.63e+05 yr
+ 0.40    20           88.5        1.13 yr         113 yr    1.13e+06 yr
+ 0.40   200           65.0        1.54 yr         154 yr    1.54e+06 yr
+ 0.56     5          140.9        0.71 yr          71 yr     7.1e+05 yr
+ 0.56    20          132.4       0.756 yr        75.6 yr    7.56e+05 yr
+ 0.56   200           96.3        1.04 yr         104 yr    1.04e+06 yr
+ 0.98     5          121.0       0.826 yr        82.6 yr    8.26e+05 yr
+ 0.98    20         2671.0        13.7 d         3.74 yr    3.74e+04 yr
+ 0.98   200         2357.6        15.5 d         4.24 yr    4.24e+04 yr
+
+NONLINEAR CHECK (20 mM, 20000 direct iterations of rna_copying.step; |ee_T| = max over the last 200 cycles)
+    r ee0 = 0.1   ee0 = 0.5   ee0 = 0.99    |ee_T|/ee0
+ 0.40    4.72e-15    4.72e-15    4.72e-15     4.7e-14   9.4e-15   4.8e-15
+ 0.56    7.68e-15    7.68e-15    7.68e-15     7.7e-14   1.5e-14   7.8e-15
+ 0.98    3.32e-06    1.82e-05    5.96e-05     3.3e-05   3.6e-05   6.0e-05
+
+POSITIVE CONTROL (can the classifier say GROWN?): r = 1.141 (arm_g_rates.log:44: Fig. 9 reading A, lam 1.00221, m* 10.08 mM), 20 mM
+  leading |lam| = 1.00220; seed ee0 = 1e-3 reaches |ee_T| > 0.5 after 2913 cycles (|ee_T| = 0.500); classifier: GROWN
+
+=== (c) RACEMIC-POOL POISONING INSIDE THE MODEL ===
+C1. per-attempt full-length probability S: racemic pool (m each hand) vs pure pool with the same TOTAL monomer (2m) vs same right-hand level (m)
+    'fresh' = m = m_in/2 at 20 mM feed; 'reactor' = m = steady racemic monomer level at 20 mM feed. r = 0: wrong hand is an inert spectator.
+    r     pool  m (mM)  mu rac      p    S rac  S pure(2m)  rac/pure   S(m,0)  rac/(m,0)
+ 0.00    fresh  10.000   3.062  1.000   0.5907      0.9434     0.626   0.5907      1.000
+ 0.00  reactor   2.453   0.751  1.000   0.0407      0.1917     0.212   0.0407      1.000
+ 0.06    fresh  10.000   3.246  0.943   0.5287      0.9434     0.560   0.5907      0.895
+ 0.06  reactor   2.486   0.807  0.943   0.0407      0.1968     0.207   0.0420      0.968
+ 0.40    fresh  10.000   4.287  0.714   0.2919      0.9434     0.309   0.5907      0.494
+ 0.40  reactor   2.700   1.157  0.714   0.0406      0.2306     0.176   0.0513      0.791
+ 0.56    fresh  10.000   4.778  0.641   0.2253      0.9434     0.239   0.5907      0.381
+ 0.56  reactor   2.821   1.348  0.641   0.0406      0.2502     0.162   0.0571      0.711
+ 0.98    fresh  10.000   6.064  0.505   0.1212      0.9434     0.128   0.5907      0.205
+ 0.98  reactor   3.245   1.967  0.505   0.0405      0.3199     0.127   0.0791      0.512
+    in the reactor the racemic S is pinned by washout (c S = w/(1-w) = 0.0408 wherever T* >> T_in); poisoning shows up as the monomer level
+    and feed needed to reach it, not as a lower S.
+
+C2. onset feed (copying just keeps up with washout, c S = w/(1-w)): racemic pool vs pure pool, same total feed
+    r  racemic mM   pure mM  ratio
+ 0.06       5.791     2.857   2.03
+ 0.40       6.294     2.857   2.20
+ 0.56       6.580     2.857   2.30
+ 0.98       7.579     2.857   2.65
+    pure onset = rna_copying.onset(r = 0)/2 = 2.857 mM (asserted equal to the one-hand formula)
+
+C3. steady reactor, same total feed: racemic (e = 0) vs pure (e = 1). Q = T_D*/(T_in/2); Y = full-length copies per cycle, both hands (uM/cycle)
+    r  feed | T* rac uM   Q rac     Y rac | T_D* pure  Q pure    Y pure  max|m_L| | Y rac/Y pure conv
+ 0.40     5 |      3.39    2.26     0.077 |    118.50   79.00     2.388   3.1e-13 |        0.032 True
+ 0.40    20 |    287.94  191.96    11.692 |    940.99  627.33    19.173   2.4e-12 |        0.610 True
+ 0.56     5 |      3.12    2.08     0.066 |    118.33   78.89     2.384   4.3e-13 |        0.028 True
+ 0.56    20 |    260.30  173.53    10.563 |    940.82  627.21    19.170   3.4e-12 |        0.551 True
+ 0.98     5 |      2.64    1.76     0.046 |    117.98   78.65     2.377   7.4e-13 |        0.019 True
+ 0.98    20 |    205.64  137.09     8.332 |    940.46  626.97    19.162   5.9e-12 |        0.435 True
+
+C4. ee-vs-yield at 20 mM: feed excess e from racemic to pure; product excess ee, yield relative to the pure pool, gain = ee/e
+    r      e        ee     gain  Y/Y(e=1)   T_D* uM   T_L* uM conv
+ 0.40   0.00    0.0000      nan     0.610    287.94    287.94 True
+ 0.40   0.01    0.0340    3.395     0.610    297.67    278.22 True
+ 0.40   0.10    0.3392    3.392     0.610    385.21    190.82 True
+ 0.40   0.20    0.6752    3.376     0.611    482.12     94.69 True
+ 0.40   0.50    0.9982    1.996     0.728    684.71      2.12 True
+ 0.40   0.90    1.0000    1.111     0.946    890.70      1.50 True
+ 0.40   1.00    1.0000    1.000     1.000    940.99      1.50 True
+ 0.56   0.00    0.0000      nan     0.551    260.30    260.30 True
+ 0.56   0.01    0.0525    5.246     0.551    273.88    246.73 True
+ 0.56   0.10    0.5224    5.224     0.552    395.85    125.22 True
+ 0.56   0.20    0.9513    4.757     0.563    517.35     14.37 True
+ 0.56   0.50    0.9992    1.998     0.730    686.90      1.77 True
+ 0.56   0.90    1.0000    1.111     0.947    890.98      1.50 True
+ 0.56   1.00    1.0000    1.000     1.000    940.82      1.50 True
+ 0.98   0.00    0.0000      nan     0.435    205.64    205.64 True
+ 0.98   0.01    0.7901   79.011     0.438    369.36     44.63 True
+ 0.98   0.10    0.9915    9.915     0.498    467.41      3.49 True
+ 0.98   0.20    0.9974    4.987     0.561    527.69      2.17 True
+ 0.98   0.50    0.9998    2.000     0.733    689.81      1.56 True
+ 0.98   0.90    1.0000    1.111     0.948    891.21      1.50 True
+ 0.98   1.00    1.0000    1.000     1.000    940.46      1.50 True
+    gain at e = 0.01: r = 0.4: 3.4, r = 0.56: 5.25, r = 0.98: 79  (rna_seed_scan.log Table 1: 3.4, 5.25, 79)
+
+C5. poison-off control: gain (linear, from rna_seed_scan.linear) with the wrong hand inert (r = 0) vs measured r, 20 mM
+    r = 0.00: gain   1.401, |lam| 0.96071, T*  392.86 uM
+    r = 0.06: gain   1.588, |lam| 0.96040, T*  372.24 uM
+    r = 0.40: gain   3.395, |lam| 0.97943, T*  287.94 uM
+    r = 0.56: gain   5.247, |lam| 0.98797, T*  260.30 uM
+    r = 0.98: gain 115.054, |lam| 0.99948, T*  205.64 uM
+
+=== S. SETTING-CONSISTENT SUPPLEMENT (feed = the setting's own concentration; Omega = N_setting/m_in; NOT part of the earlier definition) ===
+    rna_seed_scan.py used the setting's N with a 5-200 mM feed. Here m_in = pond 10 mM, lake 0.1 mM, ocean 1e-3 mM.
+    T_in (assumed template feed, 3 uM at the experiment's 24 mM) either fixed, or scaled T_in = 3 uM x m_in/20 mM.
+    r    T_in |   pond m_in(mM)  Q-1    gain  e_min/e_need | lagoon m_in(mM)  Q-1    gain  e_min/e_need |  ocean m_in(mM)  Q-1    gain  e_min/e_need | letter
+ 0.40   fixed |               10 5.2e+01   6.046        0.121 |              0.1 8.8e-06   2.994        0.153 |            0.001 9.0e-12   3.000      0.00483 |   Y
+ 0.56   fixed |               10 4.4e+01   9.572        0.113 |              0.1 8.8e-06   2.996        0.153 |            0.001 8.9e-12   3.000      0.00484 |   Y
+ 0.98   fixed |               10 2.8e+01  70.356       0.0596 |              0.1 8.6e-06   3.000        0.154 |            0.001 8.8e-12   3.000      0.00487 |   Y
+ 0.40  scaled |               10 1.0e+02   6.166        0.121 |              0.1 9.2e-06   2.994         2.18 |            0.001 9.3e-12   3.000        0.689 |   P
+ 0.56  scaled |               10 8.8e+01   9.948        0.112 |              0.1 9.2e-06   2.996         2.18 |            0.001 9.3e-12   3.000        0.689 |   P
+ 0.98  scaled |               10 5.4e+01 117.054       0.0471 |              0.1 9.1e-06   3.000         2.18 |            0.001 9.3e-12   3.000        0.689 |   P
+
+=== SENSITIVITY of the template-seed outcome at (pond, 24 h) = 36,525 cycles, 20 mM, one parameter at a time ===
+    r       change     |lam|  cplx  outcome  log10 rho_env    T* uM
+ 0.40         base   0.97943  True     LOST           -330   287.94
+ 0.40      w=0.005   0.99482  True     LOST          -82.3   129.57
+ 0.40       w=0.05   0.95678  True     LOST           -700   406.28
+ 0.40        c=0.1   0.99515  True     LOST            -77   239.82
+ 0.40        c=1.0   0.97781  True     LOST           -356   208.03
+ 0.40   T_in=0.3uM   0.97944  True     LOST           -329   287.16
+ 0.40    T_in=30uM   0.97933  True     LOST           -331   295.81
+ 0.56         base   0.98797  True     LOST           -192   260.30
+ 0.56      w=0.005   0.99673  True     LOST          -51.9   117.46
+ 0.56       w=0.05   0.97807  True     LOST           -352   349.28
+ 0.56        c=0.1   0.99878  True     LOST          -19.4    48.52
+ 0.56        c=1.0   0.98646  True     LOST           -216   189.07
+ 0.56   T_in=0.3uM   0.98803  True     LOST           -191   259.49
+ 0.56    T_in=30uM   0.98734  True     LOST           -202   268.38
+ 0.98         base   0.99948  True     LOST          -8.27   205.64
+ 0.98      w=0.005   0.99981  True     LOST          -2.99    94.91
+ 0.98       w=0.05   0.99914  True     LOST          -13.6   150.07
+ 0.98        c=0.1   0.99125  True     LOST           -139     3.43
+ 0.98        c=1.0   0.99936  True     LOST          -10.2   153.57
+ 0.98   T_in=0.3uM   0.99961  True     LOST           -6.2   204.71
+ 0.98    T_in=30uM   0.99824  True     LOST            -28   214.81
+
+=== PREDICTIONS vs RESULT (arm_g_r6_predictions.txt) ===
+  P1 |lam| matches rna_seed_scan.log Table 1 to 5e-5 in 9 cells: held (max |diff| 4.6e-06)
+  P2 no transient growth of a template seed (max rho(t >= 1) <= 1): held (max 0.999993)
+  P3 54/54 LOST: held ({'LOST': 54, 'KEPT': 0, 'GROWN': 0})
+  P4 break-even cycle length, pond, 20 mM: r = 0.4: 412.7 d = 1.13 yr (pred 804-1424 d); r = 0.56: 276.0 d = 0.76 yr (pred 475-840 d); r = 0.98: 13.7 d = 0.04 yr (pred 20-35 d): FAILED
+  P5 a (only pond/24 h/r = 0.98 has e_min^T < 1): held; b (weak letter N in 6/6, e_min^T > e_need everywhere): held; c (strong letter N in 6/6): held
+  P6 nonlinear decay |ee_T(20000)|/ee0 < 1e-3 in 9/9: held
+  P7 positive control r = 1.141: lam > 1, seed reaches 0.5, classifier GROWN: held
+  P8 onset feeds (mM): racemic 6.29, 6.58, 7.58 (pred 6.3, 6.6, 7.6); pure 2.857 (pred 2.86); ratios 2.20, 2.30, 2.65: held
+  P9 5 mM: racemic Q 2.26, 2.08, 1.76 (< 3); pure Q 79.0, 78.9, 78.7 (30-250, r-independent to 1%): held
+  P10 Y_rac/Y_pure at 20 mM: 0.610, 0.551, 0.435 (pred 0.61, 0.55, 0.44; range 0.3-0.9, decreasing): held
+  P11 gain at e = 0.01: 3.4, 5.25, 79 (log 3.4, 5.25, 79, +-5%); linear gain >= 2 in 9 cells (min 2.409); Y(0.01)/Y(0) - 1 = +2.2e-06, +6.8e-06, +6.6e-03: held
+  P12 a (no copying at lake/ocean, gain ~ 3, pond Q > 3): held; b (T_in fixed: ratios in range, Y): held; c (T_in scaled: lake ratio 1-5, ocean 0.3-1, not Y): held
+  P13 template seed LOST at (pond, 24 h) in every scored sensitivity cell: held (not LOST: none; not scored: none)
+
+VERDICT (c): V1 racemic onset >= 1.8 x pure onset: True; V2 racemic Q >= 50 at 20 mM: True (Q = 192, 174, 137); V3 feed-excess gain >= 2 in all 9 cells: True
+LETTERS (b) at 20 mM, weak / strong: r = 0.4, L = 1 h: N/N; r = 0.4, L = 24 h: N/N; r = 0.56, L = 1 h: N/N; r = 0.56, L = 24 h: N/N; r = 0.98, L = 1 h: N/N; r = 0.98, L = 24 h: N/N
+LETTERS (a) supplement (block S): fixed T_in, r = 0.4: Y; fixed T_in, r = 0.56: Y; fixed T_in, r = 0.98: Y; scaled T_in, r = 0.4: P; scaled T_in, r = 0.56: P; scaled T_in, r = 0.98: P
+
+self-check passed; runtime 11 s

@@ -1,0 +1,81 @@
+pre-registration file rna_seed_analytic_predictions.txt: sha256 fa679df67e0c2be995e77409fc11c4c4ebfbcd4c8db21aa9c9fc21af7d2359fe
+live formulas reproduce all 101 pre-registered values (max rel deviation 4.2e-06: the file keeps 6 significant digits)
+sympy check: hand-derived sigma and eps vs sympy differentiation, rel diff 6.7e-16, 4.4e-16; E_R/E_W = p/(1-p) simplifies to 0
+analytic A, B, C, Dd match a finite-difference Jacobian of the independent map (r = 0.40, 1.14, 20 mM) to < 1e-6 relative
+
+(a)(b) PREDICTIONS (feed 20 mM; ee gain = product excess per unit feed excess e, linear; nl = exact forced steady state)
+    r    T uM    m mM        A        B        C       Dd              lam1  |lam2| cyc/e-fold    G@20  ee_lin   ee_nl     G@5
+ 0.40 287.943   2.700  0.99990  0.00563 -0.20423  0.92328  0.97943+0.00000j  0.9437      48.11   3.395  0.6790  0.6752   5.928
+ 0.56 260.301   2.821  0.99988  0.00502 -0.14561  0.92664  0.98797+0.00000j  0.9386      82.60   5.247  1.0493  0.9513   5.693
+ 0.98 205.638   3.245  0.99985  0.00376 -0.00612  0.93822  0.99948+0.00000j  0.9386    1918.19 115.054 23.0108  0.9974   5.252
+ 1.14 188.283   3.468  0.99984  0.00334  0.04146  0.94331  1.00219+0.00000j  0.9410        nan     nan     nan     nan   5.135
+
+(c) r <= 1 (r = 0.02-1.0, 20 feeds each, 0.5-100 mM): A < 1, Dd < 1, B > 0, C <= 0, Delta > 0 everywhere (lam = 1 impossible); r = 1: C = 0 exactly, lam = (A, Dd)
+    window edges: r = 1 (C = 0) and r_max = (c(1-w)/w)^(1/n) - 1 = 1.9044
+    threshold feed m*(r) (Delta = 0), feed grid 0.5-1e5 mM:
+      r = 1.02: m* = 14.31 mM
+      r = 1.05: m* = 11.51 mM
+      r = 1.10: m* = 10.4 mM
+      r = 1.14: m* = 10.09 mM
+      r = 1.20: m* = 9.909 mM
+      r = 1.50: m* = 10.57 mM
+      r = 1.80: m* = 13.17 mM
+      r = 1.90: m* = 15.52 mM
+    minimum of m*(r) on r = 1.01-1.89: 9.887 mM at r = 1.24 (m* -> infinity at both window edges)
+    r_crit at feed 10 mM: 1.1605
+    r_crit at feed 20 mM: 1.0081
+    r_crit at feed 100 mM: 1.0007
+
+COMPARISON with rna_copying.py (imported). tolerances (pre-registered): matrix/eig 1e-6 rel, threshold 1e-4 mM abs, ee 1e-9 abs (5000 cycles), 1e-6 abs (steady)
+    r               quantity     analytic  rna_copying       diff      tol  ok
+ 0.40                      A    0.9998958    0.9998958   9.79e-11    1e-06  yes
+ 0.40                      B    0.0056270    0.0056270   1.81e-10    1e-06  yes
+ 0.40                      C   -0.2042273   -0.2042273   6.14e-09    1e-06  yes
+ 0.40                     Dd    0.9232787    0.9232787   9.00e-11    1e-06  yes
+ 0.40              |lam| max    0.9794299    0.9794299   8.73e-11    1e-06  yes
+ 0.40    stable at all feeds          yes          yes                      yes
+ 0.40    max|lam| 40-pt grid    0.9954757    0.9954757   2.24e-11    1e-06  yes
+ 0.40 max|lam| (mine, 400pt)    0.9954789    0.9954757   3.15e-06    2e-03  yes
+ 0.40        ee @5000 cycles    0.6751832    0.6751832   9.99e-16    1e-09  yes
+ 0.40   ee steady (400k cyc)    0.6751832    0.6751832   9.99e-16    1e-06  yes
+      linear prediction 0.6790; run 0.6752 at 5000 cycles, 0.6752 steady (linear valid only if gain*0.2 << 1)
+ 0.56                      A    0.9998847    0.9998847   5.89e-11    1e-06  yes
+ 0.56                      B    0.0050198    0.0050198   1.00e-09    1e-06  yes
+ 0.56                      C   -0.1456082   -0.1456082   5.15e-09    1e-06  yes
+ 0.56                     Dd    0.9266368    0.9266368   1.61e-10    1e-06  yes
+ 0.56              |lam| max    0.9879670    0.9879670   9.97e-11    1e-06  yes
+ 0.56    stable at all feeds          yes          yes                      yes
+ 0.56    max|lam| 40-pt grid    0.9960941    0.9960941   3.26e-11    1e-06  yes
+ 0.56 max|lam| (mine, 400pt)    0.9962933    0.9960941   2.00e-04    2e-03  yes
+ 0.56        ee @5000 cycles    0.9513325    0.9513325   0.00e+00    1e-09  yes
+ 0.56   ee steady (400k cyc)    0.9513325    0.9513325   1.65e-14    1e-06  yes
+      linear prediction 1.0493; run 0.9513 at 5000 cycles, 0.9513 steady (linear valid only if gain*0.2 << 1)
+ 0.98                      A    0.9998541    0.9998541   3.33e-12    1e-06  yes
+ 0.98                      B    0.0037583    0.0037583   2.05e-10    1e-06  yes
+ 0.98                      C   -0.0061172   -0.0061172   1.56e-07    1e-06  yes
+ 0.98                     Dd    0.9382203    0.9382203   9.41e-11    1e-06  yes
+ 0.98              |lam| max    0.9994788    0.9994788   5.48e-11    1e-06  yes
+ 0.98    stable at all feeds          yes          yes                      yes
+ 0.98    max|lam| 40-pt grid    0.9994786    0.9994786   5.98e-12    1e-06  yes
+ 0.98 max|lam| (mine, 400pt)    0.9994789    0.9994786   2.78e-07    2e-03  yes
+ 0.98        ee @5000 cycles    0.9974456    0.9974456   0.00e+00    1e-09  yes
+ 0.98   ee steady (400k cyc)    0.9974456    0.9974456   0.00e+00    1e-06  yes
+      linear prediction 23.0108; run 0.9974 at 5000 cycles, 0.9974 steady (linear valid only if gain*0.2 << 1)
+ 1.14                      A    0.9998407    0.9998407   1.46e-11    1e-06  yes
+ 1.14                      B    0.0033351    0.0033351   7.08e-10    1e-06  yes
+ 1.14                      C    0.0414624    0.0414624   6.22e-09    1e-06  yes
+ 1.14                     Dd    0.9433104    0.9433104   5.04e-11    1e-06  yes
+ 1.14              |lam| max    1.0021892    1.0021892   3.42e-12    1e-06  yes
+ 1.14      threshold feed mM   10.0878395   10.0878396   6.66e-08    1e-04  yes
+      stated in the paper / rna_copying.py output: 10.1 mM -> analytic 10.088, |analytic - 10.1| = 0.012
+
+stated plateau 0.67 at r = 0.40, +20% feed: analytic nonlinear 0.6752, linear 0.6790
+    sensitivity: r = 0.395 -> 0.6671, r = 0.405 -> 0.6834; ee = 0.670 at r = 0.3968, i.e. the stated 0.67 is consistent with r = 0.40 as rounded (|ee(0.40) - 0.67| = 0.0052)
+ 1.20 threshold feed mM (HI)    9.9094839    9.9094838   7.29e-08    1e-04  yes
+ 1.20       m* docstring 9.9    9.9094839    9.9000000   9.58e-04    6e-03  yes
+ 1.20       T_in->0 onset mM    8.3420148    8.3420148   4.26e-16    1e-06  yes
+ 1.20    onset docstring 8.3    8.3420148    8.3000000   5.06e-03    6e-03  yes
+ 1.90   r_max vs rna_copying    1.9043929    1.9043929   0.00e+00    1e-12  yes
+
+SUMMARY: 41 of 41 comparisons within tolerance; mismatches: none
+self-check passed

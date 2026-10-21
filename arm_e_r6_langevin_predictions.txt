@@ -1,0 +1,23 @@
+PREDICTIONS (addendum) for arm_e_r6_langevin.py, written after the smoke run described below and before the final run
+Unit arm_e_r6. This file adds ONE test, V2b', to P11 of arm_e_r6_predictions.txt (sha256 235e93aa..., frozen, not edited). It does not change
+P11 or its verdict: P11 is scored exactly as written there (V1, V2a, V2b at N ~ 3e6).
+
+WHY (disclosure). A smoke run of arm_e_r6_langevin.py --smoke (M = 200 trajectories per population, so every probability below has
+a standard error of 0.02-0.03; not read as a verdict) showed that at N = 3e6 the unstable pond (b) point is NOT in the linear regime at
+T = 3/lambda: the median |L - D|/(2x) at T was 0.107 (ee_sat of this point is 0.129, arm_e_r6.log:104) and the simulated sd(w) was 0.33 of the
+linear value. The sign statistic of P11 V2b is still defined and was 0.845 and 0.970 in the smoke (linear-noise Phi: 0.841, 0.977).
+The linear-noise formula for the accumulated noise (the Delta_b of arm_e_r6_analytic.py, used for e_min in case (b)) is therefore not
+tested by P11 V2b in the regime it describes. V2b' tests it where it applies: same point, same T, same method, N = 1e12.
+
+DEFINITIONS (fixed before the final run)
+  Point    record b|feed_strict|U of arm_e_r6_results.json, pond (F = 553.03, f = 1e-6 /s, kh = 3.162e-3, R = 1, K = 1e-4, lambda = 1.038e-8 /s).
+  Setup    N = Omega*C0 = 1e12 (Omega recomputed), T = 3/lambda, Euler-Maruyama with dt*rho = 0.05, M = 4000 per population (g = 0, g for Delta_b(T) = 1, g for Delta_b(T) = 2).
+  w        unstable-mode projection lv.(a, b); lv = left eigenvector of the odd 2x2 Jacobian; sd and mean from the linear formulas
+           sd(w) = sqrt(lv'D lv (e^{2 lambda T} - 1)/(2 lambda Omega)), mean = (lv.ho) g (e^{lambda T} - 1)/lambda.
+
+PREDICTIONS (pass/fail rules in brackets)
+Q1  g = 0: simulated sd(w) at T within 5% of the linear value. [pass: |ratio - 1| <= 0.05]
+Q2a g for Delta_b(T) = 1: P(sign of w equals sign of the linear mean) = 0.841 +/- 0.04.
+Q2b g for Delta_b(T) = 2: P(sign) = 0.977 +/- 0.03. [pass: both within tolerance]
+Q3  Linearity: 95th percentile of |L - D|/(2x) at T over the g = 0 population <= 0.02. [pass: <= 0.02; if it fails, Q1-Q2 are not read]
+DECISION RULE: Q held only if Q1, Q2a, Q2b and Q3 all pass. Reported separately from P11. A failed Q goes into journals/new_analyses_arm_e_r6.md.

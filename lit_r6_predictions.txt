@@ -1,0 +1,72 @@
+Literature R6 re-check under the seed rule: predictions (written 2026-10-21, before any evidence below is gathered)
+
+WHY.  scorecard.py's R6 now reads "follows an excess seeded in the pool down to e_need (inherit.py), Delta >= 2;
+passing a feed excess through does not count".  The eight literature rows were lettered under the earlier reading
+("shown to work from racemic or <= ~1% ee").  Arms E and G were re-lettered N under the new rule.  This file fixes, before
+any new evidence is read, the rule each row is scored by and the letter expected.  No letter changes without the
+author's OK.
+
+e_need (scorecard.spec(), k2 = 1e-3 /M/s): pond 5.77e-12, lake 3.23e-14, ocean 2.80e-18.
+
+RULE R (as approved; the arm_e_r6.py letter rule, arm_e_r6.py:262).  Y if a seed in the pool is followed (Delta >= 2)
+at e_need in all three settings, P if in some, N if in none.  Admissible evidence:
+ (a) a model at measured or published rates with a seed test at a setting's concentration;
+ (b) a deciding count.  A hand decided among N_d independent units cannot follow a seed below ~2/sqrt(N_d) (counting
+     form, Delta = e0 sqrt(N_d); inherit.py's sweep factor (pi k tau)^(1/4)/sqrt(2) only raises the need when
+     pi k tau >= 4).  Following at e_need therefore needs N_d >= (2/e_need)^2 = 1.2e23 (pond), 3.8e27 (lake),
+     5.1e35 (ocean).  Any route whose decision is made by crystals, surfaces or aggregates, or by <= 1e23
+     molecules, is N.
+ (c) a seed that decays, is only passed through, or does not set the final hand (a field, a surface or a crystal
+     population sets it) gives N.
+ ? only if none of (a)-(c) can be applied.
+
+RULE L (lenient; reported so the author can choose, not the approved rule).  P if a seeded excess of <= 1% grows and
+sets the final hand, in the lab or in a model of the mechanism (the repo's grinding model viedma_sim.py / viedma_big.py
+counts for both grinding rows); Y only with (a) at e_need; N if a seeded excess decays, is only passed through, or the
+final hand is set by something other than the seed.  A racemic start with a random sign no longer counts.
+Note: under L the arms do not change.  Arm E's excess decays at measured rates (arm_e_rates.py) and arm G's template
+seed is lost (arm_g_r6.log:46), so both stay N.
+
+DISCLOSED EXPOSURE (seen before writing): scorecard.py row comments and README Part 6 notes for every row (README:526
+on Saghatelian 2001: own-hand-only catalysis, no D/L cross-inhibition, rho ~0.5-0.65); soai_check.py S4 (N_d <~ 3.6e9)
+and S5 (5e-7 ee controlled the outcome); viedma_check.py (Viedma 2005: 5% mass excess followed; > 1e6 crystals);
+viedma_big.py (P = Phi(0.565 Delta), 29/30 at Delta = 3 at 256,000 crystals, about 0.4%); blind_units.py (Choi 2024
+behaved as ~34 units); aped.log:47-49 (seed 1e-6 grows to 0.76 at ctot = 2 M, x = 0.15 M) and aped.log:91-97
+(sigma_max < 0 at ctot = 0.5 M, > 0 at 1-1000 M; lower ctot not scanned); README:798 on Ozturk 2023 (field-magnetized
+magnetite -> ~60% ee; conglomerate crystallization takes ~25% to homochiral).  The predictor may have seen all four
+papers below in training and recalls only their general claims.
+
+PREDICTED LETTERS (current -> R, L)
+ row                               now   R   L   deciding fact expected
+ Ghadiri peptide replicator (2001)  Y    N   N   template seed does not grow in ee (parabolic, own-hand only)  [c]
+ Joyce RNA cross-inhibition (1984)  N    N   N   no self-copying, nothing to seed                               [c]
+ Soai reaction                      Y    N   P   R: N_d <~ 3.6e9 << 1.2e23 [b]; L: 5e-7 seed sets the hand
+ Viedma ripening, NaClO3            Y    N   P   R: crystals decide, N_d <~ 1e7 [b]; L: grinding model follows ~0.3-0.4%
+ Attrition deracemization           Y    N   P   as Viedma
+ Magnetite crystallization          Y    N   N   the field-set surface magnetization sets the hand, not a pool seed [c]
+ Blackmond eutectic                 P    N   P   R: crystals carry the excess [b]; L: solution ee follows a <= 1% excess
+ APED peptides via NCAs             P    N   P   R: racemic stable at the settings' ctot (A1) [c]; L: aped.py seed grows at 2 M
+
+Confidence: high for R on every row; for L, high on Ghadiri, Joyce, Soai, Viedma, APED; medium on Attrition (seed size
+in Noorduin 2008 not recalled; the grinding model carries it), Eutectic (solution ee grows, total ee does not) and
+Magnetite (if a seeded avalanche with a small excess was reported, L = P).
+
+EVIDENCE PREDICTIONS (checked after hashing)
+ F1 Saghatelian et al. 2001 (Nature 409:797): no experiment in which a template or product ee exceeds the ee of the
+    seeded template/fragments; homochiral products form from racemic fragments in equal amounts; growth sub-exponential.
+ F2 Ozturk et al. 2023 (Sci. Adv. 9:eadg8274): the hand is set by the magnetization direction of the surface; no pool
+    seed of <= 1% ee is tested.
+ F3 Noorduin et al. 2008 (Angew. Chem. 47:6445 / JACS 130:1158): attrition takes a small initial crystal excess to
+    single chirality; the smallest initial ee reported is between 0.5% and 10%; crystals decide.
+ F4 Klussmann et al. 2006 (Nature 441:621): the solution ee at the eutectic is set by the phase diagram and its sign by
+    the overall excess; the overall (solid + solution) ee does not grow (no racemization in the system).
+ A1 aped.py base rates (Plasson & Bersini 2009) with ctot = 0.1, 1e-2, 1e-4, 1e-6 M: sigma_max <= 0 (racemic stable at
+    every drive x in 1e-4..1e4 M) at all four.
+ A2 Regression: ctot = 0.5 M reproduces aped.log:91, sigma_max = -9.2864e-07 /s, to 4 significant digits.
+ K1 Under R, Ghadiri and Joyce tie at 5.5; scorecard.py's stable sort keeps Ghadiri first only by dict order.
+ K2 Under R the R8 = N block keeps its order: Attrition 5.0, Viedma 4.0, Magnetite 3.5, Soai is not in it (R8 = P),
+    Eutectic 2.5 last.  Under L: Attrition 5.5, Viedma 4.5, Magnetite 3.5, Eutectic 3.0.
+
+SCORING.  lit_r6.py asserts this file's sha256, runs A1-A2, and computes K1-K2 from the letters.  F1-F4 are scored by
+reading the papers (agents, open text only; no paywall bypass).  Every prediction is scored as written; letters
+proposed for the scorecard follow the evidence, not the prediction.

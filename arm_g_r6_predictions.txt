@@ -1,0 +1,121 @@
+PREDICTIONS for arm_g_r6.py (unit arm_g_r6; written 2026-10-21 before the first results run)
+
+Status when written: no number from arm_g_r6.py had been computed. The only thing run was `python scorecard.py`, which failed on
+import (no matplotlib; ocean.py:21). Every number below is either (i) quoted from an earlier log (marked [log]), or (ii) a hand
+calculation from closed forms (marked [hand]). So these predictions are NOT blind to rna_seed_scan.log, arm_g_rates.log or the
+model's structure; they are blind to this script's output.
+
+======================================================================================================================
+DEFINITIONS (fixed before running)
+======================================================================================================================
+Model     rna_copying.py (LO-type: n = 3, c = 0.5, w = 0.02, h from k4, kobs = 7.35 /h, M_REF = 24 mM, T_COLD = 1 h, T_IN = 3 uM),
+          r in {0.40, 0.56, 0.98}; feed m_in in {5, 20, 200} mM, 20 mM = main. Contrast row: r = 1.141 (arm_g_rates.log:44).
+Settings  scorecard.SETTINGS: pond 1e-2 M, 100 yr; lake 1e-4 M, 1e4 yr; ocean 1e-6 M, 1e8 yr; N = c V 1000 N_A; e_need = scorecard.spec().
+          Noise as in rna_seed_scan.py: stationary linear-noise (discrete Lyapunov) readout variance s^2, Omega = N_setting / m_in per mM.
+Unit      the model has no free primer pool. The primer-template duplex T is the unit; "seeded templates/primers" = excess in T_D vs T_L.
+
+(a) FEED SEED   excess ee0 in the monomer feed, m_in (1 +/- ee0)/2. Letters are taken from rna_seed_scan.log (not re-derived); this script
+          only reproduces the gains/|lam| it needs and adds a setting-consistent supplement (block S).
+"followed" (WEAK, = rna_seed_scan.py): Delta = readout excess / s >= 2, readout = steady product excess (D-L)/(D+L) of full-length copies.
+          e_min = smallest seed followed = 2 s / |gain|. Letter: Y if e_min <= e_need in all three settings, P in some, N in none.
+          Judged here: it is a signal-to-noise test of a bounded, monostable response to a continuously supplied excess. It is sound
+          as "the readout tracks the feed", NOT as "the system selects a homochiral state"; the e_need it is compared with comes from
+          a bifurcation ramp (inherit.py), a different decision problem. The letters are reported with that caveat.
+
+(b) TEMPLATE SEED   racemic feed (e = 0, racemic template feed T_in/2 each), state at the racemic fixed point z* = [T*, T*, m*, m*],
+          then T_D = T*(1 + ee0), T_L = T*(1 - ee0) at t = 0. Linear regime ee0 << 1 (checked against the nonlinear map).
+  ee_T(t)   = (T_D - T_L)/(T_D + T_L) = x(t)/(sqrt(2) T*), [x, y](t) = Jd^t [x0, 0], x0 = sqrt(2) T* ee0 (Jd = difference-mode block).
+  rho(t)    = ee_T(t)/ee0 = x(t)/x0.
+  cycle     one model cycle = cold copying phase (1 h, assumed) + hot phase. Cycle length L is NOT measured: bracket L = 1 h and L = 24 h.
+            n_cyc(tau) = tau / L, tau in hours = tau[s] / 3600.
+  outcome   at tau: GROWN if max_{0 < t <= tau} rho(t) > 1 (+1e-9);  KEPT if rho(tau) >= 0.5;  otherwise LOST.
+  "followed" (WEAK, as in (a)): Delta_T = |g_T(tau)| ee0 / s >= 2, g_T(t) = readout(t)/ee0 = rho_vec . Jd^t [x0, 0] / ee0 (rho_vec = readout slope
+            wrt [x, y], as rna_seed_scan.linear). e_min^T(tau) = 2 s / |g_T(tau)| (envelope for a complex pair). "none" if > 1.
+  "followed" (STRONG): weak AND outcome in {KEPT, GROWN}.
+  letter    Y if e_min^T <= e_need in all three settings, P in some, N in none. Given for weak and strong, per r and per L.
+  Why both: the weak rule counts a seed that has decayed by e^-19 as "followed" if the remnant is still above counting noise; that is
+            tracking a vanishing signal, not inheritance. The strong rule is what the scorecard comment ("works from <= ~1% ee") needs.
+
+(c) POISONING OBJECTION (paraphrased: a racemic monomer pool poisons copying, so copying only matters after symmetry breaking).
+  Inside the model "poisoning" = wrong-hand monomer (rate ratio r) terminating strands, plus halving the right-hand concentration.
+  per attempt   S = p^n P(N >= n), p = m_R/(m_R + r m_W), mu = A (m_R + r m_W)/M_REF. Racemic pool: m_R = m_W = m. Pure pool: all
+                monomer one hand, same TOTAL (2m): S_pure = P(Poisson(A 2m/M_REF) >= n). "Same right-hand level": S(m, m) vs S(m, 0).
+  reactor       steady state of rna_copying.step with feed excess e = 0 (racemic) and e = 1 (pure), same total feed m_in.
+                Q = T*/(T_in/2) (templates relative to the no-copying level; Q = 1 means copying does nothing).
+                Y = full-length copies per cycle summed over hands = c (T_D S_D + T_L S_L). Y_rac/Y_pure at the same total feed.
+  onset         feed at which copying just keeps up with washout, c S = w/(1-w) (rna_copying.onset for the racemic pool; same formula with
+                p = 1, one hand, for the pure pool: m_in = m (1 - (1-w)(1-h))/w).
+  survives      an inherited FEED excess "survives" the racemic pool if the steady product excess is >= 2 x the feed excess (gain >= 2)
+                (a gain >= 2 means the poisoned pool still reports and enlarges the excess).
+Verdict rule for (c): V1 poisoning real = racemic onset >= 1.8 x pure onset for all three r. V2 copying not blocked = racemic Q >= 50 at
+  20 mM for all three r. V3 feed excess survives = gain >= 2 in all 9 cells (r x feed). V1&V2&V3 -> "partly true: costs a factor ~2-3 in
+  feed and about half the yield, does not block copying and does not erase a feed excess". Otherwise reported as the numbers say.
+
+======================================================================================================================
+PREDICTIONS
+======================================================================================================================
+P1  [log] Reproduction of the difference-mode eigenvalue. Leading |lam| at 20 mM = 0.97943 (r 0.40), 0.98797 (0.56), 0.99948 (0.98),
+    and at 5 / 200 mM 0.99059 / 0.97845, 0.99003 / 0.98551, 0.98860 / 0.99941 (rna_seed_scan.log Table 1). PASS if all 9 within 5e-5.
+
+P2  No transient growth of a template seed: max over 1 <= t <= 1e5 cycles of rho(t) <= 1 for all 9 (r, feed) cells.
+    (rho(1) = A < 1 and the first moves, x1 = A x0, y1 = C x0 < 0, B > 0, push x down.) PASS if max rho(t >= 1) <= 1 + 1e-9 in all 9.
+
+P3  Classification. LOST (rho(tau) < 0.5) in every one of the 54 cells = 3 r x 3 feeds x 3 settings x 2 cycle lengths (1 h, 24 h).
+    Smallest n_cyc is pond at 24 h = 36,525 and the largest |lam| is 0.99948 (|ln| = 5.2e-4, rho ~ e^-19 [hand]). PASS if 54/54 LOST,
+    none KEPT, none GROWN.
+
+P4  [hand, from the logged |lam|] Break-even cycle length (cycle length at which a template seed would still be KEPT, rho = 0.5, over the
+    pond's 100 yr at 20 mM): r = 0.40: 3.0 yr (2.2 - 3.9); r = 0.56: 1.75 yr (1.3 - 2.3); r = 0.98: 27 d (20 - 35 d). Assumes the per-cycle
+    parameters (w = 0.02 etc.) are unchanged at that cycle length, which is not self-consistent; it is a scale, not a model result.
+    PASS if all three inside their ranges. In all three it is >= 20 d, i.e. >= 20 x the 24 h bracket.
+
+P5  Smallest template seed followed.
+    P5a  Exactly one of the 18 (r, L, setting) cells at 20 mM has e_min^T < 1: (r = 0.98, L = 24 h, pond), with e_min^T in [1e-5, 1]
+         [hand: s_pond ~ 1e-11 (rna_seed_scan.log Table 2: e_min 1.7e-13 at gain 115) x e^19 ~ 2e8 -> ~1e-3]. All other 17 cells > 1 ("none").
+    P5b  e_min^T > e_need in all 18 cells (pond, lake, ocean x r x L). WEAK letter N for every r and L (6/6).
+    P5c  STRONG letter N for every r and L (6/6).
+    PASS P5 = P5a and P5b and P5c.
+
+P6  Nonlinear check, 20,000 direct iterations at 20 mM, seeds ee0 = 0.1, 0.5, 0.99: |ee_T(20000)|/ee0 < 1e-3 for all 9 (r x ee0).
+    (rna_seed_scan.log:99-102 had 4.7e-15, 7.7e-15, 3.3e-6 at ee0 = 0.1 for r = 0.40, 0.56, 0.98 [log].)
+
+P7  Positive control, r = 1.141 at 20 mM (arm_g_rates.log:44: lam 1.00221, m* 10.08 mM): the classification can return GROWN. PASS if
+    leading |lam| > 1 AND a seed ee0 = 1e-3 in the templates reaches |ee_T| > 0.5 within 200,000 cycles AND the classifier labels it GROWN
+    (so the all-LOST result of P3 is not a vacuous classifier).
+
+P8  [hand] Onset feeds (c S = w/(1-w)). Racemic: r = 0.40 6.3 mM (5.5 - 7.5), r = 0.56 6.6 (5.8 - 7.9), r = 0.98 7.6 (6.5 - 9.0).
+    Pure pool 2.86 mM (2.5 - 3.3), the same for every r. Ratio racemic/pure in [1.8, 3.2] for all three r and increasing with r.
+    PASS if all ranges hold. (Feed 5 mM then lies between the pure and the racemic onset for all three r.)
+
+P9  At 5 mM total feed: racemic Q < 3 for all three r [log: T* 3.39, 3.12, 2.64 uM -> Q 2.26, 2.08, 1.76]; pure-pool Q (D hand) in [30, 250]
+    [hand ~ 80] and the same for every r (to 1%). PASS if both.
+
+P10 [hand, from logged T*] At 20 mM feed, yield ratio Y_rac/Y_pure in [0.3, 0.9] for every r and decreasing with r (hand: 0.61, 0.55, 0.44).
+    PASS if all three in range and ordered 0.40 > 0.56 > 0.98.
+
+P11 [log, regression] Inherited FEED excess survives the racemic pool. Gain at ee0 = 1e-2, 20 mM: 3.4, 5.25, 79 (within 5%) for r = 0.40, 0.56,
+    0.98 (rna_seed_scan.log Table 1); gain >= 2 in all 9 cells (min logged 2.41). Y(ee0 = 1e-2)/Y(0) within 2% of 1 at every r.
+    Product ee from a 1% feed excess: 3.4%, 5.3%, 79%. PASS if all hold.
+
+P12 [hand] Setting-consistent supplement (block S): feed set to the setting's own concentration (pond 10 mM, lake 0.1 mM, ocean 1e-3 mM),
+    two template-feed conventions: T_in fixed at 3 uM, or scaled T_in = 3 uM x m_in/20 mM.
+    P12a  Racemic reactor at lake and ocean concentration: copying does nothing, Q - 1 < 1e-3, for all r and both conventions; gain in
+          [2.9, 3.1] (dilute limit: product ratio = ((1+e)/(1-e))^n, gain -> n = 3, independent of r). Pond (10 mM) Q > 3 for all r.
+    P12b  T_in fixed: e_min/e_need in [0.05, 0.5] at the lake and [0.001, 0.02] at the ocean for every r; letter Y for all r.
+    P12c  T_in scaled: e_min/e_need in [1, 5] at the lake and [0.3, 1.0] at the ocean; so the letter is not Y (P: pond Y, lake N, ocean Y).
+    PASS P12 = all of P12a-c.   (If P12c holds, the letter Y of (a) depends on an assumed template-feed level.)
+
+P13 Sensitivity of the template-seed result (one parameter at a time from the base, r in {0.40, 0.56, 0.98}, 20 mM): w in {0.005, 0.05},
+    c in {0.1, 1.0}, T_in in {0.3, 30} uM. In every cell where a racemic state exists and is stable (|lam| < 1), the seed is LOST at the shortest
+    horizon (pond, L = 24 h). 70% confidence; the risky cells are r = 0.98 with small w or small T_in (|lam| closer to 1). PASS if no cell is
+    KEPT or GROWN at (pond, 24 h). Cells with no stable racemic state are listed, not scored.
+
+======================================================================================================================
+DECISION RULE
+======================================================================================================================
+(a) letter = the rna_seed_scan.log letters (Y in all 9 cells, rna_seed_scan.log:115), reported with the soundness caveat above, plus P12.
+(b) letter = from this script: if P3 and P5 hold -> N at every measured r for both cycle lengths (weak and strong). If any r has a Y or P
+    in either definition, report the cell, the cycle length and which definition.
+(c) verdict by V1-V3. Failed predictions are reported as failed, with the number.
+Not predicted (descriptive tables only): r = 0.06 and r = 0 (inert L) rows of the per-attempt table, the ee-vs-yield curve at e other than 0.01,
+the 5 and 200 mM rows of the template-seed table beyond P1-P3.
