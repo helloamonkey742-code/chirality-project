@@ -136,6 +136,9 @@ Table 1 entry 3: carbamoyl-Ala 20 mM + Ala 100 mM, 80 C, 53 d -> Ala2 12.7%, Ala
 per new bond over 120 mM Ala -> a = 6.1e-9 /s (pond 0.012x, lake 1.2x, ocean pass), but at 80 C, not 25 C, and
 the SI time courses were not received. R5 stays ?: every measured uncatalysed a fails the pond and passes the
 lake and ocean, the mixed case; only an added oxidant or metal salt passes all three.
+POST-HOC (2026-10-21, Leman 2004 SOM Fig. S4, read after aped_r5; not registered; changes no verdict): from preformed
+thiocarbamate with no COS gas, the 1.75 h point gives a >= 1.2e-6 /s (2.5x the pond need). It rests on two early points of
+one run and lies below the model window in the CAVEAT below in every rate set (journals/new_analyses_aped_r5.md section 2b).
 CAVEAT ON R5 (added 2026-10-21 from aped_r5_scan2.py; changes no verdict): a measured a is necessary, not sufficient.
 sigma = s* a (s* = 0.0063166) is fitted at a/kH = 0.385 (L89) and does not hold at the lab rates for plain COS. In a slice at
 x = 1e4 M the difference mode is stable (sigma < 0) below a/kH = 1.6e-3 (kR = 0, kP = 1), 1.0e-2 (kR = 1e-4, kP = 1; this
