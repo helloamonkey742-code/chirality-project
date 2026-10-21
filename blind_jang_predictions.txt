@@ -1,0 +1,74 @@
+blind_jang_predictions.txt -- BLIND.  Pre-registered predictions for Jang, Coquerel, Seo, Kim & Park 2024, "Microfluidic
+antisolvent crystallization for chiral symmetry breaking", Lab Chip 24, 5055-5064, doi:10.1039/D4LC00658E.  Written
+2026-10-20, before any outcome of the paper was read.  The sha256 and the time are in blind_jang.py's docstring.
+
+PROTOCOL.  As blind_units.py.  The predictor (Claude, an AI model) has not read the paper.  It saw one setup report from a
+scout agent told to withhold every outcome.  A separate reader enters the outcomes in blind_jang.py, in a later commit,
+without changing this file.  The author got the PDF from C. McKay on 2026-10-20.
+
+SETUP (from the scout).  Aqueous NaClO3, saturated at Tsat = 35, 40 or 45 C and cooled to room temperature, is made into
+droplets in a coaxial glass-capillary device.  The oil is dodecane with 5 vol% ethanol, the antisolvent, and SPAN 80.
+Droplets are collected under dodecane in open dishes, 10-30 per dish, and left unstirred at about 25 C for 1 h.  There is
+no seed, no chiral additive and no stirring.  Each crystal-bearing droplet is scored L only, D only, or mixed (both
+hands), by polarized microscopy.  Crystals per droplet are NOT counted.  Figs 3c, 5a and 5b plot one marker per droplet
+against diameter d_e (axis 0-1000 um), in rows L, L&D and D.  Figs 3d, 5c and 5d are L and D histograms in about 50 um
+bins.  Droplets analysed: 379 (35 C), 618 (40 C), 276 (45 C).  Droplet size is set by orifice and flow rate.  The
+dishes, devices and replicates are not stated.
+
+DISCLOSED EXPOSURE.
+ (i) The title above.
+ (ii) The scout's list of what it withheld names a "critical-size concept", plot annotations with "critical
+     diameter/volume text", "gamma values" and "P_CSB" labels, a "volume effect schematic" (Fig. 4b), and Fig. 6.
+     Fig. 6 has per-Tsat derived volume and molecule-number summaries from a classical-nucleation molecule count.  These
+     hint that the paper reports a critical droplet size, perhaps one per Tsat.
+ (iii) An earlier side-session note described the paper as giving "per-droplet hand and crystal number vs droplet
+     volume".  The scout says crystal number is not counted.
+ (iv) The predictor has read blind_units.py's results.  In Bak 2023's NaClO3 sessile drops, P_CSB fell with volume
+     over 3 markers.  Its 11-marker Tinc 90 C series, not pre-registered, fell broadly (h = 1.75), against the paper's
+     critical volume of about 0.19 uL.
+ (v) The predictor does not recall this paper or any of its values from training.
+
+WHAT THE MODEL SAYS.  A crystal-bearing droplet ends single-handed if all its independent units share one hand.  A unit is
+a primary nucleus that forms before the first crystal's copies fill the droplet.  Units are coin flips, so with N units
+P(single) = 2^(1-N).  At a fixed primary-nucleation rate per volume, N grows with V, so P_single falls with size.
+Its breadth depends on the form:
+   first nucleus + K extra ~ Poisson(mu), P = exp(-mu/2):          0.8 -> 0.2 over a factor 7.2 in V, h = 1.40
+   all nuclei at once, N ~ Poisson(mu) given N >= 1:                factor 5.4, h = 1.64
+   either, with nucleation set by ethanol through the surface (mu ~ V^(2/3)): h = 0.94 and 1.09
+ Here h is the free-width exponent in P = 1/(1 + (V/Vk)^h), and h = 3 means 0.8 -> 0.2 over a factor 2.52 in V.  Every
+ counting form gives h <= 1.64.  A step gives h at the fit's cap of 50.
+ ASSUMPTION: within one Tsat series every droplet has the same nucleation rate per volume and the same capture time.
+ Ethanol uptake depends on surface/volume and transit time, so this is rough.  Faster uptake in small droplets would
+ make mu grow more slowly than V and broaden the fall.
+ Tsat: a higher Tsat puts more NaClO3 in each droplet, so the supersaturation at 25 C is higher.  Primary nucleation then
+ rises faster than growth, so more independent nuclei form per volume and V0 falls.
+ No bias: L and D are equally likely, at every size.
+ The model cannot give V0's value.
+
+PREDICTIONS.  V = (pi/6) d_e^3 (1 nL = 1e6 um^3); "single" = L only or D only; "mixed" = both hands.
+ (J1) Direction, per series (J1a 35 C, J1b 40 C, J1c 45 C).  Mixed droplets are larger than single ones (one-sided
+      Mann-Whitney on d_e, p < 0.05).  A series is NOT SCORABLE with < 5 mixed or < 5 single droplets.
+ (J2) No sharp critical size.  Fit P_single = 1/(1 + (V/Vk)^h) per series (per-droplet binomial likelihood, h in
+      [0.1, 50]).  The prediction is h <= 3 in every scorable series.  A series is scorable if it has >= 10 mixed and
+      >= 10 single droplets, and, among 50 um bins of d_e holding >= 10 droplets, one has P_single >= 0.6 and one has
+      P_single <= 0.4.  NOT SCORABLE if no series qualifies.
+ (J3) Chance hand.  Pooled over all three series, L-only vs D-only counts fit 50/50 (two-sided binomial p > 0.05).
+ (J4) Hand does not depend on size.  Pooled, the d_e of L-only and D-only droplets do not differ (two-sided Mann-Whitney
+      p > 0.05).
+ (J5) Supersaturation lowers the volume scale.  Fit P_single = exp(-V/V0) per series (per-droplet binomial); a series
+      with no mixed droplet has V0 = infinity.  The prediction is V0(35 C) > V0(40 C) > V0(45 C).  NOT SCORABLE if
+      fewer than two series have a mixed droplet.
+ Reported, not predicted: per series, the mixed share, P_single by 50 um bin, Vk, h and V0; the L / D split per series.
+ Data rule: the reader enters each droplet's d_e from the markers of Figs 3c, 5a and 5b.  If L or D markers cannot be
+ resolved, L and D come from the histogram bars at bin centres and mixed from the markers.  The script prints how the
+ entered counts compare with 379 / 618 / 276.
+
+READINGS FIXED IN ADVANCE.
+ J1 fails: larger droplets are not mixed more often, so the number of deciding units does not grow with droplet size.
+ J2 fails: a sharp critical size, not the chance build-up of independent nuclei, decides whether a droplet ends
+   single-handed.  The counting rule's breadth is then wrong for this system, and the paper's critical-size picture
+   (hinted, item ii) fits better.
+ J3 or J4 fails: a bias (a seed or dust of one hand, say) steered the hands, or steered them by size.
+ J5 fails: a higher supersaturation did not shrink the volume scale.  Either nucleation per volume is not the control, or
+   faster growth shortened the capture time enough to cancel it.
+ Every outcome is reported as found.
