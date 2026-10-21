@@ -1,0 +1,107 @@
+h14c_predictions.txt, v1. Written 2026-10-21, BEFORE any results run of h14c_advect.py.
+
+QUESTION (open item 14 / H14, journals/ija_draft.md:252; E86 :187; Section 2.3 :479; :790; sibling analysis h14_eddy.log:81-171):
+h14b_advect.py measured the slowdown S of wall clearing under explicit eddies at ONE molecular ratio, D_mol/D_eff = 1/8:
+S50 = 2.0 (l/w 3.6), 6.3 (l/w 10), and only "S50 > 8" (censored) at l/w 30, where the first kick came 77 time units AFTER
+freeze-out (Tk = 277 against a sweep of 200). Two things were left open. (1) At l/w 30 the flow had not acted before freeze-out,
+so the 8 censored units say nothing about the eddy slowdown. (2) The real ratio D_mol/D_eff is ~1e-9, and the molecular
+reference (no flow) scales as D_eff/D_mol (h14b J 9.33, K 13.36 at 1/8). If S grows with the ratio, h14b's covered /
+not-covered verdicts do not carry to real worlds. h14c measures S at D_mol/D_eff = 1/32 and 1/64 at l/w 3.6 and 10, at 1/32 at
+l/w 30 with 10 kicks across the sweep, and re-measures 1/8 in the same code.
+
+DEFINITIONS
+  Model, S, S50, S80, S_half, t17, Kaplan-Meier, bootstrap (resample runs, 2000x): exactly as h14b_advect_predictions.txt
+  (h14b_advect.py imported, not edited). Differences, all fixed here:
+  - D_mol = 1, h = 1 for all D_eff, so the molecular wall is as resolved as in h14b B/G/I: sqrt(D_mol/k) = 1 cell (tanh
+    half-width sqrt(2) = 1.41 cells). The effective wall sqrt(D_eff/k) is 2.83 / 5.66 / 8.0 cells at D_eff = 8 / 32 / 64.
+    One h = 0.5 partner (V32_3.6h) gives the molecular wall 2 cells (tanh half-width 2.83) and tests the resolution at 1/32.
+    Euler: D dt/h^2 = 0.2 (h = 1, dt = 0.2) or 0.2 (h = 0.5, dt = 0.05), limit 0.25.
+  - D_eff in {8, 32, 64}; flow = the h14b/advect2d kicked random-phase alternating sine shear (cubic Lagrange kick) with
+    kappa = A/l = 1.47 (KAPPA2 = 2.159), n = 1, box L = round(2 pi (l/w) sqrt(D_eff)), eddy l = L/(2 pi),
+    Tk = round(KAPPA2 l^2 / (8 (D_eff - D_mol)) / 0.2) 0.2, A = sqrt(8 (D_eff - D_mol) Tk), so D_eddy = A^2/(8 Tk) = D_eff - D_mol.
+  - t17(L, D_eff) = (L/5.5)^2 / D_eff = 1.305 (l/w)^2 / k, the same 16.9 / 130 / 1174 time units for l/w 3.6 / 10 / 30 at
+    every D_eff (h14b_advect.py:76 hard-codes D_eff = 8; h14c uses a Stat subclass with the case's own D_eff).
+  - gamma per case (h14b used 0.01 for all, which gave a pre-freeze-out coarsening time 1/gamma of 5.9 / 0.77 / 0.085 t17 at
+    l/w 3.6 / 10 / 30, a confound with l/w): gamma = min(0.01, round(1/(5 Tk), 4)), i.e. 5 kicks between lam = 0 and the end of
+    the sweep (10 kicks across the whole sweep) for the cells with Tk > 20; pre-time 1.05-1.18 t17 for every l/w 10 and 30 cell.
+    The bias g is taken at the ACTUAL gamma: g = K.g_for(Delta (gamma/0.01)^(1/4), L^2) so that the sweep-end effective
+    bias is Delta (h14b's g_for assumed gamma = 0.01; asserted in the self-check).
+  - "Freeze-out" (t_after = 0) is the END of the sweep (lam = +1, t = 2/gamma), as in h14b. A run is walled if it is not
+    single-domain there; T = first cadence time (max(2, t17/60)) it is single-domain, right-censored at its last observation.
+  - Ratio exponent q: slope of ln S50 against ln(D_eff/D_mol) at fixed l/w, least squares over D_eff = 8, 32, 64 (R8, V32,
+    V64 cells), bootstrap over runs. Length exponent p: slope of ln S50 against ln(l/w) at fixed D_eff.
+  - Molecular reference (no flow, D = D_mol = 1, same box, t17 with the case's D_eff): J32 (L 128), J64 (L 181), K32 (L 355).
+  - A quantile that is undefined (not reached within the hold) is "above the censoring floor" (longest observation among
+    walled runs / t17): a band test fails if the floor is >= the upper edge, else UNDECIDED; an "at least x" test passes if the
+    floor >= x.
+
+CASES (runs spread over Delta = 0.5, 1, 2 unless stated; noise = xorshift; N = L/h cells per side)
+  name     D_eff  l/w   L    N    h   dt   gamma   Tk     A      t17    runs                       hold [t17]  seeds
+  R8_3.6     8    3.6   64   64   1  0.2  0.0100  4.0   15.0   16.9    96 (S 32)                   12         3101
+  R8_10      8    10   178  178   1  0.2  0.0065  31.0  41.7  130.9    96 (2 jobs x 48)            24         3102, 3103
+  V32_3.6   32    3.6  128  128   1  0.2  0.0100  3.6   29.9   16.9   192 (S 64)                   24         3104
+  V32_3.6h  32    3.6  128  256  0.5 0.05 0.0100  3.6   29.9   16.9    48 (S 16)                   24         3105
+  V32_3.6m  32    3.6  128  128   1  0.2  0.0556  3.6   29.9   16.9    96 (S 32)  control, not scored  24     3106
+  V32_10    32    10   355  355   1  0.2  0.0072  27.8  83.0  130.2    96 (2 jobs x 48)            30         3107, 3108
+  V32_30    32    30  1066 1066   1  0.2  0.0008  250.6 249.3 1173.9     8 (8 jobs x 1 run)        26         3110-3117
+            (Delta 0.5, 1, 2, 1, 0.5, 1, 2, 1; 8 runs only: the KM median needs 4 clears within the hold)
+  V64_3.6   64    3.6  181  181   1  0.2  0.0100  3.6   42.6   16.9    96 (S 32)                   40         3120
+  V64_10    64    10   503  503   1  0.2  0.0073  27.4 117.5  130.7    42 (2 jobs x 21)            48         3121, 3122
+  J32       32  no flow 128 128   1  0.2  0.0100   -      -     16.9    96 (S 32)                   80         3130
+  J64       64  no flow 181 181   1  0.2  0.0100   -      -     16.9    96 (S 32)                  150         3131
+  K32       32  no flow 355 355   1  0.2  0.0100   -      -    130.2    12 (S 4)                    90         3132
+  1/64 at l/w 30 is NOT run: L = 2133 (4.5 M cells) costs 4 x the 1/32 cell, about 19,000 cpu-s for 8 runs. 1/64 at l/w 10
+  has 42 runs, not 96, for cost. Estimated upper-bound cost (3.2 ns per cell-step, no early drop): about 7,600 cpu-s,
+  about 32 min on 4 workers; wall-clock guard 50 min (cut jobs count as censored at their last check and P14 fails).
+
+PREDICTIONS (bands fixed now; each is scored as written; guesses in brackets are not thresholds)
+  P1a  R8_3.6 reproduces h14b B: walled fraction 0.22-0.45 (B 0.323), S50 1.3-3.0 (B 2.01), S80 2.8-7.5 (B 4.37).
+  P1b  R8_10 S50 / 6.27 (h14b G) in [0.67, 1.5], and walled fraction >= 0.9. (gamma is 0.0065 here against 0.01 in G.)
+  P2   Flow realisation, 7 distinct flows: the Lagrangian tracer D_eddy (advect2d.tracer_lagrangian with the nk fix, advect2d.L
+       set to the box, mean of seeds 1 and 7) is within 5% of D_eff - 1 for each; the cubic-kick numerical diffusion at a
+       6.4-cell wavelength is <= 0.02 D_mol for each.
+  P3   Resolution at 1/32, l/w 3.6: S50(V32_3.6 at h 1) / S50(V32_3.6h at h 0.5) in [0.67, 1.5], and the walled fractions
+       differ by <= 0.15.
+  P4   V32_3.6: S50 in [1.6, 9] [guess 3.5], S80 in [3, 22] [guess 8].
+  P5   V32_10: S50 in [5, 28] [guess 12], S80 >= 9, walled fraction >= 0.9.
+  P6   V64_10: S50 in [5, 45] [guess 18], walled fraction >= 0.9.
+  P7   V32_30 (10 kicks across the sweep, first kick before lam = 0): (a) S50 > 8, the old censor floor of h14b I; and (b)
+       S50 > 25 (an undefined S50 with floor >= 25 counts); walled fraction >= 0.9. [guess 40, so likely censored at 26.]
+  P8   Length exponent at 1/32: p(3.6 -> 10) in [0.5, 1.6] with 97.5% bootstrap bound >= 1.1 (p = 1.1 not excluded), and the
+       lower bound p(10 -> 30) = ln(S50 or floor at 30 / S50 at 10) / ln 3 >= 0.5.
+  P9   Ratio exponent: q(l/w 3.6) in [-0.1, 0.9], q(l/w 10) in [0.1, 1.0], and the q(l/w 10) 2.5% bound > 0 [guess q ~ 0.4-0.5].
+  P10  Molecular ceilings scale with D_eff/D_mol: S50(J32) in [25, 70] [37], S50(J64) in [50, 140] [75], S50(K32) in [35, 85]
+       [53]; and flow / molecular S50 <= 0.5 for V32_3.6 / J32 and <= 0.8 for V32_10 / K32.
+  P11  Walled fractions at freeze-out: V32_3.6 in [0.3, 0.95]; V64_3.6 >= 0.4.
+  P12  S_half / S50 in [0.5, 2] for V32_3.6 and V32_10.
+  P13  Illustrative worlds (not a measurement): S_ext(lw) = S50(V64_10) (lw/10)^p with p = the V32 p(3.6 -> 10) point
+       (1.1 if undefined) evaluated at each world's p90 l/w, compared with the smaller non-None main break-even f of
+       h14_eddy.log (:81-171), for the 15 worlds: the number with S_ext < f_be is in [5, 12] at U 0.02 and <= 8 at U 1.
+  P14  Compute: results run < 50 min wall, no job cut by the guard.
+  Printed but NOT predictions (descriptive): the V32_3.6m control against V32_3.6 (does the 1.06 t17 pre-time instead of 5.9
+  change S50?), the local exponents q(8 -> 32) and q(32 -> 64), KM fractions cleared by 4 / 8 / 12 / 16 / 24 t17, the ratio
+  D_eff/D_mol at which S50(l/w 10) would reach f = 100 (extrapolation).
+
+DECISION (item 14 wording), fixed now. q = q(l/w 10) with its 95% bootstrap interval; f_be = break-even f of the world (the 15
+worlds' f_be are 100-10000, h14_eddy.log:81-171):
+  - A (ratio-dependent): the q 2.5% bound > 0.15. h14b's verdicts do not carry to the real ratio. Item 14 stays OPEN. The
+    wording states S ~ (D_eff/D_mol)^q with the measured q over 8-64, the S50 values at 1/8, 1/32, 1/64, the D_eff/D_mol at
+    which S50(l/w 10) would reach f = 100, and that the real ratio is not reachable. No world is called covered.
+  - B (ratio-independent to 1/64): the q 97.5% bound < 0.15 and P1b, P2, P3 held. Item 14 is narrowed by l/w alone: the
+    world table of P13 (S_ext < f_be at the p90 l/w, point and 97.5% p) gives the covered and not-covered worlds, and the
+    "S50 > 8" at l/w 30 is replaced by the measured V32_30 value or its floor.
+  - C (undetermined): the q interval straddles 0.15 or q is undefined. Keep open; report the measured S and the q interval.
+  Scoring does not change any band or re-run any case.
+
+DISCLOSURE before this file was hashed: (i) read advect2d.py, advect2d.log, h14b_advect.py, h14b_advect_predictions.txt,
+h14b_advect.log, h14b_advect_posthoc.log, kz_patches.py, sim.py, the h14_eddy files. (ii) The one allowed edit to an existing
+file: advect2d.py:246, nk = max(2, 2 * int(round(100 / flow["Tk"] / 2))); nk before -> after: S (Tk 0.10) 1000 -> 1000, M
+(0.25) 400 -> 400, B (4.0) 24 -> 24, Tk 31: nk 4 -> 4; unchanged for every Tk on a 0.2 grid below 100 (499 values); changed
+only for Tk >= 100 (0 -> 2, which divided by zero). (iii) Scratch scripts, not in the repo: Lagrangian D_eddy of the
+7 flows (within 1.7% of nominal), the cubic-kick damping of a cos(qx) row (numerical diffusion under 0.5% of D_mol at the
+wall scale), and timing smokes of h14b_advect.run_case (3 runs at L = 128, 356, 1066 with gamma 0.1 and a hold of 40 time
+units, which printed the number of runs still walled at the end, no S, p or q computed; one L = 1066 run alone and 4 in
+parallel; the fused kernel alone at N = 1066): about 3.0-3.25 ns per cell-step at machine load ~6. (iv) No S50, S80,
+S_half, walled fraction at the design gamma and hold, p or q was computed or seen for any h14c case. (v) Design choices
+made in the above: per-case gamma (the pre-freeze-out confound of h14b), 1/64 at l/w 30 dropped, 42 runs at 1/64 l/w 10,
+8 runs at 1/32 l/w 30. After hashing, a self-check (tiny runs, flow and nk checks) is allowed; it does not change this file.

@@ -1,0 +1,18 @@
+# torus size=512 f0=0.5 n=4 seed0=0 tmax=500 (= 0.1 tau_sw) tau_sw=8665.92 R^2/D=262144
+run seed=1 T1=nan T1/tau_sw=nan winner=+1 final_minority=0.4611
+run seed=3 T1=nan T1/tau_sw=nan winner=+1 final_minority=0.4602
+run seed=0 T1=nan T1/tau_sw=nan winner=+1 final_minority=0.4609
+run seed=2 T1=nan T1/tau_sw=nan winner=-1 final_minority=0.4280
+/Users/saptarshighosh/Documents/chirality-project/h13_sphere.py:212: RuntimeWarning: Mean of empty slice
+  f"T1/tau_sw median {q(50):.2f} p90 {q(90):.2f} p99 {q(99):.2f} max {Tn.max():.2f} mean(finished) {Tn[np.isfinite(Tn)].mean():.2f}")
+/Users/saptarshighosh/Library/Caches/uv/archive-v0/3dU0PpUY-3QKqOnB/lib/python3.12/site-packages/numpy/_core/_methods.py:142: RuntimeWarning: invalid value encountered in scalar divide
+  ret = ret.dtype.type(ret / rcount)
+SUMMARY torus size=512 f0=0.5: n=4 reached one hand 0/4 by 0 tau_sw; T1/tau_sw median inf p90 inf p99 inf max inf mean(finished) nan
+  l(10) = 31.48  l/sqrt(Dt) = 9.956
+  l(20) = 37.11  l/sqrt(Dt) = 8.298
+  l(40) = 46.25  l/sqrt(Dt) = 7.313
+  l(80) = 59.89  l/sqrt(Dt) = 6.696
+  l(160) = 79.65  l/sqrt(Dt) = 6.297
+  l(320) = 107.94  l/sqrt(Dt) = 6.034
+SUMMARY exponent: l ~ t^0.413 over t in [20, 500] (l from 37.1 to 131.5, limit 0.3*512 = 153.6); A = l/sqrt(Dt) at fixed 0.5: 6.257
+# wall time 109 s

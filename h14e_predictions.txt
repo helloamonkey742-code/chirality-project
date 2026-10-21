@@ -1,0 +1,103 @@
+h14e_predictions.txt, v1. Written 2026-10-21, BEFORE any results run of h14e_advect.py (no S50, S80, walled fraction, q or interval of any 1/256 run existed when this file was hashed).
+
+QUESTION (open item 14 / H14, journals/ija_draft.md:252; previous step h14d_advect.log, journals/new_analyses_h14d_advect.md):
+h14d measured the eddy slowdown S50 of wall clearing at l/w = 10 on a five-point ladder, D_mol/D_eff = 1/8, 1/16, 1/32, 1/64, 1/128:
+S50 = 5.76, 7.71, 10.27, 13.05, 15.28 (h14d_advect.log:96-108). The local ratio exponent fell: 0.42, 0.41, 0.34, 0.23 [95% 0.13..0.28]
+(:112-115), Delta q = -0.17 [-0.32..-0.09] (:119), and the pre-registered label for q(64 -> 128) was UNDECIDED (:147; the upper bound 0.28
+missed the SATURATING cut 0.2). A post hoc log law S50 = -1.77 + 3.52 ln r fits the five points with rms 0.19, a single power law (q 0.36)
+with rms 0.48 (h14d_advect_posthoc.log:10-11; both post hoc). The two pictures agree at 1/128 and part at 1/256: a log law and a power
+law that keeps falling give nearly the same S50 there, a power law held at q 0.36 or 0.40 gives a visibly larger one. h14e adds ONE cell,
+V256_10 (1/256, l/w 10), and asks whether the slope keeps falling. It is the same model, the same flow family, the same per-case gamma rule
+and the same statistics as h14d; the 1/64 (pooled 378 runs) and 1/128 cells are reloaded from h14d_advect_raw.pkl, NOT rerun.
+
+DEFINITIONS (everything not listed here is exactly as h14d_predictions.txt, h14c_predictions.txt and h14b_advect_predictions.txt;
+h14d_advect.py, h14c_advect.py, h14b_advect.py and advect2d.py are imported, not edited)
+  - S50 / S80 = Kaplan-Meier median / 80th-percentile time of wall clearing after the END of the sweep, over runs walled at freeze-out,
+    divided by t17(L, D_eff) = (L/5.5)^2 / D_eff; S_half = the time at which the mean wall measure of those runs falls to half its starting value
+    (h14b_advect.half_time), also in t17 (printed, not predicted). Bootstrap: resample runs, 2000x, seed = sum of the
+    character codes of the cell name ("V256_10"); the reloaded cells keep their h14d seeds. 95% interval = 2.5 / 97.5 percentiles, undefined
+    replicates dropped, interval undefined if more than 5% of replicates are undefined.
+  - V256_10 flow and gamma are built by the SAME recipe as V128_10 in h14d_advect.cases(): L = round(2 pi (l/w) sqrt(D_eff)) with l/w = 10,
+    eddy l = L/(2 pi), Tk = round(2.159 l^2 / (8 (D_eff - 1)) / 0.2) 0.2, A = sqrt(8 (D_eff - 1) Tk), gamma = min(0.01, round(1/(5 Tk), 4)),
+    D_mol = 1, h = 1, dt = 0.2, xorshift noise, Delta = 0.5, 1, 2 with 7 runs each per job, hold 60 t17, cadence max(2, round(t17/60/0.2) 0.2).
+    The script asserts that the recipe applied to D_eff = 128 and seed 3301 reproduces h14d's V128_10#0 spec exactly.
+  - Ratio exponent between two ratios r_a < r_b: q(a -> b) = ln(S50_b / S50_a) / ln(r_b / r_a), r = D_eff / D_mol. Paired by bootstrap
+    replicate index (bs[:, 0] of each cell), as h14d. q(64 -> 256) is the least-squares slope of ln S50 on ln r over r = 64, 128, 256
+    (H.fit_p), with its own 95% interval from the same replicates.
+  - Delta q = q(128 -> 256) - q(64 -> 128), paired over the same replicates.
+
+CASE (one cell; runs spread over Delta = 0.5, 1, 2; seeds 3401-3416, none repeats a seed of h14b / h14c / h14d, which used 3101-3132 and 3301-3344)
+  name       D_eff  ratio   l/w   L     N     gamma   Tk    A      kappa  t17    kicks_pre  runs                hold [t17]
+  V256_10    256    1/256   10    1005  1005  0.0074  27.0  ~235   ~1.47  ~130.4 ~5.0       336 (16 jobs x 21)  60 (~7826)
+  The run count and the per-job size are those of V128_10 in h14d (336 runs, 16 x 21), so the precision of the rule at 128 -> 256 is the
+  precision it had at 64 -> 128 (95% half-width about 0.075 in q).
+  Cost reasoning. A throwaway timing (see DISCLOSURE) gave 2.6 ns per cell-step on one process and 3.96 ns on three processes at a machine
+  load of about 6; the h14d 1/128 jobs ran at 2.65 ns per cell-step (5354 cpu-s for 336 runs, derived from the h14d pickle). The 1/256
+  box has 2.0 times the cells of the 1/128 box and the same number of kicks per t17, so the grid is about 4.7e12 cell-steps if clearing is
+  20% slower than at 1/128: 12,000 cpu-s at 2.6 ns, about 4,100 s wall on 3 workers (range 3,500 s at 2.6 ns with unchanged clearing times
+  to 6,300 s at 3.96 ns with 20% slower clearing). Guard 7200 s wall; a job cut by the guard counts as censored at its last check and P9 fails.
+  3 worker processes under nice -n 10; peak memory about 1.1 GB per worker.
+
+SCENARIO VALUES for S50(1/256), all anchored at the h14d 1/128 value 15.28 (h14d_advect.log:108), computed now:
+  (A) log law  -1.77 + 3.52 ln 256 (h14d_advect_posthoc.log:10)         = 17.75   (implied q(128 -> 256) = 0.22)
+  (B) falling power  15.28 x 2^0.23  (q(64 -> 128) held)                 = 17.92   (q = 0.23)
+  (C) constant power  15.28 x 2^0.36 (five-point least-squares q, h14d_advect.log:118) = 19.61   (q = 0.36)
+  (D) constant power  15.28 x 2^0.40 (h14c / h14d q(8 -> 64), h14d_advect.log:117)      = 20.16   (q = 0.40)
+  A and B differ by 0.17 and cannot be told apart by this cell (the 95% bootstrap half-width of S50 at 336 runs is about 0.5); the cell
+  separates {A, B} from {C, D} (gap 1.7-2.4, about three to five half-widths). Reading of a measured point value: below 16.5 the slope
+  has collapsed faster than a log law (q < 0.1); 16.5-18.8 log law or falling power; 18.8-20.9 a power law held at 0.36-0.40; above 20.9
+  growth faster than anything seen so far.
+
+PREDICTIONS (bands fixed now; each is scored as written; guesses in brackets are not thresholds)
+  P1   V256_10 S50 point in [16.2, 20.8] [guess 17.9, between scenarios A and B].
+  P2   V256_10 S80 point in [19.5, 25.5] [guess 21.6, the 1/128 value 18.79 x 2^0.2].
+  P3   q(128 -> 256) point in [0.05, 0.40] [guess 0.21].
+  P4   Delta q = q(128 -> 256) - q(64 -> 128) point in [-0.25, +0.15] [guess -0.02]: the local slope neither jumps back up nor collapses by
+       more than the noise of two paired exponents (each +-0.075).
+  P5   S50 increases at every step of the six-point ladder: 5.76 < 7.71 < 10.27 < 13.05 < 15.28 < S50(V256_10) (points; the first five are the h14d
+       values, reloaded and asserted to the printed digits).
+  P6   q(64 -> 256), least squares over the three ratios 64, 128, 256, point in [0.12, 0.35] [guess 0.23].
+  P7   Flow realisation of the 1/256 flow: Lagrangian tracer D_eddy (advect2d.tracer_lagrangian with advect2d.L set to the box, mean of seeds 1 and
+       7) within 5% of D_eff - 1 = 255 [h14d: ratio 1.011 at 1/16, 1/64 and 1/128], cubic-kick numerical diffusion at a 6.4-cell wavelength <= 0.02 D_mol,
+       kappa in [1.45, 1.49], kicks between lam = 0 and the end of the sweep in [4.5, 5.5], Lyapunov exponent of the tangent map at that kappa > 0.1 per kick.
+  P8   Completeness: the walled fraction at freeze-out is >= 0.99 [guess 1.000 as at every h14d cell], and no walled run is still walled at the end
+       of the 60 t17 hold (the longest 1/128 clearing was 37 t17).
+  P9   Compute: results run < 7200 s wall, no job cut by the guard, all 336 runs finished [guess 4,100 s].
+  Printed but NOT predictions: all local exponents 8 -> 16 ... 128 -> 256 with 95% intervals; the least-squares q over all six ratios and the
+  curvature of ln S50 against ln r; the log law refitted over the six points (b with an interval) and its residuals; which of A, B, C, D lies inside
+  the measured 95% interval of S50(256); S50 at the real ratio 1e9 under four assumptions anchored at 1/256 (power law with the q(128 -> 256)
+  2.5% bound, point and 97.5% bound; power law with q(64 -> 256); log law refitted over six; constant) and the ratio at which each reaches the Early
+  Earth threshold S* = 2600 / 17 = 153 (f = 17 S = 2600; the printed 99.9 share holds only below about f = 2600, h13h14_extreme_locate.log:249-251;
+  94.2 at f = 1e4 and 82.1 at f = 3e4, h13h14_extreme.log:216-228). These are extrapolations, not measurements.
+
+DECISION, fixed now. q = q(128 -> 256) = ln(S50(V256_10) / S50(V128_10)) / ln 2, with its 95% bootstrap interval [q_lo, q_hi]:
+  SATURATING if q_hi < 0.2.
+  GROWING    if q_lo > 0.3.
+  UNDECIDED  otherwise (including an undefined interval).
+  Second label, on the cell alone: CONSTANT-SLOPE EXCLUDED if the 95% upper bound of S50(V256_10) is < 15.28 x 2^0.36 = 19.61 (scenario C; a
+  power law held at 0.40 sits higher still), else NOT EXCLUDED. The anchor 15.28 is taken as a fixed number (its own 95% interval 14.93..15.79 is
+  not carried); the paired version, q_hi < 0.36, is printed next to it as a check.
+  Local slope (as h14d): FALLING if the 95% upper bound of Delta q < 0; RISING if its lower bound > 0; UNRESOLVED otherwise.
+  Expected outcome, stated so the result cannot be read as a surprise afterwards: with a half-width of about 0.075, SATURATING needs a true
+  q(128 -> 256) below about 0.12 and GROWING one above about 0.37, so under A or B (q 0.22-0.23) the likeliest label is UNDECIDED again
+  [about 75%; SATURATING about 15%; GROWING under 5%], and the second label is EXCLUDED under A or B [about 85-90%].
+  What each outcome means (wording for item 14, ija_draft.md:252, is proposed in the journal and NOT applied to ija_draft.md):
+  - SATURATING. The power law with q = 0.4 is no longer a description at 1/256 and any power law consistent with the 1/256 point has q <= q_hi;
+    S50(1e9) <= S50(256) x (1e9/256)^q_hi (printed). Item 14 narrows at l/w 10 to a bounded range anchored at S50(256).
+  - GROWING. The slope has not fallen below 0.3 at 1/256; the power law remains the working description, its extrapolation (printed for q_lo,
+    point, q_hi) stands as the estimate, and no world with f_be below the extrapolated S50 is called covered.
+  - UNDECIDED. Item 14 stays open; report the six-point ladder, q(128 -> 256) and q(64 -> 256) with their intervals, the second label, and the
+    envelopes (constant, log law, power law with q_hi) without choosing between them.
+  Scoring does not change any band, add runs, drop runs or re-run any case. If the walled fraction is below 1 or clearing is incomplete, that is
+  reported as found, not repaired. If anything breaks after hashing it is fixed in a new file labelled POST HOC.
+
+DISCLOSURE before this file was hashed: (i) Read h14d_advect.py, h14d_predictions.txt, h14d_advect.log, h14d_advect_posthoc.py and its log,
+h14c_advect.py, h14b_advect.py (run_case, Stat), journals/new_analyses_h14d_advect.md and the Early Earth threshold lines named above, so the
+five-point ladder, the local exponents, the post hoc log law and the 1/128 anchor 15.28 were known when the bands were written. (ii) Throwaway
+timing, not in the repo (scratchpad: h14e_timing.py): it calls h14c_advect.job on the 1/256 flow (3 runs, hold 220 time units, one process;
+21 runs, hold 110, three processes) and once on the 1/128 flow (3 runs, hold 220), printing only elapsed seconds, steps, ns per cell-step and
+peak memory; no S50, S80, walled fraction, p or q was computed or seen for any 1/256 run, and the runs are discarded. I also read the elapsed
+time and the clearing times (tobs) of the h14d 1/128 jobs to turn that ns figure into a cost estimate; those are h14d data. Machine load during
+the timing 4-6. (iii) Design choices made in the above: one cell only, 336 runs as 16 jobs x 21, seeds 3401-3416, hold 60 t17 as at 1/128, 3
+workers, guard 7200 s, and the bands and scenario table above. After hashing, a self-check (tiny recipe check, flow checks, the Lyapunov
+diagnostic) is allowed; it does not change this file.

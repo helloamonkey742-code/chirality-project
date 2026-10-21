@@ -1,0 +1,43 @@
+# sphere size=32 f0=0.5 n=32 seed0=0 tmax=10023 (= 30.0 tau_sw) tau_sw=334.10 R^2/D=1024
+run seed=3 T1=748.0 T1/tau_sw=2.239 winner=-1 final_minority=0.0096
+run seed=1 T1=1210.0 T1/tau_sw=3.622 winner=+1 final_minority=0.0097
+run seed=5 T1=522.0 T1/tau_sw=1.562 winner=-1 final_minority=0.0093
+run seed=2 T1=2160.0 T1/tau_sw=6.465 winner=-1 final_minority=0.0096
+run seed=0 T1=2564.0 T1/tau_sw=7.674 winner=-1 final_minority=0.0096
+run seed=6 T1=908.0 T1/tau_sw=2.718 winner=+1 final_minority=0.0089
+run seed=8 T1=1848.0 T1/tau_sw=5.531 winner=+1 final_minority=0.0089
+run seed=4 T1=3842.0 T1/tau_sw=11.500 winner=+1 final_minority=0.0097
+run seed=10 T1=1556.0 T1/tau_sw=4.657 winner=+1 final_minority=0.0099
+run seed=11 T1=1872.0 T1/tau_sw=5.603 winner=-1 final_minority=0.0100
+run seed=7 T1=4504.0 T1/tau_sw=13.481 winner=+1 final_minority=0.0093
+run seed=12 T1=904.0 T1/tau_sw=2.706 winner=-1 final_minority=0.0094
+run seed=9 T1=4686.0 T1/tau_sw=14.026 winner=-1 final_minority=0.0099
+run seed=16 T1=1016.0 T1/tau_sw=3.041 winner=+1 final_minority=0.0091
+run seed=15 T1=1620.0 T1/tau_sw=4.849 winner=+1 final_minority=0.0092
+run seed=13 T1=2948.0 T1/tau_sw=8.824 winner=-1 final_minority=0.0096
+run seed=14 T1=3076.0 T1/tau_sw=9.207 winner=-1 final_minority=0.0089
+run seed=18 T1=1636.0 T1/tau_sw=4.897 winner=+1 final_minority=0.0091
+run seed=17 T1=3312.0 T1/tau_sw=9.913 winner=+1 final_minority=0.0097
+run seed=21 T1=2126.0 T1/tau_sw=6.363 winner=-1 final_minority=0.0096
+run seed=22 T1=984.0 T1/tau_sw=2.945 winner=+1 final_minority=0.0097
+run seed=19 T1=3806.0 T1/tau_sw=11.392 winner=-1 final_minority=0.0097
+run seed=20 T1=3652.0 T1/tau_sw=10.931 winner=+1 final_minority=0.0090
+run seed=25 T1=1188.0 T1/tau_sw=3.556 winner=-1 final_minority=0.0094
+run seed=26 T1=1496.0 T1/tau_sw=4.478 winner=+1 final_minority=0.0098
+run seed=24 T1=2900.0 T1/tau_sw=8.680 winner=-1 final_minority=0.0092
+run seed=23 T1=3416.0 T1/tau_sw=10.225 winner=+1 final_minority=0.0094
+run seed=29 T1=740.0 T1/tau_sw=2.215 winner=+1 final_minority=0.0092
+run seed=30 T1=1676.0 T1/tau_sw=5.016 winner=+1 final_minority=0.0099
+run seed=27 T1=2970.0 T1/tau_sw=8.890 winner=+1 final_minority=0.0094
+run seed=28 T1=3456.0 T1/tau_sw=10.344 winner=+1 final_minority=0.0099
+run seed=31 T1=3022.0 T1/tau_sw=9.045 winner=-1 final_minority=0.0099
+SUMMARY sphere size=32 f0=0.5: n=32 reached one hand 32/32 by 30 tau_sw; T1/tau_sw median 6.36 p90 11.39 p99 14.03 max 14.03 mean(finished) 6.77
+SUMMARY favoured (+) hand wins 0.562 (18/32)
+SUMMARY tail: survival e-folds in 0.796 R^2/D (n_tail=16); R^2/D = 3.065 tau_sw
+  l(10) = 31.06  l/sqrt(Dt) = 9.821
+  l(20) = 36.80  l/sqrt(Dt) = 8.229
+  l(40) = 45.30  l/sqrt(Dt) = 7.162
+  l(80) = 58.42  l/sqrt(Dt) = 6.531
+  l(160) = 76.83  l/sqrt(Dt) = 6.074
+  l(320) = 105.69  l/sqrt(Dt) = 5.908
+# wall time 834 s

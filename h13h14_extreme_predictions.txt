@@ -1,0 +1,141 @@
+h13h14_extreme_predictions.txt  (v1, BEFORE any run of h13h14_extreme.py or of h13_sphere_shares.py with f > 1000;
+the file's modification time is the record of when it was written)
+
+QUESTION. The sideways-coarsening slowdown f (U.A = 5.5/sqrt(f), so the sweep's sideways time (L/A)^2/D_h is multiplied
+by f in every draw) was bounded in h13h14_combined.log up to f = 1000 (Ganymede loses 11.90 points, Early Earth 0.0025).
+h14c found the eddy slowdown S50 at l/w = 10 grows like (D_eff/D_mol)^0.40, so f = 17 x S could extrapolate to about
+1e5 - 1e6.  What does each world's share, and its rank, become for f far beyond 1000, up to f -> infinity, and does Early
+Earth's 99.9 survive?  Method: h13h14_extreme.py (a copy of the h13h14_combined.py wrapper, same script h13_sphere_shares.py
+unchanged) at f = 1, 1000, 3000, 1e4, 3e4, 1e5, 3e5, 1e6, 3e6, 1e7, 1e8, 1e9, 1e12.  Loss = share at f = 1 minus share at
+f, in points of all N = 200,000 draws, seed 0.  Columns: main no lid, main final, x10 no lid, x10 final ("main columns" =
+the first two; they are the scored ones unless a line says otherwise).  "Largest loss" = the line the script prints
+(max over 15 worlds and the 4 columns; the first column on a tie).  Count of worlds losing >= T = how many of the 15 worlds
+have loss >= T in that column.  Rank = 1 + the number of worlds whose unrounded share is STRICTLY greater (shares compared
+after round(x, 9)); equal shares share a rank.
+
+WHAT f -> INFINITY MEANS (read from the code before any result run; this is a derivation, not a result)
+  Every place the sideways time enters is a necessary condition for a draw to succeed:
+    sweep2.py:127   across = (L / U.A) ** 2 / Dh <= t
+    sweep2.py:129   creep = across & ...            sweep2.py:137   reached = ok & np.where(column, creep, across)
+    sweep3.py:122-123   t_sel = max(10/k, (L/U.A)**2/Dh, ...);  timely = t_rise + t_sel <= t
+    multiwall.py:421-422   t_sel includes (L/U.A)**2/Dh;  timely = rec & (scale*up + t_sel <= t)
+  and multi() returns w_f | (deep & strong) combined with the timely branch, so a draw whose sideways test fails has
+  P_pved = 0 in all four columns.  A draw passes only if f * ratio <= 1 (in the timely branch 1 - t_rise/t), ratio =
+  (pi R / 5.5)^2 / (D_h t), with D_h and t log-uniform over each world's declared range.  So for every world there is a
+  finite f above which EVERY draw fails and the share is exactly 0:  Miranda 8.7e7, Umbriel 1.1e8, Ariel 1.15e8, Dione 1.2e8,
+  Enceladus 1.8e8 (the last), all others lower.  The limit f -> infinity is therefore degenerate: all 15 worlds, all 4
+  columns, share exactly 0.000, Early Earth 99.93 -> 0.00, and the rank is a 15-way tie.  It is implemented as very large f
+  (1e9 and 1e12, both above 1.8e8); np.inf is not used because U.A would be 0.  The informative result is the f at which
+  each world collapses, which is what the finite grid shows.
+
+THE FORECAST AND WHAT WAS SEEN BEFORE WRITING (disclosure)
+  Seen: h13h14_combined.log (all 141 lines: the logged flip fractions, losses and Early Earth lines up to f = 1000),
+  h13h14_combined_predictions.txt, journals/new_analyses_h13h14_combined.md, sweep2.py / sweep3.py / multiwall.py at the
+  lines above, and ija_draft.md:789-791.  An analytic forecast was written and run before this file:
+    h13h14_extreme_forecast.py   sha256 78b461cf8ee5cca36ddbac6cb376cd25e9258d7fee8c3cbf0a5ce2bb30b0b858
+    h13h14_extreme_forecast.out  sha256 742420778d7fc3b4d8b51664239bda1722dd025fd3e75ea9790bf48e38548e86
+  It runs no sweep.  Model: share(f) = base share x (1 - p_flip(f)) x lam, p_flip(f) = P(f * ratio > 1) computed in closed form
+  from each world's D_h and t ranges (copied by hand from the sweeps), lam = the share among the draws that do not flip,
+  relative to the base share.  Check: the analytic p_flip reproduces the logged flip shares at f = 100 - 1000 within
+  sampling noise (Ganymede at 1000: 26.457% logged, 26.341% analytic).  lam was 0.99-1.00 in the main columns at f <= 1000
+  (Mimas 0.95, Enceladus 1.03, Ganymede 0.9915, Early Earth 1.000) and is an EXTRAPOLATION beyond that: it is the main
+  source of error in every band below.  Nothing at f > 1000 has been run; no band was fitted to a result.
+
+------------------------------------------------------------------------------------------------------------------
+PREDICTIONS  (each item is HELD only if EVERY part of it holds as written; bands are fixed now and are never retuned)
+------------------------------------------------------------------------------------------------------------------
+(P0) Regression.  Every value that h13h14_extreme.log prints for f = 1 and f = 1000 equals the one in h13h14_combined.log:
+     the flip-share block (worst, 1/worst and the two percentages), the f = 1 check line (0.05 points), the P_pved table
+     entries, the base shares and the f = 1000 losses in all four loss tables, the f = 1000 largest-loss line (11.90,
+     Ganymede, main no lid) and the Early Earth lines for f = 1 and f = 1000.  Checked by `python h13h14_extreme.py check`.
+
+(P1) Structure.  (a) For each of the 15 worlds and 4 columns the share is non-increasing along the grid f = 1 ... 1e12
+     (a draw that fails at f cannot succeed at a larger f; h14_eddy.log reported "non-monotone draws 0").  (b) f = 1e9 and
+     f = 1e12 give identical unrounded shares in all 60 cells, and every one is exactly 0.0.  (c) In the limit every column
+     is a 15-way tie: every world has rank 1 and the number of strictly ordered pairs is 0 (of 105).  (d) The largest-loss
+     line at f = 1e9 and 1e12 is Early Earth ocean, 99.93 (99.92 to 99.94), a main column (it is the largest base share).
+
+(P2) Largest loss against f = 1 and the world, as the script prints it.  Scored per f; the column named is main no lid or
+     main final (equal for the worlds named):
+       f = 3000    Ganymede            15.5 to 19.0   (central 17.3; Callisto 16.2 is the alternative, about 15% odds)
+       f = 1e4     Ganymede            21.5 to 25.5   (central 23.2)
+       f = 3e4     Ganymede            26.8 to 30.5   (central 28.6)
+       f = 1e5     Early Earth ocean   38.2 to 39.2   (central 38.7; Ganymede about 34 is behind)
+       f = 1e6     Early Earth ocean   82.3 to 83.5   (central 82.9)
+     The takeover between Ganymede and Early Earth lies between 3e4 and 1e5.
+
+(P3) Early Earth ocean share, printed values in all four columns.  EE has no lid, so main no lid = main final and
+     x10 no lid = x10 final exactly.  Band for the unrounded share, main columns / x10 columns (central in brackets):
+       f = 3000    99.70 to 99.86 (99.78, prints 99.8) / 99.40 to 99.65 (99.52)
+       f = 1e4     93.7 to 94.7 (94.2)                  / 93.2 to 94.6 (94.0)
+       f = 3e4     81.6 to 82.7 (82.1)                  / 81.2 to 82.5 (81.9)
+       f = 1e5     60.6 to 61.8 (61.2)                  / 60.1 to 61.7 (61.0)
+       f = 1e6     16.5 to 17.5 (17.0)                  / 16.4 to 17.4 (17.0)
+       limit       0.000 in all four (exactly)
+     So the printed 99.9 survives at f = 1000 (logged) and is lost between 1000 and 3000.  Analytic, not scored: the first
+     change of the printed value is near 2.8e3, and the main-column share is below 99 by 4.3e3, 95 by 9e3 and 90 by 1.6e4.
+
+(P4) Number of worlds that lose >= 1 / >= 5 / >= 10 points, per f (main no lid | main final):
+       f = 3000    13 (12-14) / 10 (8-12) / 4 (3-5)      |  12 (11-13) / 8 (6-10) / 3 (2-4)
+       f = 1e4     15 (14-15) / 14 (13-15) / 9 (7-11)    |  13 (12-14) / 11 (10-13) / 9 (7-11)
+       f = 3e4     15 (14-15) / 15 (14-15) / 13 (12-14)  |  14 (13-14) / 12 (11-13) / 11 (10-12)
+       f = 1e5     15 (14-15) / 15 (14-15) / 14 (13-15)  |  14 (13-14) / 12 (11-13) / 12 (11-13)
+       f = 1e6     15 / 15 / 15                          |  14 / 13-14 / 12
+       limit       15 / 15 / 15                          |  14 / 14 / 12
+     In the final column Enceladus has base 0.00 (lid) and can lose nothing, so at most 14 worlds lose anything, and
+     Miranda (8.97) and Mimas (5.56) cannot lose 10, so at most 12 lose >= 10; at the limit the counts there are exactly
+     14 / 14 / 12.  The x10 columns are reported, not scored.
+
+(P5) Rank.  (a) Early Earth has rank 1 (no world strictly above it) in both main columns at f = 3000, 1e4, 3e4, 1e5 and
+     3e5, and rank 1 to 3 at f = 1e6.  (b) At f = 3000, 1e4, 3e4 and 1e5 the five highest worlds in main no lid and in main
+     final are, as a set, {Early Earth ocean, Umbriel, Ariel, Oberon, Titania} (the same set as at f = 1).  (c) At f = 1e4
+     in main no lid, Ganymede and Callisto are each strictly below Dione, Pluto and Europa (Ganymede 44.1 -> about 21.5,
+     Europa about 24.3).  The ranks of Early Earth at f = 3e6 (7 in main no lid, 5-6 in main final) and 1e7 (11, 10) are
+     forecast, reported and not scored.
+
+(P6) The approach to the limit.  At f = 1e8 (above Miranda's 8.7e7, below Umbriel's 1.1e8) exactly four worlds have a
+     non-zero share in main no lid: Enceladus, Dione, Ariel, Umbriel, with Enceladus the largest, 0.03 to 0.15 (central 0.07);
+     the other eleven (Early Earth included) are exactly 0.0.  Counting from the survivors: Enceladus about 540 draws that
+     can pass, Dione 126, Ariel 60, Umbriel 44.  My confidence is about 75%: the survivors are the corner of largest
+     D_h x t and the other tests might fail there.
+
+NOT SCORED, REPORTED:  reversed-pair counts per column and f (forecast ranges are in h13h14_extreme_forecast.out), the
+     x10 columns, the mix line (it is the sphere factor alone), lam per world, the f at which Early Earth's printed value
+     first changes (located, if at all, by an exploratory run that is not pre-registered).
+
+------------------------------------------------------------------------------------------------------------------
+DECISION RULE  (applied to the printed results; it says what the result means for ija_draft.md:666, 789-791 and the
+Early Earth headline.  Nothing in the draft is edited; proposed wording goes in journals/new_analyses_h13h14_extreme.md.)
+------------------------------------------------------------------------------------------------------------------
+ The measured or ceilinged range of the combined factor is f <= 221 (sphere 17 x molecular-only ceiling S 9-13); f above
+ that is extrapolation of a power law and rests on no measurement.  All results hold for f applied to every draw (a worst
+ case) and for the assumed product 17 x S.
+ X1. Early Earth headline.  If P3 holds at f = 3000 and f = 1e4 (99.8, then about 94): the headline 99.9 is kept ONLY with the
+     bound "for a slowing factor up to 1000, 4.5 times the ceiling 221; it prints 99.8 at 3000, about 94 at 1e4, 82 at 3e4,
+     61 at 1e5 and 17 at 1e6".  Unconditional "stays at 99.9" is dropped.  If EE still prints 99.9 at 3000, the bound moves to
+     3000 and the note says the analytic onset model was wrong.
+ X2. Early Earth first.  If P5a holds: "Early Earth has the highest share" is kept with the bound "for f up to 3e5 at least";
+     if EE loses rank 1 at or below 3e5, the bound is the largest grid f at which it still has rank 1.
+ X3. ija_draft.md:789 ("never limits").  If P2 holds at f = 3000 (Ganymede, about 17 points): "never limits" cannot stand for
+     any f beyond about 40 (h13h14_combined_cross.log); the sentence gives the measured/ceiling range and, as extrapolation,
+     the loss of Ganymede at 3000, 1e4 and 3e4 and of Early Earth at 1e5 and 1e6.  If P2 names another world, the sentence
+     names that world.
+ X4. ija_draft.md:790 ("finishes in time").  The basis is that sideways coarsening takes at most 7% of the age in any draw
+     (Ganymede, margin 14.4); this holds world by world only up to its own margin (Ganymede 14.4, Early Earth 2400,
+     Miranda 1755, Enceladus 18.4 from the f = 1 flip block) and in the limit no draw of any world finishes (P1b).  The
+     sentence is bounded by the combined f and the limit is stated as a hard gate (every share 0 above 1.8e8), not as a
+     worst-case result.
+ X5. ija_draft.md:791 ("the order holds by construction against any effect that hits every world equally").  Kept as a
+     conditional statement; the sideways slowdown is NOT equal across worlds (it scales with L^2/D_h), and if P5b holds the
+     top five do not change while the three largest moons fall from ranks 6, 7 and 12 to the lower half by f = 1e4 (P5c).
+     In the limit the order is lost entirely (P1c): the sentence needs the qualification and the f above which it fails.
+ X6. If a run fails or returns NaN at some f, the f and the exact error are reported and no later f is scored.
+
+RISKS (named now).  (1) lam beyond f = 1000 is extrapolated: Ganymede and Callisto may exchange places in P2 at 3000 - 3e4
+     (Ganymede leads by about 1.1 points at lam equal; a 2.5% change in one lam reverses it).  (2) Early Earth in the x10
+     columns uses the timely branch (scale x rise + sideways <= age), which shifts the effective threshold; the x10 bands are
+     wider.  (3) Counts near a threshold (Europa 10.1 at 3000, Miranda 0.9 or 2.8 at 1e4) can move by one.  (4) A numerical
+     failure at 1e9 or 1e12 is not excluded; the extreme values were never run.
+
+SCORING.  Each of P0 - P6 is marked HELD or FAILED as written, per f where a row is scored per f, with the log line numbers.
+A band missed by any amount is FAILED; nothing is re-tuned after the run.  The summary of the note gives the count of items.

@@ -1,0 +1,9 @@
+[P1] HELD: 1 of 664 sphere runs not at one hand at 30 tau_sw (s16_f50 299/300, s16_f55 300/300, s32_f50 32/32, s32_f55 32/32)
+[P2] FAILED: t32_f50 stuck 0.62 (band (0.25, 0.55)), t32_f55 stuck 0.51 (band (0.1, 0.5)), t57_f50 stuck 0.65 (band (0.2, 0.55))
+[P3] FAILED: exponent 0.413 (band 0.45-0.55), A 6.257 (band 4.5-8.5), sphere R=32 vs torus 512 l(20), l(40) differ by -0.8%, -2.1%
+[P4] FAILED: S16a median 7.42 (2-6) p90 17.0 (5-14) p99 22.84 (9-24); f = 1 needs median <= 1.5: False; S16b median 4.96 (1.5-5, below S16a)
+[P5] FAILED: median ratio S32a/S16a 0.8571428571428572, S48a/S16a None (S48a part NOT RUN); S16a tail e-fold 1.564 R^2/D (0.7-1.4)
+[P6] HELD: + hand wins, f0 0.50 pooled 0.530 (0.40-0.60); f0 0.55 pooled 0.877 (0.80-1.00)
+D0: share f of Eq. 12 stays 1 if P1 holds. D1: f = 1 stays only if median <= 1.5 and p90 <= 2.5: False. D2: f_t = ceil(p90) = 17 (median 7.42, p99 22.84); A = 5.5/sqrt(f_t) = 1.33. D3: p99 22.84 > 10 -> rerun coarsen_slow at f = p90 and p99
+[P7] HELD: cap-law ratios [1.003, 1.0, 1.005, 1.038] (within 10%), m=2 decay rates [3.1, 2.959] (2.5-3.5), minority at 30 tau_sw [0.5, 0.5] (>= 0.45)
+[P8] HELD: 12/12 reached one hand; shell median 5.80 tau_sw, ratio to S16a 0.78 (0.6-1.7)

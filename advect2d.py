@@ -243,7 +243,7 @@ def tracer_lagrangian(flow, seed):
     """Exact-map tracers: eddy diffusivity <dx^2+dy^2>/(4 t), 400 realisations x 50 tracers."""
     rng = np.random.default_rng(seed)
     R, P = 400, 50
-    nk = 2 * int(round(100 / flow["Tk"] / 2))
+    nk = max(2, 2 * int(round(100 / flow["Tk"] / 2)))   # >= 2: Tk > ~100 gave nk = 0 and a divide by zero
     pos = rng.uniform(0, L, (R, P, 2))
     disp = np.zeros((R, P, 2))
     for j in range(nk):

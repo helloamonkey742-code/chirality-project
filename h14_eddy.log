@@ -1,0 +1,221 @@
+h14_eddy.py, N = 200000, seed 0. l = eddy size, w = sqrt(D_h / (k2 c)); shares in % of all draws
+
+(1) Eddy sizes. P (d) synchronous rotation; R = L/pi of the sweep; beta = 2 Omega / R; l = sqrt(2 U / beta), km
+world                  P d     Omega    R km      beta | l(1e-3) l(0.02) l(1) | literature km
+Enceladus            1.370  5.31e-05     232  4.58e-10 |     2.1     9.4    66.1 | 3-3
+Europa               3.550  2.05e-05    1460  2.81e-11 |     8.4    37.8   267.0 | 20-50
+Ganymede             7.154  1.02e-05    2631  7.73e-12 |    16.1    71.9   508.8 | -
+Titan               15.945  4.56e-06    2575  3.54e-12 |    23.8   106.3   751.4 | -
+Callisto            16.688  4.36e-06    2410  3.62e-12 |    23.5   105.2   743.7 | -
+Triton               5.875  1.24e-05    1353  1.83e-11 |    10.5    46.8   330.6 | -
+Pluto                6.388  1.14e-05    1188  1.92e-11 |    10.2    45.7   323.0 | -
+Titania              8.706  8.35e-06     789  2.12e-11 |     9.7    43.5   307.3 | -
+Oberon              13.463  5.40e-06     761  1.42e-11 |    11.9    53.1   375.3 | -
+Umbriel              4.144  1.75e-05     585  6.00e-11 |     5.8    25.8   182.6 | -
+Ariel                2.520  2.89e-05     579  9.97e-11 |     4.5    20.0   141.7 | -
+Dione                2.737  2.66e-05     561  9.47e-11 |     4.6    20.5   145.3 | -
+Miranda              1.413  5.14e-05     236  4.36e-10 |     2.1     9.6    67.7 | -
+Mimas                0.942  7.72e-05     198  7.79e-10 |     1.6     7.2    50.7 | -
+Early Earth ocean    0.996  7.30e-05    6371  2.29e-11 |     9.3    41.8   295.4 | 25-250
+
+regression: f = 1 P_pved reproduces coarsen_slow.log / multiwall.log within 0.05 (max diff 0.046 points)
+
+(2) Share of ALL draws with l > w. typ = l at U 1e-3 / 0.02 / 1 m/s; avg = over log-uniform l between the ends;
+    lit = literature l (low, high); tied = l = D_h/U; kin = share of draws where D_h/l(0.02) is a speed in 1e-3..1 m/s
+world              median w km | U 1e-3 U 0.02    U 1    avg | lit lo lit hi |  tied |   kin
+Enceladus                  309 |    8.6   17.5   34.2   20.0 |   10.4   10.4 |   0.9 |  25.8
+Europa                     318 |   16.9   28.9   48.2   31.5 |   23.4   31.4 |   0.9 |  10.5
+Ganymede                   318 |   21.5   34.8   54.9   37.4 |      -      - |   0.9 |   3.6
+Titan                      317 |   24.8   38.6   58.9   41.3 |      -      - |   0.9 |   0.0
+Callisto                   317 |   24.6   38.7   58.8   41.3 |      -      - |   0.9 |   0.0
+Triton                     314 |   18.4   31.0   50.5   33.6 |      -      - |   1.0 |   8.4
+Pluto                      322 |   18.2   30.5   50.0   33.2 |      -      - |   0.9 |   8.5
+Titania                    314 |   17.9   30.3   49.8   32.9 |      -      - |   0.9 |   8.9
+Oberon                     313 |   19.4   32.1   51.9   34.8 |      -      - |   0.9 |   6.9
+Umbriel                    312 |   14.5   25.8   44.5   28.4 |      -      - |   1.0 |  14.7
+Ariel                      308 |   12.9   23.6   41.9   26.2 |      -      - |   0.9 |  17.4
+Dione                      313 |   12.9   23.6   42.0   26.2 |      -      - |   0.9 |  17.0
+Miranda                    318 |    8.7   17.7   34.4   20.1 |      -      - |   0.9 |  25.6
+Mimas                      319 |    7.4   15.6   31.5   18.0 |      -      - |   0.9 |  28.6
+Early Earth ocean          424 |    5.7   18.6   44.8   22.7 |   13.2   42.4 |  21.3 | 100.0
+
+(3) Among P_pved draws at f = 1 (main, no lid): share with l > w at U 0.02 / 1 m/s, against all draws; n = P_pved draws
+Enceladus          n  52722 | U 0.02:  29.0 (all  17.5) | U 1:  54.9 (all  34.2)
+Europa             n  79217 | U 0.02:  36.5 (all  28.9) | U 1:  60.1 (all  48.2)
+Ganymede           n  88289 | U 0.02:  42.6 (all  34.8) | U 1:  66.7 (all  54.9)
+Titan              n  71600 | U 0.02:  46.8 (all  38.6) | U 1:  70.6 (all  58.9)
+Callisto           n  86941 | U 0.02:  47.8 (all  38.7) | U 1:  71.5 (all  58.8)
+Triton             n  74015 | U 0.02:  39.0 (all  31.0) | U 1:  62.9 (all  50.5)
+Pluto              n  82165 | U 0.02:  39.5 (all  30.5) | U 1:  63.7 (all  50.0)
+Titania            n 102568 | U 0.02:  41.5 (all  30.3) | U 1:  66.4 (all  49.8)
+Oberon             n 102758 | U 0.02:  44.0 (all  32.1) | U 1:  69.0 (all  51.9)
+Umbriel            n 107356 | U 0.02:  36.8 (all  25.8) | U 1:  62.0 (all  44.5)
+Ariel              n  99177 | U 0.02:  33.3 (all  23.6) | U 1:  58.2 (all  41.9)
+Dione              n  83909 | U 0.02:  33.0 (all  23.6) | U 1:  57.5 (all  42.0)
+Miranda            n  54189 | U 0.02:  27.5 (all  17.7) | U 1:  52.4 (all  34.4)
+Mimas              n  34606 | U 0.02:  27.6 (all  15.6) | U 1:  54.1 (all  31.5)
+Early Earth ocean  n 199863 | U 0.02:  18.6 (all  18.6) | U 1:  44.8 (all  44.8)
+
+(4) l/w among draws with l > w, at U 0.02 and U 1: share beyond the tested 3.6, median, 90th percentile
+Enceladus          U 0.02 n  35075 >3.6:  55.1%  med     4.3  p90     40.7 | U 1 n  68395 >3.6:  66.4%  med     7.5  p90    132.1
+Europa             U 0.02 n  57761 >3.6:  63.7%  med     6.4  p90     92.9 | U 1 n  96365 >3.6:  72.9%  med    12.3  p90    328.1
+Ganymede           U 0.02 n  69588 >3.6:  66.8%  med     7.7  p90    140.1 | U 1 n 109720 >3.6:  75.6%  med    15.6  p90    520.0
+Titan              U 0.02 n  77295 >3.6:  68.8%  med     8.9  p90    174.9 | U 1 n 117882 >3.6:  77.4%  med    18.5  p90    674.7
+Callisto           U 0.02 n  77499 >3.6:  68.6%  med     8.6  p90    177.6 | U 1 n 117588 >3.6:  77.7%  med    18.5  p90    686.2
+Triton             U 0.02 n  61984 >3.6:  64.6%  med     6.8  p90    107.4 | U 1 n 101091 >3.6:  74.1%  med    13.4  p90    385.7
+Pluto              U 0.02 n  61062 >3.6:  64.8%  med     6.8  p90    104.0 | U 1 n 100067 >3.6:  73.9%  med    13.2  p90    377.9
+Titania            U 0.02 n  60537 >3.6:  64.1%  med     6.6  p90     98.7 | U 1 n  99528 >3.6:  73.7%  med    12.8  p90    362.8
+Oberon             U 0.02 n  64226 >3.6:  65.5%  med     7.1  p90    114.9 | U 1 n 103825 >3.6:  74.6%  med    13.9  p90    417.4
+Umbriel            U 0.02 n  51656 >3.6:  61.6%  med     5.8  p90     74.3 | U 1 n  89002 >3.6:  71.7%  med    10.8  p90    262.8
+Ariel              U 0.02 n  47235 >3.6:  60.5%  med     5.4  p90     63.5 | U 1 n  83860 >3.6:  70.4%  med     9.9  p90    216.6
+Dione              U 0.02 n  47238 >3.6:  60.2%  med     5.4  p90     64.3 | U 1 n  83947 >3.6:  70.4%  med     9.8  p90    219.7
+Miranda            U 0.02 n  35329 >3.6:  55.6%  med     4.4  p90     40.5 | U 1 n  68774 >3.6:  66.3%  med     7.6  p90    132.3
+Mimas              U 0.02 n  31265 >3.6:  53.5%  med     4.1  p90     35.5 | U 1 n  63044 >3.6:  65.4%  med     6.9  p90    112.3
+Early Earth ocean  U 0.02 n  37176 >3.6:  37.8%  med     2.6  p90     10.4 | U 1 n  89601 >3.6:  59.9%  med     5.1  p90     39.1
+
+(5) E86 coverage. Subset = {l > w} and P_pved at f = 1. Lost = in the subset and not P_pved at f. Draws; (% of N).
+    Column order per f: main no lid, main final, x10 no lid, x10 final. Also overall loss (all draws) at f = 10 for the same cases.
+
+Enceladus: non-monotone draws 0; overall lost at x10 [41, 0, 28, 0] draws; min over ALL draws of t D_h / (L/A)^2 = 18.4
+  l at U 0.02 subset P_pved n [15273, 0, 11258, 0]; lost at x4 [10, 0, 9, 0], x10 [24, 0, 17, 0], x100 [575, 0], x1000 [2667, 0], x1e10 [15273, 0]
+           break-even f (5% of subset lost): main no lid 200.0, main final None; stress (NOT a result) slowdown (l/w)^p, draws lost [main no lid, main final]: p 1.1 [214, 0] = [0.11, 0.0] points; p 2 [1349, 0] = [0.67, 0.0] points
+  l at U 1    subset P_pved n [28924, 0, 21252, 0]; lost at x4 [16, 0, 11, 0], x10 [40, 0, 27, 0], x100 [889, 0], x1000 [4239, 0], x1e10 [28924, 0]
+           break-even f (5% of subset lost): main no lid 200.0, main final None; stress (NOT a result) slowdown (l/w)^p, draws lost [main no lid, main final]: p 1.1 [877, 0] = [0.44, 0.0] points; p 2 [4460, 0] = [2.23, 0.0] points
+  l at lit hi subset P_pved n [9152, 0, 6777, 0]; lost at x4 [7, 0, 5, 0], x10 [18, 0, 12, 0], x100 [406, 0], x1000 [1805, 0], x1e10 [9152, 0]
+           break-even f (5% of subset lost): main no lid 200.0, main final None; stress (NOT a result) slowdown (l/w)^p, draws lost [main no lid, main final]: p 1.1 [65, 0] = [0.03, 0.0] points; p 2 [547, 0] = [0.27, 0.0] points
+
+Europa: non-monotone draws 0; overall lost at x10 [58, 43, 24, 16] draws; min over ALL draws of t D_h / (L/A)^2 = 45.8
+  l at U 0.02 subset P_pved n [28880, 21915, 21355, 16167]; lost at x4 [16, 12, 4, 2], x10 [45, 32, 20, 13], x100 [721, 548], x1000 [6629, 4978], x1e10 [28880, 21915]
+           break-even f (5% of subset lost): main no lid 200.0, main final 200.0; stress (NOT a result) slowdown (l/w)^p, draws lost [main no lid, main final]: p 1.1 [836, 647] = [0.42, 0.32] points; p 2 [4726, 3576] = [2.36, 1.79] points
+  l at U 1    subset P_pved n [47598, 36174, 35020, 26585]; lost at x4 [20, 15, 4, 2], x10 [56, 41, 24, 16], x100 [1022, 773], x1000 [9539, 7206], x1e10 [47598, 36174]
+           break-even f (5% of subset lost): main no lid 200.0, main final 200.0; stress (NOT a result) slowdown (l/w)^p, draws lost [main no lid, main final]: p 1.1 [3045, 2300] = [1.52, 1.15] points; p 2 [11590, 8780] = [5.79, 4.39] points
+  l at lit hi subset P_pved n [31374, 23807, 23163, 17537]; lost at x4 [17, 13, 4, 2], x10 [47, 34, 20, 13], x100 [769, 587], x1000 [7058, 5296], x1e10 [31374, 23807]
+           break-even f (5% of subset lost): main no lid 200.0, main final 200.0; stress (NOT a result) slowdown (l/w)^p, draws lost [main no lid, main final]: p 1.1 [1041, 801] = [0.52, 0.4] points; p 2 [5444, 4123] = [2.72, 2.06] points
+
+Ganymede: non-monotone draws 0; overall lost at x10 [157, 157, 96, 96] draws; min over ALL draws of t D_h / (L/A)^2 = 14.4
+  l at U 0.02 subset P_pved n [37593, 37593, 29380, 29380]; lost at x4 [36, 36, 21, 21], x10 [111, 111, 67, 67], x100 [3743, 3743], x1000 [14994, 14994], x1e10 [37593, 37593]
+           break-even f (5% of subset lost): main no lid 100.0, main final 100.0; stress (NOT a result) slowdown (l/w)^p, draws lost [main no lid, main final]: p 1.1 [2860, 2860] = [1.43, 1.43] points; p 2 [9394, 9394] = [4.7, 4.7] points
+  l at U 1    subset P_pved n [58898, 58898, 45622, 45622]; lost at x4 [49, 49, 29, 29], x10 [149, 149, 88, 88], x100 [5009, 5009], x1000 [20753, 20753], x1e10 [58898, 58898]
+           break-even f (5% of subset lost): main no lid 100.0, main final 100.0; stress (NOT a result) slowdown (l/w)^p, draws lost [main no lid, main final]: p 1.1 [7409, 7409] = [3.7, 3.7] points; p 2 [19713, 19713] = [9.86, 9.86] points
+
+Titan: non-monotone draws 0; overall lost at x10 [143, 143, 81, 81] draws; min over ALL draws of t D_h / (L/A)^2 = 15.0
+  l at U 0.02 subset P_pved n [33541, 33541, 24721, 24721]; lost at x4 [30, 30, 16, 16], x10 [108, 108, 63, 63], x100 [3017, 3017], x1000 [12614, 12614], x1e10 [33541, 33541]
+           break-even f (5% of subset lost): main no lid 100.0, main final 100.0; stress (NOT a result) slowdown (l/w)^p, draws lost [main no lid, main final]: p 1.1 [2711, 2711] = [1.36, 1.36] points; p 2 [8668, 8668] = [4.33, 4.33] points
+  l at U 1    subset P_pved n [50529, 50529, 36873, 36873]; lost at x4 [40, 40, 23, 23], x10 [139, 139, 80, 80], x100 [3953, 3953], x1000 [16965, 16965], x1e10 [50529, 50529]
+           break-even f (5% of subset lost): main no lid 100.0, main final 100.0; stress (NOT a result) slowdown (l/w)^p, draws lost [main no lid, main final]: p 1.1 [6794, 6794] = [3.4, 3.4] points; p 2 [17752, 17752] = [8.88, 8.88] points
+
+Callisto: non-monotone draws 0; overall lost at x10 [121, 121, 70, 70] draws; min over ALL draws of t D_h / (L/A)^2 = 17.0
+  l at U 0.02 subset P_pved n [41523, 41523, 32321, 32321]; lost at x4 [32, 32, 19, 19], x10 [95, 95, 62, 62], x100 [3375, 3375], x1000 [14912, 14912], x1e10 [41523, 41523]
+           break-even f (5% of subset lost): main no lid 100.0, main final 100.0; stress (NOT a result) slowdown (l/w)^p, draws lost [main no lid, main final]: p 1.1 [3187, 3187] = [1.59, 1.59] points; p 2 [10502, 10502] = [5.25, 5.25] points
+  l at U 1    subset P_pved n [62197, 62197, 47970, 47970]; lost at x4 [43, 43, 21, 21], x10 [119, 119, 69, 69], x100 [4358, 4358], x1000 [19848, 19848], x1e10 [62197, 62197]
+           break-even f (5% of subset lost): main no lid 100.0, main final 100.0; stress (NOT a result) slowdown (l/w)^p, draws lost [main no lid, main final]: p 1.1 [8002, 8002] = [4.0, 4.0] points; p 2 [21682, 21682] = [10.84, 10.84] points
+
+Triton: non-monotone draws 0; overall lost at x10 [54, 54, 18, 18] draws; min over ALL draws of t D_h / (L/A)^2 = 53.7
+  l at U 0.02 subset P_pved n [28848, 28848, 20986, 20986]; lost at x4 [13, 13, 7, 7], x10 [37, 37, 14, 14], x100 [597, 597], x1000 [6015, 6015], x1e10 [28848, 28848]
+           break-even f (5% of subset lost): main no lid 200.0, main final 200.0; stress (NOT a result) slowdown (l/w)^p, draws lost [main no lid, main final]: p 1.1 [854, 854] = [0.43, 0.43] points; p 2 [4786, 4786] = [2.39, 2.39] points
+  l at U 1    subset P_pved n [46580, 46580, 33639, 33639]; lost at x4 [19, 19, 7, 7], x10 [53, 53, 17, 17], x100 [811, 811], x1000 [8461, 8461], x1e10 [46580, 46580]
+           break-even f (5% of subset lost): main no lid 500.0, main final 500.0; stress (NOT a result) slowdown (l/w)^p, draws lost [main no lid, main final]: p 1.1 [3001, 3001] = [1.5, 1.5] points; p 2 [11527, 11527] = [5.76, 5.76] points
+
+Pluto: non-monotone draws 0; overall lost at x10 [33, 33, 19, 19] draws; min over ALL draws of t D_h / (L/A)^2 = 68.7
+  l at U 0.02 subset P_pved n [32416, 32416, 24233, 24233]; lost at x4 [6, 6, 6, 6], x10 [21, 21, 13, 13], x100 [387, 387], x1000 [5635, 5635], x1e10 [32416, 32416]
+           break-even f (5% of subset lost): main no lid 500.0, main final 500.0; stress (NOT a result) slowdown (l/w)^p, draws lost [main no lid, main final]: p 1.1 [740, 740] = [0.37, 0.37] points; p 2 [5020, 5020] = [2.51, 2.51] points
+  l at U 1    subset P_pved n [52314, 52314, 39048, 39048]; lost at x4 [8, 8, 8, 8], x10 [32, 32, 19, 19], x100 [508, 508], x1000 [7869, 7869], x1e10 [52314, 52314]
+           break-even f (5% of subset lost): main no lid 500.0, main final 500.0; stress (NOT a result) slowdown (l/w)^p, draws lost [main no lid, main final]: p 1.1 [2894, 2894] = [1.45, 1.45] points; p 2 [12475, 12475] = [6.24, 6.24] points
+
+Titania: non-monotone draws 0; overall lost at x10 [13, 13, 7, 7] draws; min over ALL draws of t D_h / (L/A)^2 = 156.1
+  l at U 0.02 subset P_pved n [42567, 42567, 33589, 33589]; lost at x4 [1, 1, 3, 3], x10 [8, 8, 5, 5], x100 [135, 135], x1000 [3918, 3918], x1e10 [42567, 42567]
+           break-even f (5% of subset lost): main no lid 1000.0, main final 1000.0; stress (NOT a result) slowdown (l/w)^p, draws lost [main no lid, main final]: p 1.1 [481, 481] = [0.24, 0.24] points; p 2 [5115, 5115] = [2.56, 2.56] points
+  l at U 1    subset P_pved n [68071, 68071, 53817, 53817]; lost at x4 [5, 5, 4, 4], x10 [13, 13, 7, 7], x100 [182, 182], x1000 [5253, 5253], x1e10 [68071, 68071]
+           break-even f (5% of subset lost): main no lid 1000.0, main final 1000.0; stress (NOT a result) slowdown (l/w)^p, draws lost [main no lid, main final]: p 1.1 [2339, 2339] = [1.17, 1.17] points; p 2 [13553, 13553] = [6.78, 6.78] points
+
+Oberon: non-monotone draws 0; overall lost at x10 [15, 15, 4, 4] draws; min over ALL draws of t D_h / (L/A)^2 = 167.7
+  l at U 0.02 subset P_pved n [45237, 45237, 35623, 35623]; lost at x4 [6, 6, 1, 1], x10 [12, 12, 4, 4], x100 [130, 130], x1000 [3895, 3895], x1e10 [45237, 45237]
+           break-even f (5% of subset lost): main no lid 1000.0, main final 1000.0; stress (NOT a result) slowdown (l/w)^p, draws lost [main no lid, main final]: p 1.1 [582, 582] = [0.29, 0.29] points; p 2 [5688, 5688] = [2.84, 2.84] points
+  l at U 1    subset P_pved n [70939, 70939, 55870, 55870]; lost at x4 [6, 6, 1, 1], x10 [15, 15, 4, 4], x100 [173, 173], x1000 [5105, 5105], x1e10 [70939, 70939]
+           break-even f (5% of subset lost): main no lid 1000.0, main final 1000.0; stress (NOT a result) slowdown (l/w)^p, draws lost [main no lid, main final]: p 1.1 [2695, 2695] = [1.35, 1.35] points; p 2 [14747, 14747] = [7.37, 7.37] points
+
+Umbriel: non-monotone draws 0; overall lost at x10 [5, 5, 4, 4] draws; min over ALL draws of t D_h / (L/A)^2 = 286.2
+  l at U 0.02 subset P_pved n [39542, 39542, 31600, 31600]; lost at x4 [3, 3, 0, 0], x10 [4, 4, 3, 3], x100 [64, 64], x1000 [1955, 1955], x1e10 [39542, 39542]
+           break-even f (5% of subset lost): main no lid 10000.0, main final 10000.0; stress (NOT a result) slowdown (l/w)^p, draws lost [main no lid, main final]: p 1.1 [188, 188] = [0.09, 0.09] points; p 2 [3368, 3368] = [1.68, 1.68] points
+  l at U 1    subset P_pved n [66532, 66532, 53340, 53340]; lost at x4 [3, 3, 0, 0], x10 [5, 5, 4, 4], x100 [89, 89], x1000 [2726, 2726], x1e10 [66532, 66532]
+           break-even f (5% of subset lost): main no lid 10000.0, main final 10000.0; stress (NOT a result) slowdown (l/w)^p, draws lost [main no lid, main final]: p 1.1 [1200, 1200] = [0.6, 0.6] points; p 2 [10294, 10294] = [5.15, 5.15] points
+
+Ariel: non-monotone draws 0; overall lost at x10 [5, 5, 8, 8] draws; min over ALL draws of t D_h / (L/A)^2 = 295.0
+  l at U 0.02 subset P_pved n [33048, 33048, 25916, 25916]; lost at x4 [1, 1, 1, 1], x10 [2, 2, 6, 6], x100 [51, 51], x1000 [1652, 1652], x1e10 [33048, 33048]
+           break-even f (5% of subset lost): main no lid 10000.0, main final 10000.0; stress (NOT a result) slowdown (l/w)^p, draws lost [main no lid, main final]: p 1.1 [125, 125] = [0.06, 0.06] points; p 2 [2501, 2501] = [1.25, 1.25] points
+  l at U 1    subset P_pved n [57760, 57760, 45541, 45541]; lost at x4 [2, 2, 2, 2], x10 [4, 4, 8, 8], x100 [69, 69], x1000 [2365, 2365], x1e10 [57760, 57760]
+           break-even f (5% of subset lost): main no lid 10000.0, main final 10000.0; stress (NOT a result) slowdown (l/w)^p, draws lost [main no lid, main final]: p 1.1 [875, 875] = [0.44, 0.44] points; p 2 [8249, 8249] = [4.12, 4.12] points
+
+Dione: non-monotone draws 0; overall lost at x10 [7, 5, 3, 2] draws; min over ALL draws of t D_h / (L/A)^2 = 308.1
+  l at U 0.02 subset P_pved n [27703, 17281, 20993, 13117]; lost at x4 [1, 1, 1, 0], x10 [3, 2, 1, 0], x100 [47, 30], x1000 [1239, 784], x1e10 [27703, 17281]
+           break-even f (5% of subset lost): main no lid 10000.0, main final 10000.0; stress (NOT a result) slowdown (l/w)^p, draws lost [main no lid, main final]: p 1.1 [90, 59] = [0.04, 0.03] points; p 2 [2098, 1309] = [1.05, 0.65] points
+  l at U 1    subset P_pved n [48228, 30243, 36581, 22975]; lost at x4 [1, 1, 3, 2], x10 [6, 4, 3, 2], x100 [63, 41], x1000 [1827, 1157], x1e10 [48228, 30243]
+           break-even f (5% of subset lost): main no lid 10000.0, main final 10000.0; stress (NOT a result) slowdown (l/w)^p, draws lost [main no lid, main final]: p 1.1 [726, 459] = [0.36, 0.23] points; p 2 [6856, 4306] = [3.43, 2.15] points
+
+Miranda: non-monotone draws 0; overall lost at x10 [1, 1, 1, 1] draws; min over ALL draws of t D_h / (L/A)^2 = 1754.8
+  l at U 0.02 subset P_pved n [14906, 5008, 11750, 3976]; lost at x4 [1, 1, 1, 1], x10 [1, 1, 1, 1], x100 [10, 4], x1000 [79, 30], x1e10 [14906, 5008]
+           break-even f (5% of subset lost): main no lid 10000.0, main final 10000.0; stress (NOT a result) slowdown (l/w)^p, draws lost [main no lid, main final]: p 1.1 [4, 2] = [0.0, 0.0] points; p 2 [532, 159] = [0.27, 0.08] points
+  l at U 1    subset P_pved n [28376, 9436, 22401, 7463]; lost at x4 [1, 1, 1, 1], x10 [1, 1, 1, 1], x100 [17, 7], x1000 [106, 37], x1e10 [28376, 9436]
+           break-even f (5% of subset lost): main no lid 10000.0, main final 10000.0; stress (NOT a result) slowdown (l/w)^p, draws lost [main no lid, main final]: p 1.1 [76, 28] = [0.04, 0.01] points; p 2 [2628, 832] = [1.31, 0.42] points
+
+Mimas: non-monotone draws 0; overall lost at x10 [39, 13, 23, 6] draws; min over ALL draws of t D_h / (L/A)^2 = 50.2
+  l at U 0.02 subset P_pved n [9550, 3062, 6688, 2133]; lost at x4 [11, 5, 4, 1], x10 [24, 9, 14, 4], x100 [389, 120], x1000 [3649, 1184], x1e10 [9550, 3062]
+           break-even f (5% of subset lost): main no lid 200.0, main final 200.0; stress (NOT a result) slowdown (l/w)^p, draws lost [main no lid, main final]: p 1.1 [159, 52] = [0.08, 0.03] points; p 2 [1288, 382] = [0.64, 0.19] points
+  l at U 1    subset P_pved n [18719, 6027, 12802, 4113]; lost at x4 [16, 6, 7, 2], x10 [38, 13, 23, 6], x100 [631, 197], x1000 [6080, 1995], x1e10 [18719, 6027]
+           break-even f (5% of subset lost): main no lid 200.0, main final 200.0; stress (NOT a result) slowdown (l/w)^p, draws lost [main no lid, main final]: p 1.1 [894, 263] = [0.45, 0.13] points; p 2 [3921, 1258] = [1.96, 0.63] points
+
+Early Earth ocean: non-monotone draws 0; overall lost at x10 [0, 0, 0, 0] draws; min over ALL draws of t D_h / (L/A)^2 = 2400.0
+  l at U 0.02 subset P_pved n [37162, 37162, 37084, 37084]; lost at x4 [0, 0, 0, 0], x10 [0, 0, 0, 0], x100 [0, 0], x1000 [2, 2], x1e10 [37162, 37162]
+           break-even f (5% of subset lost): main no lid 10000.0, main final 10000.0; stress (NOT a result) slowdown (l/w)^p, draws lost [main no lid, main final]: p 1.1 [0, 0] = [0.0, 0.0] points; p 2 [0, 0] = [0.0, 0.0] points
+  l at U 1    subset P_pved n [89561, 89561, 89356, 89356]; lost at x4 [0, 0, 0, 0], x10 [0, 0, 0, 0], x100 [0, 0], x1000 [2, 2], x1e10 [89561, 89561]
+           break-even f (5% of subset lost): main no lid 10000.0, main final 10000.0; stress (NOT a result) slowdown (l/w)^p, draws lost [main no lid, main final]: p 1.1 [0, 0] = [0.0, 0.0] points; p 2 [1040, 1040] = [0.52, 0.52] points
+  l at lit hi subset P_pved n [84693, 84693, 84500, 84500]; lost at x4 [0, 0, 0, 0], x10 [0, 0, 0, 0], x100 [0, 0], x1000 [2, 2], x1e10 [84693, 84693]
+           break-even f (5% of subset lost): main no lid 10000.0, main final 10000.0; stress (NOT a result) slowdown (l/w)^p, draws lost [main no lid, main final]: p 1.1 [0, 0] = [0.0, 0.0] points; p 2 [774, 774] = [0.39, 0.39] points
+
+(7) Check of the coarsen_slow.py docstring (coarsening <= 7% of the ocean's age, 'must be about 14x slower before it decides
+    a draw'): all draws, main no lid. s* = min over draws of t D_h / (L/A)^2 (coarsening is <= 1/s* of the age at f = 1).
+world               min s* | lost at f =      2      3      4      6     10     14     20 | smallest ladder f that moves any draw
+Enceladus             18.4 |                 3     10     16     21     41     51     73 | 2.0
+Europa                45.8 |                 3      9     20     36     58     90    134 | 2.0
+Ganymede              14.4 |                23     37     51     83    157    230    459 | 2.0
+Titan                 15.0 |                16     27     40     75    143    208    398 | 2.0
+Callisto              17.0 |                14     31     43     71    121    182    313 | 2.0
+Triton                53.7 |                 6     17     19     29     54     76    113 | 2.0
+Pluto                 68.7 |                 2      4      8     18     33     52     71 | 2.0
+Titania              156.1 |                 2      3      5      8     13     24     33 | 2.0
+Oberon               167.7 |                 0      3      6      9     15     22     33 | 3.0
+Umbriel              286.2 |                 2      2      3      4      5      7     11 | 2.0
+Ariel                295.0 |                 0      2      2      3      5      8     12 | 3.0
+Dione                308.1 |                 0      0      1      2      7      8     11 | 4.0
+Miranda             1754.8 |                 0      1      1      1      1      1      1 | 3.0
+Mimas                 50.2 |                 5     10     16     21     39     61     88 | 2.0
+Early Earth ocean   2400.0 |                 0      0      0      0      0      0      0 | 200.0
+
+(6) Verdict per world at typical l (U = 0.02): E86 covers if P6 holds and >= 50% of the l > w draws have l/w <= 3.6
+  Enceladus          share l>w  17.5%  inside test  44.9%  P6 yes  -> COVERED ONLY IF slowdown beyond l/w = 3.6 stays below x200.0
+  Europa             share l>w  28.9%  inside test  36.3%  P6 yes  -> COVERED ONLY IF slowdown beyond l/w = 3.6 stays below x200.0
+  Ganymede           share l>w  34.8%  inside test  33.2%  P6 yes  -> COVERED ONLY IF slowdown beyond l/w = 3.6 stays below x100.0
+  Titan              share l>w  38.6%  inside test  31.2%  P6 yes  -> COVERED ONLY IF slowdown beyond l/w = 3.6 stays below x100.0
+  Callisto           share l>w  38.7%  inside test  31.4%  P6 yes  -> COVERED ONLY IF slowdown beyond l/w = 3.6 stays below x100.0
+  Triton             share l>w  31.0%  inside test  35.4%  P6 yes  -> COVERED ONLY IF slowdown beyond l/w = 3.6 stays below x200.0
+  Pluto              share l>w  30.5%  inside test  35.2%  P6 yes  -> COVERED ONLY IF slowdown beyond l/w = 3.6 stays below x500.0
+  Titania            share l>w  30.3%  inside test  35.9%  P6 yes  -> COVERED ONLY IF slowdown beyond l/w = 3.6 stays below x1000.0
+  Oberon             share l>w  32.1%  inside test  34.5%  P6 yes  -> COVERED ONLY IF slowdown beyond l/w = 3.6 stays below x1000.0
+  Umbriel            share l>w  25.8%  inside test  38.4%  P6 yes  -> COVERED ONLY IF slowdown beyond l/w = 3.6 stays below x10000.0
+  Ariel              share l>w  23.6%  inside test  39.5%  P6 yes  -> COVERED ONLY IF slowdown beyond l/w = 3.6 stays below x10000.0
+  Dione              share l>w  23.6%  inside test  39.8%  P6 yes  -> COVERED ONLY IF slowdown beyond l/w = 3.6 stays below x10000.0
+  Miranda            share l>w  17.7%  inside test  44.4%  P6 yes  -> COVERED ONLY IF slowdown beyond l/w = 3.6 stays below x10000.0
+  Mimas              share l>w  15.6%  inside test  46.5%  P6 yes  -> COVERED ONLY IF slowdown beyond l/w = 3.6 stays below x200.0
+  Early Earth ocean  share l>w  18.6%  inside test  62.2%  P6 yes  -> COVERED
+
+Predictions (h14_eddy_predictions.txt v1):
+  [P1] HELD: Enceladus 3 km 10.4; Europa 20/50 km 23.4/31.4; Early Earth 25/250 km 13.2/42.4
+  [P2] HELD: range 15.6-38.7; Titan 38.6, Callisto 38.7, Europa 28.9, Enceladus 17.5
+  [P3] HELD: max at U 0.02 38.7; worlds above 50% at U 1: ['Callisto', 'Ganymede', 'Oberon', 'Pluto', 'Titan', 'Triton']
+  [P4] FAILED: moons max 1.0; Early Earth 21.3; tied < typical in 14 of 15
+  [P5] HELD: P_pved share higher than all-draw share in 15 of 15; max |difference| 12.0 points
+  [P6] HELD: largest lost in the l > w subset: 36 draws at x4, 111 at x10 (limits 200 / 300 of N = 200000)
+  [P7] HELD: largest share of the subset lost: 10.0% at x100, 39.9% at x1000
+  [P8] HELD: share of l > w draws beyond l/w = 3.6: 37.8-68.8%
+
+7 of 8 held.

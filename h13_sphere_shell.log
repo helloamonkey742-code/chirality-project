@@ -1,0 +1,15 @@
+# shell R=16 nz=8 dz=0.5 D_z=D_h=1 f0=0.5 n=12 seed0=0 tau_sw=83.52 tmax=2506
+run seed=0 T1=284.5 T1/tau_sw=3.407 winner=-1
+run seed=1 T1=341.0 T1/tau_sw=4.083 winner=-1
+run seed=2 T1=520.6 T1/tau_sw=6.233 winner=-1
+run seed=4 T1=439.9 T1/tau_sw=5.267 winner=-1
+run seed=5 T1=448.0 T1/tau_sw=5.364 winner=+1
+run seed=3 T1=958.5 T1/tau_sw=11.476 winner=-1
+run seed=8 T1=244.2 T1/tau_sw=2.923 winner=+1
+run seed=10 T1=161.4 T1/tau_sw=1.933 winner=+1
+run seed=6 T1=700.2 T1/tau_sw=8.384 winner=-1
+run seed=9 T1=577.1 T1/tau_sw=6.910 winner=-1
+run seed=7 T1=1499.4 T1/tau_sw=17.951 winner=+1
+run seed=11 T1=1095.8 T1/tau_sw=13.119 winner=-1
+SUMMARY shell: reached one hand 12/12 by 30 tau_sw; T1/tau_sw median 5.80 min 1.93 max 17.95
+# wall time 195 s

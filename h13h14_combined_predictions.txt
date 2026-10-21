@@ -1,0 +1,98 @@
+h13h14_combined_predictions.txt  (v1, written 2026-10-21 ~01:50 PDT, BEFORE any run of h13h14_combined.py or of
+h13_sphere_shares.py with f > 30)
+
+QUESTION. How far do the world shares move when the sweep's sideways coarsening term (L/A)^2/D_h is slowed by the
+COMBINED sphere x eddy factor f?  Method: h13_sphere_shares.py f=1,17,34,100,136,300,1000 (U.A = 5.5/sqrt(f), same
+quantity as coarsen_slow.run(f)); loss = share at f = 1 minus share at f, in percentage points of all N = 200,000 draws
+(1 point = 2,000 draws), seed 0.  "Largest loss" = the line the script prints: max over the 15 worlds and the 4 columns
+(main no lid, main final, x10 no lid, x10 final).  "Main columns" = main no lid and main final.
+
+WHERE f COMES FROM (each row is a pre-registered reading of an existing log; none of it is rerun here)
+  sphere alone           f_t = 17   (p90 of T1/tau_sw on a sphere, h13_sphere_score.log)
+  S50 = 1.4-2.2 at l/w 3.6 (sets A-E; B 2.01)  f = 17 x 2.0 = 34   (h14b_advect.log:58-80, the only l/w measured at several L)
+  S50 = 5.8-6.3 at l/w 10 (sets F, G; set H, a larger box, 3.4)  f = 17 x 6 ~ 100 (98-107; 57 for set H)
+  S50 > 8 (censored) at l/w 30 f >= 136 = 17 x 8 (a LOWER bound on the combined factor at l/w 30; set I)
+  molecular-only ceiling S 9-13: f = 153-221   (sets J, K: 9.33, 13.36)
+  f = 300 and f = 1000 are stress points beyond anything measured (S = 17.6 and 58.8).
+ASSUMPTIONS (stated, not tested here):
+  (A1) The two factors MULTIPLY: f = 17 x S.  The sphere factor was measured without flow; S was measured in a flat
+       periodic box with flow, as time since freeze-out over the no-flow t17(L) of the same box.  Multiplying assumes
+       the eddy slowdown is the same on a sphere and that the sphere's wall geometry does not change it.
+  (A2) 17 is a p90 and S50 is a median, so the product mixes two statistics.  S80 is censored (> 5.3 to > 16) in most
+       sets, so the product with S80 would be larger; f = 136, 300, 1000 cover that side.
+  (A3) The script applies f to EVERY draw (a worst case: draws with eddy size l <= w, about a third of Ganymede's
+       P_pved draws at U = 1 m/s, h14_eddy.log:95-98, would get no slowdown in nature).
+
+WHAT WAS SEEN BEFORE WRITING (disclosure; nothing was run for this file)
+  h13_sphere_shares.log (f <= 30: Ganymede loses 0.06 / 0.16 / 0.32 / 0.57 at f = 8 / 17 / 23 / 30, lines 36-41 of that
+  log; first flip of the sideways test at f = 14.4 for Ganymede), h14_eddy.log:81-171 (draws P_pved at f = 1 that stop
+  being P_pved at f = 100 and 1000, counted inside {l > w}; same multiwall.multi and same draws as coarsen_slow.run, N
+  = 200,000, "non-monotone draws 0"), h14b_advect.log:58-80, the f = 1 shares in h13_sphere_shares.log:21-35, and
+  ija_draft.md:789-790.  No predictions below were fitted to a run of f > 30.
+  KEY ARITHMETIC (a floor, because every lost draw inside the subset is a lost draw overall):
+    main no lid lost draws at x100, largest subset (l at U 1) / smallest subset (l at U 0.02):
+      Ganymede 5009 / 3743 (2.50 / 1.87 points)   Callisto 4358 / 3375 (2.18 / 1.69)   Titan 3953 / 3017 (1.98 / 1.51)
+      Europa 1022 / 721 (0.51 / 0.36)  Enceladus 889 / 575 (0.44 / 0.29)  Triton 811 / 597 (0.41 / 0.30)
+      Mimas 631 / 389 (0.32 / 0.19)  Pluto 508 / 387 (0.25 / 0.19)  all others <= 182 (<= 0.09)  Early Earth 0
+    at x1000: Ganymede 20753 (10.38 points), Callisto 19848, Titan 16965, Europa 9539, Early Earth 2 draws (0.001).
+    At x10 the overall lost count was 1.00-1.05 times the largest subset (Ganymede 157 vs 149).
+
+------------------------------------------------------------------------------------------------------------------
+PREDICTIONS  (a prediction is HELD only if EVERY part of it holds as written; bands are fixed now and are never retuned)
+------------------------------------------------------------------------------------------------------------------
+(P0) Regression.  The script's own check "f = 1 against the logged values: max |difference|" prints <= 0.05 points, and
+     the f = 17 line reproduces h13_sphere_shares.log:38 (0.16 points, Ganymede, main no lid) to within 0.01.
+
+(P1) (a) Largest loss and the world, printed by the script ("largest loss against f = 1 is X points (World, column ...)"):
+        f = 17    0.15 <= X <= 0.17     Ganymede
+        f = 34    0.60 <= X <= 0.90     Ganymede      (central 0.72)
+        f = 100   2.50 <= X <= 3.50     Ganymede      (central 2.7; 2.50 is the floor from the arithmetic above)
+        f = 136   2.90 <= X <= 4.40     Ganymede      (central 3.3)
+        f = 300   4.60 <= X <= 7.20     Ganymede      (central 5.6)
+        f = 1000  10.40 <= X <= 13.50   Ganymede      (central 11; Callisto is within 0.5 point and may swap places,
+                                                       which would make this part FAILED as written)
+     The column named is "main no lid" or "main final" (Ganymede has no lid, so both are equal; the script prints
+     the first).  X is non-decreasing in f.
+
+(P2) (b) Worlds that lose >= 1.00 point in a main column at f = 100:  exactly {Ganymede, Titan, Callisto}.
+     Europa (0.4-0.6 expected), Enceladus, Triton, Mimas, Pluto and the other eight lose < 1.00 in both main columns.
+     At f = 34 NO world loses >= 1.00 point in any of the four columns.  (The x10 columns are reported at f = 100 but
+     not scored: they carry about 0.6 of the main loss, so Titan and Callisto sit near 1 there.)
+
+(P3) (c) Early Earth ocean stays at 99.9 at every f: the printed values in all four columns equal their f = 1 values
+     (99.9 / 99.9 / 99.7 / 99.7) at f = 17, 34, 100, 136, 300 and 1000, and its loss is <= 0.01 point at every f
+     (expected 0.000-0.002).
+
+(P4) (d) Rank order.  Rank = descending order of the 15 worlds by the share in a column, from the unrounded shares the
+     wrapper holds, f against f = 1.  At f = 17 and f = 34: no pair changes order in any column.
+     At f = 100: the SAME order in both "final" columns (main final, x10 final), and in the two no-lid columns the only
+     pairs that change are Dione with Ganymede and Dione with Callisto (Dione, 42.0 / 32.2 with no lid, passes the two
+     large moons that lose 2.2-2.7 points from 44.1 / 43.5; Dione's own loss is 0.03).  In main no lid BOTH swaps occur
+     (Ganymede 44.1 - 2.5 or more = 41.6 or less < Dione 42.0; Callisto 43.5 - 2.18 or more < 42.0).  The x10 no-lid swaps
+     are not required individually.  Margins that could still flip an "unchanged" pair: Ganymede/Callisto (0.6 at f = 1),
+     Callisto/Pluto (2.4 at f = 1) in the main columns; I put 85% on none of them flipping.
+
+(P5) First f of the grid with any world >= 1.00 point (any of the four columns): f = 100  (34 gives < 1.00, 100 gives
+     >= 1.00).  The largest loss therefore crosses 1 point between f = 34 and f = 100 (log-log interpolation: f ~ 40-45).
+
+------------------------------------------------------------------------------------------------------------------
+DECISION RULE  (applied to the printed f = 34 and f = 100 results; the 1 point threshold is the one used elsewhere in
+the paper's limitations: "any share by at most 0.6 points", "within 0.13 points")
+------------------------------------------------------------------------------------------------------------------
+ R1. If no world loses >= 1.00 point in a main column at f = 100: ija_draft.md:789's "never limits" is kept, with the
+     bound "for a combined factor up to 100 (the sphere factor 17 times the measured eddy slowdown at l/w = 10)" stated.
+ R2. Else if no world loses >= 1.00 point in any column at f = 34: "never limits" is kept ONLY for the one measured
+     eddy size (l/w = 3.6, f = 34), and is replaced for larger eddies by a sentence giving the loss at f = 100 for
+     the worlds that lose >= 1 point (their names and points), the statement that the other worlds lose < 1 point, and
+     the rank changes found.  "Never" is dropped.  [Predicted branch.]
+ R3. Else (a world loses >= 1.00 point at f = 34 already): "never limits" is dropped outright, and the sentence reports
+     the smallest grid f at which the first world loses 1 point and the loss at f = 34.
+ R4. Independently: if any rank change occurs at f = 100, the sentence "the order of the worlds holds by construction
+     against any effect that hits every world equally" (ija_draft.md:791) needs the qualification that the effect
+     here is not equal across worlds (it scales with L^2/D_h); the pairs that swap are named.
+ R5. The mix line (every draw with its own sphere f_t resampled from h13_sphere_s16_f50.log) is the sphere factor alone
+     and is NOT a combined result; it is printed and is not scored.
+ All of this applies to f applied to every draw (A3) and to the assumed product (A1); neither is tested.
+
+SCORING.  Each of P0-P5 is marked HELD or FAILED as written, with the log line numbers.  A band missed by any amount is
+FAILED; nothing is re-tuned after the run.  Parts that are "reported, not scored" are listed in the notes without a mark.

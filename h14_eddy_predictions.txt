@@ -1,0 +1,70 @@
+h14_eddy_predictions.txt, v1. Written 2026-10-21, BEFORE any run of h14_eddy.py (no draw has been looked at; the only
+numbers seen are the logged coarsen_slow.log values and my own paper-and-pencil estimates below).
+
+QUESTION (open item H14, ija_draft.md:252; E86, :187; Section 2.3, :479): in what share of the sweep's sampled input
+sets is the energetic eddy size l larger than the wall width w = sqrt(D_h / k), k = k2 * c, and does E86's x4 / x10
+slowdown of the sideways coarsening time (coarsen_slow.py / coarsen_slow.log) already cover those draws?
+
+DEFINITIONS
+  Draws: sweep2.chains(0) under the lid_melt seedfix, N = 200,000, 15 worlds, the same draws as coarsen_slow.py.
+  w = sqrt(D_h / (k2 * c)) per draw (m). "l > w" is the event that Section 2.3's condition l < w FAILS.
+  P_pved = multiwall.multi(...)[0], rule "main" (and x10 rule), no lid and final (salt lid), as in coarsen_slow.py.
+  Slowdown f: U.A -> U.A / sqrt(f), as coarsen_slow.py (coarsening time x f). Ladder of f is fixed in the script.
+
+EDDY SIZES l (m), fixed before the run. Not drawn: the share is a deterministic function mean(w < l), reported at
+three points and averaged over a log-uniform l between the end points.
+  Scaling (all 15 worlds): Rhines-type scale l = sqrt(2 U / beta), beta = 2 Omega / R at the equator (Ashkenazy and
+  Tziperman 2021, Nat. Commun. 12:6376, doi 10.1038/s41467-021-26710-0, "Spacing between the Taylor columns": their
+  L = sqrt(2U/beta) = 40 km for beta = 2.6e-11 and U ~ 0.02 m/s). Kang et al. 2022 (Sci. Adv. 8:eabm4665,
+  doi 10.1126/sciadv.abm4665) use sqrt(U/beta) (3 km for U ~ 1e-3, beta ~ 1e-10); the sqrt(2) between the two is inside
+  the range below. U = 1e-3 m/s (Kang 2022, Enceladus) / 0.02 m/s (Ashkenazy 2021, Europa; "typ") / 1 m/s (peak zonal
+  jets, Soderlund 2019, GRL 46:8700, doi 10.1029/2018GL081880: the upper end, not an eddy speed).
+  Omega = 2 pi / P, synchronous rotation ASSUMED (NASA NSSDC satellite fact sheets mark all of them "S"; periods from
+  those sheets). R = L / pi of the sweep (ocean radius). Early Earth uses today's Omega (23.9 h), flagged.
+  Approximate values, km, at U = 1e-3 / 0.02 / 1 m/s:
+    Enceladus 2.1/9.4/66   Europa 8.4/38/267    Ganymede 16/72/509   Titan 24/106/751   Callisto 24/105/744
+    Triton 10/47/331       Pluto 10/46/323      Titania 10/44/307    Oberon 12/53/375   Umbriel 6/26/183
+    Ariel 4.5/20/142       Dione 4.6/20/145     Miranda 2.1/9.6/68   Mimas 1.6/7/51     Early Earth 9/42/295
+  Literature (eddy-resolving studies), km:
+    Enceladus 3 (Kang 2022 l_GM ~ 3 km; Zhang, Kang and Marshall 2024, Sci. Adv. 10:eadn6857,
+      doi 10.1126/sciadv.adn6857, "several kilometers").
+    Europa 20 to 50 (Ashkenazy and Tziperman 2021: Taylor-column width and separation 20-50 km, 3D run).
+    Early Earth 25 to 250 (Faghmous et al. 2015, Sci. Data 2:150028, doi 10.1038/sdata.2015.28: eddy RADIUS 25-250 km,
+      present-day ocean; early-Earth eddies are not constrained).
+  Tied variant (cross-check): l = D_h / U with U log-uniform 1e-3..1 m/s per draw (l/w = sqrt(D_h k) / U).
+
+PREDICTIONS (share = % of ALL 200,000 draws unless stated)
+ P1  Literature sizes, independent of D_h. PASS if all three hold: Enceladus at 3 km 5-15%; Europa at 20 km 15-30% and
+     at 50 km 22-38%; Early Earth at 25 km 6-20% and at 250 km 30-52%. FAIL if any is outside. (Paper-and-pencil:
+     ~10%, ~22% / ~30%, ~12% / ~41%, from log10 w ~ Normal(5.5, 1.55) for the moons, Normal(5.6, 1.0) for Earth.)
+ P2  Typical eddy (U = 0.02 m/s). PASS if all 15 worlds lie in 8-45% AND the order Titan and Callisto > Europa >
+     Enceladus holds in the printed percentages. (Estimates 14-38%.)
+ P3  Upper end (U = 1 m/s). PASS if (a) no world exceeds 50% at U = 0.02 m/s, and (b) the set of worlds above 50% at
+     U = 1 m/s contains Titan and Callisto and is contained in {Ganymede, Titan, Callisto, Oberon, Triton, Pluto,
+     Titania}. (Estimates: Titan, Callisto 59%, Ganymede 55%, Oberon 52%, Triton and Pluto 50%, Titania 49%.)
+     So the answer to "which worlds have l > w in MOST draws" is: none at the literature or typical size; only the
+     large, slowly rotating worlds if their eddies reach the Rhines scale of a 1 m/s flow.
+ P4  Tied variant. PASS if the share is below 8% in all 14 moons AND 8-35% for Early Earth AND the tied share is
+     below the typical-l share in every world. (Estimates 1-4% moons, ~20% Earth.)
+ P5  Among draws that are P_pved at f = 1 (main, no lid) the share at typical l is larger than among all draws in at
+     least 10 of the 15 worlds, and differs from the all-draw share by less than 20 points in every world.
+     (Reason: P_pved needs k t >= 10, so a larger k, so a smaller w; offset by the across condition favouring large D_h.)
+ P6  E86 covers the x4 and x10 draws. PASS if, in every world, rule and lid, the draws among {l > w at typical l} that
+     are P_pved at f = 1 and stop being P_pved at f = 10 number at most 0.15% of N (300 draws) and at f = 4 at most
+     0.10% of N. (coarsen_slow.log: largest total loss 0.0 / 0.1 points at x4 / x10.) FAIL otherwise.
+ P7  Beyond x10. PASS if the share of {l > w, P_pved at f = 1} draws that stop being P_pved is at most 10% at f = 100
+     and at most 50% at f = 1000 in every world (main rule, no lid and final).
+ P8  Tested range. The only measured point is l/w = 3.6 (advect2d.py). PASS if in every world the share of {l > w at
+     typical l} draws with l/w > 3.6 lies between 35% and 75% (about half the draws are beyond the test).
+
+DECISION RULE (fixed now)
+ - "Share of draws with l > w" is reported as the three-point bracket (U = 1e-3 / 0.02 / 1 m/s), the literature value
+   where one exists, and the log-uniform average; none of these is a probability of the real world, only of the sweep.
+ - E86's x4 / x10 bound COVERS the l > w draws in a world if P6 passes there AND at least 50% of that world's l > w
+   draws have l/w <= 3.6 (inside the test). If P6 passes but fewer than half are inside the test, the bound covers them
+   only if the unmeasured slowdown at l/w > 3.6 stays below the break-even f read off the ladder (stated per world, with
+   the f at which 5% of the l > w P_pved draws are lost). If P6 fails in any world, E86 does NOT cover that world.
+ - H14 is closed only if the bound COVERS every world at typical l (and then still "bounded, not measured beyond
+   l/w = 3.6"). Otherwise the item stays open with the break-even f stated.
+ - Failed predictions are reported as failed; no prediction is edited after the first results run (a v2 file would be
+   written and said so).

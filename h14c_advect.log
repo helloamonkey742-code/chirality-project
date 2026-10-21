@@ -1,0 +1,170 @@
+self-check passed (1s): nk fix {'S': (1000, 1000), 'M': (400, 400), 'B': (24, 24)} and unchanged for all Tk < 100 (0.2 grid); g from actual gamma; D_eddy = D_eff - D_mol by construction; tiny job()/pool() consistent; 22 jobs; 15 worlds parsed from h14_eddy.log
+
+jobs (longest first):
+  V32_30#0: L=1066 N=1066 h=1 dt=0.2 gamma=0.0008 D_eff=32 runs=1 hold=30522 (26 t17) l/w=29.99 Tk=250.6 A=249.3
+  V32_30#1: L=1066 N=1066 h=1 dt=0.2 gamma=0.0008 D_eff=32 runs=1 hold=30522 (26 t17) l/w=29.99 Tk=250.6 A=249.3
+  V32_30#2: L=1066 N=1066 h=1 dt=0.2 gamma=0.0008 D_eff=32 runs=1 hold=30522 (26 t17) l/w=29.99 Tk=250.6 A=249.3
+  V32_30#3: L=1066 N=1066 h=1 dt=0.2 gamma=0.0008 D_eff=32 runs=1 hold=30522 (26 t17) l/w=29.99 Tk=250.6 A=249.3
+  V32_30#4: L=1066 N=1066 h=1 dt=0.2 gamma=0.0008 D_eff=32 runs=1 hold=30522 (26 t17) l/w=29.99 Tk=250.6 A=249.3
+  V32_30#5: L=1066 N=1066 h=1 dt=0.2 gamma=0.0008 D_eff=32 runs=1 hold=30522 (26 t17) l/w=29.99 Tk=250.6 A=249.3
+  V32_30#6: L=1066 N=1066 h=1 dt=0.2 gamma=0.0008 D_eff=32 runs=1 hold=30522 (26 t17) l/w=29.99 Tk=250.6 A=249.3
+  V32_30#7: L=1066 N=1066 h=1 dt=0.2 gamma=0.0008 D_eff=32 runs=1 hold=30522 (26 t17) l/w=29.99 Tk=250.6 A=249.3
+  V64_10#0: L=503 N=503 h=1 dt=0.2 gamma=0.0073 D_eff=64 runs=21 hold=6274 (48 t17) l/w=10.01 Tk=27.4 A=117.5
+  V64_10#1: L=503 N=503 h=1 dt=0.2 gamma=0.0073 D_eff=64 runs=21 hold=6274 (48 t17) l/w=10.01 Tk=27.4 A=117.5
+  V32_10#0: L=355 N=355 h=1 dt=0.2 gamma=0.0072 D_eff=32 runs=48 hold=3906 (30 t17) l/w=9.99 Tk=27.8 A=83.0
+  V32_10#1: L=355 N=355 h=1 dt=0.2 gamma=0.0072 D_eff=32 runs=48 hold=3906 (30 t17) l/w=9.99 Tk=27.8 A=83.0
+  K32: L=355 N=355 h=1 dt=0.2 gamma=0.01 D_eff=32 runs=12 hold=11718 (90 t17) no flow
+  R8_10#0: L=178 N=178 h=1 dt=0.2 gamma=0.0065 D_eff=8 runs=48 hold=3144 (24 t17) l/w=10.02 Tk=31 A=41.7
+  R8_10#1: L=178 N=178 h=1 dt=0.2 gamma=0.0065 D_eff=8 runs=48 hold=3144 (24 t17) l/w=10.02 Tk=31 A=41.7
+  J64: L=181 N=181 h=1 dt=0.2 gamma=0.01 D_eff=64 runs=96 hold=2540 (150 t17) no flow
+  V32_3.6h: L=128 N=256 h=0.5 dt=0.05 gamma=0.01 D_eff=32 runs=48 hold=408 (24 t17) l/w=3.60 Tk=3.6 A=29.9
+  V64_3.6: L=181 N=181 h=1 dt=0.2 gamma=0.01 D_eff=64 runs=96 hold=678 (40 t17) l/w=3.60 Tk=3.6 A=42.6
+  J32: L=128 N=128 h=1 dt=0.2 gamma=0.01 D_eff=32 runs=96 hold=1356 (80 t17) no flow
+  V32_3.6: L=128 N=128 h=1 dt=0.2 gamma=0.01 D_eff=32 runs=192 hold=408 (24 t17) l/w=3.60 Tk=3.6 A=29.9
+  V32_3.6m: L=128 N=128 h=1 dt=0.2 gamma=0.0556 D_eff=32 runs=96 hold=408 (24 t17) l/w=3.60 Tk=3.6 A=29.9
+  R8_3.6: L=64 N=64 h=1 dt=0.2 gamma=0.01 D_eff=8 runs=96 hold=204 (12 t17) l/w=3.60 Tk=4 A=15.0
+  job done: V32_30#2 [156s] walled 1/1 cleared 1 cut=False (elapsed 158s)
+  job done: V32_30#1 [163s] walled 1/1 cleared 1 cut=False (elapsed 165s)
+  job done: V32_30#0 [225s] walled 1/1 cleared 1 cut=False (elapsed 227s)
+  job done: V32_30#3 [228s] walled 1/1 cleared 1 cut=False (elapsed 230s)
+  job done: V32_30#5 [243s] walled 1/1 cleared 1 cut=False (elapsed 408s)
+  job done: V32_30#4 [274s] walled 1/1 cleared 1 cut=False (elapsed 432s)
+  job done: V32_30#6 [234s] walled 1/1 cleared 1 cut=False (elapsed 461s)
+  job done: V32_30#7 [240s] walled 1/1 cleared 1 cut=False (elapsed 471s)
+  job done: V64_10#0 [159s] walled 21/21 cleared 21 cut=False (elapsed 568s)
+  job done: V64_10#1 [175s] walled 21/21 cleared 21 cut=False (elapsed 608s)
+  job done: V32_10#0 [162s] walled 48/48 cleared 48 cut=False (elapsed 624s)
+  job done: R8_10#0 [26s] walled 48/48 cleared 48 cut=False (elapsed 633s)
+  job done: V32_10#1 [164s] walled 48/48 cleared 48 cut=False (elapsed 635s)
+  job done: R8_10#1 [26s] walled 48/48 cleared 48 cut=False (elapsed 650s)
+  job done: V64_3.6 [23s] walled 96/96 cleared 96 cut=False (elapsed 673s)
+  job done: V32_3.6h [55s] walled 42/48 cleared 42 cut=False (elapsed 690s)
+  job done: J32 [23s] walled 96/96 cleared 62 cut=False (elapsed 696s)
+  job done: V32_3.6m [7s] walled 96/96 cleared 96 cut=False (elapsed 704s)
+  job done: R8_3.6 [2s] walled 30/96 cleared 30 cut=False (elapsed 706s)
+  job done: V32_3.6 [19s] walled 167/192 cleared 167 cut=False (elapsed 708s)
+  job done: K32 [143s] walled 12/12 cleared 10 cut=False (elapsed 711s)
+  job done: J64 [85s] walled 96/96 cleared 55 cut=False (elapsed 718s)
+
+NK FIX (advect2d.py:246), old -> new: S: 1000 -> 1000, M: 400 -> 400, B: 24 -> 24; Tk 31: 4 -> 4; Tk 100: 0 -> 2; Tk 277.4: 0 -> 2; unchanged for every Tk < 100 (0.2 grid, asserted)
+
+REALISED D_eddy (fixed tracer_lagrangian, advect2d.L set to the box; mean of 2 seeds) and cubic-kick numerical diffusion at wavelength 6.4 cells
+  D_eff  32 l/w 30.0 L  1066 Tk  250.6: D_eddy measured 31.087 nominal 31 (ratio 1.003); D_num/D_mol 0.0001
+  D_eff  64 l/w 10.0 L   503 Tk   27.4: D_eddy measured 63.668 nominal 63 (ratio 1.011); D_num/D_mol 0.0005
+  D_eff  32 l/w 10.0 L   355 Tk   27.8: D_eddy measured 31.329 nominal 31 (ratio 1.011); D_num/D_mol 0.0005
+  D_eff   8 l/w 10.0 L   178 Tk   31.0: D_eddy measured 7.074 nominal 7 (ratio 1.011); D_num/D_mol 0.0004
+  D_eff  32 l/w  3.6 L   128 Tk    3.6: D_eddy measured 31.043 nominal 31 (ratio 1.001); D_num/D_mol 0.0036
+  D_eff  64 l/w  3.6 L   181 Tk    3.6: D_eddy measured 63.291 nominal 63 (ratio 1.005); D_num/D_mol 0.0036
+  D_eff   8 l/w  3.6 L    64 Tk    4.0: D_eddy measured 7.035 nominal 7 (ratio 1.005); D_num/D_mol 0.0033
+
+CASES  (box L, cells N, h, dt, gamma, D_eff, D_mol/D_eff, l/w, Tk, A, kappa, t17, kicks between lam=0 and end of sweep, runs, walled at freeze-out, hold, cens at end, cut, cpu s)
+  V32_30    L=1066 N=1066 h=1 dt=0.2 g=0.0008 Deff=32 1/32 l/w=29.99 Tk=250.6 A=249.3 kappa=1.47 kicks_pre=5.0 t17=1173.9 runs=8 walled=8 (1.000) hold=30522 (26 t17) cens_at_end=0 cut=False cpu=1766
+  V64_10    L=503 N=503 h=1 dt=0.2 g=0.0073 Deff=64 1/64 l/w=10.01 Tk=27.4 A=117.5 kappa=1.47 kicks_pre=5.0 t17=130.7 runs=42 walled=42 (1.000) hold=6274 (48 t17) cens_at_end=0 cut=False cpu=335
+  V32_10    L=355 N=355 h=1 dt=0.2 g=0.0072 Deff=32 1/32 l/w=9.99 Tk=27.8 A=83.0 kappa=1.47 kicks_pre=5.0 t17=130.2 runs=96 walled=96 (1.000) hold=3906 (30 t17) cens_at_end=0 cut=False cpu=326
+  K32       L=355 N=355 h=1 dt=0.2 g=0.01 Deff=32 1/32 no flow t17=130.2 runs=12 walled=12 (1.000) hold=11718 (90 t17) cens_at_end=2 cut=False cpu=143
+  R8_10     L=178 N=178 h=1 dt=0.2 g=0.0065 Deff=8 1/8 l/w=10.02 Tk=31 A=41.7 kappa=1.47 kicks_pre=5.0 t17=130.9 runs=96 walled=96 (1.000) hold=3144 (24 t17) cens_at_end=0 cut=False cpu=52
+  J64       L=181 N=181 h=1 dt=0.2 g=0.01 Deff=64 1/64 no flow t17=16.9 runs=96 walled=96 (1.000) hold=2540 (150 t17) cens_at_end=41 cut=False cpu=85
+  V32_3.6h  L=128 N=256 h=0.5 dt=0.05 g=0.01 Deff=32 1/32 l/w=3.60 Tk=3.6 A=29.9 kappa=1.47 kicks_pre=27.8 t17=16.9 runs=48 walled=42 (0.875) hold=408 (24 t17) cens_at_end=0 cut=False cpu=55
+  V64_3.6   L=181 N=181 h=1 dt=0.2 g=0.01 Deff=64 1/64 l/w=3.60 Tk=3.6 A=42.6 kappa=1.48 kicks_pre=27.8 t17=16.9 runs=96 walled=96 (1.000) hold=678 (40 t17) cens_at_end=0 cut=False cpu=23
+  J32       L=128 N=128 h=1 dt=0.2 g=0.01 Deff=32 1/32 no flow t17=16.9 runs=96 walled=96 (1.000) hold=1356 (80 t17) cens_at_end=34 cut=False cpu=23
+  V32_3.6   L=128 N=128 h=1 dt=0.2 g=0.01 Deff=32 1/32 l/w=3.60 Tk=3.6 A=29.9 kappa=1.47 kicks_pre=27.8 t17=16.9 runs=192 walled=167 (0.870) hold=408 (24 t17) cens_at_end=0 cut=False cpu=19
+  V32_3.6m  L=128 N=128 h=1 dt=0.2 g=0.0556 Deff=32 1/32 l/w=3.60 Tk=3.6 A=29.9 kappa=1.47 kicks_pre=5.0 t17=16.9 runs=96 walled=96 (1.000) hold=408 (24 t17) cens_at_end=0 cut=False cpu=7
+  R8_3.6    L=64 N=64 h=1 dt=0.2 g=0.01 Deff=8 1/8 l/w=3.60 Tk=4 A=15.0 kappa=1.47 kicks_pre=25.0 t17=16.9 runs=96 walled=30 (0.312) hold=204 (12 t17) cens_at_end=0 cut=False cpu=2
+
+SLOWDOWN  (time since the end of the sweep / t17(L, D_eff); Kaplan-Meier over runs walled at freeze-out; bootstrap over runs, 2000x)
+  V32_30    S50 11.84  [68% 11.52-12.41; 95% 10.52-14.24] | S80 14.41  [68% 14.24-14.61; 95% 11.84-14.61] | S_half 7.87  [68% 7.25-8.43; 95% 6.78-8.72]
+            walled fraction 1.000  wall0 22.439  mean domains at t0 7.25  cleared by t17 multiples (all walled runs, KM): 4:0.00 8:0.00 12:0.50 16:1.00 24:1.00
+  V64_10    S50 13.21  [68% 12.71-13.75; 95% 11.80-14.28] | S80 17.22  [68% 15.62-18.96; 95% 14.85-20.10] | S_half 7.71  [68% 7.27-8.30; 95% 6.91-8.58]
+            walled fraction 1.000  wall0 23.643  mean domains at t0 12.19  cleared by t17 multiples (all walled runs, KM): 4:0.00 8:0.00 12:0.38 16:0.76 24:1.00
+  V32_10    S50 10.27  [68% 10.02-10.73; 95% 9.48-11.32] | S80 13.62  [68% 13.20-15.17; 95% 12.71-16.04] | S_half 6.38  [68% 6.15-6.60; 95% 5.75-7.01]
+            walled fraction 1.000  wall0 16.417  mean domains at t0 7.91  cleared by t17 multiples (all walled runs, KM): 4:0.00 8:0.17 12:0.66 16:0.86 24:0.99
+  K32       S50 39.12  [68% 35.45-42.11; 95% 29.39-63.37] | S80 79.88  [68% 42.11-undefined; 95% 40.74-undefined] | S_half 2.93  [68% 2.73-3.18; 95% 2.51-3.45]
+            walled fraction 1.000  wall0 12.811  mean domains at t0 10.83  cleared by t17 multiples (all walled runs, KM): 4:0.00 8:0.00 12:0.00 16:0.00 24:0.08
+  R8_10     S50 5.76  [68% 5.18-6.07; 95% 4.94-6.44] | S80 8.86  [68% 8.59-9.54; 95% 7.63-9.78] | S_half 3.54  [68% 3.30-3.79; 95% 3.07-4.03]
+            walled fraction 1.000  wall0 6.788  mean domains at t0 3.43  cleared by t17 multiples (all walled runs, KM): 4:0.24 8:0.72 12:0.96 16:0.98 24:1.00
+  J64       S50 116.53  [68% 108.62-141.59; 95% 96.56-undefined] | S80 undefined (censored; > 150.10)  [68% undefined-undefined; 95% undefined-undefined] | S_half 20.53  [68% 19.34-21.69; 95% 18.23-22.66]
+            walled fraction 1.000  wall0 6.338  mean domains at t0 3.99  cleared by t17 multiples (all walled runs, KM): 4:0.00 8:0.00 12:0.00 16:0.00 24:0.02
+  V32_3.6h  S50 4.02  [68% 3.31-4.25; 95% 2.95-4.49] | S80 6.14  [68% 5.91-6.85; 95% 5.44-8.04] | S_half 2.35  [68% 2.03-2.80; 95% 1.91-3.33]
+            walled fraction 0.875  wall0 5.619  mean domains at t0 3.77  cleared by t17 multiples (all walled runs, KM): 4:0.48 8:0.88 12:0.98 16:0.98 24:1.00
+  V64_3.6   S50 5.55  [68% 5.08-6.38; 95% 4.61-7.45] | S80 9.34  [68% 8.75-9.46; 95% 8.51-9.81] | S_half 3.64  [68% 3.41-3.87; 95% 3.03-4.12]
+            walled fraction 1.000  wall0 9.720  mean domains at t0 5.56  cleared by t17 multiples (all walled runs, KM): 4:0.28 8:0.67 12:0.92 16:0.98 24:1.00
+  J32       S50 46.56  [68% 42.54-55.77; 95% 40.18-58.96] | S80 undefined (censored; > 80.12)  [68% undefined-undefined; 95% undefined-undefined] | S_half 15.67  [68% 14.49-17.32; 95% 13.23-19.11]
+            walled fraction 1.000  wall0 4.203  mean domains at t0 2.93  cleared by t17 multiples (all walled runs, KM): 4:0.00 8:0.03 12:0.07 16:0.10 24:0.19
+  V32_3.6   S50 3.54  [68% 3.31-3.78; 95% 2.95-4.14] | S80 6.62  [68% 6.14-7.21; 95% 5.91-7.44] | S_half 2.56  [68% 2.35-2.78; 95% 2.30-2.83]
+            walled fraction 0.870  wall0 5.006  mean domains at t0 3.42  cleared by t17 multiples (all walled runs, KM): 4:0.54 8:0.87 12:0.97 16:0.98 24:1.00
+  V32_3.6m  S50 8.74  [68% 8.15-9.10; 95% 7.92-9.93] | S80 12.64  [68% 11.34-13.23; 95% 10.75-14.06] | S_half 5.30  [68% 5.07-5.90; 95% 4.99-6.12]
+            walled fraction 1.000  wall0 10.995  mean domains at t0 6.23  cleared by t17 multiples (all walled runs, KM): 4:0.00 8:0.43 12:0.78 16:0.95 24:1.00
+  R8_3.6    S50 2.95  [68% 2.48-3.19; 95% 1.18-3.54] | S80 4.84  [68% 3.90-4.96; 95% 3.54-7.09] | S_half 2.13  [68% 2.01-2.32; 95% 1.81-2.72]
+            walled fraction 0.312  wall0 1.198  mean domains at t0 1.47  cleared by t17 multiples (all walled runs, KM): 4:0.73 8:0.93 12:1.00 16:1.00 24:1.00
+
+EXPONENT p in S50 ~ (l/w)^p at fixed ratio (S50 point; bootstrap)
+  D_eff 8  (3.6 -> 10): 0.65 [68% 0.52..0.84; 95% 0.38..1.53] undefined share 0.000   [h14b: 1.11, 95% 0.73-1.54, gamma 0.01 for both]
+  D_eff 32 (3.6 -> 10): 1.04 [68% 0.97..1.14; 95% 0.87..1.22] undefined share 0.000
+  D_eff 64 (3.6 -> 10): 0.85 [68% 0.72..0.94; 95% 0.58..1.05] undefined share 0.000
+  D_eff 32 (10 -> 30): lower bound from the longest observation at l/w 30 (S50 11.84): p >= 0.13
+RATIO EXPONENT q in S50 ~ (D_eff / D_mol)^q at fixed l/w (least squares over D_eff = 8, 32, 64)
+  l/w 3.6: q = 0.28 [68% 0.22..0.39; 95% 0.15..0.75] undefined share 0.000
+  l/w 10 : q = 0.40 [68% 0.36..0.46; 95% 0.33..0.50] undefined share 0.000
+  flow / molecular at the same box: V32_3.6 3.54 vs J32 46.56  ratio 0.08
+  flow / molecular at the same box: V32_10 10.27 vs K32 39.12  ratio 0.26
+  flow / molecular at the same box: V64_3.6 5.55 vs J64 116.53  ratio 0.05
+  ratio D_eff/D_mol at which S50(l/w 10) would reach the smallest world break-even f (100): point q 9.88e+03, q at 97.5% 3.77e+03, q at 2.5% 3.03e+04  (extrapolation, not a measurement)
+LOCAL ratio exponents (descriptive, not predictions; does S saturate with the ratio?)
+  l/w 3.6: D_eff 8 -> 32: q = 0.13 [95% -0.06..0.79]
+  l/w 3.6: D_eff 32 -> 64: q = 0.65 [95% 0.32..1.10]
+  l/w 10: D_eff 8 -> 32: q = 0.42 [95% 0.32..0.56]
+  l/w 10: D_eff 32 -> 64: q = 0.36 [95% 0.15..0.53]
+CONTROL (descriptive) V32_3.6m (gamma 0.0556, pre-time 1.06 t17) vs V32_3.6 (gamma 0.01, 5.9 t17): S50 8.74 vs 3.54, ratio 2.47 [95% 2.03..2.97], walled 1.000 vs 0.870
+
+PREDICTIONS (bands from h14c_predictions.txt)
+P1a HELD  R8_3.6: walled 0.312 (h14b B 0.323), S50 2.95 (B 2.01), S80 4.84 (B 4.37)
+P1b HELD  R8_10 S50 5.76 / 6.27 (h14b G) = 0.92; walled 1.000
+P2 HELD  7 flows: D_eddy within 5% of nominal 7/7; max D_num/D_mol 0.0036 (<= 0.02)
+P3 HELD  S50(h=1)/S50(h=0.5) at 1/32, l/w 3.6 = 0.88; walled 0.870 vs 0.875 (diff 0.005)
+P4 HELD  V32_3.6: S50 3.54 (guess 3.5), S80 6.62 (guess 8)
+P5 HELD  V32_10: S50 10.27 (guess 12), S80 13.62 (>= 9), walled 1.000
+P6 HELD  V64_10: S50 13.21 (guess 18), walled 1.000
+P7 FAILED  V32_30: S50 11.84 (a: > 8, the old floor; b: > 25 or undefined), cleared by 8 / 16 / 24 t17: 0.00 / 1.00 / 1.00; walled 1.000
+P8 FAILED  p(3.6->10) at 1/32 = 1.04 (97.5% bound 1.22; p = 1.1 NOT excluded); p(10->30) >= 0.13
+P9 HELD  q(l/w 3.6) = 0.28, q(l/w 10) = 0.40 (2.5% bound 0.33)
+P10 HELD  S50_mol J32 46.56, J64 116.53, K32 39.12; flow/mol 0.08 (<= 0.5), 0.26 (<= 0.8)
+P11 HELD  walled V32_3.6 0.870 (0.3-0.95), V64_3.6 1.000 (>= 0.4)
+P12 HELD  S_half/S50: V32_3.6 0.72, V32_10 0.62
+
+WORLDS (illustrative, not a measurement): S_ext(lw) = S50(V64_10 = 13.2) x (lw / 10)^p at D_eff/D_mol = 64, p = 1.04 (point) or 1.22 (97.5%); f_be = smaller non-None main break-even f (h14_eddy.log)
+  Enceladus          U0.02  lw med   4.3 p90   40.7 (h14_eddy.log:60) f_be 200 (:81) S_ext(p90)     57.1 /      73.4 -> below / below
+  Enceladus          U1     lw med   7.5 p90  132.1 (h14_eddy.log:60) f_be 200 (:83) S_ext(p90)    195.1 /     309.5 -> below / ABOVE
+  Europa             U0.02  lw med   6.4 p90   92.9 (h14_eddy.log:61) f_be 200 (:89) S_ext(p90)    135.2 /     201.3 -> below / ABOVE
+  Europa             U1     lw med  12.3 p90  328.1 (h14_eddy.log:61) f_be 200 (:91) S_ext(p90)    504.1 /     940.7 -> ABOVE / ABOVE
+  Ganymede           U0.02  lw med   7.7 p90  140.1 (h14_eddy.log:62) f_be 100 (:97) S_ext(p90)    207.5 /     332.6 -> ABOVE / ABOVE
+  Ganymede           U1     lw med  15.6 p90  520.0 (h14_eddy.log:62) f_be 100 (:99) S_ext(p90)    814.9 /    1651.3 -> ABOVE / ABOVE
+  Titan              U0.02  lw med   8.9 p90  174.9 (h14_eddy.log:63) f_be 100 (:103) S_ext(p90)    261.5 /     436.1 -> ABOVE / ABOVE
+  Titan              U1     lw med  18.5 p90  674.7 (h14_eddy.log:63) f_be 100 (:105) S_ext(p90)   1069.3 /    2270.0 -> ABOVE / ABOVE
+  Callisto           U0.02  lw med   8.6 p90  177.6 (h14_eddy.log:64) f_be 100 (:109) S_ext(p90)    265.7 /     444.4 -> ABOVE / ABOVE
+  Callisto           U1     lw med  18.5 p90  686.2 (h14_eddy.log:64) f_be 100 (:111) S_ext(p90)   1088.4 /    2317.4 -> ABOVE / ABOVE
+  Triton             U0.02  lw med   6.8 p90  107.4 (h14_eddy.log:65) f_be 200 (:115) S_ext(p90)    157.2 /     240.3 -> below / ABOVE
+  Triton             U1     lw med  13.4 p90  385.7 (h14_eddy.log:65) f_be 500 (:117) S_ext(p90)    596.7 /    1146.3 -> ABOVE / ABOVE
+  Pluto              U0.02  lw med   6.8 p90  104.0 (h14_eddy.log:66) f_be 500 (:121) S_ext(p90)    152.1 /     231.1 -> below / below
+  Pluto              U1     lw med  13.2 p90  377.9 (h14_eddy.log:66) f_be 500 (:123) S_ext(p90)    584.1 /    1118.0 -> ABOVE / ABOVE
+  Titania            U0.02  lw med   6.6 p90   98.7 (h14_eddy.log:67) f_be 1000 (:127) S_ext(p90)    144.0 /     216.8 -> below / below
+  Titania            U1     lw med  12.8 p90  362.8 (h14_eddy.log:67) f_be 1000 (:129) S_ext(p90)    559.8 /    1063.7 -> below / ABOVE
+  Oberon             U0.02  lw med   7.1 p90  114.9 (h14_eddy.log:68) f_be 1000 (:133) S_ext(p90)    168.7 /     261.0 -> below / below
+  Oberon             U1     lw med  13.9 p90  417.4 (h14_eddy.log:68) f_be 1000 (:135) S_ext(p90)    648.0 /    1262.4 -> below / ABOVE
+  Umbriel            U0.02  lw med   5.8 p90   74.3 (h14_eddy.log:69) f_be 10000 (:139) S_ext(p90)    107.1 /     153.2 -> below / below
+  Umbriel            U1     lw med  10.8 p90  262.8 (h14_eddy.log:69) f_be 10000 (:141) S_ext(p90)    399.9 /     717.3 -> below / below
+  Ariel              U0.02  lw med   5.4 p90   63.5 (h14_eddy.log:70) f_be 10000 (:145) S_ext(p90)     90.9 /     126.5 -> below / below
+  Ariel              U1     lw med   9.9 p90  216.6 (h14_eddy.log:70) f_be 10000 (:147) S_ext(p90)    326.9 /     566.4 -> below / below
+  Dione              U0.02  lw med   5.4 p90   64.3 (h14_eddy.log:71) f_be 10000 (:151) S_ext(p90)     92.1 /     128.4 -> below / below
+  Dione              U1     lw med   9.8 p90  219.7 (h14_eddy.log:71) f_be 10000 (:153) S_ext(p90)    331.7 /     576.3 -> below / below
+  Miranda            U0.02  lw med   4.4 p90   40.5 (h14_eddy.log:72) f_be 10000 (:157) S_ext(p90)     56.9 /      73.0 -> below / below
+  Miranda            U1     lw med   7.6 p90  132.3 (h14_eddy.log:72) f_be 10000 (:159) S_ext(p90)    195.4 /     310.1 -> below / below
+  Mimas              U0.02  lw med   4.1 p90   35.5 (h14_eddy.log:73) f_be 200 (:163) S_ext(p90)     49.5 /      62.1 -> below / below
+  Mimas              U1     lw med   6.9 p90  112.3 (h14_eddy.log:73) f_be 200 (:165) S_ext(p90)    164.7 /     253.8 -> below / ABOVE
+  Early Earth ocean  U0.02  lw med   2.6 p90   10.4 (h14_eddy.log:74) f_be 10000 (:169) S_ext(p90)     13.8 /      13.9 -> below / below
+  Early Earth ocean  U1     lw med   5.1 p90   39.1 (h14_eddy.log:74) f_be 10000 (:171) S_ext(p90)     54.8 /      69.9 -> below / below
+  worlds (of 15) with S_ext(p90 lw) < f_be: U 0.02: 12 (p point) / 10 (p 97.5%); U 1: 9 / 5
+P13 FAILED  U 0.02: 12 in [5, 12]; U 1: 9 <= 8
+P14 HELD  total 718 s, 4 workers, cut by guard: False
+
+SUMMARY  held: P1a, P1b, P2, P3, P4, P5, P6, P9, P10, P11, P12, P14 | failed: P7, P8, P13 | undecided: 
+DECISION (pre-registered): A (ratio-dependent: q 2.5% bound > 0.15) -> item 14 stays OPEN; the slowdown at l/w 10 grows with D_eff/D_mol; q(l/w 10) = 0.40 [95% 0.33..0.50]

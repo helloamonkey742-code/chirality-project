@@ -1,0 +1,75 @@
+h13_sphere_predictions.txt  (unit h13_sphere, H13 "case (i) coarsening on a sphere")
+Written before any results run. Never edited after the first results run; a change of course would be a v2 file.
+
+WHAT IS TESTED
+ Model: da/dt = a - a^3 + D lap(a), D = 1, no bias, on a sphere of radius R (a shallow ocean = a 2D surface), by
+ h13_sphere.py (spherical harmonics, SBDF2, dt 0.25). Control: the same rule on a flat periodic square (aniso3d.py slab).
+ Thin 3D check: sphere_layers.Shell, R = 16, nz = 8, dz = 0.5, D_z = D_h = 1 (h13_sphere_shell.py).
+ Start: smoothed noise (width 4) cut at area (volume) share f0 of the + ("favoured") hand.
+ T1 = first time the minority area share is < 1% ("one hand").  tau_sw = (pi R / 5.5)^2 / D = 0.3265 R^2/D  (sphere),
+ tau = (L/5.5)^2/D (flat square of side L).  f_t := T1 / tau_sw  (the factor by which the sweep's sideways time
+ (L/A)^2/D_h, uncertainty.py "across", would have to be multiplied to equal the sphere time; same meaning as the f
+ that coarsen_slow.py uses). "Share f" of Eq. 12 (molecule share, case (i) f = 1) is a different f; both are reported.
+ Jobs (seeds: run k uses seed0 + k):
+  S16a sphere R=16 f0=0.50 n=300 seed0=0      S16b sphere R=16 f0=0.55 n=300 seed0=1000
+  S32a sphere R=32 f0=0.50 n=32  seed0=0      S32b sphere R=32 f0=0.55 n=32  seed0=1000
+  S48a sphere R=48 f0=0.50 n=8   seed0=0
+  T32a flat L=32 f0=0.50 n=100 seed0=0        T32b flat L=32 f0=0.55 n=100 seed0=1000
+  T57a flat L=57 f0=0.50 n=100 seed0=0
+  T512 flat L=512 f0=0.50 n=4 seed0=0, tmax=500, no stop (exponent)
+  SPEC special size=16 (offset circles, symmetric wavy circles)
+  SHELL shell R=16 nz=8 dz=0.5 f0=0.50 n=12 seed0=0
+ All horizons are 30 tau (tau_sw for the sphere, (L/5.5)^2 for the flat square) unless stated.
+ Already seen before writing this file (smoke, disclosed in the script docstring): the cap law reproduced within 0.5% at
+ dt 0.25 and 0.125 and lmax = 48..80 (R=16) and 128 (R=32); one random patchwork per R (seed 999, R=16 and 32, f0=0.5,
+ stopped at t = 100) gave l(100) = 63.5 and 62.3, i.e. l/sqrt(Dt) = 6.3, and minority 0.496 and 0.425. So P3's A band is
+ informed by those two numbers; the others are from the theory below.
+
+THEORY USED (sharp interface, wall speed v = D kappa, Eq. 16)
+ A closed wall on a sphere is a curve; a cap wall of colatitude theta obeys d(cos theta)/dt = (D/R^2) cos theta, so
+ cos theta = u0 exp(D t / R^2), u0 = |mean(a)| of the nearly-circular two-domain state. Only exact great circles
+ (u = 0) are stationary, and they are unstable to a latitude shift at rate D/R^2; tilt (m = 1) is neutral (a rotation);
+ modes m >= 2 decay at (m^2 - 1) D/R^2. Hence every wall on a sphere is eventually removed, in a time
+ T = (R^2/D) ln(1/u0) + (earlier coarsening), and, because u0 has a finite density near 0, the survival
+ probability has a tail exp(-t D/R^2), i.e. an e-folding time R^2/D = 3.06 tau_sw. On a flat periodic square a pair of
+ straight walls is stationary and persists.
+
+PREDICTIONS (pass / fail rules)
+ P1  Share reaching one hand, sphere. Pooled over S16a, S16b, S32a, S32b, S48a, at most 1% of runs (at most 4 of ~680)
+     are still not at one hand at 30 tau_sw. FAIL if more than 1%.
+ P2  Flat control (stripes). Share NOT at one hand at the horizon: T32a in [0.25, 0.55]; T32b in [0.10, 0.50];
+     T57a in [0.20, 0.55]. (Motivation: aniso3d slab, 4 of 8 stuck, journals/ija_draft.md:251; no literature number used.)
+     FAIL if any is outside its band. The contrast with P1 (sphere ~0) is the point of the control.
+ P3  Coarsening law. T512: geometric-mean domain length l(t) = 2 Area / wall length fitted over t in [20, 500]
+     gives an exponent in [0.45, 0.55] and A = l / sqrt(Dt) (exponent fixed at 0.5) in [4.5, 8.5].
+     On the sphere (S32a) l(20) and l(40) are within 15% of T512's l(20) and l(40) (no sphere discretisation bias before
+     the sphere's own size matters). FAIL if any is outside. (The exponent cannot be fitted on the sphere itself: l
+     reaches 0.3 pi R within ~10-20 time units, so no scaling window exists at R <= 64; that is stated, not a failure.)
+ P4  Time to one hand vs the sweep's term, f0 = 0.50, f_t = T1 / tau_sw.
+     S16a (n = 300): median in [2, 6]; 90th percentile in [5, 14]; 99th percentile in [9, 24].
+     f = 1 (T1 <= tau_sw) would require median <= 1.5; predicted FAIL of that, i.e. f_t > 1.
+     f0 = 0.55 (S16b): median in [1.5, 5] and below the S16a median.
+ P5  R-independence and tail. Medians in units of R^2/D: S32a / S16a in [0.8, 1.25]; S48a / S16a in [0.7, 1.4].
+     Tail e-folding time of S16a (T1 above the median, survival fit) in [0.7, 1.4] R^2/D.
+ P6  Which hand wins. S16a + S32a pooled, share of runs where the + hand wins in [0.40, 0.60]; S16b + S32b pooled
+     in [0.80, 1.00] (E3 in coarsen3d.log gave 0.93 for f0 = 0.55 in the 3D box).
+ P7  Near-great-circle walls (SPEC, R = 16).
+     (a) offset circle cos(theta0) = u0 for u0 = 0.3, 0.1, 0.01, 0.001: T1 within 10% of (R^2/D) ln(0.98/u0), all four.
+     (b) symmetric wavy circle (wall at colatitude pi/2 + eps cos 2 phi, invariant under a quarter turn plus
+         reflection with a -> -a, so mean(a) = 0 for all time): m = 2 amplitude decays at a rate in [2.5, 3.5] D/R^2
+         (eps = 0.05, fit over t in [0.3, 1.5] R^2/D; linear theory 3).
+     (c) the same circles (eps = 0.05 and 0.3) still have minority share >= 0.45 at 30 tau_sw (stationary great circle).
+ P8  Thin 3D shell (SHELL). All 12 runs reach one hand within 30 tau_sw, and the median T1/tau_sw is within a factor
+     [0.6, 1.7] of the S16a median (a thin equal-mixing shell is 2D for this purpose).
+
+DECISION RULE (fixed now)
+ D0  Share f of Eq. 12 (molecule share in case (i)): if P1 holds, no flat wall persists on the sphere, so the
+     share f = 1 stays; the sphere changes the TIME, not the share.
+ D1  The time f_t. f = 1 stays only if the S16a median f_t <= 1.5 and the 90th percentile <= 2.5. Otherwise case (i)
+     needs a time factor f_t > 1.
+ D2  The value: f_t = the S16a 90th percentile of T1/tau_sw rounded up to an integer (the sweep is a single deterministic
+     threshold; this makes it true in 90% of random starts). The median and the 99th percentile are reported too.
+     The equivalent A in Eq. 17 is 5.5 / sqrt(f_t).
+ D3  Cover. If the S16a 99th percentile is <= 10, the existing coarsen_slow x10 bound (max loss 0.1 point, coarsen_slow.log)
+     already covers it; if it is > 10, coarsen_slow.run(f) is rerun for f = the 90th and the 99th percentile
+     (h13_sphere_shares.py) and the world-share changes are reported.

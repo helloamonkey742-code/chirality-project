@@ -1,0 +1,2 @@
+REPRO f = 1 and f = 1000, h13h14_extreme.log against h13h14_combined.log: 200 of 200 values identical
+  compared: 60 base, 2 ee, 1 f1check, 45 flip, 2 largest, 60 loss, 30 pved

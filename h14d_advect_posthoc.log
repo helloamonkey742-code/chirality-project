@@ -1,0 +1,18 @@
+(a) PER-DOUBLING INCREMENTS (S50 in t17; kicks to clear = S50 t17 / Tk), 95% bootstrap intervals
+  1/8 -> 1/16: S50 5.76 -> 7.71, increment 1.94 [1.17..3.22]; kicks to clear 24 -> 35, increment 10
+  1/16 -> 1/32: S50 7.71 -> 10.27, increment 2.57 [1.45..3.63]; kicks to clear 35 -> 48, increment 13
+  1/32 -> 1/64: S50 10.27 -> 13.05, increment 2.77 [1.79..3.87]; kicks to clear 48 -> 62, increment 14
+  1/64 -> 1/128: S50 13.05 -> 15.28, increment 2.24 [1.34..2.78]; kicks to clear 62 -> 73, increment 11
+  increments 1.94, 2.57, 2.77, 2.24; last / mean of the first three = 0.92
+  increment(64 -> 128) - increment(32 -> 64) = -0.54 [-2.32..0.61]  (a power law with q in 0.3-0.4 would make it positive)
+
+(b) LOG LAW S50 = a + b ln(ratio) against POWER LAW ln S50 = a + q ln(ratio), both least squares over the five ratios
+  log law:   b = 3.52 per e-fold [95% 3.27..3.84], a = -1.77; residuals in S50: +0.22, -0.27, -0.14, +0.19, -0.01; rms 0.19
+  power law: q = 0.36; residuals in S50: -0.22, +0.05, +0.46, +0.48, -0.82; rms 0.48
+  chi-square of the five S50 points (SE from the 95% bootstrap width / 3.92), 3 d.o.f.: log law 1.9, power law 18.4 (both unweighted fits, so only indicative)
+  log law at ratio 1e9 (NOT a measurement; 4 doublings measured, 23 more extrapolated): S50 = 71 [95% 67..77]; power-law fit over all five (q 0.36): 4.7e+03
+  ratio at which the log law reaches f = 100, 200, 500: 100: 3.69e+12, 200: 8.21e+24, 500: 9.06e+61
+
+(c) JOB-LEVEL BOOTSTRAP of q(64 -> 128) (resample whole jobs; 1/64 = 18 jobs of 21 runs, 1/128 = 16 jobs)
+  q(64 -> 128) point 0.23; run-level 95% 0.13..0.28 (the scored one); job-level 95% 0.13..0.28
+  S50 per job: 1/64 mean 13.17 sd 1.12 (18 jobs, 21 runs each, so SE of a job-mean 0.26); 1/128 mean 15.30 sd 0.93 (16 jobs, SE 0.23); run-level bootstrap SE 0.30 and 0.21

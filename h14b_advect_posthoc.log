@@ -1,0 +1,69 @@
+(a) FRACTION CLEARED (KM, runs walled at freeze-out) by t17 multiples; 95% bootstrap in brackets; hold in t17 given
+  B (L=64, n=1, l/w 3.6, hold 12.1): t=1: 0.27 [0.17-0.39]  t=2: 0.48 [0.36-0.61]  t=4: 0.71 [0.59-0.82]  t=6: 0.84 [0.74-0.93]  t=8: 0.90 [0.82-0.97]  (walled at freeze-out 62 of 192)
+  G (L=178, n=1, l/w 10.0, hold 8.0): t=1: 0.00 [0.00-0.00]  t=2: 0.01 [0.00-0.03]  t=4: 0.12 [0.06-0.20]  t=6: 0.44 [0.34-0.54]  t=8: 0.67 [0.58-0.76]  (walled at freeze-out 96 of 96)
+  F (L=178, n=1, l/w 10.0, hold 8.0): t=1: 0.00 [0.00-0.00]  t=2: 0.00 [0.00-0.00]  t=4: 0.22 [0.08-0.36]  t=6: 0.53 [0.36-0.69]  t=8: 0.75 [0.61-0.89]  (walled at freeze-out 36 of 36)
+  H (L=356, n=2, l/w 10.0, hold 6.0): t=1: 0.00 [0.00-0.00]  t=2: 0.33 [0.08-0.58]  t=4: 0.50 [0.25-0.75]  t=6: 1.00 [1.00-1.00]  t=8: beyond hold  (walled at freeze-out 12 of 12)
+  I (L=533, n=1, l/w 30.0, hold 8.0): t=1: 0.00 [0.00-0.00]  t=2: 0.00 [0.00-0.00]  t=4: 0.00 [0.00-0.00]  t=6: 0.06 [0.00-0.17]  t=8: 0.22 [0.06-0.44]  (walled at freeze-out 18 of 18)
+  J (L=64, n=1, no flow, hold 16.1): t=1: 0.11 [0.04-0.18]  t=2: 0.12 [0.05-0.20]  t=4: 0.22 [0.13-0.32]  t=6: 0.32 [0.21-0.42]  t=8: 0.42 [0.31-0.53]  (walled at freeze-out 76 of 96)
+  K (L=178, n=1, no flow, hold 16.0): t=1: 0.00 [0.00-0.00]  t=2: 0.00 [0.00-0.00]  t=4: 0.04 [0.00-0.12]  t=6: 0.17 [0.04-0.33]  t=8: 0.29 [0.12-0.46]  (walled at freeze-out 24 of 24)
+  I: 4 of 18 cleared within the hold; median over the 14 uncleared runs not defined; cleared times (t17): [5.01, 7.43, 7.45, 7.76]
+
+(b) LOCAL EXPONENT AND n-DEPENDENCE (S50, bootstrap over runs)
+  p(3.6 -> 10) from G/B: 1.11  [68% 0.85-1.24; 95% 0.73-1.54]
+  p(3.6 -> 10) from F/A (both h = 0.5): 0.97  [95% 0.54-1.28]
+  p(10 -> 30) lower bound from the censoring floor of I (8.00): 0.22; 4 of 18 cleared (KM S(8) = 0.78)
+  S50 ratio n=2 / n=1 at l/w = 10: 0.54  [95% 0.29-0.72]  (share of replicates with both defined 1.00)
+  S50 ratio n=2 / n=1 at l/w = 3.6: 0.68  [95% 0.44-1.05]  (share of replicates with both defined 1.00)
+  S50 ratio n=4 / n=1 at l/w = 3.6: 1.08  [95% 0.53-1.67]  (share of replicates with both defined 1.00)
+  S50 ratio n=6 / n=1 at l/w = 3.6: 0.75  [95% 0.39-1.16]  (share of replicates with both defined 0.97)
+
+(c) KICKS NEEDED  N = S50 t17 / Tk  (Tk/t17 is the same 0.237 for every n = 1 case)
+  A: Tk 4  t17 16.9  Tk/t17 0.236  S50 2.13  N = 9.0
+  B: Tk 4  t17 16.9  Tk/t17 0.236  S50 2.01  N = 8.5
+  C: Tk 4  t17 67.7  Tk/t17 0.059  S50 1.36  N = 23.0
+  D: Tk 4  t17 270.8  Tk/t17 0.015  S50 2.17  N = 147.2
+  E: Tk 4  t17 609.3  Tk/t17 0.007  S50 1.51  N = 229.5
+  F: Tk 31  t17 130.9  Tk/t17 0.237  S50 5.76  N = 24.3
+  G: Tk 31  t17 130.9  Tk/t17 0.237  S50 6.27  N = 26.5
+  H: Tk 31  t17 523.7  Tk/t17 0.059  S50 3.38  N = 57.1
+  I: Tk 277.4, first kick 277 t.u. after the start (77 t.u. after freeze-out); 34 kicks in the hold
+
+(d) ILLUSTRATIVE EXTRAPOLATION (NOT a measurement): S(lw) = S50(G) x (lw / 10.02)^p with p from (b), compared with f_be
+  p = 1.11 (point): worlds (of 15) with S < f_be at the median l/w: U 0.02 15, U 1 15; at the p90 l/w: U 0.02 12, U 1 11
+  p = 1.54 (97.5% bound): worlds (of 15) with S < f_be at the median l/w: U 0.02 15, U 1 15; at the p90 l/w: U 0.02 11, U 1 5
+  p = 1.1 (sibling): worlds (of 15) with S < f_be at the median l/w: U 0.02 15, U 1 15; at the p90 l/w: U 0.02 12, U 1 11
+  rows (p = point estimate): world, U, median S, p90 S, f_be
+    Enceladus          U0.02  lw med   4.3 -> S     6.3   p90   40.7 -> S     29.8   f_be 200   p90 below f_be
+    Enceladus          U1     lw med   7.5 -> S     6.3   p90  132.1 -> S    110.5   f_be 200   p90 below f_be
+    Europa             U0.02  lw med   6.4 -> S     6.3   p90   92.9 -> S     74.7   f_be 200   p90 below f_be
+    Europa             U1     lw med  12.3 -> S     7.9   p90  328.1 -> S    303.9   f_be 200   p90 ABOVE f_be
+    Ganymede           U0.02  lw med   7.7 -> S     6.3   p90  140.1 -> S    117.9   f_be 100   p90 ABOVE f_be
+    Ganymede           U1     lw med  15.6 -> S    10.3   p90  520.0 -> S    507.2   f_be 100   p90 ABOVE f_be
+    Titan              U0.02  lw med   8.9 -> S     6.3   p90  174.9 -> S    150.9   f_be 100   p90 ABOVE f_be
+    Titan              U1     lw med  18.5 -> S    12.4   p90  674.7 -> S    677.7   f_be 100   p90 ABOVE f_be
+    Callisto           U0.02  lw med   8.6 -> S     6.3   p90  177.6 -> S    153.5   f_be 100   p90 ABOVE f_be
+    Callisto           U1     lw med  18.5 -> S    12.4   p90  686.2 -> S    690.6   f_be 100   p90 ABOVE f_be
+    Triton             U0.02  lw med   6.8 -> S     6.3   p90  107.4 -> S     87.7   f_be 200   p90 below f_be
+    Triton             U1     lw med  13.4 -> S     8.7   p90  385.7 -> S    363.8   f_be 500   p90 below f_be
+    Pluto              U0.02  lw med   6.8 -> S     6.3   p90  104.0 -> S     84.7   f_be 500   p90 below f_be
+    Pluto              U1     lw med  13.2 -> S     8.5   p90  377.9 -> S    355.6   f_be 500   p90 below f_be
+    Titania            U0.02  lw med   6.6 -> S     6.3   p90   98.7 -> S     79.9   f_be 1000   p90 below f_be
+    Titania            U1     lw med  12.8 -> S     8.2   p90  362.8 -> S    339.9   f_be 1000   p90 below f_be
+    Oberon             U0.02  lw med   7.1 -> S     6.3   p90  114.9 -> S     94.6   f_be 1000   p90 below f_be
+    Oberon             U1     lw med  13.9 -> S     9.0   p90  417.4 -> S    397.2   f_be 1000   p90 below f_be
+    Umbriel            U0.02  lw med   5.8 -> S     6.3   p90   74.3 -> S     58.2   f_be 10000   p90 below f_be
+    Umbriel            U1     lw med  10.8 -> S     6.8   p90  262.8 -> S    237.4   f_be 10000   p90 below f_be
+    Ariel              U0.02  lw med   5.4 -> S     6.3   p90   63.5 -> S     48.9   f_be 10000   p90 below f_be
+    Ariel              U1     lw med   9.9 -> S     6.3   p90  216.6 -> S    191.5   f_be 10000   p90 below f_be
+    Dione              U0.02  lw med   5.4 -> S     6.3   p90   64.3 -> S     49.6   f_be 10000   p90 below f_be
+    Dione              U1     lw med   9.8 -> S     6.3   p90  219.7 -> S    194.5   f_be 10000   p90 below f_be
+    Miranda            U0.02  lw med   4.4 -> S     6.3   p90   40.5 -> S     29.7   f_be 10000   p90 below f_be
+    Miranda            U1     lw med   7.6 -> S     6.3   p90  132.3 -> S    110.7   f_be 10000   p90 below f_be
+    Mimas              U0.02  lw med   4.1 -> S     6.3   p90   35.5 -> S     25.6   f_be 200   p90 below f_be
+    Mimas              U1     lw med   6.9 -> S     6.3   p90  112.3 -> S     92.2   f_be 200   p90 below f_be
+    Early Earth ocean  U0.02  lw med   2.6 -> S     6.3   p90   10.4 -> S      6.5   f_be 10000   p90 below f_be
+    Early Earth ocean  U1     lw med   5.1 -> S     6.3   p90   39.1 -> S     28.5   f_be 10000   p90 below f_be
+
+(d2) SAME WITH AN S80 PROXY: S80 ~ S50(G) x r80 x (lw/10.02)^p, r80 = S80(B)/S50(B) = 2.18 (the pre-registered rule is about S80; G's S80 is censored)
+  p = 1.11: worlds (of 15) with S80 proxy < f_be at the p90 l/w: U 0.02 12, U 1 7
+  p = 1.54: worlds (of 15) with S80 proxy < f_be at the p90 l/w: U 0.02 10, U 1 5

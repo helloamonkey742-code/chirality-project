@@ -1,0 +1,43 @@
+(a) LENGTH EXPONENT p, pre-freeze-out time matched (S50, bootstrap over runs)
+  V32_3.6   l/w  3.60  gamma 0.01  pre-time 5.91 t17  kicks before freeze-out  27.8  S50 3.54 [95% 2.95-4.14]  walled 0.870
+  V32_3.6m  l/w  3.60  gamma 0.0556  pre-time 1.06 t17  kicks before freeze-out   5.0  S50 8.74 [95% 7.92-9.93]  walled 1.000
+  V32_10    l/w  9.99  gamma 0.0072  pre-time 1.07 t17  kicks before freeze-out   5.0  S50 10.27 [95% 9.47-11.32]  walled 1.000
+  V32_30    l/w 29.99  gamma 0.0008  pre-time 1.06 t17  kicks before freeze-out   5.0  S50 11.84 [95% 10.52-14.24]  walled 1.000
+  p(3.6 -> 10, NOT matched (V32_3.6 at gamma 0.01; this is P8)): 1.04  [68% 0.97..1.14; 95% 0.87..1.22]
+  p(3.6 -> 10, matched (V32_3.6m)): 0.16  [68% 0.10..0.24; 95% 0.01..0.30]
+  p(10 -> 30 (both matched; P8 printed only the point)): 0.13  [68% 0.06..0.20; 95% -0.02..0.32]
+  p(3.6 -> 30, matched (V32_3.6m, V32_30)): 0.14  [68% 0.11..0.20; 95% 0.07..0.26]
+  p (least-squares slope over V32_3.6m, V32_10, V32_30): 0.14  [68% 0.11..0.20; 95% 0.07..0.26]
+  S50(V32_3.6m) / S50(V32_3.6) (same flow, gamma 0.0556 vs 0.01): 2.47  [95% 2.03..2.97]
+  the same comparison at D_eff 8 and 64 has no matched l/w 3.6 cell (R8_3.6 and V64_3.6 were run at gamma 0.01 only)
+
+(b) V32_30, run by run (time since the end of the sweep / t17 = 1173.9; Delta is the sweep-end bias)
+  Delta 2.0  walled True  domains at freeze-out 8  clear time 10.05 t17  (last observation 10.05)
+  Delta 1.0  walled True  domains at freeze-out 7  clear time 10.52 t17  (last observation 10.52)
+  Delta 2.0  walled True  domains at freeze-out 9  clear time 11.52 t17  (last observation 11.52)
+  Delta 1.0  walled True  domains at freeze-out 9  clear time 11.84 t17  (last observation 11.84)
+  Delta 1.0  walled True  domains at freeze-out 6  clear time 12.41 t17  (last observation 12.41)
+  Delta 0.5  walled True  domains at freeze-out 4  clear time 14.24 t17  (last observation 14.24)
+  Delta 0.5  walled True  domains at freeze-out 8  clear time 14.41 t17  (last observation 14.41)
+  Delta 1.0  walled True  domains at freeze-out 7  clear time 14.61 t17  (last observation 14.61)
+  median of the 8 clear times 12.12 t17; KM S50 11.84; range 10.05..14.61
+
+(c) RATIO DEPENDENCE at l/w 10 (matched design: 5 kicks and 1.07 t17 before freeze-out at all three ratios)
+  S50(l/w 10): 1/8 5.76, 1/32 10.27, 1/64 13.21; q = 0.40 [95% 0.33..0.50]
+  molecular reference at l/w 10, 1/32 (K32): 39.12; flow / molecular 0.26; if S_mol is proportional to D_eff/D_mol (h14b J 9.33, K 13.36 at 1/8; here K32 39.1 at 1/32), K at 1/64 would be ~78
+  ratio D_eff/D_mol at which S50(l/w 10) = S50(V64_10) x (ratio/64)^q reaches f:   [point q | q at its 97.5% bound | q at its 2.5% bound]
+    f =    100: 9.88e+03 | 3.77e+03 | 3.03e+04
+    f =    200: 5.55e+04 | 1.52e+04 | 2.50e+05
+    f =    500: 5.43e+05 | 9.62e+04 | 4.06e+06
+    f =   1000: 3.05e+06 | 3.88e+05 | 3.34e+07
+    f =  10000: 9.44e+08 | 4.01e+07 | 3.70e+10
+  S50(l/w 10) at ratio 1e9 (the real order of magnitude) IF the power law held over 7 decades (NOT a measurement):
+    q point 0.40: 1.02e+04
+    q 97.5% bound 0.50: 4.94e+04
+    q 2.5% bound 0.33: 3.05e+03
+  (world, U) rows by break-even f (of 30): 100: 6, 200: 7, 500: 3, 1000: 4, 10000: 10
+
+(d) P13 table re-read with the measured plateau: S_ext(lw) = S50(V64_10) x (max(lw, 10) / 10)^p, p = p(10 -> 30) (ratio 64 only)
+  p = 0.13 (point): worlds (of 15) with S_ext(p90 l/w) < f_be at ratio 64: U 0.02 15, U 1 15
+  p = 0.32 (97.5% bound): worlds (of 15) with S_ext(p90 l/w) < f_be at ratio 64: U 0.02 15, U 1 15
+  p90 l/w above 30 (up to 690, h14_eddy.log:60-74) is outside the measured range; this is a plateau assumption, not a measurement

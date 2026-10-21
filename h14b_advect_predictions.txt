@@ -1,0 +1,86 @@
+h14b_advect_predictions.txt, v1. Written 2026-10-21, BEFORE any results run of h14b_advect.py.
+
+QUESTION (open item 14 / H14, journals/ija_draft.md:252; E86 :187; Section 2.3 :479; sibling analysis h14_eddy.log):
+the only measurement of wall removal under explicit eddies is advect2d.py at l/w = 3.6 (one box, n = 1). The sibling
+h14_eddy.log gives, per world, the uniform slowdown f of the sideways coarsening time (L/A)^2/D_h at which 5% of the
+{l > w, P_pved} draws are lost ("break-even f"); the l/w of those draws reaches 4-9 (median) and 35-178 (p90) at U = 0.02
+(h14_eddy.log:60-74). How much slower is wall removal at l/w = 10 and 30, at the same D_eff = 8?
+
+DEFINITIONS
+  Model = advect2d.py unchanged in physics: 2D Allen-Cahn field, lam = clip(-1 + gamma t, ., 1), gamma = 0.01,
+  eps = 1e-4/area, k = 1, D_mol = 1, D_eff = 8, w = sqrt(D_eff/k) = 2.83; kicked random-phase alternating sine shear
+  (cubic Lagrange kick, explicit Euler between kicks), amplitude A, period Tk, D_eddy = A^2/(8 Tk) = 7 exactly,
+  kappa = A k_flow = 1.47 (the B arm of advect2d.py). Same-geometry scaling: eddy l = L/(2 pi n); l/w = 3.6, 10, 30 at
+  n = 1 means L = 64, 178, 533 and Tk = 4, 31, 277.6 (Tk grows as l^2 at fixed D_eff and kappa). Because Tk is 31 and
+  277.6 against a sweep of 200 time units, the flow acts only a few times (l/w = 10) or not at all (l/w = 30) before
+  freeze-out: this is part of what is measured, not a defect.
+  t17(L) = (L/5.5)^2 / D_eff, Eq. 17 with A = 5.5 (ija_draft.md:493): 16.9 / 131 / 1174 for L = 64 / 178 / 533.
+  Walled run = not single-domain (all coarse cells one sign) at freeze-out (t_after = 0). T = first time (cadence
+  max(2, t17/60)) a walled run is single-domain, right-censored at the end of its hold.
+  SLOWDOWN: S50 = Kaplan-Meier median of T over walled runs / t17(L); S80 = KM 80th percentile / t17(L). This is the
+  quantity advect2d.log:49-51 gives at l/w = 3.6: of the 29% walled runs, 14 / 25 / 50 / 80% were single by 10 / 20 / 40
+  / 80 time units, so S50 ~ 40/16.9 = 2.4 and S80 ~ 80/16.9 = 4.7 (the "x4" of E86). S is the same object as the
+  sibling's f (a multiplier of t17), so S can be compared with the break-even f directly.
+  Uncensored cross-check: S_half = (time the mean wall length over ALL runs falls to half of its freeze-out value) / t17.
+  Bootstrap = resample runs (2000x); "spread" = 16-84% and "bound" = 2.5 / 97.5% of the bootstrap.
+  Exponent p: slope of ln S against ln(l/w) over the h = 1, n = 1 series (3.6, 10, 30), by bootstrap.
+  Molecular reference: same box, no flow, D = D_mol = 1 (S_mol = T/t17 with D_eff/D_mol = 8 inside t17).
+
+CASES (all runs spread over Delta = 0.5, 1, 2; g from the whole volume as kz_patches.g_for; cell h, dt; hold after freeze-out)
+  A  l/w 3.6  n1 L 64   h 0.5 dt 0.05  192 runs  hold 160 t.u.   seed 702, same RNG stream as advect2d B arm  (self-check)
+  B  l/w 3.6  n1 L 64   h 1   dt 0.2   192 runs  hold 12 t17     (resolution partner of A)
+  C  l/w 3.6  n2 L 128  h 1   dt 0.2    96 runs  hold 12 t17     (same flow, bigger box)
+  D  l/w 3.6  n4 L 256  h 1   dt 0.2    24 runs  hold 8 t17
+  E  l/w 3.6  n6 L 384  h 1   dt 0.2     9 runs  hold 6 t17
+  F  l/w 10   n1 L 178  h 0.5 dt 0.05   36 runs  hold 8 t17
+  G  l/w 10   n1 L 178  h 1   dt 0.2    96 runs  hold 8 t17     (resolution partner of F)
+  H  l/w 10   n2 L 356  h 1   dt 0.2    12 runs  hold 6 t17
+  I  l/w 30   n1 L 533  h 1   dt 0.2    16 runs  hold 8 t17     (h = 0.5 is 16x too dear; resolution rests on A/B and F/G)
+  J  no flow  D 1  L 64  h 1 dt 0.2     96 runs  hold 16 t17
+  K  no flow  D 1  L 178 h 1 dt 0.2     24 runs  hold 16 t17
+  Wall-clock guard: workers stop at 40 min after start and censor what is unfinished; <= 4 worker processes.
+
+PREDICTIONS (thresholds fixed now)
+ P1  Self-check, case A vs advect2d.log:49-51. PASS if all: walled fraction in [0.20, 0.38] (log: 0.292); single-domain
+     fraction by t_after = 80 in [0.90, 0.98] (log 0.943); mean wall(t0) in [0.6, 1.3] (log 0.92 +- 0.12);
+     S50 in [1.6, 3.6] (derived 2.4); S80 in [3.0, 7.5] (derived 4.7).
+ P2  Resolution at l/w 3.6: S50(B)/S50(A) in [0.67, 1.5] and |walled(B) - walled(A)| <= 0.12.
+ P3  Resolution at l/w 10: S50(G)/S50(F) in [0.67, 1.5].
+ P4  l/w = 10 (F): S50 in [1.8, 6.0] (point guess 3.1); S80 in [3, 12] (guess 5).
+ P5  l/w = 30 (I): S50 in [1.5, 8] (guess 3.8) and S80 lower-bounded-or-in [2.5, 16] (guess 6); censoring at 8 t17 is allowed
+     and then S80 > 8 is reported as a bound, not a value.
+ P6  Exponent (S50 series B, G, I): p-hat in [-0.1, 0.5] (guess 0.2: eddies fold the pattern in a number of kicks that
+     grows like ln(l/w_mol), and Tk grows as l^2 like t17). Also PASS-required: p = 1.1 excluded, i.e. the 97.5% bootstrap
+     bound of p is < 1.1. (p = 2 of the sibling is Da; it is excluded if p = 1.1 is.)
+ P7  Walls at freeze-out: walled fraction >= 0.5 in G and F, >= 0.9 in I (no kick before freeze-out at l/w 30).
+ P8  L/l dependence at l/w 3.6: S50(D, n = 4) <= 0.75 S50(B, n = 1) (an additive delay N_kicks x Tk, not a rate: the
+     slowdown against t17(L) falls with L/l; real worlds have L/(2 pi l) = R/(2l) = 2-7 at U = 1 and ~20-50 at U = 0.02).
+     FAIL would mean the slowdown is a rate that holds at any L/l, which is how the sibling stress tests treat it.
+ P9  Molecular reference: S50_mol(J) in [7, 20] or censored above 16, and S50 of the flow cases (B at 3.6, G at 10) is
+     <= 0.7 of S50_mol at the same L (eddies speed wall removal up relative to molecular D alone).
+ P10 Verdicts. Per world, at the world's median l/w and p90 l/w of its {l > w} draws (h14_eddy.log:60-74), for the
+     typical (U = 0.02) and the upper (U = 1 m/s) eddy size, against f_be = the smaller of the main-rule no-lid and final
+     break-even f (h14_eddy.log:81-171; a "None" is ignored):
+       bound_hi(lw) = (max over B, G, I of the 97.5% bound of S80) x max(1, lw/30)^p_hi,
+                      p_hi = max(0, 97.5% bound of p from the S80 series), infinite if any S80 is undefined in >2.5%
+                      of the bootstrap;
+       bound_lo(lw) = (2.5% bound of S50 at I) x max(1, lw/30)^p_lo, p_lo = max(0, 2.5% bound of p from S50).
+       COVERED if bound_hi(p90 lw) < f_be; NOT COVERED if bound_lo(median lw) >= f_be; else UNDECIDED.
+     PASS if all 15 worlds are COVERED at U = 0.02 and at least 13 of 15 at U = 1. (Early Earth is COVERED outright in
+     h14_eddy.log:195-209 style: its break-even f is 10000.) These bounds are for n = 1 boxes and a molecular
+     D_mol/D_eff of 1/8; they say nothing yet about D_mol/D_eff ~ 1e-9.
+ P11 Diagnostic consistency: S_half is within a factor 2 of S50 in B, G, I.
+ P12 Run: finishes inside the 40 min guard with no case stopped early; 4 workers.
+
+DECISION (item 14 wording), fixed now:
+  - P6 and P10 both PASS, P2/P3 PASS: propose closing item 14 as "measured to l/w = 30 at one molecular ratio; slowdown
+    grows at most as (l/w)^p-hat; E86's x4 / x10 are not the binding numbers, the break-even factors are 100-10000".
+  - P6 passes but P2 or P3 fails: narrow only (resolution not established), no closing.
+  - P6 fails (p = 1.1 not excluded) or any world UNDECIDED / NOT COVERED: keep item 14 open, state the measured S and the
+    worlds not covered.
+
+DISCLOSURE before this file was hashed: (i) read advect2d.py, advect2d.log, the h14_eddy files, coarsen_slow.py; (ii) one
+scratch kernel pilot (not in the repo): a numba fused Euler step timed on random fields (no model run), ~12 ns per cell-step
+under a machine load of ~29; noise-off agreement with the numpy kick + Euler path max |diff| 1.2e-7 on a 96 x 96 x 3 test.
+No outcome statistic (walled fraction, T, S, p, a) was computed or seen. After hashing, a tiny smoke run of
+h14b_advect.py (L = 16-32, few steps, output discarded except shapes/finite) is allowed; it does not change this file.

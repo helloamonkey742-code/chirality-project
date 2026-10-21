@@ -1,0 +1,7 @@
+# special R=16: tau_sw=83.52, R^2/D=256
+offset circle u0=0.3: T1 304.0 = 3.64 tau_sw; sharp-interface cap law 303.0; ratio 1.003
+offset circle u0=0.1: T1 584.0 = 6.99 tau_sw; sharp-interface cap law 584.3; ratio 1.000
+offset circle u0=0.01: T1 1180.0 = 14.13 tau_sw; sharp-interface cap law 1173.8; ratio 1.005
+offset circle u0=0.001: T1 1830.0 = 21.91 tau_sw; sharp-interface cap law 1763.2; ratio 1.038
+wavy m=2 eps=0.05: m=2 amplitude decay rate 3.100 D/R^2 (linear theory 3); amplitude(1.5 R^2/D)/amplitude(0.3 R^2/D) = 0.0248; minority at 2504 (30.0 tau_sw) = 0.5000; T1 = nan
+wavy m=2 eps=0.3: m=2 amplitude decay rate 2.959 D/R^2 (linear theory 3); amplitude(1.5 R^2/D)/amplitude(0.3 R^2/D) = 0.0304; minority at 2504 (30.0 tau_sw) = 0.5000; T1 = nan

@@ -1,0 +1,96 @@
+h14d_predictions.txt, v1. Written 2026-10-21, BEFORE any results run of h14d_advect.py.
+
+QUESTION (open item 14 / H14, journals/ija_draft.md:252; sibling analysis h14_eddy.log:81-171; previous step h14c_advect.log):
+h14c measured the eddy slowdown S50 of wall clearing at l/w = 10 at D_mol/D_eff = 1/8, 1/32, 1/64: S50 = 5.76, 10.27, 13.21
+(h14c_advect.log:83, :79, :77). The least-squares ratio exponent over the three is q = 0.40 [95% 0.33..0.50] (:107); the local
+exponents are 0.42 [0.32..0.56] for 8 -> 32 and 0.36 [0.15..0.53] for 32 -> 64 (:115-116). A power law with q = 0.40 carried
+to the real ratio ~1e9 gives S50 ~ 1.0e4 (h14c_advect_posthoc.log:35), far above the world break-even factors f_be = 100-10000.
+That extrapolation holds only if the growth does not saturate. Two limits are known: a steady cellular flow gives S ~ ratio^0.5
+(q -> 0.5); chaotic stirring gives a ratio-independent (at most logarithmic) S (q -> 0). h14d adds measured points at 1/16 and
+1/128 and asks whether the local exponent is falling and whether S50 keeps growing past 1/64.
+
+DEFINITIONS (everything not listed here is exactly as h14c_predictions.txt and h14b_advect_predictions.txt; h14b_advect.py,
+h14c_advect.py and advect2d.py are imported, not edited)
+  - Same model, same flow family, same S50 / S80 / S_half (Kaplan-Meier over runs walled at freeze-out, time since the END of the
+    sweep divided by t17(L, D_eff) = (L/5.5)^2 / D_eff), same bootstrap (resample runs, 2000x, seed = sum of the character codes of
+    the cell name), D_mol = 1, h = 1, dt = 0.2, xorshift noise, Delta = 0.5, 1, 2 with S runs each.
+  - Per-case flow and gamma exactly as h14c: L = round(2 pi (l/w) sqrt(D_eff)), eddy l = L/(2 pi), Tk = round(2.159 l^2 / (8 (D_eff - 1))
+    / 0.2) 0.2, A = sqrt(8 (D_eff - 1) Tk), D_eddy = A^2/(8 Tk) = D_eff - 1, kappa = A/l, gamma = min(0.01, round(1/(5 Tk), 4)) (5 kicks
+    between lam = 0 and the end of the sweep), bias g from the ACTUAL gamma.
+  - Ratio exponent between two ratios r_a < r_b: q(a -> b) = ln(S50_b / S50_a) / ln(r_b / r_a), with r = D_eff / D_mol. q(8 -> 64) is
+    the least-squares slope of ln S50 on ln r over r = 8, 32, 64 (the h14c definition, h14c_advect.log:107), recomputed with the pooled
+    1/64 cell below. 95% interval = 2.5 and 97.5 percentiles of the bootstrap replicates; an undefined replicate (S50 not reached) is
+    dropped, and if more than 5% of replicates are undefined the interval is called undefined.
+  - Delta q = q(64 -> 128) - q(8 -> 64), paired over the same bootstrap replicates (the 1/64 cell is shared).
+  - The 1/64 cell is POOLED: the 42 runs of h14c (V64_10#0 and #1, read from h14c_advect_raw.pkl, seeds 3121, 3122) plus the new runs of
+    V64_10n below, same flow, same gamma, same hold. The old-only and the new-only cells are printed as sensitivities.
+  - Regime diagnostics (not predictions): kappa for each flow; the Lyapunov exponent per kick of the tangent map of the random-phase
+    alternating shear (an exact product of independent shear matrices [[1, kappa cos th],[0,1]] / [[1,0],[kappa cos th,1]],
+    th uniform), because the phase is redrawn every kick; the number of kicks to clear (S50 t17 / Tk).
+
+CASES (runs spread over Delta = 0.5, 1, 2; seeds are one per job; none repeats a seed of h14b / h14c, which used 3101-3132)
+  name      D_eff  ratio  l/w    L    N   gamma   Tk    A      kappa  t17    kicks_pre  runs                  hold [t17]  seeds
+  V128_10    128   1/128   10   711  711  0.0074  27.2  166.2  1.469  130.6  4.97      336 (16 jobs x 21)     60 (7834)   3301-3316
+  V64_10n     64   1/64    10   503  503  0.0073  27.4  117.5  1.468  130.7  5.00      336 (16 jobs x 21)     48 (6274)   3321-3336
+  R16_10      16   1/16    10   251  251  0.0069  28.8   58.8  1.472  130.2  5.03      192 (4 jobs x 48)      36 (4688)   3341-3344
+  existing, reloaded from h14c_advect_raw.pkl and re-scored with the same bootstrap seeds (no new runs):
+  R8_10 (1/8, 96 runs), V32_10 (1/32, 96 runs), V64_10 old (1/64, 42 runs; pooled with V64_10n).
+  Run-count reasoning. A timing-only smoke (below) gave 1.66-1.94 ns per cell-step, about 11 s per run at 1/128, 5 s at 1/64, 1.3 s at
+  1/16: the whole run is about 5,600 cpu-s, about 31 min on 3 workers, against a 3 h budget. Counts are sized for the precision of the
+  rule, not the budget: the h14c S50 intervals are +-9% at 42-96 runs; scaled by sqrt(N) that is +-3-4% at 336 runs, so the 95% interval
+  of q(64 -> 128) is about +-0.07. With only the 42 old runs at 1/64 and ~96 new runs at 1/128 it would be about +-0.19, which cannot
+  separate q < 0.2 from q > 0.3 (the two rule thresholds). Wall-clock guard 150 min; 3 worker processes under nice -n 10; job order is
+  1/128 first, then 1/64, then 1/16. A job cut by the guard counts as censored at its last check (and P10 fails).
+
+PREDICTIONS (bands fixed now; each is scored as written; guesses in brackets are not thresholds)
+  P1   R16_10 (1/16): S50 in [6.3, 9.5] [guess 7.7, the 1/8 value 5.76 x 2^0.43], walled fraction >= 0.9.
+  P2   V128_10 (1/128): S50 in [12.5, 20.5] [guess 16.3, the 1/64 value 13.21 x 2^0.30], S80 in [16, 30] [guess 21], walled fraction >= 0.9.
+  P3   q(64 -> 128) point in [0.10, 0.50] [guess 0.30].
+  P4   Delta q = q(64 -> 128) - q(8 -> 64) point in [-0.40, 0.05] [guess -0.10]: the local slope does not rise.
+  P5   S50 increases at every step of the five-point ladder: S50(1/16) > S50(1/8), S50(1/32) > S50(1/16), S50(1/64) > S50(1/32),
+       S50(1/128) > S50(1/64) (points; h14c values for 1/8, 1/32 are reproduced to the printed digits, asserted in the script).
+  P6   Reproducibility of the 1/64 cell: S50(V64_10n) / S50(V64_10 old) in [0.85, 1.18].
+  P7   Flow realisation: for the three flows (1/16, 1/64, 1/128), the Lagrangian tracer D_eddy (advect2d.tracer_lagrangian with
+       advect2d.L set to the box, mean of seeds 1 and 7) is within 5% of D_eff - 1, the cubic-kick numerical diffusion at a 6.4-cell
+       wavelength is <= 0.02 D_mol, kappa lies in [1.45, 1.49] and kicks between lam = 0 and the end of the sweep lie in [4.5, 5.5].
+  P8   Regime: the Lyapunov exponent of the tangent map at kappa = 1.47 is > 0.1 per kick [guess 0.3] (chaotic stirring at every ratio; the
+       cellular limit q -> 0.5 needs a steady flow, and these phases are redrawn every kick).
+  P9   Curvature: the quadratic coefficient c of ln S50 against ln r (least squares over the five ratios) is <= 0 [guess -0.02].
+  P10  Compute: results run < 150 min wall, no job cut by the guard, all 864 new runs finished (336 + 336 + 192).
+  Printed but NOT predictions: local exponents 8 -> 16, 16 -> 32, 32 -> 64, 64 -> 128 with 95% intervals; the least-squares q over all five
+  ratios; q(64 -> 128) against 0.5 and 0 (which one the 95% interval excludes); S50 at the real ratio 1e9 IF a power law with q(64 -> 128)
+  (2.5% bound, point, 97.5% bound) or a constant held from 1/128 (an extrapolation, not a measurement); the ratio at which S50 reaches
+  f = 100, 200, 500, 1000, 10000 under the same four assumptions; walled fractions; old-only and new-only 1/64 cells and their rule outcome.
+
+DECISION, fixed now. q = q(64 -> 128) = ln(S50(V128_10) / S50(V64_10 pooled)) / ln 2, with its 95% bootstrap interval [q_lo, q_hi]:
+  SATURATING if q_hi < 0.2.
+  GROWING    if q_lo > 0.3.
+  UNDECIDED  otherwise (including an undefined interval).
+  Local slope: FALLING if the 95% upper bound of Delta q < 0; RISING if its lower bound > 0; UNRESOLVED otherwise.
+  What each outcome means (wording for item 14, ija_draft.md:252, is proposed in the journal and NOT applied to ija_draft.md):
+  - SATURATING. The growth of the l/w-10 slowdown with D_eff/D_mol is no longer a power law with q = 0.4 at 1/128: the 7-decade
+    extrapolation S50 ~ 1.0e4 at 1e9 (h14c_advect_posthoc.log:35) is not supported, and any power law consistent with the 1/128 point has
+    q <= q_hi, so S50(1e9) <= S50(128) x (1e9/128)^q_hi (printed). Item 14 is narrowed at l/w 10 to a bounded range with S50(1/128) as its
+    measured anchor, still an extrapolation to 1e-9 and still limited to l/w <= 10 (l/w 30 measured only at 1/32, 8 runs). Worlds are
+    called covered only if their f_be exceeds that bound; the others stay open. The chaotic-stirring picture (q -> 0) is favoured over
+    the cellular one (q -> 0.5).
+  - GROWING. The slope has not fallen below 0.3 at 1/128, so the power law is still the working description and its extrapolation
+    (printed for q_lo, point, q_hi) stands as the estimate; item 14 stays OPEN with S50 growing as ratio^q over 1/8-1/128; no world with
+    f_be below the extrapolated S50 is called covered. The cellular exponent 0.5 is not excluded if q_hi >= 0.5.
+  - UNDECIDED. Item 14 stays open; report the 1/16 and 1/128 values, the five-point ladder, q(64 -> 128) with its interval, and both
+    envelopes (constant and power law with q_hi) without choosing between them. The size of the interval is the finding.
+  Scoring does not change any band, add runs or re-run any case. If the pooled, old-only and new-only 1/64 cells give different rule
+  outcomes, the pooled outcome is the scored one and the disagreement is stated.
+
+DISCLOSURE before this file was hashed: (i) Read h14c_advect.py, h14c_predictions.txt, h14c_advect_posthoc.py and its log, the h14c log
+(S50 / S80 / q / local exponents quoted above), h14b_advect.py (run_case, Stat, shear), advect2d.py (tracer_lagrangian), the h14c
+journal and ija_draft.md:252 / :187. So the S50 values at 1/8, 1/32 and 1/64 and the local exponents were known when the bands were
+written. (ii) Scratch timing scripts, not in the repo (scratchpad: calib.py, timing.py, timing2.py): one reads the elapsed time of
+h14c_advect_raw.pkl jobs; the others call h14b_advect.run_case at D_eff 128 (L = 711) and D_eff 16 (L = 251) with gamma = 0.1 and a
+hold of 400 time units, in 1-3 parallel processes (3, 9, 21 runs), printing only elapsed seconds, steps, the derived ns per cell-step
+and the number of runs still walled at the end of that short hold; the output was discarded except the elapsed seconds, and no S50,
+S80, walled fraction at the design gamma and hold, p or q was computed or seen for any h14d case. Machine load during timing 0.9-2.7.
+(iii) Design choices made in the above: extra 1/64 runs pooled with the old 42 (precision of the rule; the old 42 alone are kept as a
+sensitivity), 336 / 336 / 192 runs, hold 60 / 48 / 36 t17 (the h14c holds were 24 / 48 / 30 at 1/8 / 1/64 / 1/32; S80 at 1/64 was 17.2,
+so 60 t17 leaves room for a 1/128 tail), 3 workers, guard 150 min. After hashing, a self-check (tiny runs, flow checks, the Lyapunov
+diagnostic) is allowed; it does not change this file.
