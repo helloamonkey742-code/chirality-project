@@ -1,0 +1,39 @@
+Pilot, counting rule, 7 levels 0.25-16 uL doubling, 20 drops each (140 drops):
+  true V0  1.0 uL: fitted / true, 95% range 0.73-1.32
+  true V0  4.0 uL: fitted / true, 95% range 0.75-1.35
+  true V0 10.0 uL: fitted / true, 95% range 0.73-1.38
+
+Why the fit has a misread term: a step at r = 2, pipette CV 0.05, 8 x 20 droplets, share called right
+  misread 0.00: fit without the term 1.00, with it 1.00
+  misread 0.03: fit without the term 0.84, with it 1.00
+  misread 0.06: fit without the term 0.30, with it 0.99
+
+Main run, 8 levels 0.2-1.6 x V0_pilot, 400 simulated runs per cell.  Each number is the share of runs
+that are scorable and called right (counting: h <= 3; step and h = 6: h > 3).  r = true V0 / pilot V0.
+
+ pipette CV 0.05, misread rate 0.00
+  n  5 per level =  40: count/r0.5 0.80 count/r0.7 0.91 count/r1 0.95 count/r1.4 0.92 count/r2 0.78 all/r0.5 0.74 all/r0.7 0.89 all/r1 0.94 all/r1.4 0.90 all/r2 0.71 step/r0.5 1.00 step/r0.7 1.00 step/r1 1.00 step/r1.4 1.00 step/r2 0.00 6/r1 1.00
+  n 10 per level =  80: count/r0.5 0.95 count/r0.7 0.98 count/r1 0.99 count/r1.4 0.99 count/r2 0.99 all/r0.5 0.91 all/r0.7 0.98 all/r1 0.98 all/r1.4 0.98 all/r2 0.97 step/r0.5 1.00 step/r0.7 1.00 step/r1 1.00 step/r1.4 1.00 step/r2 0.97 6/r1 1.00
+  n 15 per level = 120: count/r0.5 0.98 count/r0.7 1.00 count/r1 1.00 count/r1.4 1.00 count/r2 0.99 all/r0.5 0.94 all/r0.7 0.99 all/r1 1.00 all/r1.4 1.00 all/r2 1.00 step/r0.5 1.00 step/r0.7 1.00 step/r1 1.00 step/r1.4 1.00 step/r2 1.00 6/r1 1.00
+  n 20 per level = 160: count/r0.5 0.99 count/r0.7 0.99 count/r1 1.00 count/r1.4 1.00 count/r2 1.00 all/r0.5 0.97 all/r0.7 0.98 all/r1 1.00 all/r1.4 1.00 all/r2 1.00 step/r0.5 1.00 step/r0.7 1.00 step/r1 1.00 step/r1.4 1.00 step/r2 1.00 6/r1 1.00
+  n 30 per level = 240: count/r0.5 1.00 count/r0.7 1.00 count/r1 1.00 count/r1.4 1.00 count/r2 1.00 all/r0.5 0.99 all/r0.7 1.00 all/r1 1.00 all/r1.4 1.00 all/r2 1.00 step/r0.5 1.00 step/r0.7 1.00 step/r1 1.00 step/r1.4 1.00 step/r2 1.00 6/r1 1.00
+
+ pipette CV 0.05, misread rate 0.03
+  n  5 per level =  40: count/r0.5 0.85 count/r0.7 0.95 count/r1 0.96 count/r1.4 0.93 count/r2 0.85 all/r0.5 0.78 all/r0.7 0.92 all/r1 0.95 all/r1.4 0.92 all/r2 0.82 step/r0.5 0.94 step/r0.7 1.00 step/r1 1.00 step/r1.4 0.91 step/r2 0.00 6/r1 0.99
+  n 10 per level =  80: count/r0.5 0.97 count/r0.7 0.99 count/r1 1.00 count/r1.4 1.00 count/r2 0.99 all/r0.5 0.93 all/r0.7 0.98 all/r1 0.99 all/r1.4 0.99 all/r2 0.98 step/r0.5 1.00 step/r0.7 1.00 step/r1 1.00 step/r1.4 1.00 step/r2 0.95 6/r1 0.99
+  n 15 per level = 120: count/r0.5 0.99 count/r0.7 1.00 count/r1 1.00 count/r1.4 1.00 count/r2 0.99 all/r0.5 0.97 all/r0.7 1.00 all/r1 1.00 all/r1.4 1.00 all/r2 0.99 step/r0.5 1.00 step/r0.7 1.00 step/r1 1.00 step/r1.4 1.00 step/r2 1.00 6/r1 1.00
+  n 20 per level = 160: count/r0.5 0.99 count/r0.7 1.00 count/r1 1.00 count/r1.4 1.00 count/r2 0.99 all/r0.5 1.00 all/r0.7 1.00 all/r1 1.00 all/r1.4 1.00 all/r2 1.00 step/r0.5 1.00 step/r0.7 1.00 step/r1 1.00 step/r1.4 1.00 step/r2 1.00 6/r1 1.00
+  n 30 per level = 240: count/r0.5 1.00 count/r0.7 1.00 count/r1 1.00 count/r1.4 1.00 count/r2 1.00 all/r0.5 1.00 all/r0.7 1.00 all/r1 1.00 all/r1.4 1.00 all/r2 1.00 step/r0.5 1.00 step/r0.7 1.00 step/r1 1.00 step/r1.4 1.00 step/r2 1.00 6/r1 1.00
+
+ pipette CV 0.10, misread rate 0.06
+  n  5 per level =  40: count/r0.5 0.90 count/r0.7 0.95 count/r1 0.98 count/r1.4 0.95 count/r2 0.88 all/r0.5 0.88 all/r0.7 0.94 all/r1 0.96 all/r1.4 0.94 all/r2 0.85 step/r0.5 0.92 step/r0.7 0.97 step/r1 0.98 step/r1.4 0.93 step/r2 0.03 6/r1 0.86
+  n 10 per level =  80: count/r0.5 0.98 count/r0.7 1.00 count/r1 1.00 count/r1.4 1.00 count/r2 0.99 all/r0.5 0.98 all/r0.7 0.99 all/r1 0.99 all/r1.4 1.00 all/r2 0.99 step/r0.5 0.99 step/r0.7 0.99 step/r1 0.99 step/r1.4 1.00 step/r2 0.93 6/r1 0.94
+  n 15 per level = 120: count/r0.5 1.00 count/r0.7 1.00 count/r1 1.00 count/r1.4 1.00 count/r2 0.99 all/r0.5 0.99 all/r0.7 1.00 all/r1 1.00 all/r1.4 1.00 all/r2 1.00 step/r0.5 1.00 step/r0.7 1.00 step/r1 1.00 step/r1.4 1.00 step/r2 0.99 6/r1 0.94
+  n 20 per level = 160: count/r0.5 1.00 count/r0.7 1.00 count/r1 1.00 count/r1.4 1.00 count/r2 1.00 all/r0.5 1.00 all/r0.7 1.00 all/r1 1.00 all/r1.4 1.00 all/r2 0.99 step/r0.5 1.00 step/r0.7 1.00 step/r1 1.00 step/r1.4 1.00 step/r2 0.99 6/r1 0.97
+  n 30 per level = 240: count/r0.5 1.00 count/r0.7 1.00 count/r1 1.00 count/r1.4 1.00 count/r2 1.00 all/r0.5 1.00 all/r0.7 1.00 all/r1 1.00 all/r1.4 1.00 all/r2 1.00 step/r0.5 1.00 step/r0.7 1.00 step/r1 1.00 step/r1.4 1.00 step/r2 1.00 6/r1 0.99
+
+Worst cell over every truth and condition: n 5: 0.00, n 10: 0.91, n 15: 0.94, n 20: 0.97, n 30: 0.99
+
+Reported, not predicted: central 95% of fitted h under the counting forms, n 20, CV 0.05, misread 0.03, r 0.5-2:
+  count: h 2.5% 0.85, median 1.44, 97.5% 2.30
+  all: h 2.5% 0.95, median 1.59, 97.5% 2.64
