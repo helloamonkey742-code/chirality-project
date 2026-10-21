@@ -1,0 +1,65 @@
+
+=== Tsat 35 C: L 161, D 175, mixed 43; entered 379 of 379 ===
+  d_e 50-100 um: 8 drops, P_single 1.00
+  d_e 100-150 um: 29 drops, P_single 1.00
+  d_e 150-200 um: 32 drops, P_single 1.00
+  d_e 200-250 um: 42 drops, P_single 1.00
+  d_e 250-300 um: 36 drops, P_single 0.92
+  d_e 300-350 um: 42 drops, P_single 0.98
+  d_e 350-400 um: 20 drops, P_single 0.90
+  d_e 400-450 um: 26 drops, P_single 0.81
+  d_e 450-500 um: 17 drops, P_single 0.82
+  d_e 500-550 um: 20 drops, P_single 0.70
+  d_e 550-600 um: 59 drops, P_single 0.81
+  d_e 600-650 um: 38 drops, P_single 0.74
+  d_e 650-700 um: 5 drops, P_single 0.80
+  d_e 700-750 um: 1 drops, P_single 1.00
+  d_e 750-800 um: 4 drops, P_single 0.75
+  J1a HELD: mixed median 560 um vs single 325 um, one-sided p = 2.5e-08
+  reported: mixed share 0.113, free-width h = 0.87 (Vk = 419 nL), V0 = 380 nL, L/D 161/175
+
+=== Tsat 40 C: L 276, D 310, mixed 32; entered 618 of 618 ===
+  d_e 50-100 um: 17 drops, P_single 1.00
+  d_e 100-150 um: 41 drops, P_single 1.00
+  d_e 150-200 um: 49 drops, P_single 1.00
+  d_e 200-250 um: 33 drops, P_single 1.00
+  d_e 250-300 um: 74 drops, P_single 0.92
+  d_e 300-350 um: 56 drops, P_single 0.95
+  d_e 350-400 um: 55 drops, P_single 0.91
+  d_e 400-450 um: 40 drops, P_single 0.95
+  d_e 450-500 um: 35 drops, P_single 0.94
+  d_e 500-550 um: 48 drops, P_single 0.98
+  d_e 550-600 um: 42 drops, P_single 0.93
+  d_e 600-650 um: 38 drops, P_single 0.95
+  d_e 650-700 um: 27 drops, P_single 0.85
+  d_e 700-750 um: 35 drops, P_single 0.91
+  d_e 750-800 um: 28 drops, P_single 0.96
+  J1b HELD: mixed median 454 um vs single 375 um, one-sided p = 0.013
+  reported: mixed share 0.052, free-width h = 0.32 (Vk = 2.72e+05 nL), V0 = 1.15e+03 nL, L/D 276/310
+
+=== Tsat 45 C: L 122, D 125, mixed 29; entered 276 of 276 ===
+  d_e 50-100 um: 7 drops, P_single 1.00
+  d_e 100-150 um: 15 drops, P_single 1.00
+  d_e 150-200 um: 24 drops, P_single 1.00
+  d_e 200-250 um: 12 drops, P_single 0.83
+  d_e 250-300 um: 18 drops, P_single 0.83
+  d_e 300-350 um: 28 drops, P_single 0.75
+  d_e 350-400 um: 24 drops, P_single 1.00
+  d_e 400-450 um: 36 drops, P_single 0.92
+  d_e 450-500 um: 37 drops, P_single 0.97
+  d_e 500-550 um: 16 drops, P_single 1.00
+  d_e 550-600 um: 17 drops, P_single 0.53
+  d_e 600-650 um: 17 drops, P_single 0.94
+  d_e 650-700 um: 10 drops, P_single 0.80
+  d_e 700-750 um: 11 drops, P_single 0.82
+  d_e 750-800 um: 4 drops, P_single 1.00
+  J1c HELD: mixed median 449 um vs single 425 um, one-sided p = 0.048
+  reported: mixed share 0.105, free-width h = 0.29 (Vk = 4.6e+04 nL), V0 = 477 nL, L/D 122/125
+
+=== pooled ===
+  J2 NOT SCORABLE: no series has >= 10 mixed and >= 10 single with binned P_single spanning 0.4-0.6
+  J3 HELD: L 559 / D 610, two-sided p(50/50) = 0.144
+  J4 HELD: L median 375 um, D median 375 um, two-sided p = 0.790
+  J5 FAILED: V0(35 C) = 380 nL, V0(40 C) = 1.15e+03 nL, V0(45 C) = 477 nL
+
+5 of 7 predictions HELD: J1a HELD, J1b HELD, J1c HELD, J2 NOT SCORABLE, J3 HELD, J4 HELD, J5 FAILED
