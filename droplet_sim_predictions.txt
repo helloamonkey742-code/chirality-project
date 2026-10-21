@@ -1,0 +1,25 @@
+droplet_sim.py predictions, written 2026-10-20 before the first run of the model grid.
+
+What is run: journals/droplet_prereg.md's pilot and main run (Sections 5-7: 7 x 20 pilot drops, 8 x 25 main drops at
+0.2-1.6 x V0_pilot, pipette CV 5%, misread 3%, extension rule, D2 fit with the fixed 3% term) on simulated drops instead
+of real ones.  The drops follow the counting picture with evaporation: a drop of saturated solution dries from tau = 0 to
+1 (drying time ~ V^(2/3)), supersaturation S = (1 - tau)^(-3/2), primary nuclei appear at random at rate
+c * J(S) * (bulk volume or contact-line length), J = exp(-B / ln^2 S), each takes a random hand, and each nucleus
+quenches nucleation around it (fraction left f = exp(-sum ((tau - tau_i)/w)^p)).  A drop ends single-handed if all its
+primary nuclei share a hand.  This is a model of the counting rule, not a test of nature.
+
+Grid, fixed now:
+  site:   bulk (rate ~ V^(5/3) after the drying-time factor) or contact line (rate ~ V)
+  quench: none; diffusive (p = 1.5, w = 0.01, 0.1, 0.5); front (p = 3, w = 0.01, 0.1, 0.5 at 1 uL, w ~ V^(-1/3))
+  ramp:   B = 0, 1, 10 (B does not matter without quench)
+  c:      set so that P_single = 0.5 at 3.1 uL (V0 near Bak's 4-5 uL); a model where no c in 1e-6 to 1e12 does this is
+          reported as "no V0".
+true h = fit_h (no misread term) to the exact curve at the 8 levels around the true V0.
+
+M1  Contact line, no quench (nuclei ~ V): true h <= 1.7.
+M2  Bulk, no quench (nuclei ~ V^(5/3)): true h > 2.0, steeper than every form in the prereg's Section 1.
+M3  Every model with a V0: true h <= 3.
+M4  Quench with a steep ramp (B = 10): true h < 2.0.
+M5  Bulk, no quench: the pre-registered protocol returns FAILED in more than 5% of runs, so the h <= 3 cut is too
+    tight for evaporating drops.
+M6  Every model with a V0: P_single at 0.2 x V0 is above P_single at 1.6 x V0 (D1 direction).
