@@ -1,0 +1,121 @@
+RULES AUDIT, independent check of the six scorecard thresholds (R5 time rule, R6 sensitivity)
+Session: audit-scale-rule. Blind through Part B: ocean.py, inherit.py, scorecard.py NOT opened.
+Every number below has a receipt: journals/ija_draft.md:LINE (the draft) or the arithmetic in audit/rules_audit.py.
+
+=== PART A. INPUTS FROM journals/ija_draft.md ALONE ===
+Time rule (R5): k = k2*c, need k*tau >= 10, i.e. k2 >= 10/(c*tau)  [ija_draft.md:448]
+Seconds per year: 365.25 d = 3.15576e7 s. The paper does not define "yr"; using 365 d moves every R5 value by +0.07%.
+N (R6): N = c*V*f*1000*N_A, f = 1 [ija_draft.md:440-442, Eq. 12]
+Inheritance: the draft has NO inheritance result and no e_need (the word "inherit" occurs 0 times).
+  Nearest text: Eq. 8, whose first term is the initial excess [ija_draft.md:416], and the sudden-quench
+  result Delta = alpha0*(2*lambda/eps)^0.5 [ija_draft.md:442].
+  My derivation from Eqs. 8-10, seed e0 at the transition (t = 0), noise 1/N only from t >= 0:
+    Z = e0 + sqrt(eps)*Int_0^inf exp(-gamma*s^2/2) dW,  Var Z = (eps/2)*sqrt(pi/gamma),
+    Delta = e0*sqrt(2N)/(pi*k*tau)^(1/4)  ->  e_need(Delta=2) = 2*(pi*k*tau)^(1/4)/sqrt(2N).
+  So the brief's formula follows from Eq. 8 under those two assumptions (seed at t = 0, no earlier noise). It has no
+  chemistry factor F; the draft's conditions use F*Delta >= 2 with F <= 0.7 [ija_draft.md:450, ija_draft.md:553], so a
+  paper-consistent threshold is e_need/F.
+
+Settings the draft states:
+  Pond : c = 1 mM, tau = 100 yr [ija_draft.md:804]; V = 1 m^3 [ija_draft.md:621,623 "1 m^3 pond"; there stated at 1 M,
+         the 1 m^3 is reused at 1 mM here]. The ~2 m^3 in ija_draft.md:627 is a vent-mound setting, not used.
+  Lake : c = 1 mM [ija_draft.md:623]; V = 1e7 m^3 (1 km^2 x 10 m) [ija_draft.md:631], or 1 km^3 and 10 km^3 [:623].
+         tau is NOT STATED for the lake's own time rule. Only 1e4-1e5 yr, quoted from Kondepudi-Nelson via Quack 2022
+         [ija_draft.md:327]. Both ends are computed.
+  Ocean: c = 1 uM, tau = 1e8 yr [ija_draft.md:804]; V = 2.7e16 (Enceladus), 3.3e18 (Europa), 1.332e18 (early Earth) m^3
+         [ija_draft.md:551].
+  Not stated in the draft: the lake's tau for the time rule; any pond volume at 1 mM / 100 yr (V = 1 m^3 is borrowed);
+  which ocean (three volumes, 1e2 apart) the single "ocean" row means; the k*tau at which e_need is evaluated
+  (I use the time-rule edge k*tau = 10, the smallest allowed, e_need grows as (k*tau)^(1/4)); whether F enters R6.
+
+=== PART B. RECOMPUTED NUMBERS (blind; arithmetic in rules_audit.py) ===
+R5, k2_min = 10/(c*tau), M^-1 s^-1:
+  pond  (1 mM, 100 yr)            3.17e-06   (the draft itself prints 3e-6 at ija_draft.md:804)
+  lake  (1 mM, 1e4 yr)            3.17e-08
+  lake  (1 mM, 1e5 yr)            3.17e-09
+  ocean (1 uM, 1e8 yr)            3.17e-09   (the draft prints 3e-9 at ija_draft.md:804)
+R6, e_need at k*tau = 10, F = 1 (F = 0.7 in brackets, F = 0.3 in braces):
+  pond  1 m^3, 1 mM, N = 6.02e23          4.31e-12  [6.16e-12]  {1.44e-11}
+  lake  1e7 m^3, 1 mM, N = 6.02e30        1.36e-15  [1.95e-15]  {4.55e-15}
+  lake  1 km^3,  1 mM, N = 6.02e32        1.36e-16  [1.95e-16]  {4.55e-16}
+  lake  10 km^3, 1 mM, N = 6.02e33        4.31e-17  [6.16e-17]  {1.44e-16}
+  ocean Enceladus 2.7e16 m^3, 1 uM, N = 1.63e37    8.30e-19  [1.19e-18]  {2.77e-18}
+  ocean Europa    3.3e18 m^3, 1 uM, N = 1.99e39    7.51e-20  [1.07e-19]  {2.50e-19}
+  ocean Earth  1.332e18 m^3, 1 uM, N = 8.02e38     1.18e-19  [1.69e-19]  {3.94e-19}
+
+Predicted comparison with the six printed numbers (3e-7 / 3e-7 / 3e-9 and 6e-12 / 3e-14 / 3e-18), written before any code was opened:
+  R5 pond : printed 3e-7 vs 3.17e-6 from the draft: PREDICT a 10x mismatch, printed low.
+  R5 lake : printed 3e-7 needs c*tau = 3.3e7 M s (1 mM x 1056 yr), outside the draft's 1e4-1e5 yr: PREDICT unsupported by the draft.
+  R5 ocean: printed 3e-9 vs 3.17e-9: PREDICT agreement.
+  R6 pond : printed 6e-12 vs 4.31e-12 (F=1) / 6.16e-12 (F=0.7): PREDICT it matches only with F=0.7.
+  R6 lake : printed 3e-14 is 22x above 1.36e-15 and 700x above 4.31e-17: PREDICT no match from the draft's inputs.
+  R6 ocean: printed 3e-18 is 3.6x above 8.30e-19 (Enceladus F=1) and 2.5x above 1.19e-18 (F=0.7): PREDICT no match.
+
+=== PART C. MONTE CARLO PREDICTIONS (written before the run) ===
+Model: d(alpha) = (gamma*t*alpha - alpha^3) dt + sqrt(eps) dW, alpha(0) = e0, eps = 1/N, gamma = 1/(k*tau), time in 1/k,
+Euler-Maruyama, dt = 0.004/sqrt(gamma), run to t*sqrt(gamma) = 5, outcome = sign(alpha_end); n = 60000 paths, 4 values
+r = e0/e_formula in {0.6, 0.8, 1.0, 1.25} with shared noise, seed 0; physical units, not the rescaled form.
+Configs (N, k*tau): (1e6,1e2) (1e8,1e2) (1e6,1e4) (1e8,1e4) (1e10,1e4) (1e8,1e6) (1e10,1e6) (1e6,10); sigma = sqrt(k*tau/N)
+= 0.001 to 0.1 (linear regime). Two stress configs: (1e5,1e4) sigma = 0.32 and (1e4,1e4) sigma = 1.
+  C1. In the linear configs (sigma <= 0.1), P(sign follows seed) at r = 1 is Phi(2) = 0.9772, within +/-0.004.
+  C2. In those configs the fitted e0 at Delta = 2 equals e_formula within +/-5% (ratio 0.95 to 1.05).
+  C3. Over those configs, a log-log fit of the MC e0 gives exponent -0.50 +/- 0.03 in N and +0.25 +/- 0.03 in k*tau.
+  C4. The formula breaks down when sigma is not small: at sigma = 1 the ratio is outside 0.95 to 1.05 (sign not predicted).
+  C5. The prefactor 2 is Delta = 2, i.e. P = 97.7%; it is a convention, not a derived constant. Any other P target moves e_need by z/2.
+=== END PREDICTIONS ===
+=== PART D. STEP 1 RECOMPUTE (rules_audit.py; matches the frozen Part B to 0.5%) ===
+R5 k2_min pond         3.169e-06
+R5 k2_min lake_1e4yr   3.169e-08
+R5 k2_min lake_1e5yr   3.169e-09
+R5 k2_min ocean        3.169e-09
+R6 e_need pond         F=1 4.314e-12  F=0.7 6.164e-12  F=0.3 1.438e-11   N=6.022e+23  [draft 804 (c, tau); 621/623 (1 m^3)]
+R6 e_need lake_1e7m3   F=1 1.364e-15  F=0.7 1.949e-15  F=0.3 4.548e-15   N=6.022e+30  [draft 623 (c); 631 (1 km^2 x 10 m); tau unstated (1e4-1e5 yr at 327)]
+R6 e_need lake_1km3    F=1 1.364e-16  F=0.7 1.949e-16  F=0.3 4.548e-16   N=6.022e+32  [draft 623]
+R6 e_need lake_10km3   F=1 4.314e-17  F=0.7 6.164e-17  F=0.3 1.438e-16   N=6.022e+33  [draft 623]
+R6 e_need ocean_Enc    F=1 8.303e-19  F=0.7 1.186e-18  F=0.3 2.768e-18   N=1.626e+37  [draft 804 (c, tau); 551 (V)]
+R6 e_need ocean_Eur    F=1 7.511e-20  F=0.7 1.073e-19  F=0.3 2.504e-19   N=1.987e+39  [draft 804; 551]
+R6 e_need ocean_Earth  F=1 1.182e-19  F=0.7 1.689e-19  F=0.3 3.941e-19   N=8.021e+38  [draft 804; 551]
+
+=== PART E. STEP 2 MONTE CARLO (n = 60000 paths, seed 0, shared noise over r) ===
+N, k*tau, sigma=sqrt(k*tau/N), e_formula, P(r=1), ratio e0*/e_formula +/- se, z at r = 0.6 0.8 1.0 1.25
+1e+06 1e+02 sigma=0.010 e_f=5.954e-03 P(1)=0.9775 ratio=0.9988+/-0.0029 z=1.201 1.588 2.005 2.547
+1e+08 1e+02 sigma=0.001 e_f=5.954e-04 P(1)=0.9776 ratio=0.9987+/-0.0029 z=1.201 1.588 2.006 2.547
+1e+06 1e+04 sigma=0.100 e_f=1.883e-02 P(1)=0.9761 ratio=1.0096+/-0.0029 z=1.194 1.575 1.979 2.490
+1e+08 1e+04 sigma=0.010 e_f=1.883e-03 P(1)=0.9775 ratio=0.9988+/-0.0029 z=1.201 1.588 2.005 2.547
+1e+10 1e+04 sigma=0.001 e_f=1.883e-04 P(1)=0.9776 ratio=0.9987+/-0.0029 z=1.201 1.588 2.006 2.547
+1e+08 1e+06 sigma=0.100 e_f=5.954e-03 P(1)=0.9761 ratio=1.0096+/-0.0029 z=1.194 1.575 1.979 2.490
+1e+10 1e+06 sigma=0.010 e_f=5.954e-04 P(1)=0.9775 ratio=0.9988+/-0.0029 z=1.201 1.588 2.005 2.547
+1e+06 1e+01 sigma=0.003 e_f=3.348e-03 P(1)=0.9776 ratio=0.9987+/-0.0029 z=1.201 1.588 2.006 2.547
+1e+05 1e+04 sigma=0.316 e_f=5.954e-02 P(1)=0.9594 ratio=1.1327+/-0.0031 z=1.120 1.442 1.743 2.087
+1e+04 1e+04 sigma=1.000 e_f=1.883e-01 P(1)=0.7205 ratio=3.4215+/-0.0169 z=0.483 0.548 0.584 0.612
+exponent of N : -0.5012 +/- 0.0004   (formula -0.5)
+exponent of k*tau: 0.2512 +/- 0.0003   (formula +0.25)
+fit chi2 = 5.8 for 5 dof (weighted, MC errors only)
+
+=== PART F. PREDICTIONS C1-C4 ===
+PASS  C1 P(r=1) = Phi(2) +/-0.004 in all linear configs
+PASS  C2 ratio in 0.95-1.05 in all linear configs
+PASS  C3 exponents -0.50+/-0.03 (N), +0.25+/-0.03 (k*tau)
+PASS  C4 ratio outside 0.95-1.05 at sigma = 1
+max |ratio-1| over linear configs = 0.0096; ratio at sigma=0.32: 1.1327; at sigma=1: 3.4215
+
+=== PART G. STEP 3 COMPARE (code opened only after Parts A-F were frozen/run) ===
+G1. do the printed numbers reproduce from the code's own inputs? (assert, %.0e as printed)
+  pond   R5 3.1686e-07 -> 3e-07   R6 5.7695e-12 -> 6e-12   k*tau at k2=1e-3: 3.156e+04
+  lake   R5 3.1686e-07 -> 3e-07   R6 3.2338e-14 -> 3e-14   k*tau at k2=1e-3: 3.156e+04
+  ocean  R5 3.1686e-09 -> 3e-09   R6 2.8020e-18 -> 3e-18   k*tau at k2=1e-3: 3.156e+06
+G2. R5 input by input, code vs draft (blind)
+  pond   code c=1e-02 M tau=1e+02 yr -> 3.169e-07 | draft c=1e-03 M tau=1e+02 yr -> 3.169e-06 | code/draft = 0.100
+  lake   code c=1e-04 M tau=1e+04 yr -> 3.169e-07 | draft c=1e-03 M tau=1e+04 yr -> 3.169e-08 | code/draft = 9.999
+  ocean  code c=1e-06 M tau=1e+08 yr -> 3.169e-09 | draft c=1e-06 M tau=1e+08 yr -> 3.169e-09 | code/draft = 1.000
+G3. R6 code vs blind F=1, split into factors (e_need ~ (k*tau)^0.25 / sqrt(c*V))
+  pond   code 5.770e-12 blind(F=1) 4.314e-12 ratio 1.34 = k*tau factor 7.50 x N factor 0.178   | code/F: F=0.7 8.24e-12  F=0.3 1.92e-11
+  lake   code 3.234e-14 blind(F=1) 1.364e-15 ratio 23.70 = k*tau factor 7.50 x N factor 3.162   | code/F: F=0.7 4.62e-14  F=0.3 1.08e-13
+  ocean  code 2.802e-18 blind(F=1) 1.182e-19 ratio 23.70 = k*tau factor 23.70 x N factor 1.000   | code/F: F=0.7 4.00e-18  F=0.3 9.34e-18
+  ocean e_need 2.80e-18 vs weak-force excess 5e-18 [inherit.py:41]: F=1 ratio 1.78, F=0.7 1.25, F=0.3 0.54
+  pond R6 equals the blind F=0.7 value (6.16e-12) only by coincidence: code 5.77e-12 comes from c*V=0.0314 and k*tau=3.2e4, not from F.
+G4. decisions (reasoned from the files, no new numbers):
+  scorecard.py:38-40 - R5 letters Y rest on hours-days lab rates vs a floor <= 3e-7; N letters rest on k2 <= 0 [README.md:516-517]. Floor moves x0.1-x10: no R5 letter changes.
+  R6 letters rest on 'works from racemic or <= ~1% ee' [scorecard.py:40] vs e_need <= 6e-12: no R6 letter changes.
+  aped.py:439 uses floor = 10/tau (no c), so the pond c mismatch does not enter its P10 (pond 3.17e-9 fails, lake and ocean pass, aped.py:74-75).
+  draft ija_draft.md:806: lab arm 1.8e-6 'below the pond value' holds for the draft's 3e-6 (1 mM) but not for scorecard's 3e-7 (1e-2 M).

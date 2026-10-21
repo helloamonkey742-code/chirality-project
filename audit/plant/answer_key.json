@@ -1,0 +1,122 @@
+[
+  {
+    "id": 1,
+    "kind": "number_with_log_receipt",
+    "line": 668,
+    "section": "3.3 Chance, the PVED, or no single hand (Results)",
+    "original_text": "Enceladus 9.8%, Europa 4.9%, early Earth 0.0%; `multiwall.log`, Enceladus from `seedfix.log`",
+    "planted_text": "Enceladus 9.3%, Europa 4.9%, early Earth 0.0%; `multiwall.log`, Enceladus from `seedfix.log`",
+    "truth_source": "seedfix.log:10 (mw main, fixed column: P_chance for Enceladus = 9.8); seed 1 on line 22 is 10.0",
+    "note": "One digit changed in a share that carries a log receipt. The unfixed value in multiwall.log:539 is 8.8, so 9.3 matches neither log."
+  },
+  {
+    "id": 2,
+    "kind": "swapped_exponent",
+    "line": 551,
+    "section": "2.6 Table 1 (Methods, table)",
+    "original_text": "| volume V (m³) | 2.7×10¹⁶, ×U(0.7, 1.3) |",
+    "planted_text": "| volume V (m³) | 2.7×10¹⁵, ×U(0.7, 1.3) |",
+    "truth_source": "uncertainty.py:43 (Enceladus 2.7e16); also draft line 341 (Fig. 1 caption, 'Enceladus (2.7×10¹⁶ m³)')",
+    "note": "Superscript exponent of the Enceladus ocean volume lowered by one in Table 1. The Fig. 1 caption on line 341 still says 10¹⁶."
+  },
+  {
+    "id": 3,
+    "kind": "wrong_doi_digit",
+    "line": 951,
+    "section": "References (Choi et al. 2024)",
+    "original_text": "https://doi.org/10.1021/acs.jpclett.4c00558",
+    "planted_text": "https://doi.org/10.1021/acs.jpclett.4c00588",
+    "truth_source": "blind_lab.py:41 (doi:10.1021/acs.jpclett.4c00558); same DOI in earlier drafts",
+    "note": "Last-but-one digit changed, 5 to 8."
+  },
+  {
+    "id": 4,
+    "kind": "wrong_citation_year",
+    "line": 788,
+    "section": "4 Discussion (melting of the ice shell bullet)",
+    "original_text": "coupled thermal–orbital models of Hussmann and Spohn (2004)",
+    "planted_text": "coupled thermal–orbital models of Hussmann and Spohn (2003)",
+    "truth_source": "journals/ija_draft.md:1007 (reference list, 'Hussmann, H., Spohn, T. 2004, Thermal-orbital evolution of Io and Europa, Icarus, 171, 391-410'); in the planted file that entry is at line 1005",
+    "note": "In-text year changed from 2004 to 2003; the reference list still says 2004. This is the only in-text citation of Hussmann and Spohn in the body."
+  },
+  {
+    "id": 5,
+    "kind": "citation_missing_from_list",
+    "line": 750,
+    "section": "3.6 What a plume would show (Results)",
+    "original_text": "Cohen, B.A., Chyba, C.F. 2000, Racemization of Meteoritic Amino Acids, Icarus, 145, 272–281. https://doi.org/10.1006/icar.1999.6328  (reference entry, draft line 953, followed by one blank line)",
+    "planted_text": "(entry deleted, together with its blank line; the in-text citation '(Cohen and Chyba, 2000)' on line 750 is untouched)",
+    "truth_source": "journals/ija_draft.md:953 (the deleted entry); the only in-text citation is on line 750 in both files",
+    "note": "Deleted a reference entry that is cited exactly once in the body. 'line' is the orphaned in-text citation. In the planted file the gap is between Choi (line 951) and Cowan (line 953), so every later reference sits two lines higher than in the draft (Hussmann entry 1007 -> 1005)."
+  },
+  {
+    "id": 6,
+    "kind": "wrong_page_range",
+    "line": 947,
+    "section": "References (Chen et al. 2014)",
+    "original_text": "Icarus, 229, 11–30.",
+    "planted_text": "Icarus, 229, 11–38.",
+    "truth_source": "tidal_mix.py:45 ('Chen, Nimmo & Glatzmaier 2014, Icarus 229:11-30, doi:10.1016/j.icarus.2013.10.024')",
+    "note": "End page changed from 30 to 38; volume and DOI untouched."
+  },
+  {
+    "id": 7,
+    "kind": "unit_change",
+    "line": 523,
+    "section": "2.5 Ice pressure and salinity at the top of the ocean (Methods)",
+    "original_text": "g_s the surface gravity (1.315 m/s² for Europa)",
+    "planted_text": "g_s the surface gravity (1.315 m/s for Europa)",
+    "truth_source": "robust_ranking.py:8 and :42 (920 * 1.315 m/s^2 * h); rerun_base.py:511; the same line 523 gives 24.2 MPa under 20 km of ice (920 x 1.315 x 20000 Pa)",
+    "note": "The square dropped from the unit of the surface gravity of Europa."
+  },
+  {
+    "id": 8,
+    "kind": "sign_flip",
+    "line": 670,
+    "section": "3.3 Splitting the draws of one input at its median (Results)",
+    "original_text": "Faster sideways mixing lowers the share (−1 to −4 points)",
+    "planted_text": "Faster sideways mixing lowers the share (+1 to +4 points)",
+    "truth_source": "rerun_base.log:33, 45, 58, 69 and 98 ('horizontal D_h ... effect -3.4, -3.8, -1.3, -2.9'; 'P4 HELD: D_h effects -3.4, -3.8, -1.3, -2.9')",
+    "note": "Sign of the range flipped; the words 'lowers the share' and the rest of the paragraph still describe a decrease."
+  },
+  {
+    "id": 9,
+    "kind": "changed_p_value",
+    "line": 759,
+    "section": "3.7 Pre-registered blind check, bullet 2 (Results)",
+    "original_text": "both consistent with 50/50 (p = 0.20 and 0.28)",
+    "planted_text": "both consistent with 50/50 (p = 0.02 and 0.28)",
+    "truth_source": "blind_check.log:14 (B1: 42/72, p(50/50) = 0.195) and blind_check.log:20 (B5: 39/68, p = 0.275)",
+    "note": "First p-value changed from 0.20 to 0.02, which would reject 50/50 at the usual level and contradicts 'consistent with 50/50' in the same clause."
+  },
+  {
+    "id": 10,
+    "kind": "changed_commit_hash",
+    "line": 573,
+    "section": "2.7 Verification (Methods)",
+    "original_text": "VERIFICATION.md records the checks of an earlier version of the model (2026-10-06).",
+    "planted_text": "VERIFICATION.md records the checks of an earlier version of the model (2026-10-06, commit b06bd54).",
+    "truth_source": "git: `git log --diff-filter=A --format='%h %ad' --date=short -- VERIFICATION.md` gives b06db54 2026-10-06 (first commit touching VERIFICATION.md); `git cat-file -t b06bd54` fails",
+    "note": "The manuscript body (from line 290) contains no commit hash, so this is an insertion rather than an edit of an existing hash. The hash b06db54 is the commit dated 2026-10-06 that created VERIFICATION.md, as the date in the same sentence says; the planted b06bd54 swaps two characters and is not a valid object. The SUBMISSION NOTES block (not used) holds other hashes."
+  },
+  {
+    "id": 11,
+    "kind": "wrong_log_line_number",
+    "line": 594,
+    "section": "2.7 Table 2 (Methods, table), kcheck.py row",
+    "original_text": "the antisymmetric eigenvalue equals a_rac − 1 − 2r to 5×10⁻¹¹ (`kcheck.log:9`)",
+    "planted_text": "the antisymmetric eigenvalue equals a_rac − 1 − 2r to 5×10⁻¹¹ (`kcheck.log:10`)",
+    "truth_source": "kcheck.log:9 ('P1 HELD: max |eigenvalue - (a_rac - 1 - 2r)| = 4.67e-11'); kcheck.log:10 is P2 (closed form r_c = 0.08935)",
+    "note": "Off by one: the receipt now points at the P2 line, which does not contain the eigenvalue comparison."
+  },
+  {
+    "id": 12,
+    "kind": "internal_inconsistency",
+    "line": 299,
+    "section": "Abstract",
+    "original_text": "34–44% for Ganymede, 22–30% for Europa",
+    "planted_text": "34–48% for Ganymede, 22–30% for Europa",
+    "truth_source": "draft lines 707 (Table 3 row 'Ganymede ... 34–44%'), 721, 723, 791 and 834, all giving 34–44%",
+    "note": "Upper end of the Ganymede range in the Abstract raised from 44% to 48%; Table 3 and the text still give 34–44%."
+  }
+]

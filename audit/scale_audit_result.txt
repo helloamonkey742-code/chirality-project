@@ -1,0 +1,28 @@
+prediction block sha256 verified: f635e8d62ef6b22ca0fea4ed4966bb7e9c4555a7e0e63c9d7938cec9f506543a
+script sha256 at run: f14376dbf90b38e7d05622a7737e4bd21d2a07ab1097bc1b45db66f0589146f1
+Eq 9 -> Eq 10 prefactor by quadrature: 2.41408210 vs closed form 2.41408210
+N(g=1e-17, k tau=10) = 3.5682e+33  [Delta check = 2.000000000000]
+N(g=4.4e-18, k tau=10) = 1.8431e+34  [Delta check = 2.000000000000]
+N(g=2.64e-16, k tau=10) = 5.1197e+30  [Delta check = 2.000000000000]
+cube side, c=1e-06 M, N=3.5682e+33: 18.0954 km
+cube side, c=0.001 M, N=3.5682e+33: 1.8095 km
+cube side, c=0.1 M, N=3.5682e+33: 0.3899 km
+pond 1 m3 at 1 M = 6.0221e+26 molecules; shortfall N/pond: g=4.4e-18: 3.06e+07, g=1e-17: 5.93e+06, g=2.64e-16: 8.5e+03
+MC of Eq 6 (200000 paths, 4000 Euler steps, t from -5/sqrt(gamma) to +5/sqrt(gamma)):
+  A: k tau=100 N=1e+08 g=3.3591e-05  Delta_formula=2.0000  P_formula=0.97725  P_MC=0.97706 (SE 0.00033, diff -0.00018 = -0.55 SE)  Delta_MC=Phi^-1(P_MC)=1.9966  PASS
+  B: k tau=10000 N=1e+08 g=1.0623e-05  Delta_formula=2.0000  P_formula=0.97725  P_MC=0.97716 (SE 0.00033, diff -0.00009 = -0.27 SE)  Delta_MC=Phi^-1(P_MC)=1.9983  PASS
+  C: k tau=100 N=1e+10 g=1.6796e-06  Delta_formula=1.0000  P_formula=0.84134  P_MC=0.83986 (SE 0.00082, diff -0.00148 = -1.82 SE)  Delta_MC=Phi^-1(P_MC)=0.9939  PASS
+self-check: all asserts passed
+
+=== UNBLINDED COMPARISON (appended by hand after the run, 2026-10-19; re-running the script drops this section) ===
+Brief and ija_draft.md Fig. 1 caption quoted 3.6e33 before I derived anything, so the N values are a reconstruction, not a blind prediction; the Monte Carlo is the blind part.
+paper/log vs rebuilt (all match):
+  N(1e-17)    3.6e33  | sweep2.log:77 3.57e+33 | mine 3.5682e33
+  N(4.4e-18)  1.84e34 | sweep2.log:78 1.84e+34 | mine 1.8431e34
+  N(2.64e-16) 5.12e30 | sweep2.log:79 5.12e+30 | mine 5.1197e30
+  cube side at 1 uM / 1 mM / 0.1 M: paper 18 km / 1.8 km / 0.4 km | sweep2.log:77 1.81e+04 / 1.81e+03 / 390 m | mine 18.095 / 1.8095 / 0.3899 km
+  pond shortfall (kt=10): paper 3e7 to 9e3 | sweep2.log:78-79 3.06e+07 ... 8.5e+03 | mine 3.06e7, 5.93e6 (g=1e-17; sweep2.log:77 5.93e+06), 8.5e3
+  6e9 mol: 3.5682e33/6.02214076e23 = 5.925e9. T-scaling check: 4.31e33 at 300 K, 6.66e33 at 373 K (paper 4.3e33, 6.7e33).
+  code: review.py:31-33 n_needed = (2/(PREF g kt^0.25))^2, ocean.py:27 PREF = sqrt(2) pi^0.25 -- same algebra as Eq. 13.
+  note: sweep2.log lines 78-79 are g_min and g_max; the g=1e-17 row is line 77, and line 80 repeats g_max as "Ala".
+Left out of the text (needed a choice to rebuild): see the report. The MC tests Eq. 13 against Eq. 6 only; eps=1/N and gamma=1/(k tau) are inputs, not tested.
