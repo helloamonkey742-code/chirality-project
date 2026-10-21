@@ -1,6 +1,7 @@
 # NaClO3 droplet test: pre-registration plan
 
-Draft, 2026-10-20. Not committed. Not part of EXPERIMENT.md. Power numbers: `droplet_power.py`, `droplet_power.log`.
+Draft, 2026-10-20. Not committed. Not part of EXPERIMENT.md. Power numbers: `droplet_power.py`, `droplet_power.log`. Decision rule
+and its power: `droplet_sim2.py`, `droplet_sim2.log`.
 
 This is the plan, not the pre-registration itself. Before the main run, Sections 2, 3 and 6 are copied into
 `droplet_predictions.txt`, hashed and committed, as was done for `blind_jang.py` (Section 8).
@@ -26,29 +27,52 @@ counting rule says, or does it **drop off at a sharp critical size**?
 V is the pipetted volume. "Single" = L only or D only. "Mixed" = both hands in one droplet.
 
 - **D1, direction.** Mixed droplets are larger than single ones (one-sided Mann-Whitney on V, p < 0.05).
-- **D2, no sharp critical size (the main test).** Fit P_obs = 0.03 + 0.94/(1 + (V/Vk)^h) to the single and mixed
-  counts at each level (binomial likelihood, h in [0.1, 50], `droplet_power.fit_h`). The fixed 3% term stands for
-  misread droplets (Section 3). The prediction is **h ≤ 3**. Scorable only if there are at
-  least 10 mixed and 10 single droplets, one volume level has P_single ≥ 0.6 and one has P_single ≤ 0.4.
+- **D2, no sharp critical size (the main test).** The main run gets one label, from the first test it meets
+  (`droplet_sim2.stats` and `classify`; Section 10):
+  1. **NOT SCORABLE** unless there are at least 10 mixed and 10 single droplets, one volume level has P_single ≥ 0.6
+     and one has P_single ≤ 0.4.
+  2. **FLAT** if the best-fitting curve below changes by less than 0.4 across the levels run.
+  3. **RISING** if P_single rises with V (Cochran-Armitage trend z > 1.645).
+  4. **STEP** if L < c* = −1.61, otherwise **SMOOTH**.
+
+  Two curves are fitted to the single and mixed counts at each level (binomial likelihood), both through
+  P_obs = 0.03 + 0.94 P. The fixed 3% term stands for misread droplets (Section 3).
+  - **COUNT:** P = F(μ), μ = μ0 (V/V0_pilot)^a with a in [0.05, 5/3], and F one of exp(−μ/2) (first nucleus plus
+    Poisson extras), 2/(exp(μ/2) + 1) (all nuclei, drops with none excluded) or 2 exp(−μ/2) − exp(−μ) (drops with
+    none crystallize once at dryness).
+  - **STEP:** P = Φ(−ln(V/Vc)/s), Φ the normal distribution function, s in [0.02, 0.6]. s = 0.6 is about the old
+    h = 3 line (h ≈ 1.76/s).
+
+  L = best log-likelihood of COUNT − best of STEP. c* is the lowest 5th percentile of L over simulated counting
+  curves, set on a calibration seed and frozen (`droplet_sim2.log`). The prediction is **SMOOTH**.
 - **D3, chance hand.** Among single droplets, L and D fit 50/50 (two-sided binomial p > 0.05).
 - **D4, hand does not depend on size.** The volumes of L-only and D-only droplets do not differ (two-sided
   Mann-Whitney p > 0.05).
-- **Reported, not predicted:** V0 (fit P = exp(−V/V0)), Vk and h with a 95% profile interval, P_single per level, the
-  L/D split per slide, and the number of visible crystals per droplet.
+- **Reported, not predicted:** V0 (fit P = exp(−V/V0)), L, â and ŝ, the earlier fit's Vk and h with a 95% profile
+  interval (`droplet_power.fit_h`), P_single per level, the L/D split per slide, the number of visible crystals per
+  droplet, and the control-drop results (Section 6).
 
 ## 3. Readings fixed in advance
 
 | Outcome | Reading |
 |---|---|
-| D2 scorable, h ≤ 3 | HELD. No sharp critical size. This fits the counting rule, **or** a critical size that varies from droplet to droplet by more than about 1.8× (Section 10). It does not prove counting. |
-| D2 scorable, h > 3 | FAILED. A sharp critical size decides. The counting rule's breadth is wrong for these droplets, and the paper says so in Section 3.7. |
+| D2 SMOOTH | HELD. No sharp critical size. This fits the counting rule, **or** a critical size that varies from droplet to droplet by more than about 1.35–1.6× (Section 10). It does not prove counting. |
+| D2 STEP | FAILED. A sharp critical size decides. The counting rule's breadth is wrong for these droplets, and the paper says so in Section 3.7. |
+| D2 FLAT | NOT DECIDED. P_single changes by less than 0.4 over the levels run: no sharp step inside the range, but too shallow to compare the two pictures. Reported as found. |
+| D2 RISING | NOT DECIDED. P_single rises with V, which neither picture predicts (D1 then likely fails too). |
 | D2 not scorable after the extension rule | NOT SCORABLE. Reported as such; no more levels are added. |
 | D1 fails | Larger droplets are not mixed more often, so the number of deciding nuclei does not grow with volume. |
 | D3 or D4 fails | Something steered the hand (dust or a seed crystal of one hand), possibly by size. |
 
 **Misreads favour the prediction.** A misread droplet pulls the ends of the curve away from 1 and 0, and that makes
-a true step look broader. The fit therefore allows a fixed 3% misread rate at both ends (D2). So D2 is NOT SCORABLE
-if the estimated misread rate, half the blind re-read disagreement (Section 6), is above 6%, the largest rate simulated.
+a true step look broader. Both D2 fits therefore allow a fixed 3% misread rate at both ends, and c* was set with that
+term. The rate itself is measured on control drops (Section 6), and it decides how D2 is read
+(`droplet_sim2.log`, steps with s ≤ 0.2):
+- **3% or less:** D2 as above. In simulation such steps were called STEP in 97–100% of runs (pipette CV 5–15%).
+- **Above 3%, up to 6%:** D2 is scored, but a SMOOTH is reported with its weaker power. At 6% misreads such steps
+  were called STEP in only 84–95% of runs at pipette CV 5%, and 65–89% at CV 15%. Counting curves were still called
+  STEP in at most 6.4%.
+- **Above 6%,** the largest rate simulated: D2 is NOT SCORABLE.
 
 ## 4. Method
 
@@ -58,7 +82,7 @@ hand is read under crossed polarizers with the analyzer slightly rotated, as in 
 
 **V is set by the pipette, not measured from images.** A volume error blurs a step: a step seen through a log-volume
 error σ looks like h ≈ 1.7/σ, so σ = 0.3 would already give h ≈ 6. A pipette with a 5–10% CV keeps a true step at
-h ≈ 17–34, far above 3.
+s ≈ 0.05–0.10 (h ≈ 17–34), well inside the steps the rule catches (s ≤ 0.2, Section 3).
 
 ## 5. Pilot first (not counted, not pre-registered)
 
@@ -75,6 +99,7 @@ h ≈ 17–34, far above 3.
 - **Gates before the main run** (all must pass, or fix and repeat the pilot):
   - pipette CV ≤ 10%, by weighing 20 dispenses of water at each level on the 0.001 g scale;
   - blind re-read of 40 pilot drops disagrees on ≤ 3%;
+  - 16 control drops made as in Section 6 (8 of each kind), scored blind among pilot photos, at most 1 read wrong;
   - at least 90% of drops readable;
   - no slide where all single drops share one hand (a sign of seeding).
 - Pilot data are never used in D1–D4.
@@ -83,7 +108,7 @@ h ≈ 17–34, far above 3.
 
 - **Levels:** K = 8 volumes, log-spaced from 0.2 to 1.6 × V0_pilot (ratio 1.35 between levels). Under
   P = exp(−V/V0) that runs from P_single 0.82 to 0.20.
-- **Droplets:** 25 per level, 200 in all (Section 7). The extension rule can add up to 100 more.
+- **Droplets:** 25 per level, 200 in all (Section 7), plus 64 control drops. The extension rule can add up to 100 more.
 - **Layout:** every slide carries every level, in an order drawn by a script with a fixed seed, so slide, position
   and time are not tied to volume.
 - **Extension rule (fixed now):** after the main run, if no level has P_single ≤ 0.4, add one level at 1.35× the
@@ -92,13 +117,26 @@ h ≈ 17–34, far above 3.
 - **Blinding:** each drop is photographed under its ID. A script renames the photos to random codes and crops each
   to its drop, rescaled to the same frame, so the reader cannot see the volume. The reader scores L, D, mixed or
   unreadable. The key is joined only after every photo is scored.
-- **Re-read:** a second reader re-scores a random 20% of photos blind. The disagreement rate is reported; half of it
-  estimates the misread rate, which sets the 6% rule in Section 3.
+- **Control drops (the misread rate):** at every level, 4 extra drops get one seed crystal of known hand and 4 get
+  one crystal of each hand, 64 in all. Seeds are pilot crystals whose hand both readers agree on. Control drops
+  use saturated solution, so the seed does not dissolve, and they are placed in the drawn order on the same
+  slides. They are photographed, renamed and scored blind with the rest; only the key marks them. The misread
+  rate is the share of controls read wrong for single or mixed (a one-seed drop read as mixed, a two-seed drop
+  read as single), and it sets the tiers in Section 3. A one-seed drop read with the wrong hand is reported
+  separately (it bears on D3 and D4). Unreadable controls are reported, not counted. A control can also grow a
+  stray crystal of its own, which looks like a misread, so the estimate errs high, toward NOT SCORABLE. Controls
+  are never used in D1–D4.
+- **Re-read:** a second reader re-scores a random 20% of photos blind. The disagreement rate is reported.
 - **Exclusions, logged before unblinding:** drops with no crystal, unreadable drops, drops that merged with a
   neighbour or were touched. Any slide whose single drops are lopsided at two-sided binomial p < 0.001 is excluded
   as seeded and reported.
 
 ## 7. How many droplets (`droplet_power.log`)
+
+**This table was made for the earlier h ≤ 3 rule.** For the rule now in Section 2, `droplet_sim2.py` ran the same
+protocol at 25 per level, 500 runs per truth, at pipette CV 5 or 15% and misreads 3 or 6%. Counting curves were
+called STEP in at most 6.4% of runs, and steps with s ≤ 0.2 in 97–100% at 3% misreads (65–95% at 6%). The count of
+25 per level stands.
 
 The simulation runs the whole main run 400 times per case: 8 levels, drawing droplets, applying the extension rule
 and the scorability rule, then the D2 fit. A run counts as **called right** if it is scorable and gives h ≤ 3 under
@@ -128,8 +166,8 @@ Each cell is the **worst** share called right over every true V0 and every condi
 - **Reported, not predicted.** At 20 per level with 3% misreads, the fitted h under the counting forms falls between
   0.85 and 2.64 in 95% of runs (median 1.44 for first-plus-extras, 1.59 for all-at-once). The 3 cut-off sits above
   that range.
-- **Not simulated.** The pilot precision assumes the counting rule. Contact-line nucleation (h ≈ 0.5; Section 10) is
-  not simulated either.
+- **Not simulated here.** The pilot precision assumes the counting rule. Evaporation is not in this table; it is
+  simulated separately in `droplet_sim.py` and changes the picture (Section 10).
 
 ## 8. Pre-registration steps
 
@@ -137,7 +175,7 @@ Each cell is the **worst** share called right over every true V0 and every condi
 2. `droplet_predictions.txt` is written: Sections 2, 3 and 6 with V0_pilot, the eight volumes and the droplet count
    filled in. Its sha256 goes in the docstring of `droplet_test.py`, which asserts it. Both are committed **before
    the first main-run drop is pipetted**.
-3. Main run, blind scoring, re-read.
+3. Main run with control drops, blind scoring, re-read. The misread rate from the controls is computed before D2.
 4. Outcomes are entered in `droplet_test.py` in a later commit, without changing the predictions file. Every
    outcome is reported as found.
 
@@ -155,11 +193,54 @@ Each cell is the **worst** share called right over every true V0 and every condi
 ## 10. Limits
 
 - **HELD does not prove counting.** A sharp critical size that varies between droplets also gives a broad curve.
-  A step blurred by a log-normal spread σ in the critical volume looks like h ≈ 1.7/σ, so h ≤ 3 needs σ ≥ 0.57, a
-  critical volume varying by about 1.8× (one standard deviation) between drops made the same way. The test rules
-  out a critical size that is sharp *and* the same for every drop.
-- **FAILED is the strong outcome.** A fitted h > 3 cannot come from counting under any form in Section 1.
-- **Evaporating drops are not Jang's drops.** Supersaturation rises as the drop dries, and nucleation may start at
-  the contact line. If the nucleus count grows like the perimeter (V^(1/3)) rather than V, the fall is broader
-  still (h about 0.5), which is fine for D2 but may need the extension levels to reach P_single ≤ 0.4.
+  A step blurred by a log-normal spread σ in the critical volume is a STEP curve with s ≈ σ (more with pipette
+  error). The rule called STEP in 84% of runs at s = 0.3 and 17% at s = 0.45 (CV 5%, 3% misreads), so SMOOTH needs
+  σ above about 0.3–0.45, a critical volume varying by about 1.35–1.6× (one standard deviation) between drops made
+  the same way. The test rules out a critical size that is sharp *and* the same for every drop.
+- **FAILED is the strong outcome.** Under the old h ≤ 3 line that held only in drops that do not evaporate (next
+  point). Under the rule in Section 2, no counting form in Section 1 and none of the drying models below was called
+  STEP in more than 6.4% of simulated runs (`droplet_sim2.log`).
+- **Evaporating drops can make counting look sharp** (`droplet_sim.py`, `droplet_sim.log`, 2026-10-20). This is a
+  model study, not data. Predictions were hashed before the run (`droplet_sim_predictions.txt`).
+  - **The model.** A drop dries, and a larger drop takes longer to dry (time ∝ V^(2/3)). Nuclei form in the bulk
+    or at the contact line, and each crystal may stop nucleation near it (quench). Thirty-eight models were run,
+    each through 200 simulated runs of Sections 5–7.
+  - **Nuclei in the bulk.** The count grows like V^(5/3), not V. The true curve has h = 2.66, and the protocol
+    returns FAILED in 34% of runs.
+  - **Drops that never nucleate.** If they crystallize once at dryness and count as single, rather than being
+    excluded, the true h is 3.54 and FAILED comes up in 83% of runs. In the bulk model, 78% of drops at 0.2 × V0
+    never nucleate before drying, so the exclusion rule would remove most of the bottom level.
+  - **Nuclei at the contact line.** The count grows like V: perimeter V^(1/3) times drying time V^(2/3). Then
+    h = 1.59, and every run is HELD. This replaces the earlier guess of h ≈ 0.5, which left out drying time.
+  - **A wide quench** behaves like no quench. Bulk models have h 2.1–2.5 and FAILED in up to 28% of runs (up to
+    68% with the dryness rule).
+  - **A narrow quench with a steep supersaturation ramp** flattens the curve (h 0.1–1.5), and up to 16% of runs
+    are NOT SCORABLE. In 3 of 36 quench models P_single rises with V, so D1 would fail. In 2 models no rate gives
+    P_single = 1/2 at 3.1 µL.
+  - **Predictions.** Four of six held. M4 failed: a steep ramp did not always flatten the curve, and with a wide
+    quench h reached 2.52. M6 failed in the 3 models above.
+  - **Consequence.** In evaporating drops a FAILED could come from counting itself, so h ≤ 3 is not a fair line
+    there. Section 2 now uses a rule that allows nuclei ∝ V^a with a up to 5/3 (next point). Drops that do not
+    evaporate (fixed volume, cooled or antisolvent, as in Jang et al.) remain the cleaner option.
+- **A rule that allows for drying** (`droplet_sim2.py`, `droplet_sim2.log`, 2026-10-20). Also a model study;
+  predictions were hashed before the run (`droplet_sim2_predictions.txt`). Three agents (physicist, statistician,
+  skeptic) designed the rule in Section 2 over two rounds. c* was calibrated on every counting curve: the three
+  forms at a = 1/3 to 5/3, and every `droplet_sim.py` model, with drops that never nucleate either excluded or
+  counted single at dryness. Every result below is from a fresh seed.
+  - **Six of eight predictions held.** Counting curves were called STEP in at most 6.4% of runs in any condition,
+    where the old line called the worst of them (dry, a = 5/3) FAILED in 85%. Steps with s ≤ 0.2 were called STEP
+    in every run at pipette CV 5% and 3% misreads.
+  - **S2 and S7 failed, for one reason.** At 6% misreads, twice the fit's 3%, a step with s = 0.15 was caught in
+    only 78% of runs at pipette CV 15%. Hence the control drops (Section 6) and the misread tiers (Section 3).
+  - **Blind spot (reported, not predicted).** A sharp step down to a plateau at P_single = 0.3, rather than to 0,
+    was called STEP in only 5% of runs. The rule looks for a step to full mixing only.
+  - **Exclusion zones cannot fake a step** (`exclusion_bak.py`, `exclusion_bak.log`; POST HOC). If each nucleus
+    blocks later ones near it, P_single depends on drop size through one ratio, which in drying drops grows like
+    V^e with e ≤ 1/2. Over 27 such curves (nuclei in the volume, on the base or at the contact line; three zone
+    growth rates; e = 1/6, 1/3, 1/2) the steepest had h = 1.58, and none was ever called STEP. At e = 1/6 most runs came out FLAT, so in drops like
+    that D2 would not be decided.
+  - **Bak et al. (2023), re-fit (POST HOC).** Their 90 °C series is SMOOTH for any guess of the unprinted drop
+    counts at P = 1 (3, 6 or 10), and a step with s ≤ 0.15 is rejected (2 Δlog-likelihood 14–17). Counting and
+    exclusion fit it equally well (within 0.4), so it rules out a sharp step but cannot choose between those two.
+    Their main series is NOT SCORABLE (5 mixed drops).
 - **One salt, one method.** A result here says nothing yet about the antisolvent droplets of Jang et al.

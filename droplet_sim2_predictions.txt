@@ -1,0 +1,53 @@
+droplet_sim2.py and exclusion_bak.py predictions, written 2026-10-20 before the first run of either.
+
+Why: droplet_sim.py (run 1) showed the prereg's h <= 3 cut is unfair to drying drops (dry bulk counting, nuclei ~ V^(5/3),
+called FAILED in 83% of runs).  A three-agent debate (physicist, statistician, skeptic; two rounds) agreed on the rule
+below.  This is a model study of a decision rule, not a test of nature.
+
+Protocol, unchanged from journals/droplet_prereg.md Sections 5-6: pilot 7 x 20 drops at 0.25-16 uL, exp_fit V0, main run
+8 x 25 drops at 0.2-1.6 x V0, extension rule (up to two levels), drops with no crystal excluded.
+
+Rule, per run, in this order:
+  NS      not scorable (droplet_power.scorable)
+  FLAT    the best-fitting curve (COUNT or STEP) changes by less than 0.4 across the levels run
+  RISING  Cochran-Armitage trend z > 1.645 (P_single rises with V)
+  STEP    L < c*
+  SMOOTH  otherwise ("no sharp step")
+L = max log-likelihood of COUNT - max log-likelihood of STEP, both with the fixed 3% misread blend.
+COUNT: P = F(mu), mu = mu0 (V / V0)^a, a in [0.05, 5/3], F one of
+  first  exp(-mu/2)                    (first nucleus fixes the hand, Poisson extras)
+  all    2 / (exp(mu/2) + 1)           (Poisson nuclei given at least one)
+  dry    2 exp(-mu/2) - exp(-mu)       (no-nucleus drops crystallize once at dryness, single)
+STEP: P = Phi(-ln(V / Vc) / s), s in [0.02, 0.6] (s = 0.6 is about the old h = 3 edge; h ~ 1.76 / s).
+c* = the lowest 5th percentile of L over every counting cell and condition, 1000 runs per cell on a calibration seed,
+then frozen.  Every number below is from a fresh seed, 500 runs per cell.
+s* = the largest probit s (of 0.1, 0.15, 0.2, 0.3, 0.45, 0.6) called STEP in >= 95% of runs in every condition.
+
+Counting cells: the three forms at a = 1/3, 2/3, 1, 4/3, 5/3 (P = 1/2 at 3.1 uL; "all" excludes drops with no nucleus,
+share exp(-mu)), plus every run-1 model curve (droplet_sim.MODELS, recomputed exactly as run 1) in both its excl and dry
+versions.  Step truths: probit s = 0.1, 0.15, 0.2, 0.3, 0.45, 0.6; logistic with h = 1.76 / s for s = 0.15, 0.3;
+reported only: a probit s = 0.15 step down to a 0.3 plateau, and a depletion-volume curve (P = 1 below Vd, counting
+tail above) with Vd = 0.3 and 0.6 x 3.1 uL.  Conditions: pipette CV 0.05 or 0.15 x misread 0.03 or 0.06 (fit keeps 3%).
+
+droplet_sim2.py predictions
+S1  Every counting cell is called STEP in <= 7% of runs in every condition (fresh seed).
+S2  Probit steps with s <= 0.15 are called STEP in >= 90% of runs in every condition.
+S3  Probit s = 0.6 is called STEP in <= 50% of runs at CV 0.05, misread 0.03.
+S4  Logistic s = 0.15 is called STEP in >= 90% of runs at CV 0.05, misread 0.03.
+S5  The run-1 curves whose P rises with V (line front w 0.01 B 1, line front w 0.1 B 10, bulk front w 0.01 B 1; excl)
+    are called STEP in <= 5% of runs in every condition.
+S6  At CV 0.05, misread 0.03 the old h <= 3 rule calls dry a = 5/3 FAILED in more than half of its runs, while the new
+    rule calls it STEP in <= 7%.
+S7  0.1 <= s* <= 0.2.
+S8  -4 <= c* <= -0.5.
+
+exclusion_bak.py: POST HOC.  Bak et al. (2023) data were already read, and the debate agents ran scratch versions of
+these fits, so these are expectations, not blind predictions.
+Model: each nucleus in a drying drop depletes a zone ell(dt) = sqrt(dt) + nu dt that blocks later nuclei (Johnson-Mehl
+thinning), nucleation rate e-folding every t_J; one control number eta = drop radius / zone scale.  Over volume,
+eta ~ V^e with e = 1/3 - gamma/2 (3-D drops) or 1/2 - gamma (films), drying time ~ V^gamma, so physical e <= 1/2.
+E1  No physical exclusion curve (e <= 1/2; volume, base or ring sites; nu 0, 0.3, 1) has true h > 3 at 0.2-1.6 x V0.
+E2  Through the frozen rule (CV 0.05, misread 0.03), every exclusion curve with 0 < e <= 1/2 is called STEP in <= 7%.
+E3  Bak Tinc-90 series (11 volumes; n at the P = 1 markers unknown, tried at 3, 6, 10): not STEP for any n, and a step
+    with s <= 0.15 is rejected (2 dlogL > 3.84 against the best fit).
+E4  The exclusion e-profile on Tinc-90 is best above e = 1/2 and rejects e = 0 by more than 2 log-likelihood units.

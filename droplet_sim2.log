@@ -1,0 +1,128 @@
+Model study, not data.  c* from counting cells on the calibration seed (1000 runs per cell and condition);
+everything below is a fresh seed, 500 runs per cell.
+c* = -1.61, set by run1 dry bulk no quench at CV 0.05, misread 0.03  (277 of 348 cell-conditions had >= 50 runs reaching L; 2 run-1 model(s) no V0)
+
+Counting cells (should not be STEP).  Shares at CV 0.05, misread 0.03:
+  first a=0.33                               STEP 0.00 SMOOTH 0.08 FLAT 0.91 RISING 0.00 NS 0.01 | worst STEP over conditions 0.00  old rule FAILED 0.00
+  first a=0.67                               STEP 0.00 SMOOTH 0.73 FLAT 0.27 RISING 0.00 NS 0.00 | worst STEP over conditions 0.00  old rule FAILED 0.00
+  first a=1.00                               STEP 0.00 SMOOTH 0.98 FLAT 0.02 RISING 0.00 NS 0.00 | worst STEP over conditions 0.00  old rule FAILED 0.00
+  first a=1.33                               STEP 0.00 SMOOTH 1.00 FLAT 0.00 RISING 0.00 NS 0.00 | worst STEP over conditions 0.00  old rule FAILED 0.00
+  first a=1.67                               STEP 0.00 SMOOTH 1.00 FLAT 0.00 RISING 0.00 NS 0.00 | worst STEP over conditions 0.00  old rule FAILED 0.05
+  all a=0.33                                 STEP 0.00 SMOOTH 0.20 FLAT 0.78 RISING 0.00 NS 0.02 | worst STEP over conditions 0.00  old rule FAILED 0.00
+  all a=0.67                                 STEP 0.00 SMOOTH 0.88 FLAT 0.12 RISING 0.00 NS 0.00 | worst STEP over conditions 0.00  old rule FAILED 0.00
+  all a=1.00                                 STEP 0.00 SMOOTH 0.99 FLAT 0.01 RISING 0.00 NS 0.00 | worst STEP over conditions 0.00  old rule FAILED 0.00
+  all a=1.33                                 STEP 0.00 SMOOTH 1.00 FLAT 0.00 RISING 0.00 NS 0.00 | worst STEP over conditions 0.00  old rule FAILED 0.08
+  all a=1.67                                 STEP 0.00 SMOOTH 1.00 FLAT 0.00 RISING 0.00 NS 0.00 | worst STEP over conditions 0.00  old rule FAILED 0.43
+  dry a=0.33                                 STEP 0.00 SMOOTH 0.32 FLAT 0.68 RISING 0.00 NS 0.00 | worst STEP over conditions 0.00  old rule FAILED 0.00
+  dry a=0.67                                 STEP 0.00 SMOOTH 0.97 FLAT 0.03 RISING 0.00 NS 0.00 | worst STEP over conditions 0.00  old rule FAILED 0.00
+  dry a=1.00                                 STEP 0.00 SMOOTH 1.00 FLAT 0.00 RISING 0.00 NS 0.00 | worst STEP over conditions 0.00  old rule FAILED 0.01
+  dry a=1.33                                 STEP 0.01 SMOOTH 0.99 FLAT 0.00 RISING 0.00 NS 0.00 | worst STEP over conditions 0.01  old rule FAILED 0.32
+  dry a=1.67                                 STEP 0.06 SMOOTH 0.94 FLAT 0.00 RISING 0.00 NS 0.00 | worst STEP over conditions 0.06  old rule FAILED 0.85
+  run1 excl line no quench                   STEP 0.00 SMOOTH 1.00 FLAT 0.00 RISING 0.00 NS 0.00 | worst STEP over conditions 0.00  old rule FAILED 0.00
+  run1 dry line no quench                    STEP 0.00 SMOOTH 1.00 FLAT 0.00 RISING 0.00 NS 0.00 | worst STEP over conditions 0.00  old rule FAILED 0.01
+  run1 excl bulk no quench                   STEP 0.01 SMOOTH 0.99 FLAT 0.00 RISING 0.00 NS 0.00 | worst STEP over conditions 0.01  old rule FAILED 0.42
+  run1 dry bulk no quench                    STEP 0.05 SMOOTH 0.95 FLAT 0.00 RISING 0.00 NS 0.00 | worst STEP over conditions 0.05  old rule FAILED 0.86
+  run1 excl line diff  w 0.01 B 0            STEP 0.00 SMOOTH 0.94 FLAT 0.06 RISING 0.00 NS 0.00 | worst STEP over conditions 0.00  old rule FAILED 0.00
+  run1 dry line diff  w 0.01 B 0             STEP 0.00 SMOOTH 0.94 FLAT 0.06 RISING 0.00 NS 0.00 | worst STEP over conditions 0.00  old rule FAILED 0.00
+  run1 excl line diff  w 0.01 B 1            STEP 0.00 SMOOTH 0.02 FLAT 0.93 RISING 0.00 NS 0.06 | worst STEP over conditions 0.00  old rule FAILED 0.00
+  run1 dry line diff  w 0.01 B 1             STEP 0.00 SMOOTH 0.00 FLAT 0.92 RISING 0.00 NS 0.08 | worst STEP over conditions 0.00  old rule FAILED 0.00
+  run1 excl line diff  w 0.01 B 10           STEP 0.00 SMOOTH 0.00 FLAT 0.88 RISING 0.00 NS 0.12 | worst STEP over conditions 0.00  old rule FAILED 0.00
+  run1 dry line diff  w 0.01 B 10            STEP 0.00 SMOOTH 0.00 FLAT 0.88 RISING 0.00 NS 0.12 | worst STEP over conditions 0.00  old rule FAILED 0.00
+  run1 excl line diff  w 0.1  B 0            STEP 0.00 SMOOTH 0.96 FLAT 0.04 RISING 0.00 NS 0.00 | worst STEP over conditions 0.00  old rule FAILED 0.00
+  run1 dry line diff  w 0.1  B 0             STEP 0.00 SMOOTH 0.96 FLAT 0.04 RISING 0.00 NS 0.00 | worst STEP over conditions 0.00  old rule FAILED 0.00
+  run1 excl line diff  w 0.1  B 1            STEP 0.00 SMOOTH 0.50 FLAT 0.50 RISING 0.00 NS 0.00 | worst STEP over conditions 0.00  old rule FAILED 0.00
+  run1 dry line diff  w 0.1  B 1             STEP 0.00 SMOOTH 0.51 FLAT 0.49 RISING 0.00 NS 0.00 | worst STEP over conditions 0.00  old rule FAILED 0.00
+  run1 excl line diff  w 0.1  B 10           STEP 0.00 SMOOTH 0.47 FLAT 0.53 RISING 0.00 NS 0.00 | worst STEP over conditions 0.00  old rule FAILED 0.00
+  run1 dry line diff  w 0.1  B 10            STEP 0.00 SMOOTH 0.50 FLAT 0.50 RISING 0.00 NS 0.00 | worst STEP over conditions 0.00  old rule FAILED 0.00
+  run1 excl line diff  w 0.5  B 0            STEP 0.00 SMOOTH 0.99 FLAT 0.01 RISING 0.00 NS 0.00 | worst STEP over conditions 0.00  old rule FAILED 0.00
+  run1 dry line diff  w 0.5  B 0             STEP 0.00 SMOOTH 1.00 FLAT 0.00 RISING 0.00 NS 0.00 | worst STEP over conditions 0.00  old rule FAILED 0.00
+  run1 excl line diff  w 0.5  B 1            STEP 0.00 SMOOTH 0.99 FLAT 0.01 RISING 0.00 NS 0.00 | worst STEP over conditions 0.00  old rule FAILED 0.00
+  run1 dry line diff  w 0.5  B 1             STEP 0.00 SMOOTH 1.00 FLAT 0.00 RISING 0.00 NS 0.00 | worst STEP over conditions 0.00  old rule FAILED 0.00
+  run1 excl line diff  w 0.5  B 10           STEP 0.00 SMOOTH 0.99 FLAT 0.01 RISING 0.00 NS 0.00 | worst STEP over conditions 0.00  old rule FAILED 0.00
+  run1 dry line diff  w 0.5  B 10            STEP 0.00 SMOOTH 1.00 FLAT 0.00 RISING 0.00 NS 0.00 | worst STEP over conditions 0.00  old rule FAILED 0.01
+  run1 excl line front w 0.01 B 0            STEP 0.00 SMOOTH 0.48 FLAT 0.52 RISING 0.00 NS 0.00 | worst STEP over conditions 0.00  old rule FAILED 0.00
+  run1 dry line front w 0.01 B 0             STEP 0.00 SMOOTH 0.47 FLAT 0.53 RISING 0.00 NS 0.00 | worst STEP over conditions 0.00  old rule FAILED 0.00
+  run1 excl line front w 0.01 B 1            STEP 0.00 SMOOTH 0.00 FLAT 0.86 RISING 0.00 NS 0.14 | worst STEP over conditions 0.00  old rule FAILED 0.00
+  run1 dry line front w 0.01 B 1             STEP 0.00 SMOOTH 0.00 FLAT 0.88 RISING 0.00 NS 0.12 | worst STEP over conditions 0.00  old rule FAILED 0.00
+  run1 excl line front w 0.1  B 0            STEP 0.00 SMOOTH 0.75 FLAT 0.25 RISING 0.00 NS 0.00 | worst STEP over conditions 0.00  old rule FAILED 0.00
+  run1 dry line front w 0.1  B 0             STEP 0.00 SMOOTH 0.73 FLAT 0.27 RISING 0.00 NS 0.00 | worst STEP over conditions 0.00  old rule FAILED 0.00
+  run1 excl line front w 0.1  B 1            STEP 0.00 SMOOTH 0.00 FLAT 0.82 RISING 0.00 NS 0.18 | worst STEP over conditions 0.00  old rule FAILED 0.00
+  run1 dry line front w 0.1  B 1             STEP 0.00 SMOOTH 0.00 FLAT 0.85 RISING 0.00 NS 0.15 | worst STEP over conditions 0.00  old rule FAILED 0.00
+  run1 excl line front w 0.1  B 10           STEP 0.00 SMOOTH 0.00 FLAT 0.77 RISING 0.00 NS 0.23 | worst STEP over conditions 0.00  old rule FAILED 0.00
+  run1 dry line front w 0.1  B 10            STEP 0.00 SMOOTH 0.00 FLAT 0.78 RISING 0.00 NS 0.22 | worst STEP over conditions 0.00  old rule FAILED 0.00
+  run1 excl line front w 0.5  B 0            STEP 0.00 SMOOTH 0.92 FLAT 0.08 RISING 0.00 NS 0.00 | worst STEP over conditions 0.00  old rule FAILED 0.00
+  run1 dry line front w 0.5  B 0             STEP 0.00 SMOOTH 0.96 FLAT 0.04 RISING 0.00 NS 0.00 | worst STEP over conditions 0.00  old rule FAILED 0.00
+  run1 excl line front w 0.5  B 1            STEP 0.00 SMOOTH 0.83 FLAT 0.17 RISING 0.00 NS 0.00 | worst STEP over conditions 0.00  old rule FAILED 0.00
+  run1 dry line front w 0.5  B 1             STEP 0.00 SMOOTH 0.96 FLAT 0.04 RISING 0.00 NS 0.00 | worst STEP over conditions 0.00  old rule FAILED 0.00
+  run1 excl line front w 0.5  B 10           STEP 0.00 SMOOTH 0.99 FLAT 0.01 RISING 0.00 NS 0.00 | worst STEP over conditions 0.00  old rule FAILED 0.00
+  run1 dry line front w 0.5  B 10            STEP 0.00 SMOOTH 1.00 FLAT 0.00 RISING 0.00 NS 0.00 | worst STEP over conditions 0.00  old rule FAILED 0.00
+  run1 excl bulk diff  w 0.01 B 0            STEP 0.00 SMOOTH 1.00 FLAT 0.00 RISING 0.00 NS 0.00 | worst STEP over conditions 0.00  old rule FAILED 0.00
+  run1 dry bulk diff  w 0.01 B 0             STEP 0.00 SMOOTH 1.00 FLAT 0.00 RISING 0.00 NS 0.00 | worst STEP over conditions 0.00  old rule FAILED 0.00
+  run1 excl bulk diff  w 0.01 B 1            STEP 0.00 SMOOTH 0.05 FLAT 0.94 RISING 0.00 NS 0.02 | worst STEP over conditions 0.00  old rule FAILED 0.00
+  run1 dry bulk diff  w 0.01 B 1             STEP 0.00 SMOOTH 0.04 FLAT 0.94 RISING 0.00 NS 0.02 | worst STEP over conditions 0.00  old rule FAILED 0.00
+  run1 excl bulk diff  w 0.01 B 10           STEP 0.00 SMOOTH 0.01 FLAT 0.91 RISING 0.00 NS 0.08 | worst STEP over conditions 0.00  old rule FAILED 0.00
+  run1 dry bulk diff  w 0.01 B 10            STEP 0.00 SMOOTH 0.01 FLAT 0.93 RISING 0.00 NS 0.06 | worst STEP over conditions 0.00  old rule FAILED 0.00
+  run1 excl bulk diff  w 0.1  B 0            STEP 0.00 SMOOTH 1.00 FLAT 0.00 RISING 0.00 NS 0.00 | worst STEP over conditions 0.00  old rule FAILED 0.05
+  run1 dry bulk diff  w 0.1  B 0             STEP 0.00 SMOOTH 1.00 FLAT 0.00 RISING 0.00 NS 0.00 | worst STEP over conditions 0.01  old rule FAILED 0.08
+  run1 excl bulk diff  w 0.1  B 1            STEP 0.00 SMOOTH 1.00 FLAT 0.00 RISING 0.00 NS 0.00 | worst STEP over conditions 0.00  old rule FAILED 0.00
+  run1 dry bulk diff  w 0.1  B 1             STEP 0.00 SMOOTH 1.00 FLAT 0.00 RISING 0.00 NS 0.00 | worst STEP over conditions 0.00  old rule FAILED 0.00
+  run1 excl bulk diff  w 0.1  B 10           STEP 0.00 SMOOTH 0.99 FLAT 0.01 RISING 0.00 NS 0.00 | worst STEP over conditions 0.00  old rule FAILED 0.00
+  run1 dry bulk diff  w 0.1  B 10            STEP 0.00 SMOOTH 1.00 FLAT 0.00 RISING 0.00 NS 0.00 | worst STEP over conditions 0.00  old rule FAILED 0.00
+  run1 excl bulk diff  w 0.5  B 0            STEP 0.01 SMOOTH 0.99 FLAT 0.00 RISING 0.00 NS 0.00 | worst STEP over conditions 0.01  old rule FAILED 0.22
+  run1 dry bulk diff  w 0.5  B 0             STEP 0.02 SMOOTH 0.98 FLAT 0.00 RISING 0.00 NS 0.00 | worst STEP over conditions 0.02  old rule FAILED 0.53
+  run1 excl bulk diff  w 0.5  B 1            STEP 0.00 SMOOTH 1.00 FLAT 0.00 RISING 0.00 NS 0.00 | worst STEP over conditions 0.00  old rule FAILED 0.21
+  run1 dry bulk diff  w 0.5  B 1             STEP 0.02 SMOOTH 0.98 FLAT 0.00 RISING 0.00 NS 0.00 | worst STEP over conditions 0.02  old rule FAILED 0.54
+  run1 excl bulk diff  w 0.5  B 10           STEP 0.00 SMOOTH 1.00 FLAT 0.00 RISING 0.00 NS 0.00 | worst STEP over conditions 0.00  old rule FAILED 0.28
+  run1 dry bulk diff  w 0.5  B 10            STEP 0.03 SMOOTH 0.97 FLAT 0.00 RISING 0.00 NS 0.00 | worst STEP over conditions 0.03  old rule FAILED 0.74
+  run1 excl bulk front w 0.01 B 0            STEP 0.00 SMOOTH 1.00 FLAT 0.00 RISING 0.00 NS 0.00 | worst STEP over conditions 0.00  old rule FAILED 0.00
+  run1 dry bulk front w 0.01 B 0             STEP 0.00 SMOOTH 1.00 FLAT 0.00 RISING 0.00 NS 0.00 | worst STEP over conditions 0.00  old rule FAILED 0.00
+  run1 excl bulk front w 0.01 B 1            STEP 0.00 SMOOTH 0.00 FLAT 0.81 RISING 0.00 NS 0.19 | worst STEP over conditions 0.00  old rule FAILED 0.00
+  run1 dry bulk front w 0.01 B 1             STEP 0.00 SMOOTH 0.00 FLAT 0.82 RISING 0.00 NS 0.18 | worst STEP over conditions 0.00  old rule FAILED 0.00
+  run1 excl bulk front w 0.1  B 0            STEP 0.00 SMOOTH 1.00 FLAT 0.00 RISING 0.00 NS 0.00 | worst STEP over conditions 0.00  old rule FAILED 0.01
+  run1 dry bulk front w 0.1  B 0             STEP 0.00 SMOOTH 1.00 FLAT 0.00 RISING 0.00 NS 0.00 | worst STEP over conditions 0.00  old rule FAILED 0.02
+  run1 excl bulk front w 0.1  B 1            STEP 0.00 SMOOTH 0.16 FLAT 0.83 RISING 0.00 NS 0.00 | worst STEP over conditions 0.00  old rule FAILED 0.00
+  run1 dry bulk front w 0.1  B 1             STEP 0.00 SMOOTH 0.12 FLAT 0.87 RISING 0.00 NS 0.00 | worst STEP over conditions 0.00  old rule FAILED 0.00
+  run1 excl bulk front w 0.1  B 10           STEP 0.00 SMOOTH 0.01 FLAT 0.94 RISING 0.00 NS 0.06 | worst STEP over conditions 0.00  old rule FAILED 0.00
+  run1 dry bulk front w 0.1  B 10            STEP 0.00 SMOOTH 0.01 FLAT 0.94 RISING 0.00 NS 0.05 | worst STEP over conditions 0.00  old rule FAILED 0.00
+  run1 excl bulk front w 0.5  B 0            STEP 0.00 SMOOTH 1.00 FLAT 0.00 RISING 0.00 NS 0.00 | worst STEP over conditions 0.00  old rule FAILED 0.12
+  run1 dry bulk front w 0.5  B 0             STEP 0.01 SMOOTH 0.99 FLAT 0.00 RISING 0.00 NS 0.00 | worst STEP over conditions 0.02  old rule FAILED 0.37
+  run1 excl bulk front w 0.5  B 1            STEP 0.00 SMOOTH 1.00 FLAT 0.00 RISING 0.00 NS 0.00 | worst STEP over conditions 0.00  old rule FAILED 0.08
+  run1 dry bulk front w 0.5  B 1             STEP 0.02 SMOOTH 0.98 FLAT 0.00 RISING 0.00 NS 0.00 | worst STEP over conditions 0.02  old rule FAILED 0.27
+  run1 excl bulk front w 0.5  B 10           STEP 0.00 SMOOTH 1.00 FLAT 0.00 RISING 0.00 NS 0.00 | worst STEP over conditions 0.00  old rule FAILED 0.23
+  run1 dry bulk front w 0.5  B 10            STEP 0.04 SMOOTH 0.96 FLAT 0.00 RISING 0.00 NS 0.00 | worst STEP over conditions 0.04  old rule FAILED 0.65
+
+Step and reported truths.  Shares at CV 0.05, misread 0.03; then STEP share per condition and median s-hat of STEP calls:
+  probit s=0.1                               STEP 1.00 SMOOTH 0.00 FLAT 0.00 RISING 0.00 NS 0.00 | worst STEP over conditions 1.00  old rule FAILED 1.00
+      STEP by CV/misread 0.05/0.03:1.00 0.05/0.06:0.95 0.15/0.03:1.00 0.15/0.06:0.89  median s-hat 0.100
+  probit s=0.15                              STEP 1.00 SMOOTH 0.00 FLAT 0.00 RISING 0.00 NS 0.00 | worst STEP over conditions 1.00  old rule FAILED 1.00
+      STEP by CV/misread 0.05/0.03:1.00 0.05/0.06:0.91 0.15/0.03:1.00 0.15/0.06:0.78  median s-hat 0.150
+  probit s=0.2                               STEP 1.00 SMOOTH 0.00 FLAT 0.00 RISING 0.00 NS 0.00 | worst STEP over conditions 1.00  old rule FAILED 1.00
+      STEP by CV/misread 0.05/0.03:1.00 0.05/0.06:0.84 0.15/0.03:0.97 0.15/0.06:0.65  median s-hat 0.200
+  probit s=0.3                               STEP 0.84 SMOOTH 0.16 FLAT 0.00 RISING 0.00 NS 0.00 | worst STEP over conditions 0.84  old rule FAILED 1.00
+      STEP by CV/misread 0.05/0.03:0.84 0.05/0.06:0.39 0.15/0.03:0.71 0.15/0.06:0.30  median s-hat 0.300
+  probit s=0.45                              STEP 0.17 SMOOTH 0.83 FLAT 0.00 RISING 0.00 NS 0.00 | worst STEP over conditions 0.17  old rule FAILED 0.95
+      STEP by CV/misread 0.05/0.03:0.17 0.05/0.06:0.05 0.15/0.03:0.11 0.15/0.06:0.05  median s-hat 0.350
+  probit s=0.6                               STEP 0.03 SMOOTH 0.97 FLAT 0.00 RISING 0.00 NS 0.00 | worst STEP over conditions 0.04  old rule FAILED 0.38
+      STEP by CV/misread 0.05/0.03:0.03 0.05/0.06:0.01 0.15/0.03:0.04 0.15/0.06:0.01  median s-hat 0.500
+  logistic s=0.15                            STEP 1.00 SMOOTH 0.00 FLAT 0.00 RISING 0.00 NS 0.00 | worst STEP over conditions 1.00  old rule FAILED 1.00
+      STEP by CV/misread 0.05/0.03:1.00 0.05/0.06:0.93 0.15/0.03:0.99 0.15/0.06:0.79  median s-hat 0.150
+  logistic s=0.3                             STEP 0.87 SMOOTH 0.13 FLAT 0.00 RISING 0.00 NS 0.00 | worst STEP over conditions 0.87  old rule FAILED 1.00
+      STEP by CV/misread 0.05/0.03:0.87 0.05/0.06:0.39 0.15/0.03:0.69 0.15/0.06:0.25  median s-hat 0.300
+  plateau 0.3, s=0.15                        STEP 0.05 SMOOTH 0.91 FLAT 0.03 RISING 0.00 NS 0.00 | worst STEP over conditions 0.05  old rule FAILED 0.01
+      STEP by CV/misread 0.05/0.03:0.05 0.05/0.06:0.03 0.15/0.03:0.04 0.15/0.06:0.01  median s-hat 0.600
+  Vd = 0.3 x V50                             STEP 0.02 SMOOTH 0.98 FLAT 0.00 RISING 0.00 NS 0.00 | worst STEP over conditions 0.02  old rule FAILED 0.30
+      STEP by CV/misread 0.05/0.03:0.02 0.05/0.06:0.01 0.15/0.03:0.01 0.15/0.06:0.01  median s-hat 0.600
+  Vd = 0.6 x V50                             STEP 0.77 SMOOTH 0.23 FLAT 0.00 RISING 0.00 NS 0.00 | worst STEP over conditions 0.77  old rule FAILED 1.00
+      STEP by CV/misread 0.05/0.03:0.77 0.05/0.06:0.31 0.15/0.03:0.64 0.15/0.06:0.23  median s-hat 0.350
+
+s* = nan (largest probit s called STEP in >= 95% of runs in every condition)
+
+Predictions:
+  S1 HELD: max STEP over counting cells 0.064
+  S2 FAILED: min 0.78
+  S3 HELD: 0.03
+  S4 HELD: 1.00
+  S5 HELD: 3 curves, max STEP 0.00
+  S6 HELD: old FAILED 0.85, new STEP 0.06
+  S7 FAILED: s* nan
+  S8 HELD: c* -1.61

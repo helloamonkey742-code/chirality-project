@@ -1,0 +1,83 @@
+POST HOC.  Model study and re-fit of published points, not new data.  Frozen c* = -1.61.
+
+1. Exclusion Monte Carlo, P_single against eta (drop radius / zone scale), 6000 drops per point:
+  volume nu 0.0 0.05:1.00 0.16:0.99 0.33:0.95 0.59:0.84 1.1:0.53 1.9:0.01 3.4:0.00 6:0.00  (overflow max 0.997)
+  base   nu 0.0 0.05:1.00 0.16:0.99 0.33:0.94 0.59:0.83 1.1:0.50 1.9:0.01 3.4:0.00 6:0.00  (overflow max 0.999)
+  ring   nu 0.0 0.05:1.00 0.16:0.98 0.33:0.89 0.59:0.66 1.1:0.24 1.9:0.00 3.4:0.00 6:0.00  (overflow max 1.000)
+  volume nu 0.3 0.05:1.00 0.16:0.99 0.33:0.96 0.59:0.88 1.1:0.69 1.9:0.33 3.4:0.03 6:0.00  (overflow max 0.744)
+  base   nu 0.3 0.05:1.00 0.16:0.99 0.33:0.95 0.59:0.88 1.1:0.68 1.9:0.32 3.4:0.03 6:0.00  (overflow max 0.939)
+  ring   nu 0.3 0.05:1.00 0.16:0.98 0.33:0.92 0.59:0.78 1.1:0.48 1.9:0.13 3.4:0.01 6:0.00  (overflow max 0.995)
+  volume nu 1.0 0.05:1.00 0.16:0.99 0.33:0.97 0.59:0.93 1.1:0.82 1.9:0.61 3.4:0.29 6:0.04  (overflow max 0.000)
+  base   nu 1.0 0.05:1.00 0.16:0.99 0.33:0.97 0.59:0.92 1.1:0.81 1.9:0.60 3.4:0.28 6:0.04  (overflow max 0.004)
+  ring   nu 1.0 0.05:1.00 0.16:0.98 0.33:0.94 0.59:0.87 1.1:0.71 1.9:0.42 3.4:0.12 6:0.01  (overflow max 0.007)
+
+2. Exclusion curves over volume, eta ~ V^e (e = 1/3: 3-D drop, drying time fixed; 1/6: gamma 1/3; 0:
+   gamma 2/3, diffusion-limited; 1/2: film).  True h at 0.2-1.6 x V0, then the frozen rule, CV 0.05,
+   misread 0.03, 500 runs:
+  volume nu 0.0 e -0.17: true h  0.10  STEP 0.00 SMOOTH 0.00 FLAT 0.92 RISING 0.00 NS 0.08
+  volume nu 0.0 e +0.00: true h  0.10  STEP 0.00 SMOOTH 0.00 FLAT 0.82 RISING 0.00 NS 0.18
+  volume nu 0.0 e +0.17: true h  0.55  STEP 0.00 SMOOTH 0.20 FLAT 0.80 RISING 0.00 NS 0.00
+  volume nu 0.0 e +0.33: true h  1.05  STEP 0.00 SMOOTH 0.86 FLAT 0.14 RISING 0.00 NS 0.00
+  volume nu 0.0 e +0.50: true h  1.58  STEP 0.00 SMOOTH 1.00 FLAT 0.00 RISING 0.00 NS 0.00
+  base   nu 0.0 e -0.17: true h  0.10  STEP 0.00 SMOOTH 0.00 FLAT 0.89 RISING 0.00 NS 0.11
+  base   nu 0.0 e +0.00: true h  0.10  STEP 0.00 SMOOTH 0.00 FLAT 0.83 RISING 0.00 NS 0.17
+  base   nu 0.0 e +0.17: true h  0.52  STEP 0.00 SMOOTH 0.15 FLAT 0.85 RISING 0.00 NS 0.00
+  base   nu 0.0 e +0.33: true h  1.02  STEP 0.00 SMOOTH 0.80 FLAT 0.20 RISING 0.00 NS 0.00
+  base   nu 0.0 e +0.50: true h  1.55  STEP 0.00 SMOOTH 1.00 FLAT 0.00 RISING 0.00 NS 0.00
+  ring   nu 0.0 e -0.17: true h  0.10  STEP 0.00 SMOOTH 0.00 FLAT 0.91 RISING 0.00 NS 0.09
+  ring   nu 0.0 e +0.00: true h  0.10  STEP 0.00 SMOOTH 0.00 FLAT 0.82 RISING 0.00 NS 0.18
+  ring   nu 0.0 e +0.17: true h  0.50  STEP 0.00 SMOOTH 0.13 FLAT 0.86 RISING 0.00 NS 0.01
+  ring   nu 0.0 e +0.33: true h  0.99  STEP 0.00 SMOOTH 0.82 FLAT 0.18 RISING 0.00 NS 0.00
+  ring   nu 0.0 e +0.50: true h  1.48  STEP 0.00 SMOOTH 1.00 FLAT 0.00 RISING 0.00 NS 0.00
+  volume nu 0.3 e -0.17: true h  0.10  STEP 0.00 SMOOTH 0.00 FLAT 0.85 RISING 0.00 NS 0.15
+  volume nu 0.3 e +0.00: true h  0.10  STEP 0.00 SMOOTH 0.00 FLAT 0.82 RISING 0.00 NS 0.18
+  volume nu 0.3 e +0.17: true h  0.43  STEP 0.00 SMOOTH 0.08 FLAT 0.91 RISING 0.00 NS 0.01
+  volume nu 0.3 e +0.33: true h  0.87  STEP 0.00 SMOOTH 0.64 FLAT 0.36 RISING 0.00 NS 0.00
+  volume nu 0.3 e +0.50: true h  1.30  STEP 0.00 SMOOTH 0.97 FLAT 0.03 RISING 0.00 NS 0.00
+  base   nu 0.3 e -0.17: true h  0.10  STEP 0.00 SMOOTH 0.00 FLAT 0.84 RISING 0.00 NS 0.16
+  base   nu 0.3 e +0.00: true h  0.10  STEP 0.00 SMOOTH 0.00 FLAT 0.84 RISING 0.00 NS 0.16
+  base   nu 0.3 e +0.17: true h  0.43  STEP 0.00 SMOOTH 0.08 FLAT 0.90 RISING 0.00 NS 0.02
+  base   nu 0.3 e +0.33: true h  0.85  STEP 0.00 SMOOTH 0.59 FLAT 0.41 RISING 0.00 NS 0.00
+  base   nu 0.3 e +0.50: true h  1.27  STEP 0.00 SMOOTH 0.96 FLAT 0.04 RISING 0.00 NS 0.00
+  ring   nu 0.3 e -0.17: true h  0.10  STEP 0.00 SMOOTH 0.00 FLAT 0.85 RISING 0.00 NS 0.15
+  ring   nu 0.3 e +0.00: true h  0.10  STEP 0.00 SMOOTH 0.00 FLAT 0.77 RISING 0.00 NS 0.23
+  ring   nu 0.3 e +0.17: true h  0.42  STEP 0.00 SMOOTH 0.05 FLAT 0.95 RISING 0.00 NS 0.00
+  ring   nu 0.3 e +0.33: true h  0.84  STEP 0.00 SMOOTH 0.58 FLAT 0.42 RISING 0.00 NS 0.00
+  ring   nu 0.3 e +0.50: true h  1.24  STEP 0.00 SMOOTH 0.97 FLAT 0.03 RISING 0.00 NS 0.00
+  volume nu 1.0 e -0.17: true h  0.10  STEP 0.00 SMOOTH 0.00 FLAT 0.81 RISING 0.00 NS 0.19
+  volume nu 1.0 e +0.00: true h  0.10  STEP 0.00 SMOOTH 0.00 FLAT 0.80 RISING 0.00 NS 0.20
+  volume nu 1.0 e +0.17: true h  0.37  STEP 0.00 SMOOTH 0.03 FLAT 0.95 RISING 0.00 NS 0.03
+  volume nu 1.0 e +0.33: true h  0.71  STEP 0.00 SMOOTH 0.42 FLAT 0.58 RISING 0.00 NS 0.00
+  volume nu 1.0 e +0.50: true h  1.08  STEP 0.00 SMOOTH 0.89 FLAT 0.11 RISING 0.00 NS 0.00
+  base   nu 1.0 e -0.17: true h  0.10  STEP 0.00 SMOOTH 0.00 FLAT 0.85 RISING 0.00 NS 0.15
+  base   nu 1.0 e +0.00: true h  0.10  STEP 0.00 SMOOTH 0.00 FLAT 0.81 RISING 0.00 NS 0.19
+  base   nu 1.0 e +0.17: true h  0.35  STEP 0.00 SMOOTH 0.04 FLAT 0.94 RISING 0.00 NS 0.02
+  base   nu 1.0 e +0.33: true h  0.70  STEP 0.00 SMOOTH 0.34 FLAT 0.65 RISING 0.00 NS 0.00
+  base   nu 1.0 e +0.50: true h  1.06  STEP 0.00 SMOOTH 0.88 FLAT 0.12 RISING 0.00 NS 0.00
+  ring   nu 1.0 e -0.17: true h  0.10  STEP 0.00 SMOOTH 0.00 FLAT 0.85 RISING 0.00 NS 0.15
+  ring   nu 1.0 e +0.00: true h  0.10  STEP 0.00 SMOOTH 0.00 FLAT 0.83 RISING 0.00 NS 0.17
+  ring   nu 1.0 e +0.17: true h  0.34  STEP 0.00 SMOOTH 0.04 FLAT 0.94 RISING 0.00 NS 0.03
+  ring   nu 1.0 e +0.33: true h  0.68  STEP 0.00 SMOOTH 0.35 FLAT 0.65 RISING 0.00 NS 0.00
+  ring   nu 1.0 e +0.50: true h  1.04  STEP 0.00 SMOOTH 0.86 FLAT 0.14 RISING 0.00 NS 0.00
+
+3. Bak et al. 2023 Fig. 2a, frozen rule.  n at the P = 1 markers is not printed; tried at 3, 6, 10.
+   L = ll COUNT - ll STEP (s <= 0.6); p = parametric bootstrap share of L <= observed under the best COUNT fit;
+   sharp = 2 (ll best - ll best STEP with s <= 0.15).
+  Tinc 90 C n=3 : L  +3.54  p 0.632  a-hat 0.70  s-hat 0.600  sharp  16.9  z -4.82  verdict SMOOTH
+      exclusion e-profile (ll - best): -0.2:-20.0 -0.1:-15.8 -0:-12.0 0.1:-7.3 0.2:-3.7 0.3:-1.5 0.4:-0.4 0.5:-0.1 0.6:-0.0 0.7:0.0 0.8:-0.2 0.9:-0.6 1:-1.1
+      best e 0.7; ll EXCL -25.01 vs COUNT -24.84, STEP -28.37
+  Tinc 90 C n=6 : L  +2.78  p 0.647  a-hat 0.80  s-hat 0.600  sharp  15.4  z -5.93  verdict SMOOTH
+      exclusion e-profile (ll - best): -0.2:-25.3 -0.1:-20.9 -0:-16.6 0.1:-10.8 0.2:-6.2 0.3:-3.1 0.4:-1.2 0.5:-0.3 0.6:-0.1 0.7:-0.0 0.8:-0.0 0.9:-0.2 1:-0.5
+      best e 0.75; ll EXCL -26.54 vs COUNT -26.24, STEP -29.02
+  Tinc 90 C n=10: L  +2.10  p 0.696  a-hat 0.90  s-hat 0.600  sharp  14.0  z -7.04  verdict SMOOTH
+      exclusion e-profile (ll - best): -0.2:-29.3 -0.1:-25.0 -0:-20.9 0.1:-14.4 0.2:-9.2 0.3:-5.1 0.4:-2.4 0.5:-0.9 0.6:-0.3 0.7:-0.1 0.8:-0.1 0.9:0.0 1:-0.2
+      best e 0.9; ll EXCL -28.15 vs COUNT -27.79, STEP -29.88
+  main      n=3 : L  +0.52  p 0.565  a-hat 0.70  s-hat 0.600  sharp   4.3  z -1.12  verdict NS
+  main      n=6 : L  +0.47  p 0.635  a-hat 0.80  s-hat 0.600  sharp   4.2  z -1.47  verdict NS
+  main      n=10: L  +0.43  p 0.610  a-hat 0.90  s-hat 0.600  sharp   4.1  z -1.83  verdict NS
+
+Expectations (POST HOC, not blind):
+  E1 HELD: max true h over physical exclusion curves (0 < e <= 1/2) 1.58
+  E2 HELD: max STEP share 0.00
+  E3 HELD: Tinc 90 C not STEP and sharp step rejected at n = 3, 6, 10: [np.True_, np.True_, np.True_]
+  E4 HELD: best e > 1/2 and e = 0 rejected by > 2 at n = 3, 6, 10: [np.True_, np.True_, np.True_]
