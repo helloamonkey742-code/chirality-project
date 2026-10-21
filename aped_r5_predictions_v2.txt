@@ -1,0 +1,45 @@
+APED R5 predictions v2, written 2026-10-21 after the aped_r5.py results run, before aped_r5_scan.py exists or has run.
+aped_r5_predictions.txt (sha256 2fb0f2759ac8c188fc5319dd42eaecb515d3d7ad01210b6446886aa7a7b1c715) is untouched; its results are in aped_r5.log
+(10 of 11 held; P10 FAILED).  This file covers only the new run that P10's failure calls for.
+
+WHY A v2.  P10 (sigma = s* a holds when activation is slow against the other base rates) failed at fixed x = x* = 0.3852 M:
+  aped_r5.log "Model check" lines, a/kH = 0.385, 0.0385, 3.85e-3, 3.85e-4, 3.85e-5, 3.85e-6
+  sigma(kR=0)       = +2.55e-3, +7.28e-4, +5.15e-5, -2.72e-5, -3.52e-5, -3.60e-5 /s   (sigma/a = 6.6e-3, 1.9e-2, 1.3e-2, then negative)
+  sigma(kR=1e-4)    = +2.43e-3, +5.42e-4, -1.46e-4, -2.26e-4, -2.34e-4, -2.35e-4 /s
+  So at slow activation sigma levels off at a negative constant (about -3.6e-5 with kR = 0) instead of falling to zero in proportion
+  to a, and the difference mode is stable.  That x* was the optimum at kA = 1 only.  v2 asks whether the instability window
+  exists at ANY drive x when the activation rate is lowered, which is what a real a needs.
+NOT BLIND: the x* slice above is known, so V2 (kR = 0, open at kA >= 1e-2) and V3 (open at kA >= 0.1) are partly known; the
+  closed side (all x), the crossing value and the kP = 22 case are not.
+
+INPUTS (read earlier; not re-derived here)
+  Real hydrolysis rate of an NCA: kH = 0.018 /s, Devaraj et al., JACS 2016, doi:10.1021/jacs.6b08801, Fig. S7 (PMC7547885), pH ~8.5.
+  Real coupling: kP >= ~0.4 /M/s (NCA + 100 mM amino acid, 4 C, complete in < 2 min; Leman et al. 2004, note 9), so kP/kH >= ~22 /M.
+  Lab a bracket for plain COS (aped_r5.log): a_lo = 1.716e-7, a_hi = 1.925e-5 /s, so a/kH in [9.5e-6, 1.07e-3] with kH = 0.018.
+  Ferricyanide entry L9: a_lo = 1.669e-4 /s, a/kH >= 9.3e-3.
+  The remaining rates (kD, kE, kR, alpha, beta, gamma, Kact, Kdim) have no measured value in this unit; they stay at the aped.py base.
+
+RUN (aped_r5_scan.py)
+  Copied aped.py functions.  kH = 1 (so a/kH = kA x).  For each kA in 1, 1e-1, 1e-2, 1e-3, 1e-4, 1e-5 and each configuration
+  (kR = 0, kP = 1), (kR = 1e-4, kP = 1), (kR = 0, kP = 22): sigma_max = max over x in 1e-4..1e4 M of the leading difference-mode
+  Re(lambda), by aped.py's smax (65-point grid with continuation, bounded refinement); x_opt; a_opt = kA x_opt.
+  Window "open" if sigma_max > 0, "closed" if sigma_max <= 0.  Closing rate a_c = kA_c x_opt, with kA_c the largest closed kA
+  found by log-bisection (6 steps) between the neighbouring grid values; report a_c/kH.
+
+PREDICTIONS
+V1  Reproduction.  The copied code at kA = 1, kR = 1e-4, kP = 1 gives sigma_max in [0.0024322, 0.0024342] /s at x_opt in
+    [0.3845, 0.3859] M (aped.log L89: 0.0024332 at 0.3852).
+V2  (kR = 0, kP = 1) open at kA = 1, 0.1, 0.01; closed at kA = 1e-4 and 1e-5 (sigma_max <= 0 at every x in the grid).
+V3  (kR = 1e-4, kP = 1) open at kA = 1 and 0.1; closed at kA = 1e-2, 1e-3, 1e-4, 1e-5.
+V4  Closing rate: a_c/kH in [3e-4, 6e-3] for (kR = 0, kP = 1); in [3e-3, 1e-1] for (kR = 1e-4, kP = 1).
+V5  (kR = 0, kP = 22): the window closes at a lower rate than at kP = 1, a_c/kH(kP = 22) < a_c/kH(kP = 1).  (Faster coupling
+    against hydrolysis should keep the amplification alive at smaller a.  This one is a genuine guess.)
+V6  Lab bracket against the closing rate.  With (kR = 0, kP = 1): a_hi(L1)/kH = 1.07e-3 < a_c/kH, and a_lo(L9)/kH = 9.3e-3 > a_c/kH,
+    i.e. plain COS at the lab dose sits in the closed region (or at its edge) and the ferricyanide entry in the open one.
+
+DECISION RULE
+  V1 must hold or the scan is not trusted and nothing below is reported as a finding.  If V2 holds, then sigma = s* a is not valid below
+  a/kH ~ a_c/kH and the R5 mapping of aped.py is restricted to a/kH above the closing rate; the model's R5 then depends on kP, kD, kE,
+  kR as well as a, and R5 stays "?" with that as the stated reason.  If V2 fails (window open at 1e-4 or 1e-5), s* a is only
+  broken at fixed x* and the proposed wording says that instead.  V5 and V6 decide only how much of the lab bracket is closed or open
+  at the base ratios; they do not change a letter.  Failed predictions are reported as failed.  scorecard.py is not edited.

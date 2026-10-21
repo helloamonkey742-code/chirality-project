@@ -1,0 +1,75 @@
+APED R5 predictions, written 2026-10-21 before aped_r5.py existed and before any rate from this unit was passed through the model.
+
+NOT BLIND, plainly.  Already known when this was written (all from earlier sessions, none of it re-derived here):
+  - aped.py docstring, POST-HOC paragraphs (lines 120-138): Leman 2004 Table 1 entries 1 and 9 and Danger 2006 Table 1 entry 3
+    turned into first-order a, with the same fractions-to-rates idea.  Those numbers are 1.7e-7 to 3.5e-7, 1.7e-4 and 6.1e-9 /s.
+  - I have read Leman 2004 Table 1 (all 20 entries) and its notes 5, 8, 9 and 14, Danger 2006 Table 1 and Fig. 1, and the Liu 2014
+    Sci Rep half-lives, before writing this.  So P2-P7 are arithmetic checks of a fixed rule, not discoveries.  What was NOT known:
+    the upper bound (P3), the row letter under the two-sided rule (P4, P8), the metal-salt entries (P6), the COS-dose scaling (P9)
+    and the whole rate-ratio check of the model (P10, P11).  Those are the real tests.
+
+SOURCES AND PROVENANCE
+  Leman, Orgel & Ghadiri, Science 306, 283 (2004), doi:10.1126/science.1102722, Table 1 (p. 284), notes 5, 8, 9, 14 (p. 285-286).
+  Danger, Boiteau, Cottet & Pascal, J. Am. Chem. Soc. 128, 7412 (2006), doi:10.1021/ja061339+, Table 1 and Fig. 1 (p. 7412-7413).
+    Both are copies sent by C. McKay on request on 2026-10-20 (not from Dworkin, no paywall bypass); they are used under the same
+    disclosure as joyce_r5.py.  The Science SI and the JACS SI were not received.
+  Open access, read: Liu, Beaufils, Rossi & Pascal, Sci. Rep. 4, 7440 (2014), doi:10.1038/srep07440; Devaraj et al. JACS 2016,
+    doi:10.1021/jacs.6b08801 (PMC7547885); Pascal, BIO Web Conf. 2, 04001 (2014), doi:10.1051/bioconf/20140204001 (no rates in it).
+  Blocked by a bot challenge or 403, not bypassed: Desfoux et al. 2025 EurJOC (Wiley and the HAL copy, Anubis challenge);
+    ChemRxiv 11358596 (403); Springer OLEB papers; RSIF 2024 (not fetched).  Not used.
+
+R5 RULE (aped.py, scorecard.py): sigma = s* a >= 10/tau, s* = 0.0063166 (aped.log L89), so a is needed at
+  a_need = 10/(tau s*) = 5.02e-7 /s (pond, tau 100 yr), 5.02e-9 (lake, 1e4 yr), 5.02e-13 (ocean, 1e8 yr)  (aped.log L99-L101).
+  YR = 3.156e7 s.  a is the apparent first-order rate at which the amino-acid pool passes through an NCA.
+
+ESTIMATOR (fixed here)
+  No source prints a rate for NCA formation from a free amino acid, so a is bracketed.
+  Lower bound.  Each peptide bond made by an NCA used one NCA.  With product yields y_n (fraction, as printed):
+      Leman (basis unstated, so the smaller reading):  f_min = y2/2 + 2 y3/3  (yield = share of residues in that product)
+      Danger (yield "relative to activated agent", so per activated residue):  f_min = (y2 + 2 y3) [CAA] / [Ala total]
+      a_lo = ln(1/(1 - f_min)) / t.   Products not quantified (printed "Nd") count as 0.
+  The other reading of the Leman basis (yield = molecules per monomer, f = y2 + 2 y3) is a sensitivity only; it is at most 2x higher.
+  Upper bound (COS route only).  NCA formation is one way the thiocarbamate is lost, so k_cyc <= k_loss = ln2 / t_half with
+  t_half = 10 h (Leman note 8: in situ thiocarbamate, 25 mM, pD 8.6).  a_hi = k_loss = 1.93e-5 /s.  No upper bound is available
+  for the other routes (a_hi = infinity).
+
+LETTER PER SETTING: Y if a_lo >= a_need.  N if a_hi < a_need.  ? otherwise (the need lies inside the bracket or no upper bound).
+  A lower bound that fails does not make an N.
+ROW LETTER (primary route = Leman entry 1: free Phe + COS, no additive, 25 C, aqueous):
+  Y if all three settings are Y; N if all three are N; P if all three are decided and mixed; ? if any setting is ?.
+  Routes with an added oxidant, metal salt or 80 C (entries 5-9, Danger) are reported but cannot change the row letter: those doses
+  and that temperature are not shown to be prebiotic.  They only show what the activation step can do.
+
+PREDICTIONS
+P1  No direct rate.  Neither Leman 2004 nor Danger 2006 prints a rate constant or half-life for NCA formation from a free amino
+    acid; Leman gives end-point yields at one time per entry (and thiocarbamate half-lives 10 h in situ, ~20 h authentic),
+    Danger gives end points and a CAA decomposition curve.  The open-access searches find no time course of NCA formation from a
+    free amino acid with COS, cyanate or NOx at stated aqueous conditions.  Fails if a paper read here prints one.
+P2  Basal COS, entry 1 (Phe 50 mM, COS ~400 mM nominal, final pH 8.7, 25 C, 56 h, dipeptide 6.8%):
+    f_min = 0.034, a_lo in [1.63e-7, 1.80e-7] /s; ratio to a_need: pond 0.34, lake 34, ocean 3.4e5.
+P3  a_hi = ln2/(10 h) is in [1.90e-5, 1.95e-5] /s, which is 38x the pond need.
+P4  Basal-route letters (pond, lake, ocean) = (?, Y, Y).  The molecule-basis reading (a_lo = 3.5e-7) gives the same letters.
+P5  Ferricyanide, entry 9 (Phe 50 mM, COS ~400 mM, K3Fe(CN)6 100 mM, pH 8.8, 20 min, dipeptide 36.3%, tripeptide Nd):
+    a_lo in [1.60e-4, 1.75e-4] /s; letters (Y, Y, Y).
+P6  Metal entries 5-8 (Pb2+ x3 incl. Pacific water, Cd2+; free Phe + COS): every one gives (Y, Y, Y); the slowest is entry 8 (CdCl2,
+    16 h) with a_lo in [3.7e-6, 4.2e-6] /s.  Fails if any entry has pond ratio < 1.
+P7  Cyanate route, Danger entry 3 (CAA 20 mM + Ala 100 mM, 80 C, 53 d; Ala2 12.7%, Ala3 1.9%): a_lo in [5.5e-9, 6.7e-9] /s; ratios
+    pond 0.012, lake 1.2, ocean 1.2e4.  It is at 80 C, there is no upper bound, and no Ea; not used for the row letter.
+P8  Row letter = ? (pond ?, lake Y, ocean Y at the lab COS dose).  The missing number is the activation rate in the pond, now
+    bracketed at 1.7e-7 to 1.9e-5 /s against a need of 5.0e-7 /s.
+P9  COS dose.  Volcanic gas has up to 0.09 mol% COS (Leman note 14) and pure COS dissolves to 20-30 mM (note 5, 25 mM used), so at
+    1 atm of volcanic gas the dissolved COS is 9.2e-4 of the lab saturation.  If a is proportional to dissolved COS (not measured),
+    the basal a_lo drops to 1.6e-10 /s: lake ratio < 1 (lake becomes ?), ocean ratio > 1 (ocean Y), pond ratio < 1e-3.
+    Fails if the lake ratio is >= 1 or the ocean ratio is <= 1.
+P10 Rate-ratio check of the model (exploratory, aped.py functions copied, x fixed at x* = 0.3852 M, kR = 0, other base rates kept,
+    kA = a/x* with a/kH = 0.385, 3.85e-2, 3.85e-3, 3.85e-4, 3.85e-5, 3.85e-6): sigma/a stays inside [s*/3, 3 s*] at all six values,
+    i.e. sigma = s* a holds when activation is slow compared with NCA hydrolysis and coupling.  (The real a/kH is 1e-5 to 1e-3:
+    kH = 0.018 /s, Devaraj 2016 Fig. S7.)
+P11 With the base racemization kR = 1e-4 (rates relative to kH = 1) the leading difference-mode eigenvalue is negative at every
+    a/kH <= 3.85e-3 of the same scan and positive at a/kH = 0.385.
+
+DECISION RULE
+  Letters per setting and the row letter follow the rules above, from P2-P4 and P8.  If P10 fails, the s* a mapping is not valid at
+  real rate ratios, then the per-setting letters are reported "under the aped.py time rescaling" only and the proposed wording says
+  so; the row stays ? either way.  Failed predictions are reported as failed.  scorecard.py, README.md and journals/ija_draft.md are
+  not edited; wording goes in journals/new_analyses_aped_r5.md marked "not applied".

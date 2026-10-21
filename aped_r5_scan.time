@@ -1,0 +1,1 @@
+UV_CACHE_DIR=~/Library/Caches/uv nice -n 10 uv run --no-project --with numpy   1.56s user 0.09s system 88% cpu 1.867 total

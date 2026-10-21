@@ -1,0 +1,41 @@
+sigma_max = max over x in 1e-4..1e4 M of the leading difference-mode Re(lambda); kH = 1, a = kA x
+
+config A: kR = 0, kP = 1
+  kA   1e+00: sigma_max +2.5540e-03 /s at x 0.3764 M  a/kH 3.764e-01  sigma/a +6.785e-03  open  skipped 0
+  kA   1e-01: sigma_max +2.5571e-03 /s at x 3.765 M  a/kH 3.765e-01  sigma/a +6.793e-03  open  skipped 0
+  kA   1e-02: sigma_max +2.5575e-03 /s at x 37.65 M  a/kH 3.765e-01  sigma/a +6.793e-03  open  skipped 0
+  kA   1e-03: sigma_max +2.5575e-03 /s at x 376.5 M  a/kH 3.765e-01  sigma/a +6.793e-03  open  skipped 0
+  kA   1e-04: sigma_max +2.5575e-03 /s at x 3765 M  a/kH 3.765e-01  sigma/a +6.793e-03  open  skipped 0
+  kA   1e-05: sigma_max +1.5493e-03 /s at x 1e+04 M  a/kH 1.000e-01  sigma/a +1.549e-02  open  skipped 0
+
+config B: kR = 0.0001, kP = 1
+  kA   1e+00: sigma_max +2.4332e-03 /s at x 0.3852 M  a/kH 3.852e-01  sigma/a +6.317e-03  open  skipped 0
+  kA   1e-01: sigma_max +2.4364e-03 /s at x 3.852 M  a/kH 3.852e-01  sigma/a +6.324e-03  open  skipped 0
+  kA   1e-02: sigma_max +2.4367e-03 /s at x 38.52 M  a/kH 3.852e-01  sigma/a +6.325e-03  open  skipped 0
+  kA   1e-03: sigma_max +2.4367e-03 /s at x 385.2 M  a/kH 3.852e-01  sigma/a +6.325e-03  open  skipped 0
+  kA   1e-04: sigma_max +2.4367e-03 /s at x 3852 M  a/kH 3.852e-01  sigma/a +6.325e-03  open  skipped 0
+  kA   1e-05: sigma_max +1.3809e-03 /s at x 1e+04 M  a/kH 1.000e-01  sigma/a +1.381e-02  open  skipped 0
+
+config C: kR = 0, kP = 22
+  kA   1e+00: sigma_max +2.5748e-02 /s at x 1.509 M  a/kH 1.509e+00  sigma/a +1.707e-02  open  skipped 0
+  kA   1e-01: sigma_max +2.5754e-02 /s at x 15.09 M  a/kH 1.509e+00  sigma/a +1.706e-02  open  skipped 0
+  kA   1e-02: sigma_max +2.5755e-02 /s at x 150.9 M  a/kH 1.509e+00  sigma/a +1.706e-02  open  skipped 0
+  kA   1e-03: sigma_max +2.5755e-02 /s at x 1509 M  a/kH 1.509e+00  sigma/a +1.706e-02  open  skipped 0
+  kA   1e-04: sigma_max +2.5007e-02 /s at x 1e+04 M  a/kH 1.000e+00  sigma/a +2.501e-02  open  skipped 0
+  kA   1e-05: sigma_max +7.9412e-03 /s at x 1e+04 M  a/kH 1.000e-01  sigma/a +7.941e-02  open  skipped 0
+
+config A closing: no open/closed boundary on the grid
+
+config B closing: no open/closed boundary on the grid
+
+config C closing: no open/closed boundary on the grid
+
+lab a/kH with kH = 0.018: plain COS a_hi 1.069e-03 (a_lo 9.533e-06); ferricyanide L9 a_lo 9.272e-03
+
+V1 HELD   sigma_max 0.0024332 at x 0.3852 (aped.log L89 0.0024332 at 0.3852)
+V2 FAILED A open: 1e+00=True, 1e-01=True, 1e-02=True, 1e-03=True, 1e-04=True, 1e-05=True
+V3 FAILED B open: 1e+00=True, 1e-01=True, 1e-02=True, 1e-03=True, 1e-04=True, 1e-05=True
+V4 FAILED no boundary
+V5 FAILED no boundary
+V6 FAILED no boundary
+1 of 6 held (scorecard.py not changed).

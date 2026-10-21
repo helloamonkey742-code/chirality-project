@@ -1,0 +1,38 @@
+a needed (aped.log L99-L101): Warm little pond 5.016e-07, Lake / lagoon 5.016e-09, Open ocean 5.016e-13 /s;  s* = 0.0063166
+copied model at x* = 0.3852 M, kA = 1, kR = 1e-4: sigma = 0.0024332 /s (aped.log L89: 0.0024332)
+
+Lower bounds a_lo = ln(1/(1-f))/t; ratio = a_lo / a_needed; letters (pond, lake, ocean)
+L1  Phe+COS, no additive, 25C, pH 8.7     f 0.0340  t    56.0 h  a_lo 1.716e-07 /s  sigma 1.08e-09 /s  ratio     0.342       34.2   3.42e+05  letters ?YY
+L5  Phe+COS+PbCl2, pH 9.1                 f 0.2512  t    11.0 h  a_lo 7.304e-06 /s  sigma 4.61e-08 /s  ratio      14.6   1.46e+03   1.46e+07  letters YYY
+L6  Phe+COS+PbCl2, pH 8.2                 f 0.1790  t     3.5 h  a_lo 1.565e-05 /s  sigma 9.89e-08 /s  ratio      31.2   3.12e+03   3.12e+07  letters YYY
+L7  Phe+COS+PbCl2, Pacific water          f 0.1122  t     3.0 h  a_lo 1.102e-05 /s  sigma 6.96e-08 /s  ratio        22    2.2e+03    2.2e+07  letters YYY
+L8  Phe+COS+CdCl2                         f 0.2040  t    16.0 h  a_lo 3.961e-06 /s  sigma 2.50e-08 /s  ratio       7.9        790    7.9e+06  letters YYY
+L9  Phe+COS+K3Fe(CN)6 100 mM              f 0.1815  t     0.3 h  a_lo 1.669e-04 /s  sigma 1.05e-06 /s  ratio       333   3.33e+04   3.33e+08  letters YYY
+D2  cyanate CAA 20 mM alone, 80C          f 0.0170  t   672.0 h  a_lo 7.088e-09 /s  sigma 4.48e-11 /s  ratio    0.0141       1.41   1.41e+04  letters ?YY
+D3  cyanate CAA 20 mM + Ala 100 mM, 80C   f 0.0275  t  1272.0 h  a_lo 6.090e-09 /s  sigma 3.85e-11 /s  ratio    0.0121       1.21   1.21e+04  letters ?YY
+
+L1 molecule-basis sensitivity: f 0.068  a_lo 3.493e-07 /s  letters ?YY
+L1 upper bound a_hi = ln2/(10 h) = 1.925e-05 /s = 38.4 x pond need
+L1 dose-scaled by 9.2e-04 (a proportional to dissolved COS, unmeasured): a_lo 1.58e-10 /s  ratio 0.000315  0.0315  315  letters N?Y
+L1 dose-scaled by 9.0e-04 (a proportional to dissolved COS, unmeasured): a_lo 1.54e-10 /s  ratio 0.000308  0.0308  308  letters N?Y
+
+Model check at x* (copied aped.py functions, other base rates kept): a/kH, sigma(kR=0), sigma/a, sigma(kR=1e-4), residual
+  a/kH 0.385: kR=0 +2.5535e-03 (Im 0.0e+00) sigma/a 6.6325e-03;  kR=1e-4 +2.4332e-03;  resid 3.6e-17
+  a/kH 0.0385: kR=0 +7.2812e-04 (Im 0.0e+00) sigma/a 1.8912e-02;  kR=1e-4 +5.4231e-04;  resid 7.5e-18
+  a/kH 0.00385: kR=0 +5.1506e-05 (Im 0.0e+00) sigma/a 1.3378e-02;  kR=1e-4 -1.4621e-04;  resid 5.5e-19
+  a/kH 0.000385: kR=0 -2.7223e-05 (Im 0.0e+00) sigma/a -7.0709e-02;  kR=1e-4 -2.2623e-04;  resid 2.1e-19
+  a/kH 3.85e-05: kR=0 -3.5219e-05 (Im 0.0e+00) sigma/a -9.1479e-01;  kR=1e-4 -2.3436e-04;  resid 1.6e-19
+  a/kH 3.85e-06: kR=0 -3.6020e-05 (Im 0.0e+00) sigma/a -9.3559e+00;  kR=1e-4 -2.3517e-04;  resid 1.1e-19
+
+P1 HELD   no direct NCA-formation rate printed in Leman 2004 or Danger 2006 (end points only); OA searches found none
+P2 HELD   a_lo 1.716e-07; ratios 0.342, 34.2, 3.42e+05
+P3 HELD   a_hi 1.925e-05, 38.4x pond need
+P4 HELD   letters ?YY; molecule basis ?YY
+P5 HELD   L9 a_lo 1.669e-04, letters YYY
+P6 HELD   L5-L8 pond ratios 14.6, 31.2, 22.0, 7.9; L8 a_lo 3.961e-06
+P7 HELD   D3 a_lo 6.090e-09; ratios 0.0121, 1.21, 1.21e+04; letters ?YY
+P8 HELD   row letter ? (pond/lake/ocean ?/Y/Y)
+P9 HELD   dose-scaled ratios (lake, ocean) 9.2e-04: 0.0315, 315; 9.0e-04: 0.0308, 308
+P10 FAILED sigma/a (kR=0) 6.633e-03, 1.891e-02, 1.338e-02, -7.071e-02, -9.148e-01, -9.356e+00 vs [2.106e-03, 1.895e-02]
+P11 HELD   sigma(kR=1e-4) +2.43e-03, +5.42e-04, -1.46e-04, -2.26e-04, -2.34e-04, -2.35e-04
+10 of 11 held.  R5 = ?  (P10 failed: letters hold under the aped.py time rescaling only) (scorecard.py not changed).

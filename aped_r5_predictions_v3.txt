@@ -1,0 +1,36 @@
+APED R5 predictions v3, written 2026-10-21 after aped_r5_scan.py (v2) ran, before aped_r5_scan2.py exists or has run.
+v1 aped_r5_predictions.txt (sha256 2fb0f2759ac8c188fc5319dd42eaecb515d3d7ad01210b6446886aa7a7b1c715): results in aped_r5.log, 10 of 11 held.
+v2 aped_r5_predictions_v2.txt (sha256 06e8573cba32dd0e5c500529a5c5cbbdf832adfa4374f77be47489c953b5cb00): results in aped_r5_scan.log,
+1 of 6 held (V2-V6 FAILED).  Both files are untouched.
+
+WHY A v3.  v2 assumed that lowering kA at a free fuel x lowers the activation rate.  It does not: under reading B the forward rate is
+a = kA x, so at kA = 1e-3 the window just moves to x = 376.5 M, where a = kA x = 0.3765 /s, sigma_max = 2.5575e-3 /s (aped_r5_scan.log,
+config A), the same as at kA = 1.  What controls sigma is a/kH, the reverse activation (kA Kfx/Kact = 1e-3 kA) being a small term at
+large x.  v2 therefore never reached small a: its grid stops at x = 1e4 M, where kA = 1e-5 gives only a/kH = 0.1 (the +1.5e-3 /s at the
+top edge of the grid is the grid limit, not a window).  The correct slice is sigma against a at a fixed large x (activation effectively
+irreversible, as it is for a real NCA), which is the same coordinate the lower threshold x_c1 = 0.010457 M of aped.log L36 is a point on.
+NOT BLIND: the x* slice (aped_r5.log "Model check") showed sigma(kR=0) = +5.15e-5 at a/kH = 3.85e-3 and -2.72e-5 at 3.85e-4, and
+sigma(kR=1e-4) = -1.46e-4 at 3.85e-3, +5.42e-4 at 0.0385.  W3 and W2 are therefore partly known; W4-W6 are not.
+
+RUN (aped_r5_scan2.py)
+  Copied aped.py functions via aped_r5.py.  Irreversible-activation slice: x = XB = 1e4 M, kA = a / XB, kH = 1, so the reverse activation
+  is 1e-3 kA = 1e-7 a (against a forward a), and a/kH = a.  Configurations as in v2: A (kR = 0, kP = 1), B (kR = 1e-4, kP = 1),
+  C (kR = 0, kP = 22).  sigma(a) = Re lambda_lead for a on 71 log points in 1e-7..1 /s, continuation upward.  Lowest upward sign change
+  of sigma is a_c1 (refined by brentq on log a), the next downward one a_c2.  Also sigma at the lab points a/kH = 9.5e-6 (L1 a_lo),
+  1.07e-3 (L1 a_hi) and 9.27e-3 (L9 a_lo), kH = 0.018 /s (Devaraj 2016, Fig. S7).
+
+PREDICTIONS
+W1  Reproduction.  Config B at a = 0.3852: sigma within 1% of 2.4332e-3 /s (aped.log L89).
+W2  Config B: a_c1/kH lies in [0.005, 0.02] (aped.log x_c1 = 0.010457 M includes the reverse term, expected to matter at the 10% level).
+W3  Config A (kR = 0): a_c1/kH lies in [8e-4, 3e-3].
+W4  Config C (kR = 0, kP = 22): a_c1/kH(C) < a_c1/kH(A).  (Genuine guess: faster coupling should keep the amplification alive at lower a.)
+W5  Plain COS at the lab dose is closed at the base ratios: sigma(a/kH = 1.07e-3) < 0 and sigma(9.5e-6) < 0 for config A.
+W6  The ferricyanide lower bound a/kH = 9.27e-3 is open for config A (sigma > 0) and closed for config B (sigma < 0).  (Edge case for B:
+    a_c1(B) ~ 0.0105 is just above 9.27e-3.)
+
+DECISION RULE
+  W1 must hold or the slice is not trusted.  If W2 and W3 hold, sigma(a) is positive only above a_c1/kH ~ 1e-3 to 1e-2 and peaks near
+  a/kH = 0.38, so sigma = s* a (aped.py's R5 mapping) is valid only near that peak and nowhere near the lab values of a/kH for plain COS
+  (<= 1.07e-3); a measured a is then necessary but not sufficient for R5, which also needs kH, kP, kD, kE, kR at the same conditions.
+  R5 stays "?" in that case, with that stated reason.  If W2 or W3 fails, the closing rate is reported as found and the
+  wording says so.  W4 and W6 change no letter.  Failed predictions are reported as failed.  scorecard.py is not edited.
