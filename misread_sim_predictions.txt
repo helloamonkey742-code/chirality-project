@@ -1,0 +1,28 @@
+misread_sim.py predictions, written 2026-10-20 before the first run.
+
+Why: droplet_sim2.py failed S2 and S7 because a 6% misread rate, twice the fit's fixed 3%, hides sharp steps.  The prereg
+(journals/droplet_prereg.md Sections 3 and 6) now measures the misread rate on control drops (64: 4 one-seed and 4
+two-seed drops per level) and sorts runs into tiers.  A binomial check showed 64 controls sort rates poorly (a true 3%
+is read as above 6% in 13% of runs; a true 6% as 3% or less in 10%).  This is a model study of the decision rule, not a
+test of nature.
+
+Protocol: droplet_sim2.protocol unchanged (pilot, main run 8 x 25, extension rule).  Each run also gets n_c control
+drops, each read wrong with the run's true misread rate eps (same flip rate as the main drops, both directions).
+k = controls read wrong.  Conditions: true eps 0, 0.02, 0.04, 0.06, 0.08, 0.10 x pipette CV 0.05, 0.15.
+n_c = 64, 128, 192 (the first 64 and 128 of the same 192 draws, so the three are paired).
+
+Two policies, same NS / FLAT / RISING gates as droplet_sim2.classify:
+  A  (the prereg as written)  fit with the fixed 3% term, c* = -1.61 frozen; NOT SCORABLE also when k / n_c > 0.06.
+  B  (refit)  fit COUNT and STEP with the measured rate eps_hat = (k + 0.5) / (n_c + 1) in place of 3%; no misread
+     cut-off.  c*_B is set per n_c exactly as droplet_sim2 set c*: the lowest 5th percentile of L over every counting
+     cell (droplet_sim2.truths, 87 cells) and condition, 1000 runs on a calibration seed, then frozen.
+Every number below is from a fresh seed, 500 runs per cell.  Steps: probit s = 0.1, 0.15, 0.2, 0.3.
+
+M1  Policy A, 64 controls: every counting cell is called STEP in <= 7% of runs at every true eps and both CVs.
+M2  Policy A, 64 controls: at true eps 0.06, probit s = 0.15 is called STEP in < 50% of runs at both CVs.
+M3  Policy B: every counting cell is called STEP in <= 7% of runs at every true eps, both CVs, and every n_c.
+M4  Policy B, 64 controls: probit s <= 0.15 is called STEP in >= 90% of runs at every true eps <= 0.06 and both CVs.
+M5  At true eps 0.04 and 0.06, both CVs, 64 controls: policy B calls probit s = 0.15 STEP more often than policy A.
+M6  Policy B: the lowest STEP share of probit s = 0.15 over true eps <= 0.06 and both CVs rises by <= 0.05 from 64 to
+    192 controls.
+M7  -4 <= c*_B <= -0.5 for every n_c.
