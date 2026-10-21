@@ -271,4 +271,10 @@ Each cell is the **worst** share called right over every true V0 and every condi
   - **Not simulated.** Misreads are taken as equally likely both ways, and control drops as misread as often as
     the rest; a seed crystal may be easier to read, which would make the measured rate too low. c* was set for 128
     readable controls; fewer would make ε̂ noisier. Rates above 10% were not run, hence NOT SCORABLE there.
+  - **Bak et al. (2023) under this rule** (`bak_policy_b.py`, `bak_policy_b.log`; POST HOC, their data were read
+    long before). Bak had no control drops, so the misread rate was tried at 0–10%, and the unprinted drop counts at
+    P = 1 at 3, 6 and 10. Their 90 °C series is SMOOTH in every case (L from +8.1 down to −0.02, all above c*). A
+    sharp step (s ≤ 0.15) is rejected (2 Δlog-likelihood 5.8–283) at misread rates up to 6%, at 8% for two of the
+    three count guesses (3.0–4.8), and not at 10% (1.2–2.6). Their main series is NOT SCORABLE at every rate. No
+    unread published dataset was found that could test the rule blind (searched 2026-10-20).
 - **One salt, one method.** A result here says nothing yet about the antisolvent droplets of Jang et al.

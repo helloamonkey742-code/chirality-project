@@ -1,0 +1,7 @@
+POST HOC.  Re-fit of published points, not new data.  Frozen c* = -2.21; misread rate unknown, tried 0-10%.
+Tinc 90 C n=3  | e 0.00: L +8.14 sharp 282.7 SMOOTH | e 0.02: L +4.44 sharp  22.7 SMOOTH | e 0.04: L +2.85 sharp  13.0 SMOOTH | e 0.06: L +1.89 sharp   8.0 SMOOTH | e 0.08: L +1.21 sharp   4.8 SMOOTH | e 0.10: L +0.67 sharp   2.6 SMOOTH
+Tinc 90 C n=6  | e 0.00: L +7.15 sharp 280.7 SMOOTH | e 0.02: L +3.60 sharp  21.0 SMOOTH | e 0.04: L +2.17 sharp  11.6 SMOOTH | e 0.06: L +1.31 sharp   6.8 SMOOTH | e 0.08: L +0.74 sharp   3.9 SMOOTH | e 0.10: L +0.29 sharp   1.8 SMOOTH
+Tinc 90 C n=10 | e 0.00: L +6.29 sharp 278.9 SMOOTH | e 0.02: L +2.82 sharp  19.4 SMOOTH | e 0.04: L +1.57 sharp  10.4 SMOOTH | e 0.06: L +0.81 sharp   5.8 SMOOTH | e 0.08: L +0.35 sharp   3.0 SMOOTH | e 0.10: L -0.02 sharp   1.2 SMOOTH
+main      n=3  | e 0.00: L +0.75 sharp  38.3 NS | e 0.02: L +0.60 sharp   5.8 NS | e 0.04: L +0.46 sharp   3.4 NS | e 0.06: L +0.33 sharp   2.1 NS | e 0.08: L +0.23 sharp   1.3 NS | e 0.10: L +0.15 sharp   0.8 NS
+main      n=6  | e 0.00: L +0.69 sharp  38.1 NS | e 0.02: L +0.54 sharp   5.7 NS | e 0.04: L +0.41 sharp   3.3 NS | e 0.06: L +0.30 sharp   2.0 NS | e 0.08: L +0.21 sharp   1.3 NS | e 0.10: L +0.13 sharp   0.8 NS
+main      n=10 | e 0.00: L +0.62 sharp  38.0 NS | e 0.02: L +0.49 sharp   5.5 NS | e 0.04: L +0.37 sharp   3.2 NS | e 0.06: L +0.27 sharp   2.0 NS | e 0.08: L +0.18 sharp   1.2 NS | e 0.10: L +0.11 sharp   0.8 NS
