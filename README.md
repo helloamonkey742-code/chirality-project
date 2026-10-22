@@ -708,8 +708,9 @@ star system could do that.
   and limits healing only if eddies larger than the wall width slow sideways coarsening more than about
   40×: no share moves by a point below that, and early Earth keeps 99.9% up to about 2600×
   (`h13h14_combined_cross.log`, `h13h14_extreme_locate.log`). The measured slowdown times the sphere's 17
-  gives 34–307×; at the real eddy ratio it is extrapolated to about 300–27,000×, so the early-Earth 99.9%
-  is not settled (`h14e_advect.log:88-95`). With weak vertical mixing the ocean forms layers; layers merge only as fast
+  gives 34–490×; at the real eddy ratio it is extrapolated to about 490–4,700×. The early-Earth 99.9% holds
+  under the logarithmic law, which predicted the 1/4096 point, but not if the exponent stops falling at its
+  measured 0.17 (`h14f_advect.log:90-96`, `:111`). With weak vertical mixing the ocean forms layers; layers merge only as fast
   as vertical mixing allows (Part 3b, `sphere_layers.py`), so vertical mixing is again the key unknown.
   *(Note 2026-09-27, `vertical_mixing_lit.md`: Zeng & Jansen 2021 is still the only primary estimate. Their Sec. 2.2 was
   re-read this date and gives 3×10⁻¹⁰ to 3×10⁻³, DOCUMENTED. Ames et al. 2025 quote "10⁻⁷ to 10⁻³" citing the same paper,

@@ -1,0 +1,111 @@
+hashes asserted: h14f_predictions.txt d136fe694b8fe890833864590cb910d372424b770275f7519e169280f50c5c99; h14e_advect.py 22e7b592ddfdc859ba87d248725e470a9a96a8646f8548116b7ef2ab421188a2; h14e_advect_raw.pkl 3338b7347336e71d13e6fee2148f4d3a3582bafbef1fdc23ae39219a86b108f4
+self-check passed (1s): nk fix {'S': (1000, 1000), 'M': (400, 400), 'B': (24, 24)} and unchanged for all Tk < 100 (0.2 grid); g from actual gamma; D_eddy = D_eff - D_mol by construction; tiny job()/pool() consistent; 22 jobs; 15 worlds parsed from h14_eddy.log
+h14f self-check passed (4s): h14c self_check; recipe at D_eff 256 reproduces h14e V256_10#0 exactly; seeds unique and new; nkick bitwise equal to h14b kick (max |diff| 0.0 at N 64, 257, 4021); tiny job identical with either kick (3/3 walled, t_single [inf, inf, inf]); 16 jobs / 48 runs
+h14c reproduction: R8_10 5.76, V32_10 10.27, V64_10 (42 runs) 13.21 reloaded from h14c_advect_raw.pkl with the h14c bootstrap seeds
+h14d reproduction: S50 ladder 5.76, 7.71, 10.27, 13.05, 15.28 reloaded from h14d_advect_raw.pkl with the h14d bootstrap seeds
+h14e reproduction: S50(1/256) 18.07 reloaded from h14e_advect_raw.pkl with the h14e bootstrap seed
+
+jobs (load average at start 4.22, 4.84, 4.96):
+  V4096_10#0: L=4021 gamma=0.0074 D_eff=4096 runs=3 hold=11746 (90 t17) seed=3501 Tk=27 A=940.5 cad=2.2
+  V4096_10#1: L=4021 gamma=0.0074 D_eff=4096 runs=3 hold=11746 (90 t17) seed=3502 Tk=27 A=940.5 cad=2.2
+  V4096_10#2: L=4021 gamma=0.0074 D_eff=4096 runs=3 hold=11746 (90 t17) seed=3503 Tk=27 A=940.5 cad=2.2
+  V4096_10#3: L=4021 gamma=0.0074 D_eff=4096 runs=3 hold=11746 (90 t17) seed=3504 Tk=27 A=940.5 cad=2.2
+  V4096_10#4: L=4021 gamma=0.0074 D_eff=4096 runs=3 hold=11746 (90 t17) seed=3505 Tk=27 A=940.5 cad=2.2
+  V4096_10#5: L=4021 gamma=0.0074 D_eff=4096 runs=3 hold=11746 (90 t17) seed=3506 Tk=27 A=940.5 cad=2.2
+  V4096_10#6: L=4021 gamma=0.0074 D_eff=4096 runs=3 hold=11746 (90 t17) seed=3507 Tk=27 A=940.5 cad=2.2
+  V4096_10#7: L=4021 gamma=0.0074 D_eff=4096 runs=3 hold=11746 (90 t17) seed=3508 Tk=27 A=940.5 cad=2.2
+  V4096_10#8: L=4021 gamma=0.0074 D_eff=4096 runs=3 hold=11746 (90 t17) seed=3509 Tk=27 A=940.5 cad=2.2
+  V4096_10#9: L=4021 gamma=0.0074 D_eff=4096 runs=3 hold=11746 (90 t17) seed=3510 Tk=27 A=940.5 cad=2.2
+  V4096_10#10: L=4021 gamma=0.0074 D_eff=4096 runs=3 hold=11746 (90 t17) seed=3511 Tk=27 A=940.5 cad=2.2
+  V4096_10#11: L=4021 gamma=0.0074 D_eff=4096 runs=3 hold=11746 (90 t17) seed=3512 Tk=27 A=940.5 cad=2.2
+  V4096_10#12: L=4021 gamma=0.0074 D_eff=4096 runs=3 hold=11746 (90 t17) seed=3513 Tk=27 A=940.5 cad=2.2
+  V4096_10#13: L=4021 gamma=0.0074 D_eff=4096 runs=3 hold=11746 (90 t17) seed=3514 Tk=27 A=940.5 cad=2.2
+  V4096_10#14: L=4021 gamma=0.0074 D_eff=4096 runs=3 hold=11746 (90 t17) seed=3515 Tk=27 A=940.5 cad=2.2
+  V4096_10#15: L=4021 gamma=0.0074 D_eff=4096 runs=3 hold=11746 (90 t17) seed=3516 Tk=27 A=940.5 cad=2.2
+  job done: V4096_10#3 [3417s] walled 3/3 cleared 3 cut=False (elapsed 3436s)
+  job done: V4096_10#1 [3551s] walled 3/3 cleared 3 cut=False (elapsed 3570s)
+  job done: V4096_10#0 [3600s] walled 3/3 cleared 3 cut=False (elapsed 3619s)
+  job done: V4096_10#2 [3788s] walled 3/3 cleared 3 cut=False (elapsed 3807s)
+  job done: V4096_10#4 [3628s] walled 3/3 cleared 3 cut=False (elapsed 7064s)
+  job done: V4096_10#6 [3856s] walled 3/3 cleared 3 cut=False (elapsed 7475s)
+  job done: V4096_10#5 [4095s] walled 3/3 cleared 3 cut=False (elapsed 7665s)
+  job done: V4096_10#7 [4079s] walled 3/3 cleared 3 cut=False (elapsed 7886s)
+  job done: V4096_10#8 [3535s] walled 3/3 cleared 3 cut=False (elapsed 10599s)
+  job done: V4096_10#9 [3950s] walled 3/3 cleared 3 cut=False (elapsed 11426s)
+  job done: V4096_10#10 [3767s] walled 3/3 cleared 3 cut=False (elapsed 11432s)
+  job done: V4096_10#11 [4059s] walled 3/3 cleared 3 cut=False (elapsed 11945s)
+  job done: V4096_10#12 [3719s] walled 3/3 cleared 3 cut=False (elapsed 14318s)
+  job done: V4096_10#13 [3648s] walled 3/3 cleared 3 cut=False (elapsed 15074s)
+  job done: V4096_10#15 [3826s] walled 3/3 cleared 3 cut=False (elapsed 15771s)
+  job done: V4096_10#14 [4586s] walled 3/3 cleared 3 cut=False (elapsed 16018s)
+hashes: h14f_predictions.txt d136fe694b8fe890833864590cb910d372424b770275f7519e169280f50c5c99; h14e_advect.py 22e7b592ddfdc859ba87d248725e470a9a96a8646f8548116b7ef2ab421188a2; h14e_advect_raw.pkl 3338b7347336e71d13e6fee2148f4d3a3582bafbef1fdc23ae39219a86b108f4
+
+REALISED FLOW (new case; AD.L set to the box, mean of 2 seeds) and regime diagnostic
+  D_eff 4096 L 4021 Tk  27.0 A  940.5 eddy l  640.0: kappa 1.470 kicks_pre 5.01 gamma 0.0074; D_eddy measured 4138.4 nominal 4095 (ratio 1.011); D_num/D_mol 0.0005; Lyapunov exponent 0.131 per kick (0.0048 per time unit)
+
+CASES  (L, ratio, l/w, Tk, A, gamma, t17, runs, walled at freeze-out, hold, cens at end, cut, cpu s)
+  V256_10  L=1005 Deff=256 1/256 l/w=10.00 Tk=27 A=234.7 g=0.0074 t17=130.4 runs=336 walled=336 (1.000) hold=7826 cens_at_end=0 cut=False cpu=12345
+  V4096_10 L=4021 Deff=4096 1/4096 l/w=10.00 Tk=27 A=940.5 g=0.0074 t17=130.5 runs=48 walled=48 (1.000) hold=11746 cens_at_end=0 cut=False cpu=61103
+
+SLOWDOWN at l/w 10  (time since the end of the sweep / t17; Kaplan-Meier over runs walled at freeze-out; bootstrap over runs, 2000x; 1/8 ... 1/256 reloaded)
+  R8_10    S50 5.76  [68% 5.18-6.07; 95% 4.94-6.44] | S80 8.86  [68% 8.59-9.54; 95% 7.63-9.78] | S_half 3.54  [68% 3.30-3.79; 95% 3.07-4.03]
+           walled 1.000  mean domains at t0 3.43  kicks to clear (S50 t17 / Tk) 24  cleared by 16 / 24 / 32 / 48 t17: 0.98 1.00 1.00 1.00
+  R16_10   S50 7.71  [68% 7.52-8.18; 95% 7.34-8.40] | S80 12.02  [68% 11.09-12.39; 95% 10.75-13.00] | S_half 3.93  [68% 3.71-4.15; 95% 3.49-4.36]
+           walled 1.000  mean domains at t0 4.93  kicks to clear (S50 t17 / Tk) 35  cleared by 16 / 24 / 32 / 48 t17: 0.95 0.99 1.00 1.00
+  V32_10   S50 10.27  [68% 10.02-10.73; 95% 9.48-11.32] | S80 13.62  [68% 13.20-15.17; 95% 12.71-16.04] | S_half 6.38  [68% 6.15-6.60; 95% 5.75-7.01]
+           walled 1.000  mean domains at t0 7.91  kicks to clear (S50 t17 / Tk) 48  cleared by 16 / 24 / 32 / 48 t17: 0.86 0.99 1.00 1.00
+  V64_10   S50 13.05  [68% 12.95-13.62; 95% 12.74-13.80] | S80 16.48  [68% 16.26-16.97; 95% 16.11-17.26] | S_half 7.93  [68% 7.74-8.13; 95% 7.69-8.34]
+           walled 1.000  mean domains at t0 12.50  kicks to clear (S50 t17 / Tk) 62  cleared by 16 / 24 / 32 / 48 t17: 0.75 0.97 1.00 1.00
+  V128_10  S50 15.28  [68% 15.12-15.47; 95% 14.93-15.79] | S80 18.79  [68% 18.38-19.56; 95% 17.86-20.00] | S_half 9.12  [68% 8.92-9.34; 95% 8.72-9.55]
+           walled 1.000  mean domains at t0 22.77  kicks to clear (S50 t17 / Tk) 73  cleared by 16 / 24 / 32 / 48 t17: 0.57 0.94 0.99 1.00
+  V256_10  S50 18.07  [68% 17.88-18.34; 95% 17.66-18.52] | S80 21.30  [68% 20.95-21.59; 95% 20.41-21.91] | S_half 9.31  [68% 9.27-9.51; 95% 9.07-9.71]
+           walled 1.000  mean domains at t0 42.74  kicks to clear (S50 t17 / Tk) 87  cleared by 16 / 24 / 32 / 48 t17: 0.29 0.90 0.98 1.00
+  V4096_10 S50 28.85  [68% 26.84-29.28; 95% 25.26-29.69] | S80 31.90  [68% 30.92-33.03; 95% 30.46-34.02] | S_half 14.03  [68% 13.43-14.46; 95% 13.02-15.25]
+           walled 1.000  mean domains at t0 645.60  kicks to clear (S50 t17 / Tk) 139  cleared by 16 / 24 / 32 / 48 t17: 0.00 0.21 0.81 0.98
+
+LOCAL ratio exponents q(a -> b) = ln(S50_b / S50_a) / ln(r_b / r_a)  (h14e: 0.42, 0.41, 0.34, 0.23, 0.24 [0.19..0.29])
+  1/8    -> 1/16  : q = 0.42 [95% 0.24..0.70]
+  1/16   -> 1/32  : q = 0.41 [95% 0.24..0.56]
+  1/32   -> 1/64  : q = 0.34 [95% 0.21..0.50]
+  1/64   -> 1/128 : q = 0.23 [95% 0.13..0.28]
+  1/128  -> 1/256 : q = 0.24 [95% 0.19..0.29]
+  1/256  -> 1/4096: q = 0.17 [95% 0.12..0.18]
+  q(256 -> 4096) = 0.17 [95% 0.12..0.18]; q(128 -> 256) = 0.24 [95% 0.19..0.29]; Delta q = -0.07 [95% -0.15..-0.02] (paired over the same replicates)
+  job-level bootstrap (printed, NOT the scored interval): q(256 -> 4096) 95% 0.13..0.18
+
+PER-DOUBLING INCREMENTS of S50: 1.94, 2.57, 2.77, 2.24, 2.78; 256 -> 4096 per doubling 2.70 [95% 1.84..2.92] (a log law keeps it near 2.5)
+SIX-POINT LOG LAW at 1/4096: 27.88; measured - log law = +0.97
+LOG LAW refit over seven ratios: S50 = -2.51 + 3.74 ln r  [b 95% 3.22..3.90]; residuals +0.50, -0.15, -0.17, +0.02, -0.34, -0.14, +0.28; rms 0.27   (h14e six-point -1.98 + 3.59 ln r, rms 0.20)
+POWER LAW refit over seven ratios: q = 0.25; residuals -1.07, -0.44, +0.56, +1.46, +1.47, +1.60, -4.42; rms 2.00   (h14e six-point: 0.33, rms 0.66)
+
+SCENARIOS for S50(1/4096) written in h14f_predictions.txt, against the measured 28.85 [95% 25.26..29.69]
+  A log law over six (-1.98 + 3.59 ln 4096)   27.88  implied q 0.156  inside the measured 95% interval: True  (measured - scenario = +0.97)
+  B edge path q 0.135 (f 2400)                26.27  implied q 0.135  inside the measured 95% interval: True  (measured - scenario = +2.57)
+  B edge path q 0.141 (f 2600)                26.71  implied q 0.141  inside the measured 95% interval: True  (measured - scenario = +2.13)
+  C power law q 0.19 from 1/256               30.60  implied q 0.190  inside the measured 95% interval: False  (measured - scenario = -1.76)
+  D power law q 0.24 from 1/256               35.15  implied q 0.240  inside the measured 95% interval: False  (measured - scenario = -6.31)
+  E power law q 0.29 from 1/256               40.38  implied q 0.290  inside the measured 95% interval: False  (measured - scenario = -11.53)
+  F power law q 0.33 from 1/256               45.11  implied q 0.330  inside the measured 95% interval: False  (measured - scenario = -16.27)
+
+EXTRAPOLATION (NOT a measurement; 9 doublings measured (1/8 to 1/4096), 18 more extrapolated to 1e9): S50 at the real ratio 1e9, anchored at the 1/4096 point, and the Early Earth threshold S* = f/17 for f = 2400, 2600
+  S* = 141 (f=2400), 153 (f=2600); q* (the power-law q that reaches S* at 1e9 from the 1/4096 point): 0.128 (f=2400), 0.134 (f=2600)
+  power law, q(256->4096) 2.5% bound      (q 0.122): S50(1e9) =    131.2, f = 17 S =     2231; ratio at which S50 reaches S*: f=2400: 1.82e+09, f=2600: 3.50e+09; below S* at 1e9: True
+  power law, q(256->4096) point           (q 0.169): S50(1e9) =    234.1, f = 17 S =     3980; ratio at which S50 reaches S*: f=2400: 4.99e+07, f=2600: 8.02e+07; below S* at 1e9: False
+  power law, q(256->4096) 97.5% bound     (q 0.182): S50(1e9) =    276.3, f = 17 S =     4697; ratio at which S50 reaches S*: f=2400: 2.51e+07, f=2600: 3.89e+07; below S* at 1e9: False
+  log law refit over seven                         : S50(1e9) =    74.91 [95% 66..78], f = 17 S =     1274; ratio at which S50 reaches S*: f=2400: 5.05e+16, f=2600: 1.18e+18; below S* at 1e9: True
+  constant from 1/4096                    (q 0.000): S50(1e9) =    28.85, f = 17 S =    490.4; ratio at which S50 reaches S*: f=2400: inf, f=2600: inf; below S* at 1e9: True
+
+PREDICTIONS (bands from h14f_predictions.txt)
+P1 HELD  V4096_10 S50 28.85 in [24, 42] (guess 29)
+P2 HELD  V4096_10 S80 31.90 in [28, 50] (guess 34)
+P3 HELD  q(256 -> 4096) = 0.17 in [0.10, 0.30] (guess 0.17)
+P4 HELD  Delta q = -0.07 in [-0.16, +0.06] (guess -0.07); q(128 -> 256) = 0.24
+P5 HELD  S50 ladder 5.76 < 7.71 < 10.27 < 13.05 < 15.28 < 18.07 < 28.85
+P6 HELD  flow 1/4096: D_eddy ratio 1.011, D_num/D_mol 0.0005, kappa 1.470, kicks_pre 5.01, Lyapunov 0.131 per kick
+P7 HELD  walled fraction 1.000 (>= 0.99), walled runs still walled at the end of the hold 0 (0)
+P8 HELD  total 16019 s (4 workers, guard 43200 s), cut by guard False, new runs 48 (48)
+
+SUMMARY  held: P1, P2, P3, P4, P5, P6, P7, P8 | failed:  | undecided: 
+DECISION (pre-registered): FALLING; q(256 -> 4096) = 0.17 [95% 0.12..0.18] (rule: FALLING if upper < 0.19, HELD if lower > 0.19)
+SECOND LABEL (pre-registered): NOT BELOW; upper bound 0.18 vs q* 0.134 (f 2600; 0.128 at f 2400)
+THIRD LABEL (pre-registered): LOG LAW INSIDE; six-point log law 27.88, S50(1/4096) 28.85 [95% 25.26..29.69]
