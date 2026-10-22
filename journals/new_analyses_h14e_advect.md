@@ -3,7 +3,7 @@
 Script `h14e_advect.py` (imports `h14d_advect.py`, which imports `h14c_advect.py`, `h14b_advect.py` and `advect2d.py`; none of them was edited). Predictions `h14e_predictions.txt` (v1, written and hashed before any 1/256 result existed, sha256 `6ea98ce64f21fa6ccc67c9eeb45a3763aefe168a9116a2c8ca7c91a1724cd865`). The script asserts that hash and the sha256 of `h14d_advect.py` (`10476e92..0721`), `advect2d.py` (`7d84a2e6..145cf2e`) and `h14d_advect_raw.pkl` (`c3c8f8b9..0288`); the full strings are at `h14e_advect.log:1` and again at `:40`. The script file itself was written after the predictions were hashed and is not hash-asserted. Run line, exactly as given:
 
 ```
-cd /Users/saptarshighosh/Documents/chirality-project && UV_CACHE_DIR=$HOME/Library/Caches/uv nice -n 10 uv run --no-project --with numpy --with scipy --with numba --with matplotlib python h14e_advect.py > h14e_advect.log 2> h14e_advect.err
+UV_CACHE_DIR=$HOME/Library/Caches/uv nice -n 10 uv run --no-project --with numpy --with scipy --with numba --with matplotlib python h14e_advect.py > h14e_advect.log 2> h14e_advect.err
 ```
 
 Log `h14e_advect.log` (111 lines, exit 0, `h14e_advect.err` empty), raw results `h14e_advect_raw.pkl`. `h14e_advect_raw.pkl.part` is a leftover save file next to it (11 bytes larger than the final pickle, `cmp` shows the first difference at byte 5,037,188; not inspected further; the final pickle is the one used). No post hoc script was run; the few POST HOC items below are arithmetic on numbers printed in the log. Nothing was committed, pushed or sent; no network. `ija_draft.md`, `README.md`, `scorecard.py`, `droplet_prereg.md`, `advect2d.py` and every `h14b_`, `h14c_`, `h14d_` file were not touched; `h14d_advect_raw.pkl.part` was left alone.

@@ -13,7 +13,7 @@ After scoring, one extra exploratory run (not pre-registered, not scored) locate
 Wrapper `h13h14_combined.py` runs `h13_sphere_shares.py` unchanged (runpy, same argv) with `coarsen_slow.run` cached, so the script's own lines are identical to a direct run (f = 17 line reproduces `h13_sphere_shares.log:38`), and adds per-world losses in every column, the worlds at 1 point, rank swaps against f = 1 and the Early Earth lines (log lines 46 to 139).
 
 ```
-cd /Users/saptarshighosh/Documents/chirality-project && UV_CACHE_DIR=$HOME/Library/Caches/uv nice -n 10 uv run --no-project \
+UV_CACHE_DIR=$HOME/Library/Caches/uv nice -n 10 uv run --no-project \
   --with numpy --with scipy --with numba --with matplotlib python h13h14_combined.py \
   f=1,17,34,100,136,300,1000 mix=h13_sphere_s16_f50.log > h13h14_combined.log 2> h13h14_combined.err
 ```

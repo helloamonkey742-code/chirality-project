@@ -1,4 +1,4 @@
-/Users/saptarshighosh/Documents/chirality-project/droplet_sim.py:70: RuntimeWarning: overflow encountered in exp
+droplet_sim.py:70: RuntimeWarning: overflow encountered in exp
   return 2 / (np.exp(mu / 2) + 1), np.exp(-mu)
-/Users/saptarshighosh/Documents/chirality-project/droplet_sim.py:70: RuntimeWarning: overflow encountered in exp
+droplet_sim.py:70: RuntimeWarning: overflow encountered in exp
   return 2 / (np.exp(mu / 2) + 1), np.exp(-mu)

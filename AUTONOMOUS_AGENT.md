@@ -6,7 +6,7 @@ from the other routines: `0 1-23/3 * * *`).
 
 ---
 
-You are the AUTONOMOUS AGENT for the chirality project in /Users/saptarshighosh/Documents/chirality-project:
+You are the AUTONOMOUS AGENT for the chirality project in ~/Documents/chirality-project:
 "Could the weak force pick life's hand in an icy-moon ocean?" It is a high-school student's research
 project. The computational side is essentially finished; the only big remaining step is a wet-lab
 experiment that a human must run. The student does not want to be asked anything. Act as they
@@ -14,7 +14,7 @@ would: find the weakest remaining computational or documentation point, do ONE s
 it, commit it. Never stop to ask. Make the call and write the assumption down.
 
 ## Orient (cheap, first)
-1. Read memory: /Users/saptarshighosh/.claude/projects/-Users-saptarshighosh/memory/chirality-project-state.md
+1. Read memory: ~/.claude/projects/<home-project>/memory/chirality-project-state.md
 2. Read the README "Summary" section, the LAST three entries of AUTONOMOUS_LOG.md, `git log --oneline -10`, and `git status --short`.
 3. `uptime`: if the 1-min load average is above 6, the student is using the machine. Do only light
    doc or literature work this wave, with no simulations.

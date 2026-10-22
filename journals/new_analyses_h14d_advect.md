@@ -3,7 +3,7 @@
 Script `h14d_advect.py` (imports `h14c_advect.py`, `h14b_advect.py` and `advect2d.py`; none of them was edited, their sha256 are asserted at the top of the script and printed at `h14d_advect.log:1`), predictions `h14d_predictions.txt` (v1, written and hashed before the results run, sha256 `5da5f82b7a392c106d9eaee9406d1ebf0d3948a7fc0b4bae1e322a1039f63a0d`, asserted at the top of the script). Run line, exactly as given:
 
 ```
-cd /Users/saptarshighosh/Documents/chirality-project && UV_CACHE_DIR=$HOME/Library/Caches/uv nice -n 10 uv run --no-project --with numpy --with scipy --with numba --with matplotlib python h14d_advect.py > h14d_advect.log 2> h14d_advect.err
+UV_CACHE_DIR=$HOME/Library/Caches/uv nice -n 10 uv run --no-project --with numpy --with scipy --with numba --with matplotlib python h14d_advect.py > h14d_advect.log 2> h14d_advect.err
 ```
 
 Log `h14d_advect.log` (148 lines, exit 0, `h14d_advect.err` empty), raw results `h14d_advect_raw.pkl` (`h14d_advect_raw.pkl.part` is a leftover partial-save file that differs from the final pickle; the final pickle is the one used). One post hoc script, `h14d_advect_posthoc.py`, log `h14d_advect_posthoc.log` (18 lines, `.err` empty); everything from it is marked POST HOC below. Nothing was committed, pushed or sent; no network. `ija_draft.md`, `README.md`, `scorecard.py`, `advect2d.py` and the `h14b_*`, `h14c_*` files were not touched by this work (git shows the `M` on `advect2d.py`, `README.md`, `scorecard.py` and `ija_draft.md` from earlier edits, and the `advect2d.py` hash asserted here is the one with the h14c `nk` fix).

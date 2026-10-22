@@ -16,7 +16,7 @@ Nothing at f > 1000 was run before the hash. The wrapper was first written after
 `h13h14_extreme.py` is a copy of the `h13h14_combined.py` wrapper with the new hash, strict tie-aware ranks, counts of worlds losing >= 1 / 5 / 10 points, a monotone check, a limit check and a `check` mode. It runs `h13_sphere_shares.py` unchanged (runpy, same argv) with `coarsen_slow.run` cached. No existing file was edited.
 
 ```
-cd /Users/saptarshighosh/Documents/chirality-project && UV_CACHE_DIR=$HOME/Library/Caches/uv nice -n 10 uv run --no-project \
+UV_CACHE_DIR=$HOME/Library/Caches/uv nice -n 10 uv run --no-project \
   --with numpy --with scipy --with numba --with matplotlib python h13h14_extreme.py \
   f=1,1000,3000,10000,30000,100000,300000,1000000,3000000,10000000,100000000,1000000000,1000000000000 \
   mix=h13_sphere_s16_f50.log > h13h14_extreme.log 2> h13h14_extreme.err

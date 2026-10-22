@@ -18,7 +18,7 @@ Simulated drops, not data. Date 2026-10-21. `journals/droplet_prereg.md` was not
 Run line (3 processes, niced; the self-check was run first with `--check` appended and printed "self-check passed"):
 
 ```
-cd /Users/saptarshighosh/Documents/chirality-project && UV_CACHE_DIR=$HOME/Library/Caches/uv nice -n 10 uv run --no-project --with numpy --with scipy --with numba python droplet_am2_full.py > droplet_am2_full.log 2> droplet_am2_full.err
+UV_CACHE_DIR=$HOME/Library/Caches/uv nice -n 10 uv run --no-project --with numpy --with scipy --with numba python droplet_am2_full.py > droplet_am2_full.log 2> droplet_am2_full.err
 ```
 
 The script imports `droplet_ctrl_am2`, `droplet_range_a` and `droplet_range_common` and edits none of them; the extra rules (AMf, AMs, Bsub and their no-cap "n" versions) are added to `RULES` in memory only. Same fit groups and cap as AM2 / B, other c*, so one fit per simulated run feeds every threshold. Two worlds, because the earlier units used different control draws: K = `droplet_ctrl_am2.stage2` (91 truths x 12 conditions x 500 runs, seeds [5, i, j]), R = `droplet_range_a` stages 2-3 (141 cells x 8 conditions x 400 runs, seeds [11, i, j]; plateau map 28 truths x 4 conditions x 600 runs, seeds [12, i, j]). A scratchpad checkpoint directory only saved intermediate arrays.

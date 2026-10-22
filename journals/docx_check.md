@@ -5,7 +5,7 @@
 
 ## How it was built
 
-Script: `/private/tmp/claude-501/…/scratchpad/docx/build_docx.py`, run with `/opt/anaconda3/bin/python build_docx.py`. It does the following:
+Script: `<scratchpad>/docx/build_docx.py`, run with `/opt/anaconda3/bin/python build_docx.py`. It does the following:
 
 1. Copies the manuscript part to `scratchpad/docx/manuscript.md` and changes only that copy:
    - `\tag{n}` becomes `\qquad\text{(n)}`, because texmath cannot handle `\tag`. The number stays inside the Word equation as upright "(n)".

@@ -9,13 +9,13 @@
   D_z=0.0016: speed 2.019e-04 / (2 D_z/r_nominal=2.030e-04) = 0.994
   D_z=0.0032: speed 5.658e-04 / (2 D_z/r_nominal=4.061e-04) = 1.393
 Traceback (most recent call last):
-  File "/Users/saptarshighosh/Documents/chirality-project/sphere_layers.py", line 297, in <module>
+  File "sphere_layers.py", line 297, in <module>
     main()
     ~~~~^^
-  File "/Users/saptarshighosh/Documents/chirality-project/sphere_layers.py", line 276, in main
+  File "sphere_layers.py", line 276, in main
     section1c(t0)
     ~~~~~~~~~^^^^
-  File "/Users/saptarshighosh/Documents/chirality-project/sphere_layers.py", line 255, in section1c
+  File "sphere_layers.py", line 255, in section1c
     assert 0.8 < sp / pz < 1.25, f"D_z={Dz}: speed not 2*D_z/r (ratio {sp / pz:.3f})"
            ^^^^^^^^^^^^^^^^^^^^
 AssertionError: D_z=0.0032: speed not 2*D_z/r (ratio 1.393)

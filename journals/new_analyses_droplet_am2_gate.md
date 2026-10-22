@@ -14,7 +14,7 @@ Simulated drops, not data. Date 2026-10-21. `journals/droplet_prereg.md` was not
 Run line (exit 0, started about 02:36:30, finished 02:46:25, 593 s, 4 processes). One invocation completed everything; the per-task checkpoints in the scratchpad (`.../scratchpad/am2_gate/`) were only a safeguard and no task was resumed:
 
 ```
-cd /Users/saptarshighosh/Documents/chirality-project && UV_CACHE_DIR=$HOME/Library/Caches/uv nice -n 10 uv run --no-project --with numpy --with scipy --with numba python droplet_am2_gate.py > droplet_am2_gate.log 2> droplet_am2_gate.err
+UV_CACHE_DIR=$HOME/Library/Caches/uv nice -n 10 uv run --no-project --with numpy --with scipy --with numba python droplet_am2_gate.py > droplet_am2_gate.log 2> droplet_am2_gate.err
 ```
 
 The script imports `droplet_range_common.py`, `misread_sim.py` and `droplet_ctrl_am2.py` without editing them. Before the main stages it checks itself (`droplet_am2_gate.err:1`): its calibration code equals `misread_sim.run_cell` on two cells (L to 1e-8, same eligibility), and its `sharp` equals the printed values of `bak_policy_b.log` (B) and `droplet_ctrl_am2.log` (AM2) at all 18 (n, misread) pairs. The 87 null curves came from the existing `DR_CACHE` file of the earlier unit (results do not depend on it).

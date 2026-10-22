@@ -3,7 +3,7 @@
 Script `h14c_advect.py` (imports the physics of `h14b_advect.py` and `advect2d.py`; the `h14b_*` files were not edited), predictions `h14c_predictions.txt` (v1, written and hashed before the results run, sha256 `522fb6ea19a961bc877d182e6e9f668d96d9f91efc41cc5258d96006b1ce79ea`, asserted at the top of the script). Run line, exactly as given:
 
 ```
-cd /Users/saptarshighosh/Documents/chirality-project && UV_CACHE_DIR=$HOME/Library/Caches/uv nice -n 10 uv run --no-project --with numpy --with scipy --with numba --with matplotlib python h14c_advect.py > h14c_advect.log 2> h14c_advect.err
+UV_CACHE_DIR=$HOME/Library/Caches/uv nice -n 10 uv run --no-project --with numpy --with scipy --with numba --with matplotlib python h14c_advect.py > h14c_advect.log 2> h14c_advect.err
 ```
 
 Log `h14c_advect.log` (170 lines, exit 0, `h14c_advect.err` empty), raw results `h14c_advect_raw.pkl`. One post hoc script, `h14c_advect_posthoc.py`, log `h14c_advect_posthoc.log`, reads the raw file; everything from it is marked POST HOC below. Nothing was committed, pushed, or sent; no network. The only existing file edited is `advect2d.py:246`. `ija_draft.md`, `README.md`, `scorecard.py` and the `h14b_*` files were not touched.

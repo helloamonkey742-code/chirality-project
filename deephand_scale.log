@@ -7,7 +7,7 @@ were resumed at the first unfinished run: w = 0.005 runs 0-86 then 87-119 in thr
 === Section 1: scale runs, w = 0.035 (w/H at the ice; dz = w/12, dt = 0.1), runs 0..149 ===
 ROW {"w": 0.035, "i": 0, "R": 2.0, "n": 3, "lr": 3.7464, "u": 0.4125, "hands": "+-+", "K": 2, "Kd": 0, "dw": 2.167, "Te": 448.0, "fin": 1, "ok": true, "Tc": 150.31945186495037, "Tm": 482.86911457126774, "tmax": 1548.6073437138032, "sec": 1.0}
 ROW {"w": 0.035, "i": 1, "R": 3.0, "n": 3, "lr": 2.8671, "u": 0.4322, "hands": "+-+", "K": 2, "Kd": 0, "dw": 2.675, "Te": 594.0, "fin": 1, "ok": true, "Tc": 288.3911870435111, "Tm": 626.0382245982998, "tmax": 1978.1146737948995, "sec": 0.0}
-/Users/saptarshighosh/Documents/chirality-project/deephand_scale.py:133: DeprecationWarning: In future, it will be an error for 'np.bool' scalars to be interpreted as an index
+deephand_scale.py:133: DeprecationWarning: In future, it will be an error for 'np.bool' scalars to be interpreted as an index
   return dict(w=w, i=i, R=R, n=n, lr=round(lr, 4), u=round(u, 4), hands="".join("+-"[h < 0] for h in hands),
 ROW {"w": 0.035, "i": 2, "R": 6.0, "n": 3, "lr": 4.0153, "u": 0.568, "hands": "++-", "K": 1, "Kd": 0, "dw": 2.638, "Te": 180.0, "fin": -1, "ok": true, "Tc": 40.56970583150418, "Tm": 186.62066394532252, "tmax": 659.8619918359675, "sec": 0.0}
 ROW {"w": 0.035, "i": 3, "R": 12.0, "n": 3, "lr": 4.486, "u": 0.8936, "hands": "+-+", "K": 2, "Kd": 0, "dw": 3.287, "Te": 26.0, "fin": 1, "ok": true, "Tc": 17.25529645573321, "Tm": 124.36194600560825, "tmax": 473.0858380168247, "sec": 0.0}
@@ -162,7 +162,7 @@ section 1 w = 0.035: 7 s
 === Section 1: scale runs, w = 0.02 (w/H at the ice; dz = w/12, dt = 0.1), runs 0..149 ===
 ROW {"w": 0.02, "i": 0, "R": 2.0, "n": 3, "lr": 2.6479, "u": 0.9317, "hands": "+-+", "K": 1, "Kd": 1, "dw": 9.389, "Te": 2564.0, "fin": -1, "ok": true, "Tc": 3558.669224642036, "Tm": 2799.8604883441194, "tmax": 8499.58146503236, "sec": 1.1}
 ROW {"w": 0.02, "i": 1, "R": 3.0, "n": 3, "lr": 4.2604, "u": 0.3207, "hands": "+-+", "K": 2, "Kd": 0, "dw": 2.8, "Te": 698.0, "fin": 1, "ok": true, "Tc": 148.44362411959764, "Tm": 716.5312784407687, "tmax": 2249.593835322306, "sec": 0.0}
-/Users/saptarshighosh/Documents/chirality-project/deephand_scale.py:133: DeprecationWarning: In future, it will be an error for 'np.bool' scalars to be interpreted as an index
+deephand_scale.py:133: DeprecationWarning: In future, it will be an error for 'np.bool' scalars to be interpreted as an index
   return dict(w=w, i=i, R=R, n=n, lr=round(lr, 4), u=round(u, 4), hands="".join("+-"[h < 0] for h in hands),
 ROW {"w": 0.02, "i": 2, "R": 6.0, "n": 3, "lr": 2.2035, "u": 0.5066, "hands": "+--", "K": 1, "Kd": 0, "dw": 17.746, "Te": 1192.0, "fin": -1, "ok": true, "Tc": 505.61649050958295, "Tm": 1249.2549223915273, "tmax": 3847.7647671745817, "sec": 0.1}
 ROW {"w": 0.02, "i": 3, "R": 12.0, "n": 3, "lr": 3.6221, "u": 0.3955, "hands": "+-+", "K": 2, "Kd": 0, "dw": 3.754, "Te": 696.0, "fin": 1, "ok": true, "Tc": 200.7150775058265, "Tm": 705.8459898259777, "tmax": 2217.537969477933, "sec": 0.0}
@@ -317,7 +317,7 @@ section 1 w = 0.02: 43 s
 === Section 1: scale runs, w = 0.01 (w/H at the ice; dz = w/12, dt = 0.1), runs 0..149 ===
 ROW {"w": 0.01, "i": 0, "R": 2.0, "n": 3, "lr": 2.4074, "u": 0.9659, "hands": "+-+", "K": 1, "Kd": 1, "dw": 19.494, "Te": 23384.0, "fin": -1, "ok": true, "Tc": 14269.218230435858, "Tm": 23898.20379137935, "tmax": 71794.61137413805, "sec": 3.9}
 ROW {"w": 0.01, "i": 1, "R": 3.0, "n": 3, "lr": 3.0693, "u": 0.7227, "hands": "+-+", "K": 2, "Kd": 0, "dw": 13.313, "Te": 6354.0, "fin": 1, "ok": true, "Tc": 2105.867766575919, "Tm": 6329.747080710056, "tmax": 19089.24124213017, "sec": 0.7}
-/Users/saptarshighosh/Documents/chirality-project/deephand_scale.py:133: DeprecationWarning: In future, it will be an error for 'np.bool' scalars to be interpreted as an index
+deephand_scale.py:133: DeprecationWarning: In future, it will be an error for 'np.bool' scalars to be interpreted as an index
   return dict(w=w, i=i, R=R, n=n, lr=round(lr, 4), u=round(u, 4), hands="".join("+-"[h < 0] for h in hands),
 ROW {"w": 0.01, "i": 2, "R": 6.0, "n": 3, "lr": 3.8555, "u": 0.6934, "hands": "-+-", "K": 2, "Kd": 0, "dw": 11.018, "Te": 2720.0, "fin": -1, "ok": true, "Tc": 551.1773966250807, "Tm": 2714.4803968588008, "tmax": 8243.441190576403, "sec": 0.3}
 ROW {"w": 0.01, "i": 3, "R": 12.0, "n": 3, "lr": 3.2902, "u": 0.6311, "hands": "+-+", "K": 2, "Kd": 0, "dw": 11.533, "Te": 3392.0, "fin": 1, "ok": true, "Tc": 997.4397655876922, "Tm": 3370.88273718507, "tmax": 10212.64821155521, "sec": 0.4}
@@ -472,7 +472,7 @@ section 1 w = 0.01: 357 s
 === Section 1: scale runs, w = 0.005 (w/H at the ice; dz = w/12, dt = 0.1), runs 0..119 ===
 ROW {"w": 0.005, "i": 0, "R": 2.0, "n": 3, "lr": 2.8106, "u": 0.1226, "hands": "+-+", "K": 1, "Kd": 1, "dw": 49.27, "Te": 51266.0, "fin": -1, "ok": true, "Tc": 18080.116410168946, "Tm": 50654.656585389035, "tmax": 152063.9697561671, "sec": 12.7}
 ROW {"w": 0.005, "i": 1, "R": 3.0, "n": 3, "lr": 2.8741, "u": 0.4688, "hands": "+-+", "K": 2, "Kd": 0, "dw": 19.958, "Te": 33766.0, "fin": 1, "ok": true, "Tc": 13569.514503358398, "Tm": 33074.7781731272, "tmax": 99324.33451938159, "sec": 7.4}
-/Users/saptarshighosh/Documents/chirality-project/deephand_scale.py:133: DeprecationWarning: In future, it will be an error for 'np.bool' scalars to be interpreted as an index
+deephand_scale.py:133: DeprecationWarning: In future, it will be an error for 'np.bool' scalars to be interpreted as an index
   return dict(w=w, i=i, R=R, n=n, lr=round(lr, 4), u=round(u, 4), hands="".join("+-"[h < 0] for h in hands),
 ROW {"w": 0.005, "i": 2, "R": 6.0, "n": 3, "lr": 1.816, "u": 0.2019, "hands": "+--", "K": 1, "Kd": 0, "dw": 70.701, "Te": 36330.0, "fin": -1, "ok": true, "Tc": 17399.75902998366, "Tm": 35795.873937471624, "tmax": 107487.62181241487, "sec": 8.3}
 ROW {"w": 0.005, "i": 3, "R": 12.0, "n": 3, "lr": 3.4805, "u": 0.2555, "hands": "+-+", "K": 2, "Kd": 0, "dw": 10.655, "Te": 13602.0, "fin": 1, "ok": true, "Tc": 4257.0420298548315, "Tm": 13327.440326663069, "tmax": 40082.32097998921, "sec": 2.9}
@@ -563,7 +563,7 @@ ROW {"w": 0.005, "i": 86, "R": 3.0, "n": 10, "lr": 3.8266, "u": 0.916, "hands": 
 === Section 1: scale runs, w = 0.005 (w/H at the ice; dz = w/12, dt = 0.1), runs 87..97 ===
 ROW {"w": 0.005, "i": 87, "R": 6.0, "n": 10, "lr": 1.9193, "u": 0.2019, "hands": "+-+-+-+-+-", "K": 9, "Kd": 0, "dw": 2.821, "Te": 58814.0, "fin": -1, "ok": true, "Tc": 42710.374296500784, "Tm": 57426.19276514924, "tmax": 172378.57829544772, "sec": 14.2}
 ROW {"w": 0.005, "i": 88, "R": 12.0, "n": 10, "lr": 4.0493, "u": 0.7902, "hands": "+-+-+-+-+-", "K": 9, "Kd": 0, "dw": 6.868, "Te": 7110.0, "fin": -1, "ok": true, "Tc": 2450.1545251920575, "Tm": 10002.611591767252, "tmax": 30107.83477530176, "sec": 1.6}
-/Users/saptarshighosh/Documents/chirality-project/deephand_scale.py:133: DeprecationWarning: In future, it will be an error for 'np.bool' scalars to be interpreted as an index
+deephand_scale.py:133: DeprecationWarning: In future, it will be an error for 'np.bool' scalars to be interpreted as an index
   return dict(w=w, i=i, R=R, n=n, lr=round(lr, 4), u=round(u, 4), hands="".join("+-"[h < 0] for h in hands),
 ROW {"w": 0.005, "i": 89, "R": 100.0, "n": 10, "lr": 2.9909, "u": 0.3645, "hands": "+++----+-+", "K": 4, "Kd": 0, "dw": 4.036, "Te": 14972.0, "fin": 1, "ok": true, "Tc": 7852.7549167319985, "Tm": 16687.116067707782, "tmax": 50161.34820312334, "sec": 3.4}
 ROW {"w": 0.005, "i": 90, "R": 2.0, "n": 3, "lr": 2.6326, "u": 0.0043, "hands": "+-+", "K": 1, "Kd": 1, "dw": 53.824, "Te": 83886.0, "fin": -1, "ok": true, "Tc": 28237.712635385156, "Tm": 82543.7376426082, "tmax": 247731.2129278246, "sec": 19.1}
@@ -575,7 +575,7 @@ ROW {"w": 0.005, "i": 95, "R": 2.0, "n": 6, "lr": 2.5179, "u": 0.8808, "hands": 
 ROW {"w": 0.005, "i": 96, "R": 3.0, "n": 6, "lr": 3.7863, "u": 0.8216, "hands": "+-+-+-", "K": 5, "Kd": 0, "dw": 12.485, "Te": 16662.0, "fin": -1, "ok": true, "Tc": 4285.621657588466, "Tm": 16391.49972557713, "tmax": 49274.49917673139, "sec": 2.8}
 ROW {"w": 0.005, "i": 97, "R": 6.0, "n": 6, "lr": 2.8785, "u": 0.3115, "hands": "+-+-+-", "K": 5, "Kd": 0, "dw": 6.21, "Te": 23648.0, "fin": -1, "ok": true, "Tc": 11189.699756492199, "Tm": 23126.187809778683, "tmax": 69478.56342933605, "sec": 3.6}
 section 1 w = 0.005: 82 s
-/Users/saptarshighosh/Documents/chirality-project/deephand_scale.py:133: DeprecationWarning: In future, it will be an error for 'np.bool' scalars to be interpreted as an index
+deephand_scale.py:133: DeprecationWarning: In future, it will be an error for 'np.bool' scalars to be interpreted as an index
   return dict(w=w, i=i, R=R, n=n, lr=round(lr, 4), u=round(u, 4), hands="".join("+-"[h < 0] for h in hands),
 
 === Section 1: scale runs, w = 0.005 (w/H at the ice; dz = w/12, dt = 0.1), runs 98..108 ===
@@ -594,7 +594,7 @@ section 1 w = 0.005: 95 s
 
 === Section 1: scale runs, w = 0.005 (w/H at the ice; dz = w/12, dt = 0.1), runs 109..119 ===
 ROW {"w": 0.005, "i": 109, "R": 100.0, "n": 3, "lr": 2.6232, "u": 0.0756, "hands": "+-+", "K": 2, "Kd": 0, "dw": 4.057, "Te": 21756.0, "fin": 1, "ok": true, "Tc": 11798.984934586251, "Tm": 21235.605939295532, "tmax": 63806.81781788659, "sec": 5.4}
-/Users/saptarshighosh/Documents/chirality-project/deephand_scale.py:133: DeprecationWarning: In future, it will be an error for 'np.bool' scalars to be interpreted as an index
+deephand_scale.py:133: DeprecationWarning: In future, it will be an error for 'np.bool' scalars to be interpreted as an index
   return dict(w=w, i=i, R=R, n=n, lr=round(lr, 4), u=round(u, 4), hands="".join("+-"[h < 0] for h in hands),
 ROW {"w": 0.005, "i": 110, "R": 2.0, "n": 6, "lr": 4.0143, "u": 0.294, "hands": "++--+-", "K": 3, "Kd": 0, "dw": 4.772, "Te": 23218.0, "fin": -1, "ok": true, "Tc": 7948.992104551057, "Tm": 22760.45896314917, "tmax": 68381.3768894475, "sec": 5.6}
 ROW {"w": 0.005, "i": 111, "R": 3.0, "n": 6, "lr": 1.7902, "u": 0.4201, "hands": "+-+-+-", "K": 4, "Kd": 1, "dw": 24.334, "Te": 220844.0, "fin": 1, "ok": true, "Tc": 197263.73531735706, "Tm": 215213.56941318617, "tmax": 645740.7082395585, "sec": 47.1}
@@ -611,12 +611,12 @@ section 1 w = 0.005: 189 s
 === Section 1: scale runs, w = 0.0025 (w/H at the ice; dz = w/12, dt = 0.1), runs 0..14 ===
 ROW {"w": 0.0025, "i": 0, "R": 2.0, "n": 3, "lr": 2.4271, "u": 0.8054, "hands": "+-+", "K": 1, "Kd": 1, "dw": 82.013, "Te": 404510.0, "fin": -1, "ok": true, "Tc": 213024.4733342284, "Tm": 396177.73905845225, "tmax": 1188633.2171753568, "sec": 160.9}
 ROW {"w": 0.0025, "i": 1, "R": 3.0, "n": 3, "lr": 2.0507, "u": 0.0487, "hands": "+-+", "K": 2, "Kd": 0, "dw": 5.947, "Te": 605160.0, "fin": 1, "ok": true, "Tc": 543227.3330798971, "Tm": 585609.9354895242, "tmax": 1756929.8064685725, "sec": 382.6}
-/Users/saptarshighosh/Documents/chirality-project/deephand_scale.py:133: DeprecationWarning: In future, it will be an error for 'np.bool' scalars to be interpreted as an index
+deephand_scale.py:133: DeprecationWarning: In future, it will be an error for 'np.bool' scalars to be interpreted as an index
   return dict(w=w, i=i, R=R, n=n, lr=round(lr, 4), u=round(u, 4), hands="".join("+-"[h < 0] for h in hands),
 ROW {"w": 0.0025, "i": 2, "R": 6.0, "n": 3, "lr": 4.2644, "u": 0.5693, "hands": "-++", "K": 1, "Kd": 0, "dw": 89.64, "Te": 23750.0, "fin": 1, "ok": true, "Tc": 2137.794800135527, "Tm": 23333.470494130997, "tmax": 70100.41148239298, "sec": 16.1}
 ROW {"w": 0.0025, "i": 3, "R": 12.0, "n": 3, "lr": 4.2669, "u": 0.2856, "hands": "+-+", "K": 2, "Kd": 0, "dw": 20.287, "Te": 36756.0, "fin": 1, "ok": true, "Tc": 6846.296015613599, "Tm": 35785.193965529244, "tmax": 107455.58189658774, "sec": 25.6}
 ROW {"w": 0.0025, "i": 4, "R": 100.0, "n": 3, "lr": 2.473, "u": 0.1455, "hands": "+-+", "K": 2, "Kd": 0, "dw": 15.557, "Te": 96452.0, "fin": 1, "ok": true, "Tc": 52480.843932136544, "Tm": 93529.9227506217, "tmax": 280689.7682518651, "sec": 63.1}
-/Users/saptarshighosh/Documents/chirality-project/deephand_scale.py:133: DeprecationWarning: In future, it will be an error for 'np.bool' scalars to be interpreted as an index
+deephand_scale.py:133: DeprecationWarning: In future, it will be an error for 'np.bool' scalars to be interpreted as an index
   return dict(w=w, i=i, R=R, n=n, lr=round(lr, 4), u=round(u, 4), hands="".join("+-"[h < 0] for h in hands),
 
 === Section 1: scale runs, w = 0.0025 (w/H at the ice; dz = w/12, dt = 0.1), runs 5..7 ===
@@ -624,7 +624,7 @@ ROW {"w": 0.0025, "i": 5, "R": 2.0, "n": 6, "lr": 3.2167, "u": 0.002, "hands": "
 ROW {"w": 0.0025, "i": 6, "R": 3.0, "n": 6, "lr": 3.0394, "u": 0.1181, "hands": "+-+-+-", "K": 5, "Kd": 0, "dw": 4.744, "Te": 131280.0, "fin": -1, "ok": true, "Tc": 65525.31738479254, "Tm": 127467.47005061629, "tmax": 382502.41015184886, "sec": 91.1}
 ROW {"w": 0.0025, "i": 7, "R": 6.0, "n": 6, "lr": 2.6596, "u": 0.0209, "hands": "+-+-+-", "K": 5, "Kd": 0, "dw": 0.919, "Te": 103670.0, "fin": 1, "ok": false, "Tc": 65768.68291262515, "Tm": 113411.52683400488, "tmax": 340334.5805020146, "sec": 74.9}
 section 1 w = 0.0025: 284 s
-/Users/saptarshighosh/Documents/chirality-project/deephand_scale.py:133: DeprecationWarning: In future, it will be an error for 'np.bool' scalars to be interpreted as an index
+deephand_scale.py:133: DeprecationWarning: In future, it will be an error for 'np.bool' scalars to be interpreted as an index
   return dict(w=w, i=i, R=R, n=n, lr=round(lr, 4), u=round(u, 4), hands="".join("+-"[h < 0] for h in hands),
 
 === Section 1: scale runs, w = 0.0025 (w/H at the ice; dz = w/12, dt = 0.1), runs 8..10 ===
@@ -632,7 +632,7 @@ ROW {"w": 0.0025, "i": 8, "R": 12.0, "n": 6, "lr": 1.4902, "u": 0.4974, "hands":
 ROW {"w": 0.0025, "i": 9, "R": 100.0, "n": 6, "lr": 0.4068, "u": 0.7675, "hands": "+-+-+-", "K": 5, "Kd": 0, "dw": 48.161, "Te": 1298598.0, "fin": -1, "ok": true, "Tc": 1208843.154548531, "Tm": 1255666.456797454, "tmax": 3767099.370392362, "sec": 688.3}
 ROW {"w": 0.0025, "i": 10, "R": 2.0, "n": 10, "lr": 3.6052, "u": 0.7238, "hands": "+-+-+-+-+-", "K": 9, "Kd": 0, "dw": 13.736, "Te": 145424.0, "fin": -1, "ok": true, "Tc": 65732.94755214837, "Tm": 141175.28417350087, "tmax": 423625.85252050264, "sec": 53.4}
 section 1 w = 0.0025: 848 s
-/Users/saptarshighosh/Documents/chirality-project/deephand_scale.py:133: DeprecationWarning: In future, it will be an error for 'np.bool' scalars to be interpreted as an index
+deephand_scale.py:133: DeprecationWarning: In future, it will be an error for 'np.bool' scalars to be interpreted as an index
   return dict(w=w, i=i, R=R, n=n, lr=round(lr, 4), u=round(u, 4), hands="".join("+-"[h < 0] for h in hands),
 
 === Section 1: scale runs, w = 0.0025 (w/H at the ice; dz = w/12, dt = 0.1), runs 11..12 ===
@@ -642,7 +642,7 @@ section 1 w = 0.0025: 290 s
 
 === Section 1: scale runs, w = 0.0025 (w/H at the ice; dz = w/12, dt = 0.1), runs 13..14 ===
 ROW {"w": 0.0025, "i": 13, "R": 12.0, "n": 10, "lr": 2.9591, "u": 0.6307, "hands": "+-+-+-+-+-", "K": 9, "Kd": 0, "dw": 13.651, "Te": 77824.0, "fin": -1, "ok": true, "Tc": 34264.84239303828, "Tm": 75603.39607292096, "tmax": 226910.1882187629, "sec": 68.0}
-/Users/saptarshighosh/Documents/chirality-project/deephand_scale.py:133: DeprecationWarning: In future, it will be an error for 'np.bool' scalars to be interpreted as an index
+deephand_scale.py:133: DeprecationWarning: In future, it will be an error for 'np.bool' scalars to be interpreted as an index
   return dict(w=w, i=i, R=R, n=n, lr=round(lr, 4), u=round(u, 4), hands="".join("+-"[h < 0] for h in hands),
 ROW {"w": 0.0025, "i": 14, "R": 100.0, "n": 10, "lr": 2.2506, "u": 0.7464, "hands": "+-++++-+++", "K": 4, "Kd": 0, "dw": 67.057, "Te": 96650.0, "fin": 1, "ok": true, "Tc": 45250.596075679765, "Tm": 93815.5585754826, "tmax": 281546.67572644784, "sec": 70.9}
 section 1 w = 0.0025: 139 s
@@ -650,12 +650,12 @@ section 1 w = 0.0025: 139 s
 === Section 1: scale runs, w = 0.0025 (w/H at the ice; dz = w/12, dt = 0.1), runs 15..29 ===
 ROW {"w": 0.0025, "i": 15, "R": 2.0, "n": 3, "lr": 3.0309, "u": 0.6957, "hands": "+-+", "K": 2, "Kd": 0, "dw": 52.227, "Te": 252804.0, "fin": 1, "ok": true, "Tc": 96752.55891046293, "Tm": 245451.53823692544, "tmax": 736454.6147107764, "sec": 114.8}
 ROW {"w": 0.0025, "i": 16, "R": 3.0, "n": 3, "lr": 2.2158, "u": 0.7544, "hands": "+-+", "K": 2, "Kd": 0, "dw": 65.692, "Te": 289454.0, "fin": 1, "ok": true, "Tc": 146062.03527116307, "Tm": 281091.1901679756, "tmax": 843373.5705039268, "sec": 109.2}
-/Users/saptarshighosh/Documents/chirality-project/deephand_scale.py:133: DeprecationWarning: In future, it will be an error for 'np.bool' scalars to be interpreted as an index
+deephand_scale.py:133: DeprecationWarning: In future, it will be an error for 'np.bool' scalars to be interpreted as an index
   return dict(w=w, i=i, R=R, n=n, lr=round(lr, 4), u=round(u, 4), hands="".join("+-"[h < 0] for h in hands),
 ROW {"w": 0.0025, "i": 17, "R": 6.0, "n": 3, "lr": 2.7984, "u": 0.7233, "hands": "+-+", "K": 2, "Kd": 0, "dw": 56.357, "Te": 88624.0, "fin": 1, "ok": true, "Tc": 31883.433158410902, "Tm": 86150.42010533114, "tmax": 258551.26031599342, "sec": 62.2}
 ROW {"w": 0.0025, "i": 18, "R": 12.0, "n": 3, "lr": 4.2662, "u": 0.0914, "hands": "+-+", "K": 2, "Kd": 0, "dw": 7.198, "Te": 37870.0, "fin": 1, "ok": true, "Tc": 8603.762417961905, "Tm": 36857.873843027846, "tmax": 110673.62152908354, "sec": 27.0}
 ROW {"w": 0.0025, "i": 19, "R": 100.0, "n": 3, "lr": 0.8078, "u": 0.3254, "hands": "+-+", "K": 2, "Kd": 0, "dw": 46.039, "Te": 520516.0, "fin": 1, "ok": true, "Tc": 451488.943120478, "Tm": 503505.6210748968, "tmax": 1510616.8632246903, "sec": 354.6}
-/Users/saptarshighosh/Documents/chirality-project/deephand_scale.py:133: DeprecationWarning: In future, it will be an error for 'np.bool' scalars to be interpreted as an index
+deephand_scale.py:133: DeprecationWarning: In future, it will be an error for 'np.bool' scalars to be interpreted as an index
   return dict(w=w, i=i, R=R, n=n, lr=round(lr, 4), u=round(u, 4), hands="".join("+-"[h < 0] for h in hands),
 
 === Section 1: scale runs, w = 0.0025 (w/H at the ice; dz = w/12, dt = 0.1), runs 20..22 ===
@@ -663,7 +663,7 @@ ROW {"w": 0.0025, "i": 20, "R": 2.0, "n": 6, "lr": 4.1787, "u": 0.1067, "hands":
 ROW {"w": 0.0025, "i": 21, "R": 3.0, "n": 6, "lr": 2.1617, "u": 0.2538, "hands": "+-+-+-", "K": 5, "Kd": 0, "dw": 11.808, "Te": 427982.0, "fin": -1, "ok": true, "Tc": 322426.91026854666, "Tm": 414551.291247261, "tmax": 1243753.873741783, "sec": 284.0}
 ROW {"w": 0.0025, "i": 22, "R": 6.0, "n": 6, "lr": 2.6212, "u": 0.0544, "hands": "+-+-+-", "K": 5, "Kd": 0, "dw": 2.399, "Te": 120306.0, "fin": -1, "ok": true, "Tc": 67968.44732462875, "Tm": 116701.11452904402, "tmax": 350203.34358713205, "sec": 71.5}
 section 1 w = 0.0025: 426 s
-/Users/saptarshighosh/Documents/chirality-project/deephand_scale.py:133: DeprecationWarning: In future, it will be an error for 'np.bool' scalars to be interpreted as an index
+deephand_scale.py:133: DeprecationWarning: In future, it will be an error for 'np.bool' scalars to be interpreted as an index
   return dict(w=w, i=i, R=R, n=n, lr=round(lr, 4), u=round(u, 4), hands="".join("+-"[h < 0] for h in hands),
 
 === Section 1: scale runs, w = 0.0025 (w/H at the ice; dz = w/12, dt = 0.1), runs 23..25 ===
@@ -671,7 +671,7 @@ ROW {"w": 0.0025, "i": 23, "R": 12.0, "n": 6, "lr": 3.7427, "u": 0.1982, "hands"
 ROW {"w": 0.0025, "i": 24, "R": 100.0, "n": 6, "lr": 1.0458, "u": 0.6022, "hands": "+-+-+-", "K": 5, "Kd": 0, "dw": 33.476, "Te": 372472.0, "fin": -1, "ok": true, "Tc": 311470.5784003201, "Tm": 360350.27736214414, "tmax": 1081150.8320864325, "sec": 268.0}
 ROW {"w": 0.0025, "i": 25, "R": 2.0, "n": 10, "lr": 2.9248, "u": 0.5582, "hands": "+-+-+-+-+-", "K": 7, "Kd": 2, "dw": 21.949, "Te": 316180.0, "fin": -1, "ok": true, "Tc": 202243.52963506684, "Tm": 306788.10767041234, "tmax": 920464.323011237, "sec": 173.7}
 section 1 w = 0.0025: 478 s
-/Users/saptarshighosh/Documents/chirality-project/deephand_scale.py:133: DeprecationWarning: In future, it will be an error for 'np.bool' scalars to be interpreted as an index
+deephand_scale.py:133: DeprecationWarning: In future, it will be an error for 'np.bool' scalars to be interpreted as an index
   return dict(w=w, i=i, R=R, n=n, lr=round(lr, 4), u=round(u, 4), hands="".join("+-"[h < 0] for h in hands),
 
 === Section 1: scale runs, w = 0.0025 (w/H at the ice; dz = w/12, dt = 0.1), runs 26..27 ===
@@ -681,7 +681,7 @@ section 1 w = 0.0025: 65 s
 
 === Section 1: scale runs, w = 0.0025 (w/H at the ice; dz = w/12, dt = 0.1), runs 28..29 ===
 ROW {"w": 0.0025, "i": 28, "R": 12.0, "n": 10, "lr": 2.9172, "u": 0.6099, "hands": "+-+-+-+-+-", "K": 9, "Kd": 0, "dw": 13.336, "Te": 80114.0, "fin": -1, "ok": true, "Tc": 36099.48764993199, "Tm": 77806.98850049535, "tmax": 233520.96550148606, "sec": 41.7}
-/Users/saptarshighosh/Documents/chirality-project/deephand_scale.py:133: DeprecationWarning: In future, it will be an error for 'np.bool' scalars to be interpreted as an index
+deephand_scale.py:133: DeprecationWarning: In future, it will be an error for 'np.bool' scalars to be interpreted as an index
   return dict(w=w, i=i, R=R, n=n, lr=round(lr, 4), u=round(u, 4), hands="".join("+-"[h < 0] for h in hands),
 ROW {"w": 0.0025, "i": 29, "R": 100.0, "n": 10, "lr": 2.7201, "u": 0.7923, "hands": "-+-+++-+++", "K": 5, "Kd": 0, "dw": 61.41, "Te": 69906.0, "fin": 1, "ok": true, "Tc": 25524.038461591448, "Tm": 67919.28761243293, "tmax": 203857.8628372988, "sec": 27.6}
 section 1 w = 0.0025: 69 s

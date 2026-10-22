@@ -14,7 +14,7 @@ Simulated drops and exact binomial arithmetic, not data. Date 2026-10-21. `journ
 Run line (as executed, exit 0, started 02:02:29 PDT, stage 2 simulation 170 s, total 172 s, 4 processes):
 
 ```
-cd /Users/saptarshighosh/Documents/chirality-project && DR_CACHE=/private/tmp/claude-501/-Users-saptarshighosh-Documents-chirality-project/05c76bba-5069-4c19-a20f-58eb08337c55/scratchpad/ctrl_am2/cache UV_CACHE_DIR=$HOME/Library/Caches/uv nice -n 10 uv run --no-project --with numpy --with scipy --with numba python droplet_ctrl_am2.py > droplet_ctrl_am2.log 2> droplet_ctrl_am2.err
+DR_CACHE=<scratchpad>/ctrl_am2/cache UV_CACHE_DIR=$HOME/Library/Caches/uv nice -n 10 uv run --no-project --with numpy --with scipy --with numba python droplet_ctrl_am2.py > droplet_ctrl_am2.log 2> droplet_ctrl_am2.err
 ```
 
 Part 2 uses `droplet_range_common.py` (imported, not edited), the seeds `[5, i, j]` and 500 runs per cell of `misread_sim.py`.
@@ -142,7 +142,7 @@ B reproduces `bak_policy_b.log`: 36 of 36 (L, sharp, label) entries equal (`log:
 
 ## 7. Disclosures
 
-- A timing smoke run (`/private/tmp/claude-501/-Users-saptarshighosh-Documents-chirality-project/05c76bba-5069-4c19-a20f-58eb08337c55/scratchpad/ctrl_am2/time1.py`, no verdicts printed) came after the predictions file.
+- A timing smoke run (`<scratchpad>/ctrl_am2/time1.py`, no verdicts printed) came after the predictions file.
 - The null-curve cache in `.../scratchpad/ctrl_am2/cache/null.npz` is a copy of an earlier agent's cache of `droplet_range_common` (curves only, no results).
 - An earlier launch, minutes before 02:02:29, aborted in `C.self_check()` (`droplet_range_common.py:309`, AssertionError) because my patch of `C.controls` ignored the `mode` argument. No result was produced and the log was empty. The patch is now mode-aware, the predictions file is unchanged, and the script hash above is the fixed version.
 - Part 1 treats n as a fixed number of readable controls; c* was not refitted for any n other than 128; the P6 price clause had no numeric band and is reported, not scored.

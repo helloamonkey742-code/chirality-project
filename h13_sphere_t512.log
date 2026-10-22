@@ -3,9 +3,9 @@ run seed=1 T1=nan T1/tau_sw=nan winner=+1 final_minority=0.4611
 run seed=3 T1=nan T1/tau_sw=nan winner=+1 final_minority=0.4602
 run seed=0 T1=nan T1/tau_sw=nan winner=+1 final_minority=0.4609
 run seed=2 T1=nan T1/tau_sw=nan winner=-1 final_minority=0.4280
-/Users/saptarshighosh/Documents/chirality-project/h13_sphere.py:212: RuntimeWarning: Mean of empty slice
+h13_sphere.py:212: RuntimeWarning: Mean of empty slice
   f"T1/tau_sw median {q(50):.2f} p90 {q(90):.2f} p99 {q(99):.2f} max {Tn.max():.2f} mean(finished) {Tn[np.isfinite(Tn)].mean():.2f}")
-/Users/saptarshighosh/Library/Caches/uv/archive-v0/3dU0PpUY-3QKqOnB/lib/python3.12/site-packages/numpy/_core/_methods.py:142: RuntimeWarning: invalid value encountered in scalar divide
+~/Library/Caches/uv/archive-v0/3dU0PpUY-3QKqOnB/lib/python3.12/site-packages/numpy/_core/_methods.py:142: RuntimeWarning: invalid value encountered in scalar divide
   ret = ret.dtype.type(ret / rcount)
 SUMMARY torus size=512 f0=0.5: n=4 reached one hand 0/4 by 0 tau_sw; T1/tau_sw median inf p90 inf p99 inf max inf mean(finished) nan
   l(10) = 31.48  l/sqrt(Dt) = 9.956

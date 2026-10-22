@@ -12,7 +12,7 @@
 
 Frank's paper, **"On spontaneous asymmetric synthesis"** (*Biochimica et Biophysica Acta* 11: 459–463, 1953), set out the classic recipe for chemical homochirality: an open system combining **autocatalysis** ($A + L \to 2L$, $A + D \to 2D$) with **mutual antagonism** ($L + D \to$ waste or an inactive heterochiral complex).
 
-OpenAlex lists **905 citing records** for Frank (1953) (work W2026655238, 2026-10-10). About 50 of them repeat an earlier title (duplicate records, or generic titles such as "Chirality"), so there are roughly 855 distinct works. The full list, with each paper's group and a one-line note, is in [`frank_citers.csv`](file:///Users/saptarshighosh/Documents/chirality-project/frank_citers.csv).
+OpenAlex lists **905 citing records** for Frank (1953) (work W2026655238, 2026-10-10). About 50 of them repeat an earlier title (duplicate records, or generic titles such as "Chirality"), so there are roughly 855 distinct works. The full list, with each paper's group and a one-line note, is in [`frank_citers.csv`](frank_citers.csv).
 
 ### 1.1 Counts
 
@@ -180,12 +180,12 @@ The other relevance-3 papers are Rivera-Islas et al. (2005, Soai kinetics), Glei
 
 | Script | What it models (model only, not validated against experiment) |
 | :--- | :--- |
-| [`frank.py`](file:///Users/saptarshighosh/Documents/chirality-project/frank.py) | Open-flow Frank model with Langevin counting noise; computes a noise penalty factor. |
-| [`frank2.py`](file:///Users/saptarshighosh/Documents/chirality-project/frank2.py) | Frank network with reversible back-reactions obeying detailed balance. |
-| [`review.py`](file:///Users/saptarshighosh/Documents/chirality-project/review.py) | R1: noise-vs-bias coherence volume. R6: closed-system decay to racemic. |
-| [`dna_network.py`](file:///Users/saptarshighosh/Documents/chirality-project/dna_network.py) | Coupled cross-catalytic Frank network (internal self-consistency checks only). |
-| [`titan_95k.py`](file:///Users/saptarshighosh/Documents/chirality-project/titan_95k.py) | Tunnelling vs. Arrhenius kinetics at 94 K. Tunnelling rates are **assumed**; Longo & Remsing (2024) and Trixler (2013) give none. |
-| [`stress_test.py`](file:///Users/saptarshighosh/Documents/chirality-project/stress_test.py) | Domain-wall motion vs. vent racemization. |
+| [`frank.py`](frank.py) | Open-flow Frank model with Langevin counting noise; computes a noise penalty factor. |
+| [`frank2.py`](frank2.py) | Frank network with reversible back-reactions obeying detailed balance. |
+| [`review.py`](review.py) | R1: noise-vs-bias coherence volume. R6: closed-system decay to racemic. |
+| [`dna_network.py`](dna_network.py) | Coupled cross-catalytic Frank network (internal self-consistency checks only). |
+| [`titan_95k.py`](titan_95k.py) | Tunnelling vs. Arrhenius kinetics at 94 K. Tunnelling rates are **assumed**; Longo & Remsing (2024) and Trixler (2013) give none. |
+| [`stress_test.py`](stress_test.py) | Domain-wall motion vs. vent racemization. |
 
 ---
 
