@@ -1,0 +1,112 @@
+h14f_predictions.txt, v1. Written 2026-10-21, BEFORE any results run of h14f_advect.py (no S50, S80, walled fraction, q or interval of any 1/4096 run existed when this file was hashed).
+
+QUESTION (open item 14 / H14, journals/ija_draft.md:252-261; previous step h14e_advect.log, journals/new_analyses_h14e_advect.md):
+h14e measured the eddy slowdown S50 at l/w = 10 on a six-point ladder, D_mol/D_eff = 1/8 ... 1/256: S50 = 5.76, 7.71, 10.27, 13.05, 15.28, 18.07
+[95% 17.66..18.52] (h14e_advect.log). The local exponent went 0.42, 0.41, 0.34, 0.23, 0.24 [95% 0.19..0.29] (h14e_advect.log:73); the pre-registered
+label for q(128 -> 256) was UNDECIDED (:109), the constant slope q 0.36 was EXCLUDED (:110), the local-slope label UNRESOLVED (:111). A log law
+S50 = -1.98 + 3.59 ln r fits the six points with rms 0.20, a single power law (q 0.33) with rms 0.66 (:79-80; both descriptive, post hoc).
+Extrapolated to the real ratio 1e9 the two pictures part completely: the log law gives S50 = 72 [69..76] (f = 17 S = 1230, below the Early Earth edge
+f = 2400-2600, S* = 141-153), a power law held at the 128 -> 256 slope gives 305 / 703 / 1567 at q 0.19 / 0.24 / 0.29 (:88-94). One more doubling
+cannot tell them apart. h14f adds ONE cell four doublings further out, V4096_10 (1/4096, l/w 10), and asks whether the slope keeps falling.
+Same model, same flow family, same per-case gamma rule, same statistics; 1/8 ... 1/128 are reloaded from h14d_advect_raw.pkl and 1/256 from
+h14e_advect_raw.pkl, NOT rerun.
+
+DEFINITIONS (everything not listed here is exactly as h14e_predictions.txt, h14d_predictions.txt, h14c_predictions.txt and
+h14b_advect_predictions.txt; h14e_advect.py, h14d_advect.py, h14c_advect.py, h14b_advect.py and advect2d.py are imported, not edited)
+  - S50 / S80 / S_half and the bootstrap exactly as h14e (Kaplan-Meier over runs walled at freeze-out, time since the end of the sweep in
+    t17 = (L/5.5)^2 / D_eff; 2000x over runs; seed = sum of the character codes of the cell name, "V4096_10"; 95% interval = 2.5 / 97.5
+    percentiles, undefined if more than 5% of replicates are undefined). The reloaded cells keep their h14d / h14e seeds; the script asserts that
+    the reload reproduces 5.76, 7.71, 10.27, 13.05, 15.28, 18.07 to the printed digits.
+  - V4096_10 spec = h14e_advect.spec(name, 4096, S, hold17, seed), the h14e / h14d recipe called unchanged: L = round(2 pi 10 sqrt(D_eff)),
+    l = L/(2 pi), Tk = round(2.159 l^2 / (8 (D_eff - 1)) / 0.2) 0.2, A = sqrt(8 (D_eff - 1) Tk), gamma = round(min(0.01, 1/(5 Tk)), 4), D_mol = 1,
+    h = 1, dt = 0.2, xorshift noise, Delta = 0.5, 1, 2, cadence max(2, round(t17/60/0.2) 0.2). The script asserts that this function at
+    D_eff = 256, S = 7, hold 60, seed 3401 returns h14e's V256_10#0 spec exactly.
+  - Two changes from h14e, both forced by the 16x larger grid (N = 4021, 16.2e6 cells per run), neither touching the model:
+    (a) S = 1 per job (3 runs per job, one per Delta) instead of 7, so one worker holds about 0.8 GB, and hold = 90 t17 instead of 60, since the
+        clearing times scale with S50 (at 1/256 the longest clearing was 2.06 x the median, h14e_advect_raw.pkl).
+    (b) The shear kick is a numba loop, h14f_advect.nkick, put in place of h14b_advect.kick inside each worker. It computes the same cubic
+        Lagrange weights with the same numpy float32 expressions and sums the four terms in the same order. Its self-check asserts it is
+        bitwise equal to h14b_advect.kick on random fields for both axes (including shifts of hundreds of cells), and that a tiny run_case
+        gives identical outputs with either kick. The numpy kick needs about 2 GB of index temporaries per worker at N = 4021 and took
+        1.8-23 s per call (throwaway timing); the numba one 0.2-0.3 s.
+  - Ratio exponent q(a -> b) = ln(S50_b / S50_a) / ln(r_b / r_a), paired by bootstrap replicate index (bs[:, 0] of each cell), as h14d / h14e.
+    The new one is q(256 -> 4096) = ln(S50(V4096_10) / S50(V256_10)) / ln 16.
+  - Delta q = q(256 -> 4096) - q(128 -> 256), paired over the same replicates.
+
+CASE (one cell; seeds 3501-3516, none repeats a seed of h14b / h14c / h14d / h14e, which used 3101-3132, 3301-3344 and 3401-3416)
+  name       D_eff  ratio    l/w   L     N     gamma   Tk    A      kappa  t17     kicks_pre  runs               hold [t17]
+  V4096_10   4096   1/4096   10    4021  4021  0.0074  27.0  ~940   ~1.47  ~130.5  ~5.0       48 (16 jobs x 3)   90 (~11,744)
+  Run count and cost. A throwaway timing (see DISCLOSURE) at N = 4021 gave 2.97 ns per cell-step on one process and 5.3-5.7 ns on four at a
+  machine load of about 4 (three processes 5.55, six 10.5, eight 10.7 ns: four is the throughput optimum on this machine), so one run costs
+  about 59-63 s per t17 with checks and kicks, i.e. about 1,900 s for the sweep (2.07 t17) plus a clearing time near 29 t17. From the 336
+  clearing times at 1/256 (h14e_advect_raw.pkl): a median of n runs has a 95% spread of about +-8.8% at n = 24, +-7.0% at 36 and +-5.9% at 48.
+  With 48 runs the 95% half-width of q(256 -> 4096) is about 0.023 (with the 1/256 cell's own +-1.2%). 48 runs on 4 workers: about 23,000 s
+  wall if S50 is near the log law, up to about 33,000 s if it is near a power law held at 0.29 or the machine is busy. Guard 43,200 s (12 h) wall;
+  a job cut by the guard counts as censored at its last check and P8 fails. 4 worker processes under nice -n 10.
+
+SCENARIO VALUES for S50(1/4096), computed now from the printed h14e numbers:
+  (A) log law refitted over six, -1.98 + 3.59 ln 4096                        = 27.88   (implied q(256 -> 4096) = 0.156; local q at 1/4096 0.13)
+  (B) Early Earth edge path: 18.07 x 16^q with the q that reaches S* at 1e9 from 1/256, q 0.135 (f 2400) / 0.141 (f 2600) = 26.27 / 26.71
+  (C) power law held at the 2.5% bound of q(128 -> 256), 18.07 x 16^0.19     = 30.60
+  (D) power law held at the q(128 -> 256) point, 18.07 x 16^0.24              = 35.15
+  (E) power law held at the 97.5% bound, 18.07 x 16^0.29                     = 40.38
+  (F) power law over all six ratios, 18.07 x 16^0.33                         = 45.11
+  A and B differ by 1.2-1.6 (about one half-width) and are NOT separated by this cell. The cell separates A from D, E, F (gaps of 7-17, five or
+  more half-widths) and, with about 80% probability, from C (gap 2.7).
+
+PREDICTIONS (bands fixed now; each is scored as written; guesses in brackets are not thresholds)
+  P1   V4096_10 S50 point in [24, 42] [guess 29, between A and C: the per-doubling increments 1.94, 2.57, 2.77, 2.24, 2.78 have not grown, as a
+       log law needs, but the last two local exponents (0.23, 0.24) have not fallen].
+  P2   V4096_10 S80 point in [28, 50] [guess 34, the 1/256 ratio S80/S50 = 21.30/18.07 = 1.18 times the S50 guess].
+  P3   q(256 -> 4096) point in [0.10, 0.30] [guess 0.17].
+  P4   Delta q = q(256 -> 4096) - q(128 -> 256) point in [-0.16, +0.06] [guess -0.07].
+  P5   S50 increases at every step of the seven-point ladder: 5.76 < 7.71 < 10.27 < 13.05 < 15.28 < 18.07 < S50(V4096_10) (points).
+  P6   Flow realisation at 1/4096: Lagrangian tracer D_eddy (advect2d.tracer_lagrangian with advect2d.L set to the box, mean of seeds 1 and 7)
+       within 5% of D_eff - 1 = 4095, cubic-kick numerical diffusion at a 6.4-cell wavelength <= 0.02 D_mol, kappa in [1.45, 1.49], kicks between
+       lam = 0 and the end of the sweep in [4.5, 5.5], Lyapunov exponent of the tangent map at that kappa > 0.1 per kick.
+  P7   Completeness: walled fraction at freeze-out >= 0.99 [guess 1.000, as at every h14d / h14e cell], and no walled run is still walled at the
+       end of the 90 t17 hold [the longest of 336 at 1/256 was 2.06 x the median; 2.06 x 42 = 87].
+  P8   Compute: results run < 43,200 s wall, no job cut by the guard, all 48 runs finished [guess 24,000 s].
+  Printed but NOT predictions: S_half; mean domains at t0; kicks to clear; all local exponents with 95% intervals; a job-level (cluster)
+  bootstrap of q(256 -> 4096); which of A-F lies inside the measured 95% interval of S50(4096); the six-point log law's residual at 4096
+  (measured - 27.88); the log law and the power law refitted over seven points with residuals; the q that reaches S* at 1e9 from the measured
+  1/4096 point; S50 at 1e9 anchored at 1/4096 (power law at the q(256 -> 4096) 2.5% bound, point and 97.5% bound; log law refit over seven with
+  an interval; constant) and the ratio at which each reaches S* = 2400/17, 2600/17. These are extrapolations, not measurements.
+
+DECISION, fixed now. q = q(256 -> 4096) with its 95% bootstrap interval [q_lo, q_hi]; the threshold 0.19 is the 2.5% bound of q(128 -> 256):
+  FALLING if q_hi < 0.19   (over 1/256 -> 1/4096 the slope is below anything the 128 -> 256 slope allowed: it kept falling, as a log law predicts;
+                            every power law held at a slope consistent with h14e is excluded).
+  HELD    if q_lo > 0.19   (no sign that the slope fell below the 128 -> 256 range; the log law, which needs 0.156, is excluded).
+  UNDECIDED otherwise (including an undefined interval).
+  Second label, the paper's question taken one step further: BELOW EDGE SLOPE if q_hi < q*, where q* = ln(S* / S50(V4096_10)) / ln(1e9 / 4096)
+  with S* = 2600/17 = 153 (the power-law slope that, held from the measured 1/4096 point, just reaches the Early Earth edge at 1e9; about 0.137
+  if S50 is 28). Else NOT BELOW. q* uses the point S50; it is printed with f = 2400 too.
+  Third label, on the cell alone: LOG LAW INSIDE if 27.88 lies in the 95% interval of S50(V4096_10), else OUTSIDE (with the sign).
+  Expected outcome, stated so the result cannot be read as a surprise afterwards: with a half-width of about 0.023, under A (true q 0.156) the
+  likeliest label is FALLING [about 80%; UNDECIDED about 20%; HELD under 1%]; under C (0.19) UNDECIDED [about 95%]; under D or worse HELD [about
+  99%]. The second label is NOT BELOW under A as well [over 99%: q* = 0.172 - 0.224 q falls as q rises, so BELOW needs q < 0.12]: the log law averages 0.156 over 1/256 -> 1/4096, above q* near 0.137, and
+  reaches only 72 at 1e9 because its local slope keeps falling (0.13 at 1/4096). So no outcome of this cell proves the 99.9% share at 1e9; a
+  FALLING label removes the held power laws that were the reason to doubt it.
+  What each outcome means (wording for item 14 is proposed in the journal and NOT applied to ija_draft.md):
+  - FALLING. Seven doublings measured. The slope fell from 0.42 to below 0.19 on average over the last four doublings; the extrapolation to 1e9
+    rests on the log law (refit over seven printed), which keeps the Early Earth share at 99.9% if the slope keeps falling. Item 14 narrows to
+    "the trend of the measured slope", not "the form is unknown".
+  - HELD. The slope stopped falling near 0.2; a power law from 1/4096 at q_lo already exceeds the edge at 1e9 if q_lo > q*; item 14 reports the
+    Early Earth share as model-dependent with the lower figure from the deepest-layer-free rule (as now), and the log law is withdrawn as a
+    description.
+  - UNDECIDED. Item 14 stays open; report the seven-point ladder, q(256 -> 4096) with its interval, and the envelopes without choosing.
+  Scoring does not change any band, add runs, drop runs or re-run any case. If the walled fraction is below 1 or clearing is incomplete, that is
+  reported as found, not repaired. If anything breaks after hashing it is fixed in a new file labelled POST HOC.
+
+DISCLOSURE before this file was hashed: (i) Read h14e_advect.py, h14e_predictions.txt, h14e_advect.log (all of it, including the post hoc log and
+power fits and the 1e9 extrapolations), h14b_advect.py (kick, shear, coarse, n_domains, wall_len, run_case), h14c_advect.job and
+journals/new_analyses_h14e_advect.md, so the six-point ladder, the local exponents and both fits were known when the bands were written.
+(ii) From h14e_advect_raw.pkl I read the 336 clearing times at 1/256 (median 18.13 t17, mean/median 1.03, max/median 2.06, 99th
+percentile/median 1.92) and computed by subsampling the spread of the median of n of them (n = 24, 30, 36, 48); this is h14e data, already
+reported. (iii) Throwaway timings, not in the repo (scratchpad: h14f/probe.py, probe2.py, probe3.py): rd_x steps, kicks and checks on random
+fields at N = 1005 and 4021 with 1, 3, 4, 6 and 8 processes, printing only seconds, ns per cell-step and array sizes, and the bitwise comparison of
+the numba kick with h14b_advect.kick (max |diff| 0.0 on N 64, 257 and 4021, both axes). No sweep, no freeze-out, no S50, S80, walled fraction or
+q was computed for any 1/4096 run. Machine load during the timings 3-5 (18 at the end of the 8-process test). (iv) Design choices made above: one
+cell, 48 runs as 16 jobs x 3, seeds 3501-3516, hold 90 t17, 4 workers, guard 43,200 s, the numba kick, the bands, the scenario table and the
+labels. After hashing, a self-check (recipe, bitwise kick, tiny run_case equality, flow checks, the Lyapunov diagnostic) is allowed; it does not
+change this file.
