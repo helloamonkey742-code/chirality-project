@@ -246,7 +246,7 @@ This block is for the author only. Delete everything from this heading to the li
 
 ## H. To do before submission
 
-1. **[CONFIRM WITH DR. MCKAY BEFORE SUBMISSION]** Get his agreement to the acknowledgement wording.
+1. **Dr. McKay (done 2026-10-22).** He agreed to the acknowledgement wording. He asked that the paper sit for a week or so, then be read over carefully so the arguments are as clear and complete as possible, and that the final copy then go to him for comments before submission.
 2. Fill in the address, phone, e-mail and ORCID. Add the AI model version(s) and dates.
 3. File the APC waiver request at or before submission (section C).
 4. Convert to the IJA LaTeX template or to Word, and embed the figures.
@@ -906,7 +906,7 @@ Competing interests: The author declares none.
 
 ## Acknowledgements
 
-I thank Dr. Chris McKay (NASA Ames Research Center) for discussion. [CONFIRM WITH DR. MCKAY BEFORE SUBMISSION]
+I thank Dr. Chris McKay (NASA Ames Research Center) for discussion.
 
 An AI assistant (Claude, Anthropic; Claude Opus 5.5, Claude Sonnet 5, Claude Sonnet 5.5 and Claude Fable 5.1, through Claude Code; used 23 September to 21 October 2026 [CONFIRM: add any other use, such as claude.ai chats, and the final end date]; available at https://claude.ai) was used to write the code and text. I directed the work and checked all results and references. Its use for the code is described in Section 2.8.
 
